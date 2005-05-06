@@ -1,0 +1,345 @@
+This is pdfTeX, Version 3.14159-1.10b (Web2C 7.4.5) (format=pdflatex 2003.9.23)  10 JUN 2005 14:37
+**/home/boogaart/Textus/CompKriging/R/compositions/inst/doc/UsingCompositions.t
+ex
+
+(/home/boogaart/Textus/CompKriging/R/compositions/inst/doc/UsingCompositions.te
+x{/var/lib/texmf/pdftex/config/pdftex.cfg}
+LaTeX2e <2001/06/01>
+Babel <v3.7h> and hyphenation patterns for american, french, german, ngerman, n
+ohyphenation, loaded.
+(/usr/share/texmf/tex/latex/base/article.cls
+Document Class: article 2001/04/21 v1.4e Standard LaTeX document class
+(/usr/share/texmf/tex/latex/base/size10.clo
+File: size10.clo 2001/04/21 v1.4e Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@section=\count80
+\c@subsection=\count81
+\c@subsubsection=\count82
+\c@paragraph=\count83
+\c@subparagraph=\count84
+\c@figure=\count85
+\c@table=\count86
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(/usr/share/texmf/tex/latex/ntgclass/a4.sty
+Package: a4 1999/03/03 v1.2f A4 based page layout
+) (./UsingCompositions.aux)
+\openout1 = `UsingCompositions.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 9.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 9.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 9.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 36.
+
+(/usr/share/texmf/tex/latex/base/omscmr.fd
+File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 36.
+
+Overfull \hbox (37.16461pt too wide) in paragraph at lines 51--64
+/cmr10/has greatly evolved in the past years [[]] [[]]
+ []
+
+
+Overfull \hbox (29.44244pt too wide) in paragraph at lines 51--64
+/cmr10/[[]]
+ []
+
+
+Overfull \hbox (55.24811pt too wide) in paragraph at lines 51--64
+/cmr10/[[]]
+ []
+
+
+Overfull \hbox (61.60915pt too wide) in paragraph at lines 51--64
+/cmr10/[[]]
+ []
+
+
+Overfull \hbox (5.01184pt too wide) in paragraph at lines 51--64
+/cmr10/[[]] [[]]
+ []
+
+
+Overfull \hbox (12.62764pt too wide) in paragraph at lines 51--64
+/cmr10/[[]]. This
+ []
+
+
+Overfull \hbox (42.7758pt too wide) in paragraph at lines 51--64
+/cmr10/in [[]]. 
+ []
+
+[1
+
+{/var/lib/texmf/dvips/config/pdftex.map}]
+Overfull \hbox (42.89648pt too wide) in paragraph at lines 102--102
+[]/cmtt10/> plot(amounts)                     # Produces Scatterplotmatrix in l
+og-scale[] 
+ []
+
+[2] [3]
+Overfull \hbox (84.05356pt too wide) in paragraph at lines 165--168
+/cmr10/Ellipses and straight lines are drawn here in Aitchi-son ge-om-e-try [[]
+].
+ []
+
+
+Overfull \hbox (11.39676pt too wide) in paragraph at lines 188--188
+[]/cmtt10/pie(mean(dat))            # Only one composition at a time can be dra
+wn[] 
+ []
+
+
+Overfull \hbox (0.89685pt too wide) in paragraph at lines 222--222
+[]/cmtt10/var(dat)              # variance in the clr-euclidean space structure
+[] 
+ []
+
+
+Overfull \hbox (0.89685pt too wide) in paragraph at lines 222--222
+[]/cmtt10/variation(dat)        # the variation matrix (i.e. var(log(x_i/x_j)))
+[] 
+ []
+
+[4]
+Overfull \hbox (4.44241pt too wide) in paragraph at lines 223--246
+/cmr10/[[]]
+ []
+
+
+Overfull \hbox (58.64635pt too wide) in paragraph at lines 275--275
+[] /cmtt10/[1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+1 1 1 1 1 1[] 
+ []
+
+
+Overfull \hbox (27.14662pt too wide) in paragraph at lines 275--275
+[] /cmtt10/[1]  89.86653  51.27057  54.28445  18.31066  31.19352  21.82243  39.
+43808[] 
+ []
+
+[5]
+Overfull \hbox (27.14662pt too wide) in paragraph at lines 299--299
+[] /cmtt10/[1]  89.86653  51.27057  54.28445  18.31066  31.19352  21.82243  39.
+43808[] 
+ []
+
+[6]
+Overfull \hbox (58.64635pt too wide) in paragraph at lines 364--364
+[]/cmtt10/> groupparts(rcomp(dat5),Cparts=c("Cu","Cd","Co"),Zparts=c("Zn"),Ppar
+ts=c("Pb"))[] 
+ []
+
+
+Overfull \hbox (21.89667pt too wide) in paragraph at lines 372--372
+[]/cmtt10/> groupparts(dat5,Cparts=c("Cu","Cd","Co"),Zparts=c("Zn"),Pparts=c("P
+b"))[] 
+ []
+
+
+Overfull \hbox (40.33134pt too wide) in paragraph at lines 373--381
+/cmr10/ap-proach is sim-pli-fi-ca-tion of the ap-proach in [[]],
+ []
+
+
+Overfull \hbox (11.09508pt too wide) in paragraph at lines 385--392
+/cmr10/for-ma-tions de-fined for the Aitchi-son sim-plex /cmtt10/alr /cmr10/(ad
+-di-tive log ration)[[]],
+ []
+
+
+Overfull \hbox (339.72046pt too wide) in paragraph at lines 385--392
+/cmtt10/clr /cmr10/(cen-tered log ratio)[[]] and /cmtt10/ilr /cmr10/(iso-met-ri
+c log ra-tio) [[]].
+ []
+
+[7] [8]
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 461.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 461.
+
+Overfull \hbox (107.33151pt too wide) in paragraph at lines 467--474
+/cmr10/space[[]] [[]],
+ []
+
+
+Overfull \hbox (7.2202pt too wide) in paragraph at lines 480--483
+/cmr10/[[]]. 
+ []
+
+[9]
+Overfull \hbox (207.665pt too wide) in paragraph at lines 520--524
+/cmr10/are equipped with a scalar prod-uct and a norm [[]],
+ []
+
+
+Overfull \hbox (37.64653pt too wide) in paragraph at lines 541--541
+[] /cmtt10/[1]  1.57164217  8.79155615  6.15968662  0.70970049  3.02654905  0.6
+8458123[] 
+ []
+
+
+Overfull \hbox (37.64653pt too wide) in paragraph at lines 541--541
+[] /cmtt10/[1]  1.57164217  8.79155615  6.15968662  0.70970049  3.02654905  0.6
+8458123[] 
+ []
+
+
+Overfull \hbox (48.44244pt too wide) in paragraph at lines 571--576
+/cmr10/The cen-tral idea of the pack-age -- fol-low-ing the co-or-di-nate ap-pr
+oach of [[]]
+ []
+
+[10] [11]
+Overfull \hbox (81.47482pt too wide) in paragraph at lines 631--635
+/cmr10/now. How-ever ref-er-ences are [[]], [[]],
+ []
+
+
+Overfull \hbox (0.89685pt too wide) in paragraph at lines 647--647
+[]/cmtt10/# The other distance types '"euclidean"', '"maximum"', '"manhattan"',
+[] 
+ []
+
+
+Overfull \hbox (53.3964pt too wide) in paragraph at lines 701--701
+[]/cmtt10/discr <- lda(traingroups~.,data=idt(acomp(trainset,c("clay","sand","g
+ravel"))))[] 
+ []
+
+
+Overfull \hbox (121.6458pt too wide) in paragraph at lines 701--701
+[]/cmtt10/table(testgroups,predict(discr,newdata=idt(acomp(testset,c("clay","sa
+nd","gravel"))))$class)[] 
+ []
+
+
+Overfull \hbox (32.39658pt too wide) in paragraph at lines 701--701
+[]/cmtt10/barplot(ilr.inv(t(discr$scaling))) # Visualise the discrimination fun
+ctions[] 
+ []
+
+
+Overfull \hbox (174.14534pt too wide) in paragraph at lines 701--701
+[]/cmtt10/plot(acomp(sa.groups),col=predict(discr,idt(acomp(sa.groups,c("clay",
+"sand","gravel"))))$class,pch=20)[] 
+ []
+
+[12]
+Overfull \hbox (53.3964pt too wide) in paragraph at lines 701--701
+[]/cmtt10/discr <- qda(traingroups~.,data=idt(acomp(trainset,c("clay","sand","g
+ravel"))))[] 
+ []
+
+
+Overfull \hbox (126.89575pt too wide) in paragraph at lines 701--701
+[]/cmtt10/table(testgroups, predict(discr,newdata=idt(acomp(testset,c("clay","s
+and","gravel"))))$class)[] 
+ []
+
+
+Overfull \hbox (174.14534pt too wide) in paragraph at lines 701--701
+[]/cmtt10/plot(acomp(sa.groups),col=predict(discr,idt(acomp(sa.groups,c("clay",
+"sand","gravel"))))$class,pch=20)[] 
+ []
+
+
+Overfull \hbox (53.3964pt too wide) in paragraph at lines 701--701
+[]/cmtt10/discr <- fda(traingroups~.,data=idt(acomp(trainset,c("clay","sand","g
+ravel"))))[] 
+ []
+
+
+Overfull \hbox (53.3964pt too wide) in paragraph at lines 701--701
+[]/cmtt10/table(testgroups, predict(discr,idt(acomp(testset,c("clay","sand","gr
+avel")))))[] 
+ []
+
+
+Overfull \hbox (142.64561pt too wide) in paragraph at lines 701--701
+[]/cmtt10/plot(acomp(sa.groups),col=predict(discr,idt(acomp(sa.groups,c("clay",
+"sand","gravel")))),pch=20)[] 
+ []
+
+[13] [14]
+Overfull \hbox (77.31645pt too wide) in paragraph at lines 796--800
+/cmr10/Without con-clu-sion, but open-ing to fur-ther steps like barycen-tric c
+o-or-di-nates (/cmtt10/endpointCoordinates/cmr10/)
+ []
+
+
+Overfull \hbox (9.44241pt too wide) in paragraph at lines 842--848
+[]
+ []
+
+
+Underfull \hbox (badness 1102) in paragraph at lines 850--854
+[]/cmr10/Billheimer, D. and Gut-
+ []
+
+
+Overfull \hbox (35.24808pt too wide) in paragraph at lines 858--865
+[]
+ []
+
+[15]
+Overfull \hbox (41.60912pt too wide) in paragraph at lines 876--881
+[]
+ []
+
+
+Overfull \hbox (28.08133pt too wide) in paragraph at lines 893--896
+[]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 950--953
+[]
+ []
+
+[16] [17] (./UsingCompositions.aux) ) 
+Here is how much of TeX's memory you used:
+ 302 strings out of 95437
+ 3442 string characters out of 1190247
+ 49833 words of memory out of 1000001
+ 3362 multiletter control sequences out of 10000+50000
+ 8708 words of font info for 31 fonts, out of 500000 for 1000
+ 14 hyphenation exceptions out of 1000
+ 23i,6n,19p,255b,301s stack positions out of 1500i,500n,5000p,200000b,5000s
+ 93 PDF objects out of 300000
+ 0 named destinations out of 131072
+ 0 words of extra memory for PDF output out of 65536
+{/usr/share/texmf/dvips/tetex/f7b6d320.enc
+}</usr/share/texmf/fonts/type1/bluesky/cm/cmr7.pfb></usr/share/texmf/fonts/type
+1/bluesky/cm/cmex10.pfb>{/usr/share/texmf/dvips/tetex/aae443f0.enc}</usr/share/
+texmf/fonts/type1/bluesky/cm/cmmi7.pfb></usr/share/texmf/fonts/type1/bluesky/cm
+/cmmi10.pfb>{/usr/share/texmf/dvips/tetex/74afc74c.enc}</usr/share/texmf/fonts/
+type1/bluesky/cm/cmti10.pfb>{/usr/share/texmf/dvips/tetex/09fbbfac.enc}</usr/sh
+are/texmf/fonts/type1/bluesky/cm/cmtt10.pfb>{/usr/share/texmf/dvips/tetex/bbad1
+53f.enc}</usr/share/texmf/fonts/type1/bluesky/cm/cmsy10.pfb></usr/share/texmf/f
+onts/type1/bluesky/cm/cmr10.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmbx12
+.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmr9.pfb></usr/share/texmf/fonts/
+type1/bluesky/cm/cmbx9.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmr12.pfb><
+/usr/share/texmf/fonts/type1/bluesky/cm/cmr17.pfb>
+Output written on UsingCompositions.pdf (17 pages, 142293 bytes).

@@ -1,0 +1,41 @@
+\name{norm}
+\alias{norm}
+\alias{norm.default}
+\alias{norm.acomp}
+\alias{norm.aplus}
+\alias{norm.rcomp}
+\alias{norm.rplus}
+\alias{norm.rmult}
+\title{Vector space norm}
+\description{
+  Each of the considered space structures has an associated norm, which is
+  computed for each element by these functions.
+}
+\usage{
+norm(x,\dots)
+\method{norm}{default}(x,\dots)
+\method{norm}{acomp}(x,\dots)
+\method{norm}{rcomp}(x,\dots)
+\method{norm}{aplus}(x,\dots)
+\method{norm}{rplus}(x,\dots)
+\method{norm}{rmult}(x,\dots)
+
+          }
+\arguments{
+  \item{x}{a dataset or a single vector of some type}
+  \item{\dots}{currently not used, intended to select a different norm}
+}
+\value{
+  The norms of the given vectors.
+}
+\seealso{
+  \code{\link{normalize}}
+}
+\examples{
+data(SimulatedAmounts)
+tmp <- acomp(sa.lognormals)
+mvar(tmp)
+sum(norm( tmp - mean(tmp) )^2)/(nrow(tmp)-1)
+
+}
+\keyword{multivariate}

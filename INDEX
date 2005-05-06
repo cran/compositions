@@ -1,0 +1,127 @@
+%*%                     inner product for matrices and vectors
+acomp                   Aitchison compositions
+%*%.acomp               inner product for datasets with a vector space
+                        structure
+acompmargin             Marginal compositions in Aitchison
+                        Compositions
+alr                     Additive log ratio transform
+aplus                   Amounts analysed in log-scale
++.aplus                 vectorial arithmetic for datasets with aplus
+                        class
+apt                     Additive planar transform
+as.data.frame.acomp     Convert "compositions" classes to data frames
+barplot.acomp           Barcharts of amounts
+boxplot.acomp           Displaying compositions and amounts by
+                        boxplots
+cdt                     Centered default transform
+clo                     Closure of a composition
+clr                     Centered log ratio transform
+clr2ilr                 Convert between clr and ilr, and between cpt
+                        and ipt. Acts in vectors and in bilinear
+                        forms.
+cor.acomp               Correlations of amounts and compositions
+cpt                     Centered planar transform
+dist                    Distances in variouse approaches
+ellipses                Draw ellipses
+endpointCoordinates     Amounts in barytic-coordinates
+geometricmean           The geometric mean
+groupparts              Group amounts of parts
+gsi                     Internal functions of the compositions package
+gsi2.invperm            Internal function: Invert a permutation
+gsi.add                 Internal functions: Parallel operations of
+                        single and multiple datasets
+gsi.addclass            Internal function: give an object a derived
+                        subclass
+gsi.call                Internal functions of the compositions package
+gsi.closespread         Internal functions of the compositions package
+gsi.diagExtract         Internal functions: Get the diagonal of a
+                        matrix
+gsi.diagGenerate        Internal functions: Generate a diagonal matrix
+gsi.drop                Internal functions: A conditional drop
+gsi.eps                 Internal variable: Negligible differences
+gsi.expandrcomp         Internal function: Scaling rcomp
+gsi.getD                Interal function: Get number of samples and
+                        number of parts in a compositional object
+gsi.isSingleRow         Internal function: Can something be considered
+                        as a single multivariate data item?
+gsi.mapin01             Internal functions: Storing integers as reals
+gsi.margin              Internal function: Compute a desired
+                        compositional margin
+gsi.pairrelativeMatrix
+                        Internal functions of the compositions package
+gsi.pairs               Internal functions of the compositions package
+gsi.plain               Internal function: Convert to plain vector or
+                        matrix
+gsi.plotmargin          Internal functions of the compositions package
+gsi.simshape            Internal function: Reshape an object to the
+                        shape type of another
+gsi.spreadToIsoSpace    Internal functions of the compositions package
+gsi.textpanel           Internal function: A panel displaying a label
+                        only
+Hydrochem               Hydrochemical composition data set of
+                        Llobregat river basin water (NE Spain)
+idt                     Isometric default transform
+iit                     Isometric identity transform
+ilr                     Isometric log ratio transform
+ilrBase                 The canonical basis in the clr plane used for
+                        ilr and ipt transforms.
+ilt                     Isometric log transform
+ipt                     Isometric planar transform
+is.acomp                Check for compositional data type
+lines.rmult             Draws connected lines from point to point.
+mean.acomp              Mean amounts and mean compositions
+mean.row                The arithmetic mean of rows or columns
+mvar                    Metric summary statistics of real, amount or
+                        compositional data
+names.acomp             The names of the parts
+norm                    Vector space norm
+normalize               Normalize vectors to norm 1
+oneOrDataset            Treating single compositions as one-row
+                        datasets
+perturbe                Perturbation of compositions
+plot.acomp              Displaying compositions in ternary diagrams
+plot.aplus              Displaying amounts in scatterplots
+power.acomp             Power transform in Aitchisons simplex
+powerofpsdmatrix        power transform of a matrix
+princomp.acomp          Principal component analysis for Aitchison
+                        compositions
+princomp.aplus          Principal component analysis for amounts in
+                        log geometry
+princomp.rcomp          Principal component analysis for real
+                        compositions
+princomp.rmult          Principle component analysis for Real data
+princomp.rplus          Principal component analysis for real amounts
+qqnorm.acomp            Normal quantile plots for compositions and
+                        amounts
+rcomp                   Compositions as elements of the Simplex
+                        embedded in the D-dimensional real space
++.rcomp                 Arithmetic operations for composition in real
+                        geometry
+rcompmargin             Marginal compositions in real geometry
+rDirichlet              Dirichlet distribution
+relativeLoadings        Loadings of relations of two amounts
+rlnorm.rplus            The multivariate lognormal distribution
+rmult                   Simple treatment of real vectors
+%*%.rmult               inner product for datasets with vector scale
++.rmult                 vectorial arithmetic for datasets in a
+                        classical vector scale
+rnorm.acomp             Normal distributions on special spaces
+rplus                   Amounts i.e. positive numbers analysed as
+                        objects of the real vector space
++.rplus                 Arithmetik of rplus-scale
+runif.acomp             The uniform distribution on the simplex
+scalar                  Parallel scalar products
+scale.acomp             Normalizing datasets by centering and scaling
+segments.rmult          Draws straight lines from point to point.
+SimulatedAmounts        Simulated amount datasets
+split.acomp             Spliting datasets in groups given by factors
+straight                Draws infinite straight lines.
+summary.acomp           Summarizing a compositional dataset in terms
+                        of ratios
+summary.aplus           Summaries of amounts
+summary.rcomp           Summary of compositions in real geometry
+totals                  Total sum of amounts
+ult                     Uncentered log transform
+var.acomp               Variances and covariances of amounts and
+                        compositions
+variation               Variation matrices of amounts and compositions

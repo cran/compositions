@@ -1,0 +1,28 @@
+\name{normalize}
+\alias{normalize}
+\alias{normalize.default}
+\title{Normalize vectors to norm 1}
+\description{
+  Normalize vectors to norm 1.
+}
+\usage{
+normalize(x,\dots)
+\method{normalize}{default}(x,\dots)
+}
+\arguments{
+  \item{x}{a dataset or a single vector of some type}
+  \item{\dots}{currently not used, intended to select a different norm}
+}
+\value{
+  The vectors given, but normalized to norm 1.
+}
+\seealso{
+  \code{\link{norm}}
+}
+\examples{
+data(SimulatedAmounts)
+normalize(c(1,2,3))
+normalize(acomp(c(1,2,3)))
+norm(normalize(acomp(sa.groups)))
+}
+\keyword{multivariate}

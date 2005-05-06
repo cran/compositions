@@ -1,0 +1,53 @@
+\name{alr}
+\alias{alr}
+\alias{alr.inv}
+\title{Additive log ratio transform}
+\description{
+  Compute the additive log ratio transform of a (dataset of)
+  composition(s), and its inverse.
+}
+\usage{
+          alr( x  )
+          alr.inv( z )
+          }
+\arguments{
+  \item{x}{a composition, not necessarily closed}
+  \item{z}{the alr-transform of a composition, thus a (D-1)-dimensional real vector}
+}
+\value{
+  \code{alr} gives the additive log ratio transform; accepts a compositional dataset
+  \code{alr.inv} gives a closed composition with the given alr-transform; accepts a dataset
+}
+\details{
+  The alr-transform maps a composition in the D-part Aitchison-simplex
+  non-isometrically to a D-1 dimensonal euclidian vector, treating the
+  last part as common denominator of the others. The data can then
+  be analysed in this transformation by all classical multivariate
+  analysis tools not relying on a distance. The interpretation of
+  the results is relatively simple, since the relation to the original D-1
+  first parts is preserved. However distance is an extremely relevant
+  concept in most types of analysis, where a \code{\link{clr}} or
+  \code{\link{ilr}} transformation should be preferred.\cr
+  
+  The additive logratio transform is given by
+  \deqn{ alr(x)_i := \ln\frac{x_i}{x_D}  }{alr(x)_i := \ln(x_i/x_D)}.
+   
+}
+\seealso{
+  \code{\link{clr}},\code{\link{alr}},\code{\link{apt}},
+  \url{http://ima.udg.es/Activitats/CoDaWork03}
+}
+\references{
+  Aitchison, J. (1986) \emph{The Statistical Analysis of Compositional
+    Data} Monographs on Statistics and Applied Probability. Chapman &
+  Hall Ltd., London (UK). 416p.
+}
+\examples{
+(tmp <- alr(c(1,2,3)))
+alr.inv(tmp)
+unclass(alr.inv(tmp)) - clo(c(1,2,3)) # 0
+data(Hydrochem)
+cdata <- Hydrochem[,6:19]
+pairs(alr(cdata))
+}
+\keyword{multivariate}

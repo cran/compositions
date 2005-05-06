@@ -1,0 +1,37 @@
+\name{powerofpsdmatrix}
+\alias{powerofpsdmatrix}
+\title{power transform of a matrix }
+\description{
+  Computes a power of a positive semidefinite symmetric matrix.
+}
+\usage{
+          powerofpsdmatrix( M , p,\dots)
+          }
+\arguments{
+  \item{M}{a Matrix, preferably symmetric}
+  \item{p}{a single number giving the power}
+  \item{\dots}{further arguments to the singular value decomposition}
+}
+\value{
+  \code{U\%*\% D^p \%*\% t(P)} where the \code{UDP} is a singular value
+  decomposition of M. 
+}
+\details{
+  for a symmetric matrix the computed result can actually be considered as
+  a version of the given power of the matrix fullfilling the relation:
+  \deqn{M^pM^q=M^{p+q}}
+  The symmetry of the matrix is not checked.  
+  
+
+}
+\seealso{
+}
+\references{
+
+  }
+  \examples{
+data(SimulatedAmounts)
+d <- ilr(sa.lognormals)
+var( d \%*\% powerofpsdmatrix(var(d),-1/2)) # Unit matrix
+}
+\keyword{multivariate}
