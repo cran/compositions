@@ -69,12 +69,13 @@ msd.default(x,y=NULL,\dots)
 
   Pawlowsky-Glahn, V. and J.J. Egozcue (2001) Geometric approach to
   statistical analysis on the simplex. \emph{SERRA} \bold{15}(5), 384-398\cr
-  }
+}
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}, Raimon
+Tolosana-Delgado}
 \seealso{
 \code{\link{var}}, \code{\link{cov}},
 \code{\link{mean.acomp}}, \code{\link{acomp}}, \code{\link{rcomp}},
 \code{\link{aplus}}, \code{\link{rplus}} }
-
 \examples{
 data(SimulatedAmounts)
 mvar(acomp(sa.lognormals))

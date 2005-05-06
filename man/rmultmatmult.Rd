@@ -41,7 +41,7 @@ the multiplication with a matrix each vector is considered as a row or
 column, whatever is more appropriate. 
 }
 \note{The product \code{x \%*\% A \%*\% y} is associative. }
-
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{rmult}}, \code{\link{\%*\%.rmult}}
 }

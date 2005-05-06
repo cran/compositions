@@ -22,6 +22,7 @@ data in the scale of real vectors just like data in the scale of real
 numbers. A major aspect to take into account is that the internal arithmetic of R is
 different for these vectors.    
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{+.rmult}}, \code{\link{scalar}}, \code{\link{norm}},
   \code{\link{\%*\%.rmult}},

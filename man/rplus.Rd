@@ -46,6 +46,7 @@
   
 
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{iit}},\code{\link{rcomp}}, \code{\link{aplus}},
   \code{\link{princomp.rplus}}, 

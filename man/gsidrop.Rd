@@ -14,6 +14,7 @@ gsi.drop(X,drop)
 \value{
   \code{X} or \code{drop(X)}
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \details{
 
 }

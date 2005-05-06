@@ -31,8 +31,8 @@ scalar(x,y)
   is defined.
 
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \examples{
-scalar
-
+scalar(acomp(c(1,2,3)),acomp(c(1,2,3)))
 }
 \keyword{multivariate}

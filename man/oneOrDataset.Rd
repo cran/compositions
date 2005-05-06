@@ -18,7 +18,8 @@
    interpreded as a single row. If \code{B} is given and
    \code{length(dim(B))!= 2} and \code{W} is a vector,
    then \code{W} is repeated \code{nrow(B)} times.
-}
+ }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
 }
 \examples{

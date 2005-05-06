@@ -5,7 +5,7 @@
 \alias{barplot.rplus}
 \title{Barcharts of amounts}
 \description{
-  Compositions and amounts can 
+  Compositions and amounts dispalyed by barplots. 
 }
 \usage{
 \method{barplot}{acomp}(height,...,legend.text=TRUE,beside=FALSE,total=1)
@@ -33,6 +33,7 @@
 
 
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{acomp}}, \code{\link{rcomp}},   \code{\link{rplus}}
   \code{\link{aplus}}, \code{\link{plot.acomp}},

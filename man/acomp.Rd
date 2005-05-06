@@ -59,6 +59,9 @@ with these
   A side effect of the procedure is to force the compositions to sum up to a
   \var{total}, which is done by the closure operation \code{\link{clo}} . 
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}, Raimon
+Tolosana-Delgado}
+
 \seealso{
   \code{\link{clr}},\code{\link{rcomp}}, \code{\link{aplus}},
   \code{\link{princomp.acomp}}, 

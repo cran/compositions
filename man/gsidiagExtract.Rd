@@ -25,6 +25,7 @@ gsi.diagExtract(x)
 \seealso{
   \code{\link{gsi.diagGenerate}}, \code{\link[base]{diag}}
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \examples{
 data(SimulatedAmounts)
 gsi.diagExtract(var(acomp(sa.lognormals,c(1,2))))

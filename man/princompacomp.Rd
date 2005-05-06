@@ -120,6 +120,7 @@ scale.sdev=1)
   barplot. The deviation from a unit bar shows the effect of each
   principal component on the respective ratio. 
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{clr}},\code{\link{acomp}}, \code{\link{relativeLoadings}} 
   \code{\link{princomp.aplus}}, \code{\link{princomp.rcomp}},

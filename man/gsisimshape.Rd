@@ -18,6 +18,7 @@ Reshape an object to the shape type of another
   functions of the package}
 \details{
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
 }
 \references{

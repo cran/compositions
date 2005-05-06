@@ -42,6 +42,7 @@
   one-to-one relation between the original parts and each transformed variable.
   
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{cdt}}, \code{\link{ilr}}, \code{\link{ipt}}, \code{\link{ilt}}, \code{\link{iit}}
 }

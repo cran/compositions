@@ -19,6 +19,8 @@ gsi.pairrelativeMatrix(names)
 
 \note{Do not use gsi.* functions directly since they are internal
   functions of the package}
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}, Raimon
+Tolosana-Delgado}
 
 \seealso{
   \code{\link{gsi}}

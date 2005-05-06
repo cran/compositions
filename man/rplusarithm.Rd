@@ -35,6 +35,7 @@ mul.rplus(x,r)
   The functions behave quite like \code{\link{+.rmult}}.\cr
 }
 \note{For \code{*} the arguments x and y can be exchanged.}
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{+.rmult}}, \code{\link{+.acomp}},\code{\link{cpt}}, \code{\link{rcomp}}, \code{\link{rmult}}
 }

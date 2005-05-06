@@ -42,6 +42,7 @@ plot(scale(rplus(sa.groups)))
   plot(scale(rmult(sa.groups)))
 
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{split}{base}}
 }

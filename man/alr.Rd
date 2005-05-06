@@ -33,6 +33,7 @@
   \deqn{ alr(x)_i := \ln\frac{x_i}{x_D}  }{alr(x)_i := \ln(x_i/x_D)}.
    
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{clr}},\code{\link{alr}},\code{\link{apt}},
   \url{http://ima.udg.es/Activitats/CoDaWork03}

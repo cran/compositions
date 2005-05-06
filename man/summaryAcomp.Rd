@@ -35,6 +35,7 @@
   It is quite difficult to summarize a composition in a consistent and
   interpretable way. We tried to provide such a summary here.
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{acomp}}
 }

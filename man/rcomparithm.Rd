@@ -38,6 +38,7 @@ convex.rcomp(x,y,alpha=0.5)
   The convex combination is defined as: \code{x*alpha + (1-alpha)*y}
 }
 \note{For \code{*} the arguments x and y can be exchanged.}
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{+.rmult}}, \code{\link{+.acomp}},\code{\link{cpt}}, \code{\link{rcomp}}, \code{\link{rmult}}
 }

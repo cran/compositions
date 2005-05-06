@@ -40,6 +40,7 @@
 
 }
 \note{\code{iit} can be used to unclass amounts.}
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{ilt}}, \code{\link{ilr},} \code{\link{rplus}}
 }

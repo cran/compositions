@@ -69,6 +69,9 @@
   
 
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de},
+  Raimon Tolosana-Delgado}
+
 \references{
   Shurtz, Robert F., 2003. Compositional geometry and mass conservation.
   Mathematical Geology 35~(8), 972--937.

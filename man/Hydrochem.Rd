@@ -14,7 +14,7 @@ data(Hydrochem)
   The datasets are also accessible in Otero et al. (2005), and are here
   included under the  GNU Public Library Licence Version 2 or newer.
 }
-
+\author{Raimon Tolosana-Delgado}
 \details{
 
   This hydrochemical data set contains measurements of 14 components, H,

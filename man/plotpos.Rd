@@ -47,6 +47,7 @@
 \details{
 TO DO: fix pca bug
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{plot.aplus}},
   \code{\link{qqnorm.acomp}},\code{\link{boxplot.acomp}} }

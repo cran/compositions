@@ -30,6 +30,9 @@
   Note that after computing the closed-to-one version, obtaining a 
   version closed to any other value is done by simple multiplication.
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}, Raimon
+Tolosana-Delgado}
+
 \seealso{
   \code{\link{clr}},\code{\link{acomp}},\code{\link{rcomp}}
 }

@@ -65,6 +65,7 @@ relativeLoadings(x,...)
   rcomp/rplus-classes the relation is induced by a difference, which
   is quite meaningless when the units are different.  
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{princomp.acomp}},   \code{\link{princomp.aplus}},
   \code{\link[graphics]{barplot}}

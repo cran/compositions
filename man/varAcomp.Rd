@@ -70,7 +70,7 @@
   \code{\link[base]{cov}} were defined in package ``base'' instead of in ``stats''.
   This might produce some misfunction.
 }
-
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{cdt}}, \code{\link{clrvar2ilr}}, \code{\link{clo}},
 \code{\link{mean.acomp}}, \code{\link{acomp}}, \code{\link{rcomp}},

@@ -17,6 +17,7 @@ runif.rcomp(n,D)
 \value{
   a generated random dataset of class \code{"acomp"} or \code{"rcomp"} with
   drawn from a uniform distribution on the simplex of D parts. }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{rDirichlet.acomp}}
 }

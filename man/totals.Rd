@@ -22,6 +22,7 @@ totals(x,\dots)
 \value{
   a numeric vector containing the total amounts
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{aplus}}
 }

@@ -96,6 +96,7 @@ scale.sdev=1)
   barplot. The deviation from a unit bar shows the effect of each
   principal component on the respective differences. 
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{cpt}},\code{\link{rcomp}}, \code{\link{relativeLoadings}} 
   \code{\link{princomp.acomp}}, \code{\link{princomp.rplus}},

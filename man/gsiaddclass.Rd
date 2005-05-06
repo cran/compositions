@@ -14,6 +14,7 @@ gsi.addclass( x , cls)
 \value{
   The object x with additional class attached.
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \note{Do not use gsi.* functions directly since they are internal
   functions of the package}
 \examples{

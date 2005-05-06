@@ -28,6 +28,7 @@
 \details{
   
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{aplus}},\code{\link{rplus}},\code{\link{summary.acomp}},
   \code{\link{summary.rcomp}}

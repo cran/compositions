@@ -18,6 +18,7 @@ gsi.plain( x )
   functions of the package}
 \details{
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
 }
 \references{

@@ -28,6 +28,7 @@ norm(x,\dots)
 \value{
   The norms of the given vectors.
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{normalize}}
 }

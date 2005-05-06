@@ -38,6 +38,7 @@
   \deqn{ cpt(x)_i := clo(x)_i - \frac1D }{
          cpt(x)_i := clo(x)_i - 1/D}
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{clr}},\code{\link{apt}},\code{\link{ipt}}
 }

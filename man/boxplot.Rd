@@ -41,6 +41,7 @@ vp.logboxplot(x,y,...,dots=FALSE,boxes=TRUE,xlim,ylim,log,notch=FALSE)
 \details{
   \code{vp.boxplot} and \code{vp.logboxplot} are only used as panel functions.
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{plot.acomp}}, \code{\link{qqnorm.acomp}} 
 }

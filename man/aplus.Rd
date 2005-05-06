@@ -76,6 +76,7 @@ fixed (e.g. for ppm, g/l, vol.\%, mass \%, molar
   \code{\link{var.aplus}}, \code{\link{variation.aplus}},
   \code{\link{cov.aplus}}, \code{\link{msd}}
 }
+\author{Raimon Tolosana-Delgado, K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 
 \references{
 

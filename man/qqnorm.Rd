@@ -61,6 +61,7 @@ vp.qqnorm(x,y,...,alpha=NULL)
   \code{vp.qqnorm} is used as a panel function to make high dimensional
   plots. 
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{plot.acomp}}, \code{\link{boxplot.acomp}},
   \code{\link{rnorm.acomp}}, \code{\link{rnorm.rcomp}}, 

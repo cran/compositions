@@ -43,7 +43,7 @@ In all cases the mean is again an object of the same class.
 
 
 }
-
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{clo}}, \code{\link{mean.col}},
   \code{\link{geometricmean}}, \code{\link{acomp}},

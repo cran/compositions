@@ -39,7 +39,7 @@
   \cr
   TODO: Adding to multi-panel plots
 }
-
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{plot.acomp}}, 
 }

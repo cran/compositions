@@ -24,6 +24,7 @@ is.rmult(x)
 \details{
   These functions only check for the class of the object.
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{acomp}},  \code{\link{rcomp}}
   \code{\link{aplus}},  \code{\link{rplus}}

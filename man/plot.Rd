@@ -109,9 +109,11 @@
   \url{http://ima.udg.es/Activitats/CoDaWork05}
 
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}, Raimon
+Tolosana-Delgado}
 
 \seealso{
-  \code{\link{plot.aplus}},
+  \code{\link{plot.aplus}}, \code{\link{kingTetrahedron}} (for 3D-plot),
   \code{\link{qqnorm.acomp}},\code{\link{boxplot.acomp}} }
 
 \examples{

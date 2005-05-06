@@ -28,7 +28,10 @@ groupparts(x,\dots)
   parts). In the Aitchison-geometry grouping is done by taking geometric
   means. The new parts are named by named
   formal arguments. Not-mentioned parts remain ungrouped.
-} \seealso{
+}
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}, Raimon
+Tolosana-Delgado}
+\seealso{
   \code{\link{aplus}}
 }
 \references{

@@ -31,6 +31,8 @@ Adding to multipaneled plots, redraws the plot completely and is only
 possible, when the plot has been created with the plotting routines from
 this library.
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}, Raimon
+Tolosana-Delgado}
 \seealso{
   \code{\link{plot.acomp}}, \code{\link{straight}} 
 }

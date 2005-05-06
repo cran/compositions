@@ -35,6 +35,7 @@
 \value{
   a character vector giving the names of the parts
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{aplus}}
 }

@@ -19,9 +19,11 @@ dist(x,\dots)
 \details{
   The distance is computed based on \code{\link{cdt}}
   }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{aplus}}
 }
+
 \examples{
 data(iris)
 dist(iris[,1:4])

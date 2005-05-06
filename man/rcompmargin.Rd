@@ -23,6 +23,8 @@ consistent with the \code{\link{rcomp}} approach and is widely used because
 of its easy interpretation. However, it often leads to difficult-to-read
 ternary diagrams and is inconsistent with the \code{\link{acomp}}
 approach.  }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}, Raimon
+olosana-Delgado}
 \seealso{ \code{\link{acompmargin}}, \code{\link{rcomp}}}
 
 \references{

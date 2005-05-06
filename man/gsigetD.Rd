@@ -16,6 +16,7 @@ gsi.getN(x)
    \code{\link{aplus}}, \code{\link{rplus}} object or something that
    could be cast to one of them}
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \value{
   an integer giving the number of parts D or the number of samples N.
 }

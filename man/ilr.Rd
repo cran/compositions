@@ -36,6 +36,8 @@
   
    
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}, Raimon
+Tolosana-Delgado}
 \seealso{
   \code{\link{clr}},\code{\link{alr}},\code{\link{apt}}, \code{\link{ilrBase}},
   \url{http://ima.udg.es/Activitats/CoDaWork03}

@@ -38,6 +38,8 @@ ilrvar2clr( varz , V=ilrBase(D=ncol(varz)+1) )
   These functions perform a matrix multiplication with \code{V} in an
   appropriate way. 
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
+
 \seealso{
   \code{\link{ilr}}, \code{\link{ipt}}
 }

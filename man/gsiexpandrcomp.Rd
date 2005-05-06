@@ -15,7 +15,7 @@ gsi.expandrcomp(x,alpha)
 \value{
   an rcomp-object
 }
-
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \note{It is better not to use gsi.* functions directly since they are internal
   functions of the package
 }  

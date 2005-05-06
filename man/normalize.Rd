@@ -16,6 +16,7 @@ normalize(x,\dots)
 \value{
   The vectors given, but normalized to norm 1.
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{norm}}
 }

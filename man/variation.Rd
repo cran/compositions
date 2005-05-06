@@ -36,7 +36,7 @@
    amount and rmult objects should not be treated with variation 
    matrices, because this implies always the existence of a closure.
 }
-
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{cdt}}, \code{\link{clrvar2ilr}}, \code{\link{clo}},
 \code{\link{mean.acomp}}, \code{\link{acomp}}, \code{\link{rcomp}},

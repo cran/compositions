@@ -34,6 +34,7 @@ gsi.addclass            Internal function: give an object a derived
                         subclass
 gsi.call                Internal functions of the compositions package
 gsi.closespread         Internal functions of the compositions package
+gsi.coorInfo            Internal functions of the compositions package
 gsi.diagExtract         Internal functions: Get the diagonal of a
                         matrix
 gsi.diagGenerate        Internal functions: Generate a diagonal matrix
@@ -68,6 +69,8 @@ ilrBase                 The canonical basis in the clr plane used for
 ilt                     Isometric log transform
 ipt                     Isometric planar transform
 is.acomp                Check for compositional data type
+isoPortionLines         Isoportion- and Isoproportion-lines
+kingTetrahedron         Ploting composition into rotatable tetrahedron
 lines.rmult             Draws connected lines from point to point.
 mean.acomp              Mean amounts and mean compositions
 mean.row                The arithmetic mean of rows or columns
@@ -99,6 +102,7 @@ rcomp                   Compositions as elements of the Simplex
                         geometry
 rcompmargin             Marginal compositions in real geometry
 rDirichlet              Dirichlet distribution
+read.geoeas             Reads a data file in a geoeas format
 relativeLoadings        Loadings of relations of two amounts
 rlnorm.rplus            The multivariate lognormal distribution
 rmult                   Simple treatment of real vectors

@@ -28,7 +28,7 @@
   \item{call}{the matched call}
   \item{na.action}{Not clearly understood}
 }
-
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \details{
   The function just does \code{princomp(unclass(x),\dots,scale=scale)}
   and is only here for convenience. 

@@ -42,6 +42,7 @@
 }
 \references{
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \examples{
 (tmp <- apt(c(1,2,3)))
 apt.inv(tmp)

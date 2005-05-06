@@ -42,6 +42,7 @@ represented in clr, ilr or ilt coordinates. Which of the aforementioned
 coordinate systems is used is judged from the type of \var{x} and from
 the dimensions of the \var{A}. 
 } 
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{\%*\%.rmult}}
 }

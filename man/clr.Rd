@@ -41,6 +41,8 @@
 
   
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
+
 \seealso{
   \code{\link{ilr}},\code{\link{alr}},\code{\link{apt}}
 }

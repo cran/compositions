@@ -49,6 +49,7 @@ real numbers to vectors of amounts, represented as matrices containing
 the vectors as rows and works like the operators for \code{{\link{rmult}}} 
 
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{rmult}}, \code{\link{\%*\%.rmult}}
 }

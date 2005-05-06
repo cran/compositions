@@ -35,6 +35,8 @@ dlnorm.rplus(x,meanlog,varlog)
   \code{dnorm.aplus} is the reference measure. 
   
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}, Raimon
+Tolosana-Delgado}
 \references{
   Aitchison, J. (1986) \emph{The Statistical Analysis of Compositional
     Data} Monographs on Statistics and Applied Probability. Chapman &

@@ -31,6 +31,7 @@ real numbers on vectors of vectors represented as matrices containing
 the vectors as rows. 
 
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{rmult}}, \code{\link{\%*\%.rmult}}
 }

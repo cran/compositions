@@ -35,6 +35,7 @@ this definition generalizes the power by a scalar, since \code{y} or
 the composition in \code{\link{acomp}} \code{x}. The result is then a matrix 
 where each row corresponds to the composition powered by one of the scalars 
 in the vector.}
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{ilr}},\code{\link{clr}}, \code{\link{alr}},
 }

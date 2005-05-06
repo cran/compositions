@@ -28,6 +28,7 @@
   }
   The geometric mean is actually computed by
   \code{exp(mean(log(c(unclass(x))),...))}.  }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 
 \seealso{
   \code{\link{mean.rplus}} }

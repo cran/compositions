@@ -35,6 +35,8 @@ perturbe(x,y)
   and as unary operation respectively as: 
   \deqn{(-x)_i:=clo( (1/y_i)_i )_i}
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}, Raimon
+Tolosana-Delgado}
 \seealso{
   \code{\link{acomp}}, \code{\link{*.aplus}}, \code{\link{+.rplus}}
 }

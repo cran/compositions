@@ -115,6 +115,7 @@ scale.sdev=1)
   on the respective ratio. The
   interpretation of the ratios plot may only be done in an Aitchison-compositional framework.  
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{ilt}},\code{\link{aplus}}, \code{\link{relativeLoadings}} 
   \code{\link{princomp.acomp}}, \code{\link{princomp.rplus}},

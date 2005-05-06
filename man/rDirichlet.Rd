@@ -23,6 +23,8 @@ rDirichlet.rcomp(n,alpha)
 \details{
   TO DO!!!
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de},
+  Raimon Tolosana-Delgado}
 \seealso{
   \code{\link{rnorm.acomp}}
 }

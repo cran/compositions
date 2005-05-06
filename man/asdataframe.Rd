@@ -19,6 +19,7 @@
   \item{x}{an object to be converted to a dataframe}
   \item{\dots}{additional arguments are not used}
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \value{
   a dataframe containing the given data.
 }

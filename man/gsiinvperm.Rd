@@ -21,6 +21,7 @@ gsi2.invperm( i,n )
   The inverse permutation is defined by \code{p[\var{v}]==1:n} and
   \code{v[\var{p}]==1:n}.  
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
     \code{\link{gsi}}
 }

@@ -32,6 +32,7 @@ possible, when the plot has been created with the plotting routines from
 this library.
 
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{plot.acomp}},\code{\link{lines.acomp}} 
 }

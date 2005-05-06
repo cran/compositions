@@ -61,6 +61,7 @@ dnorm.rmult(x,mean,var)
   measure due to the truncation. 
 
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{runif.acomp}}, \code{\link{rlnorm.rplus}},
   \code{\link{rDirichlet.acomp}}

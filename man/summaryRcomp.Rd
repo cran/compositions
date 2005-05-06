@@ -20,6 +20,7 @@
 \details{
   The data is applied a \code{\link{clo}} operation before the computation.
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{rcomp}}, \code{\link{summary.aplus}}, \code{\link{summary.acomp}}
 }

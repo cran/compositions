@@ -238,3 +238,7 @@ biplot(tmp,ch=2:3)
 
 
 
+# Loading data
+  read.geoeas("TRUE.DAT")
+  read.geoEAS("TRUE.DAT")
+ # read.standard("LAKE.txt")

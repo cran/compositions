@@ -24,6 +24,7 @@ x \%*\% y
   This is a copy of the \code{\link[base]{\%*\%}} function. The
   function is made generic to allow the definition of specific methods.
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{\%*\%.rmult}}
 }

@@ -345,4 +345,5 @@ objects(pattern="sa.*")
 
 
  }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \keyword{datasets}

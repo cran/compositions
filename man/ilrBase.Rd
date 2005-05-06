@@ -25,6 +25,8 @@
   used as the more convenient function. Only one of the arguments is needs 
   to determine the dimension of the simplex.
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}, Raimon
+Tolosana-Delgado}
 \seealso{
   \code{\link{clr}},\code{\link{ilr}},\code{\link{ipt}},
   \url{http://ima.udg.es/Activitats/CoDaWork03}

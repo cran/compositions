@@ -35,6 +35,7 @@ this library.
 Lines end, when they leave the space (e.g. the simplex), which sometimes
 leads to the impression of premature end. 
 }
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{plot.acomp}},\code{\link{lines.acomp}} 
 }

@@ -65,6 +65,7 @@
   \code{\link{ipt}} in the rcomp class framework. 
 
 }
+\author{Raimon Tolosana-Delgado, K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{cpt}}, \code{\link{apt}}, \code{\link{ipt}},
   \code{\link{acomp}}, \code{\link{rplus}},

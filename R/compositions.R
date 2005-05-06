@@ -1487,6 +1487,18 @@ gsi.mapmin <- function(x) {x[1]}
 gsi.mapmax <- function(x) {x[3]}
 
 gsi.plots <- list()
+gsi.coorInfo <- list()
+gsi.setCoorInfo <- function(...) {
+  par()
+  gsi.coorInfo[[dev.cur()]] <<- list(...)
+}
+gsi.getCoorInfo <- function() {
+  if( dev.cur() <= length(gsi.coorInfo))
+    gsi.coorInfo[[dev.cur()]]
+  else
+    NULL
+}
+
 gsi.call  <- function(fkt,...) {
   if( is.character(fkt) )
     do.call(fkt,list(...))
@@ -1507,6 +1519,8 @@ gsi.add2pairs <- function(x,panel,...,noplot=FALSE) {
     if(!noplot) do.call("gsi.pairs",curplot)
   }
 }
+
+
 
 
 gsi.pairs <- function (x, labels, panel = points, ..., main = NULL, oma = NULL, 
@@ -1674,7 +1688,7 @@ plot.acomp <- function(x,...,labels=colnames(X),cn=colnames(X),aspanel=FALSE,id=
       }
       if( triangle ) {
         segments(x0=c(0,1,c60),y0=c(0,0,s60),x1=c(1,c60,0),y1=c(0,s60,0))
-        axis(1,pos=0)
+        #axis(1,pos=0)
         mtext(cn[1],side=1,adj=0,line=1.5)
         mtext(cn[2],side=1,adj=1,line=1.5)
         text(0.5,s60*1.05,cn[3],pos=3,offset=0.01,xpd=TRUE)
@@ -1682,6 +1696,8 @@ plot.acomp <- function(x,...,labels=colnames(X),cn=colnames(X),aspanel=FALSE,id=
     }
     X <- acomp(X,c(1,2,3))
     Y <- scale.acomp(X,center=center,scale=scale)
+    gsi.setCoorInfo(mean=if(center) -mean(acomp(X)) else acomp(c(1,1,1)),
+                    scale=if(scale) 1/msd(X) else 1)
     x <- Y[,2]+Y[,3]*c60
     y <- Y[,3]*s60
     points(x,y,...,col=col)
@@ -1702,6 +1718,116 @@ plot.acomp <- function(x,...,labels=colnames(X),cn=colnames(X),aspanel=FALSE,id=
   
   return( invisible(NULL))
 }
+
+isoPortionLines <- function(...) {
+  UseMethod("isoPortionLines",gsi.getCoorInfo()$mean)
+}
+
+isoProportionLines <- function(...) {
+  UseMethod("isoProportionLines",gsi.getCoorInfo()$mean)
+}
+
+isoPortionLines.acomp <- function(by=0.2,at=seq(0,1,by=by),...,parts=1:3,total=1,labs=TRUE,lines=TRUE,unit="") {
+  coor <- gsi.getCoorInfo()
+  if( coor$scale != 1 )
+    stop("Scaling not implemented  in isoPortionLines.acomp")
+  for(k in parts) {
+    isoCollaps <- function(kw,k) {
+      s <- sum(kw[-k])
+      rcomp(switch(k,c(kw[k],0,s),c(s,kw[k],0),c(0,s,kw[k])))
+    }
+    dir   <- rep(0,3)
+    dir[k]<- 0
+    dir[-k]<-c(1,-1)
+    for(p in at) {
+      start <- rep((1-p)/2,3)
+      start[k] <- p
+      if( p>0 && p<1 ) {
+        kw<-rcomp(acomp(start)-coor$mean)
+        if(lines) straight(kw,rmult(dir),...)
+        kw <- isoCollaps(kw,k)
+        if( labs ) text(kw[2]+cos(60*pi/180)*kw[3],kw[3]*sin(60*pi/180),
+             paste(p*total,unit[(k-1)%%length(unit)+1]),...,pos=c(2,1,4)[k],xpd=TRUE)
+      }
+    }
+  }
+  invisible(NULL)
+}
+
+
+isoProportionLines.acomp <- function(by=0.2,at=seq(0,1,by=by),...,parts=1:3,labs=TRUE,lines=TRUE) {
+  coor <- gsi.getCoorInfo()
+  for(k in parts) {
+    dir   <- rep(0.25,3)
+    dir[k]<- 0.5
+    for(p in at) {
+      if( p>0 && p<1) {
+        start <- acomp(switch(k,c(1,1-p,p),c(p,1,1-p),c(1-p,p,1)))
+        kw<-(start-coor$mean)*coor$scale
+        if(lines) straight(kw,acomp(dir),...)
+        kw[k]<- 1E-17
+        kw <- acomp(kw)
+        if( labs ) text(kw[2]+cos(60*pi/180)*kw[3],kw[3]*sin(60*pi/180),
+             paste(p),...,pos=c(4,2,1)[k],xpd=TRUE)
+      }
+    }
+  }
+  invisible(NULL)
+}
+
+
+isoPortionLines.rcomp <- function(by=0.2,at=seq(0,1,by=by),...,parts=1:3,total=1,labs=TRUE,lines=TRUE,unit="") {
+  coor <- gsi.getCoorInfo()
+  if( coor$scale != 1 || norm(acomp(coor$mean))>0.001 )
+    stop("Scaling and centering not implemented  in isoPortionLines.rcomp")
+  for(k in parts) {
+    isoCollaps <- function(kw,k) {
+      s <- sum(kw[-k])
+      rcomp(switch(k,c(kw[k],0,s),c(s,kw[k],0),c(0,s,kw[k])))
+    }
+    dir   <- rep(0,3)
+    dir[k]<- 0
+    dir[-k]<-c(1,-1)
+    for(p in at) {
+      start <- rep((1-p)/2,3)
+      start[k] <- p
+      if( p>0 && p<1 ) {
+        try({
+        kw <- rcomp(start) # isoCollaps(rcomp(start)-coor$mean)
+        if(lines ) straight(kw,rmult(dir),...)
+        kw <- isoCollaps(kw,k)
+        if( labs ) text(kw[2]+cos(60*pi/180)*kw[3],kw[3]*sin(60*pi/180),
+             paste(p*total,unit[(k-1)%%length(unit)+1]),...,pos=c(2,1,4)[k],xpd=TRUE)
+      },silent=FALSE)
+      }
+    }
+  }
+  invisible(NULL)
+}
+
+
+isoProportionLines.rcomp <- function(by=0.2,at=seq(0,1,by=by),...,parts=1:3,labs=TRUE,lines=TRUE) {
+  coor <- gsi.getCoorInfo()
+  if( coor$scale != 1 || norm(acomp(coor$mean))>0.001)
+    stop("Scaling not implemented  in isoPortionLines.rcomp")
+  for(k in parts) {
+    dir   <- rep(0.25,3)
+    dir[k]<- 0.5
+    for(p in at) {
+      if( p>0 && p<1) {
+        start <- acomp(switch(k,c(1,1-p,p),c(p,1,1-p),c(1-p,p,1)))
+        kw<-start
+        if(lines) straight(kw,acomp(dir),...)
+        kw[k]<- 1E-17
+        kw <- acomp(kw)
+        if( labs ) text(kw[2]+cos(60*pi/180)*kw[3],kw[3]*sin(60*pi/180),
+             paste(p),...,pos=c(4,2,1)[k],xpd=TRUE)
+      }
+    }
+  }
+  invisible(NULL)
+}
+
 
 
 plot.rcomp <- function(x,...,labels=colnames(X),cn=colnames(X),aspanel=FALSE,id=FALSE,idlabs=NULL,idcol=2,center=FALSE,scale=FALSE,pca=FALSE,col.pca=par("col"),margin="rcomp",add=FALSE,col=par("col")) {
@@ -1740,6 +1866,8 @@ if( NCOL(X) > 3 ) {
     }
     X <- rcomp(X,c(1,2,3))
     Y <- X
+    gsi.setCoorInfo(mean=rcomp(c(1,1,1)),
+                    scale=1)
     x <- Y[,2]+Y[,3]*c60
     y <- Y[,3]*s60
     
@@ -1763,7 +1891,7 @@ if( NCOL(X) > 3 ) {
         gsi.plots[[dev.cur()]]<<-NULL
         
         arrows(x0=c(0,1,c60),y0=c(0,0,s60),x1=c(1,c60,0),y1=c(0,s60,0),angle=15)
-        axis(1,pos=0)
+        # axis(1,pos=0)
         mtext(cn[1],side=1,adj=0)
         mtext(cn[2],side=1,adj=1)
         text(0.5,s60,cn[3],pos=3,offset=0.01,xpd=TRUE)
@@ -2671,9 +2799,9 @@ barplot.rplus <- function(height,...,legend.text=TRUE,beside=TRUE) {
 
 
 
-split.acomp <- function(x,f) {
+split.acomp <- function(x,f,drop=FALSE,...) {
   cls <- class(x)
-  lapply(split(1:NROW(x),f),function(i) structure(x[i,],class=cls))
+  lapply(split(1:NROW(x),f,drop=drop,...),function(i) structure(x[i,],class=cls))
 }
 split.rcomp <- split.acomp
 split.aplus <- split.acomp
@@ -3075,3 +3203,131 @@ cor.rcomp <- cor.acomp
 cor.aplus <- cor.acomp
 cor.rplus <- cor.acomp
 cor.rmult <- function(x,y=NULL,...) cor(unclass(x),unclass(cdt(y)),...)
+
+
+read.geoeas <- function (file){
+#read title
+print("reading title:...")
+title <- read.table(file, nrows=1, quote="", colClasses="character", sep="\t")
+print("reading title: OK")
+
+#read number of variables
+print("reading number of variables:...")
+nvars <- read.table(file, skip=1, nrows=1, sep="\t")
+nvars <- as.integer(nvars)
+#read labels of the variables
+print("reading variables:...")
+labels <- scan(file, skip=2, nmax=nvars, nlines= nvars, sep="\t", quote="", what="character")
+
+#read data matrix
+print("reading dataset:...")
+dades <- read.table(file, skip=2+nvars)
+print("reading dataset: OK")
+#relate variables with their names
+colnames(dades)=as.vector(labels)
+#add title as an attribute
+attr(dades,"title") <- as.character(title)
+return(dades)
+}
+
+read.geoEAS <- function(file){ read.geoeas(file) }
+
+
+
+#read.standard <- function (file){
+##read title
+#print("reading title:...")
+#title <- read.table(file, nrows=1, quote="", colClasses="character", sep="\t")
+#print("reading title: OK")
+
+#read data matrix
+#print("reading dataset:...")
+#dades <- read.table(file, skip=1, header=T)
+#print("reading dataset: OK")#
+
+#add title as an attribute
+#attr(dades,"title") <- as.character(title)
+#return(dades)
+#}
+
+ #  =========================================================================#
+# Based on the the tedrahedron plot from MixeR
+# http://vlado.fmf.uni-lj.si/pub/MixeR/
+# Vladimir Batagelj & Matevz Bren
+# plots mix object 'm' into tetrahedron and exports it in kinemage format
+#   clu - partition -> color of points
+#   vec - vector of values -> size of points
+#   col - color of points if clu=NULL
+#   scale - relative size of points
+#   king - FALSE (for Mage); TRUE (for King)
+kingTetrahedron <- function(X,parts=1:4,file="tmptetrahedron.kin",clu=NULL,vec=NULL,king=TRUE,scale=0.2,col=1,title="Compositional Tetrahedron"){
+  m <- list()
+  m$mat <- data.frame(clo(X,parts=parts))
+  m$tit <- title
+  kinColors <- c('white', 'red', 'blue', 'yellow',
+    'green', 'cyan', 'magenta', 'pink', 'lime',
+    'orange', 'peach', 'gold', 'purple', 'sea',
+    'gray', 'sky', 'brown', 'lilac', 'hotpink',
+    'yellowtint', 'pinktint', 'peachtint',
+    'greentint', 'bluetint', 'lilactint',
+    'deadwhite', 'deadblack', 'invisible')
+  warn <- ""
+  if (king) warn <- "\n*** works only with KiNG viewer: http://kinemage.biochem.duke.edu/"
+  head <- paste("@text\n",
+    file," / ",date(),
+    "\nDataset: ", m$tit,warn,
+"\nLayout obtained using composition
+based on  MixeR
+http://vlado.fmf.uni-lj.si/pub/MixeR/
+Vladimir Batagelj & Matevz Bren
+Institute of Mathematics, Physics and Mechanics
+Ljubljana, Slovenia
+@kinemage 1
+@caption\n", m$tit,
+"\n@fontsizeword 18
+@zoom 1.00
+@thinline
+@zclipoff
+@group {Complete} dominant animate movieview = 1
+@spherelist 0 radius= 0.20\n",sep="")
+  foot <-
+"@vectorlist {}  color=  blue
+P 9.500, 0.500, 9.500
+0.500, 9.500, 9.500
+P 9.500, 0.500, 9.500
+0.500, 0.500, 0.500
+P 9.500, 0.500, 9.500
+9.500, 9.500, 0.500
+P 0.500, 9.500, 9.500
+0.500, 0.500, 0.500
+P 0.500, 9.500, 9.500
+9.500, 9.500, 0.500
+P 0.500, 0.500, 0.500
+9.500, 9.500, 0.500\n"
+  kin <- file(file,"w")
+  n <- nrow(m$mat)
+  if (is.null(clu)) {clu <- rep(col,n)}
+  clu <- c(clu,0,0,0,0)
+  if (is.null(vec)) {vec <- rep(1,n)}
+  vec <- c(vec,1,1,1,1)
+  size <- scale/max(vec)
+  rn <- c(dimnames(m$mat)[[1]],"A","B","C","D")
+  a <- 10/9+c(m$mat[,1],1,0,0,0)
+  b <- c(m$mat[,2],0,1,0,0)
+  c <- c(m$mat[,3],0,0,1,0)
+  d <- c(m$mat[,4],0,0,0,1)
+  x <- (a - b - c + d)*0.45
+  y <- (a - b + c - d)*0.45
+  z <- (a + b - c - d)*0.45
+  cat(head,file=kin)
+  for (i in 1:length(rn)) {
+    color <- "white"
+    if (clu[i]>0) color <- kinColors[2+(clu[i]-1)%%18]
+    cat("{",rn[i],"} ", color," ",file=kin,sep="")
+    if (king) cat(" r=", vec[i]*size," ",file=kin,sep=" ")
+    cat(10*x[i],10*(1-y[i]),10*z[i],"\n",file=kin,sep=" ")
+  }
+  cat(foot,file=kin)
+  close(kin)
+}
+

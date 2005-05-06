@@ -23,6 +23,8 @@
 consistent with the \code{\link{acomp}} approach and gives clear ternary
 diagrams. However, this geometric mean is difficult to interpret.
 }
+\author{Raimon Tolosana-Delgado, K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
+
 \seealso{ \code{\link{rcompmargin}}, \code{\link{acomp}}
 }
 \references{
