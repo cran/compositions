@@ -8,16 +8,14 @@
 \description{
   A principal component analysis is done in the Aitchison geometry
   (i.e. ilt-transform). Some gimics simplify the
-  interpretation of the computed components as amount perturbations.
+  interpretation of the computed components as perturbations of amounts.
 }
 \usage{
 \method{princomp}{aplus}(x,\dots,scores=TRUE)
 \method{print}{princomp.aplus}(x,\dots)
-\method{plot}{princomp.aplus}(x,y=NULL,\dots,
-npcs=min(10,length(x$sdev)),
-type=c("screeplot","variance","biplot","loadings","relative"),
-main=NULL,
-scale.sdev=1)
+\method{plot}{princomp.aplus}(x,y=NULL,\dots, npcs=min(10,length(x$sdev)),
+               type=c("screeplot","variance","biplot","loadings","relative"),
+               main=NULL,scale.sdev=1)
 \method{predict}{princomp.aplus}(object,newdata,\dots)
 }
 \arguments{
@@ -27,11 +25,11 @@ scale.sdev=1)
   \item{scores}{a logical indicating whether scores should be computed or not}
   \item{npcs}{the number of components to be drawn in the scree plot}
   \item{type}{type of the plot: \code{"screeplot"} is a lined screeplot,
-    \code{"variance"} is a boxplot like screeplot, \code{"biplot"} is a
-    biplot, \code{"loadings"} displayes the Loadings as a 
+    \code{"variance"} is a boxplot-like screeplot, \code{"biplot"} is a
+    biplot, \code{"loadings"} displays the loadings as a 
     \code{\link{barplot.acomp}}}
-  \item{scale.sdev}{the multiple of sigma to use plotting the loadings}
-  \item{main}{headline of the plot}
+  \item{scale.sdev}{the multiple of sigma to use when plotting the loadings}
+  \item{main}{title of the plot}
   \item{object}{a fitted princomp.aplus object}
   \item{newdata}{another amount dataset of class aplus}
   \item{\dots}{further arguments to pass to internally-called functions}
@@ -48,8 +46,7 @@ scale.sdev=1)
   \item{scale}{the scaling applied to each variable}
   \item{n.obs}{number of observations}
   \item{scores}{if \code{scores = TRUE}, the scores of the supplied data
-    on the principal components and the information
-    available. Scores are coordinates in a basis given by the principal
+    on the principal components. Scores are coordinates in a basis given by the principal
     components and thus not compositions}
   \item{call}{the matched call}
   \item{na.action}{not clearly understood}
@@ -68,17 +65,19 @@ scale.sdev=1)
 \details{
   As a metric euclidean space, the positive real space described in
   \code{\link{aplus}} has its own
-  principal component analysis, that should be performed in terms of the
-  covariance matrix and not in terms of the meaningless correlation
-  matrix.
+  principal component analysis, that can be performed either in terms of the
+  covariance matrix or the correlation matrix. However, since all parts in a composition 
+  or in an amount vector share a natural scaling, they do not need the 
+  standardization (which in fact would produce a loss of important information). 
+  For this reason, \code{princomp.aplus} works on the covariance matrix.
   \cr
   To aid the interpretation we added some extra functionality to a
   normal \code{princomp(ilt(x))}. First of all the result contains as
   additional information the amount representation of
-  returned vectors in the space of the data: the center as amount
+  returned vectors in the space of the data: the center as an amount
   \code{Center}, and the loadings in terms of amounts to perturbe
-  with positively
-  (\code{Loadings}) or negativly (\code{DownLoadings}). The Up- and
+  with, either positively
+  (\code{Loadings}) or negatively (\code{DownLoadings}). The Up- and
   DownLoadings are normalized to the number of parts  
   and not to one to simplify the interpretation. A value of about one
   means no change in the specific component. 
@@ -93,8 +92,8 @@ scale.sdev=1)
   represent the portions of variance explained by the principal
   components. 
   \cr
-  The interpretation of the the biplot uses additionally to the
-  classical one a compositional concept: The
+  The interpretation of the the biplot uses, additionally to the
+  classical one, a compositional concept: The
   differences between two arrowheads can be interpreted as log-ratios
   between the two components represented by the arrows. 
   \cr
@@ -104,16 +103,17 @@ scale.sdev=1)
   their corresponding amounts. A portion of one means no change of this
   part. This is equivalent to a zero loading in a real principal component analysis. 
   \cr
-  The loadings plot can work in two different modes: If
+  The loadings plot can work in two different modes. If
   \code{scale.sdev} is set to \code{NA} it displays the amount vector
   being represented by the unit vector of loadings in the ilt-transformed space. If
-  \code{scale.sdev} is numeric we use the this amount vector scaled by the
+  \code{scale.sdev} is numeric we use this amount vector scaled by the
   standard deviation of the respective component. 
   \cr
   The relative plot displays the \code{\link{relativeLoadings}} as a
   barplot. The deviation from a unit bar shows the effect of each principal component 
   on the respective ratio. The
-  interpretation of the ratios plot may only be done in an Aitchison-compositional framework.  
+  interpretation of the ratios plot may only be done in an Aitchison-compositional framework 
+  (see \code{\link{princomp.acomp}}).  
 }
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{

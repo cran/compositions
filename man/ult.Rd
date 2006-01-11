@@ -8,25 +8,29 @@
   composition(s) and its inverse.
 }
 \usage{
-          ult( x )
-          ult.inv( z )
-          Kappa( x )
+          ult( x ,...)
+          ult.inv( z ,...)
+          Kappa( x ,...)
           }
 \arguments{
   \item{x}{a composition or a data matrix of compositions, not necessarily closed}
-  \item{z}{the ult-transform of a composition or  a data matrix of
-    clr-transforms of compositions, not necessarily centered}
+  \item{z}{the ult-transform of a composition or
+    clr-transforms of compositions (or a data matrix), not necessarily centered}
+  \item{\dots}{for generic use only}
+
 }
 \value{
   \code{ult} gives the uncentered log transform,\cr
   \code{ult.inv} gives closed compositions with the given
-  ult-transforms\cr
+  ult/clr-transforms\cr
   \code{Kappa} gives the difference between the clr and the ult
-  transform. It is quite linked to information measures.
+  transforms. It is quite linked to information measures.
   }
 \details{
   The ult-transform is simply the elementwise log of the closed
-  composition. The ult has some important properties in the scope of Information Theory.
+  composition. The ult has some important properties in the scope 
+  of Information Theory of probability vectors (but might be mostly 
+  misleading for exploratory analysis of compositions).
 
 }
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}

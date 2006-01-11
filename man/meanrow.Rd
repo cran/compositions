@@ -18,8 +18,7 @@
 }
 \value{
   The arithmetic means of the rows
-  (mean.row)
-  or  columns (mean.col) of x.
+  (mean.row) or  columns (mean.col) of x.
 }
 \details{
 

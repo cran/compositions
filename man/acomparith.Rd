@@ -2,7 +2,7 @@
 \alias{power.acomp}
 \alias{*.acomp}
 \alias{/.acomp}
-\title{Power transform in Aitchisons simplex}
+\title{Power transform in the simplex}
 \description{
   The Aitchison Simplex with its two operations perturbation as +  and
   power transform as * is a vector space. This vector space is

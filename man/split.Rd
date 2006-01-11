@@ -4,10 +4,10 @@
 \alias{split.rcomp}
 \alias{split.rplus}
 \alias{split.rmult}
-\title{Spliting datasets in groups given by factors}
+\title{Splitting datasets in groups given by factors}
 \description{
-  Each of the given scale levels has an associated norm, which is
-  computed for each element by these functions.
+  Splits data sets of compositions in groups given by factors, 
+  and gives the same class as the data to the result.
 }
 \usage{
 \method{split}{acomp}(x,f,drop=FALSE,\dots)
@@ -22,17 +22,18 @@
   \item{drop}{drop=FALSE also gives (empty) datsets for empty
     categories}
   \item{\dots}{Further arguments passed to split.default.
-    Currently probably without any use.}
+    Currently (and probably) without any use.}
 }
 \value{
-  a list of objects of the same type as x.
+  a list of objects of the same type as \code{x}.
 }
 \examples{
   data(SimulatedAmounts)
   split(acomp(sa.groups),sa.groups.area)
+  lapply( split(acomp(sa.groups),sa.groups.area), mean)
 }
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link[base]{split}}
 }
-\keyword{}
+\keyword{multivariate}

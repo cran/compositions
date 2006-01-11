@@ -1,0 +1,18 @@
+
+
+Version 1.0-0  ( R >= 2.2.0 , rgl )
+
+Added:	plot3d, biplot3d, 
+	Basic treatment of missings
+
+
+Version 0.9-11 ( R >= 2.2.0 beta)
+
+Added: 
+	read.geoeas, read.geoEAS (Tolosana)
+	isoPortionlines, isoProportionLines (Boogaart)
+	kingTetrahedron (Bren)
+
+Version 0.9-10 (R > 2.0.0 )
+
+Was the first complete version 

@@ -16,12 +16,11 @@ mvar(x,\dots)
 mcov(x,\dots)
 mcor(x,\dots)
 msd(x,\dots)
-mvar.default(x,y=NULL,\dots)
-mcov.default(x,y=x,\dots)
-mcor.default(x,y,\dots)
-msd.default(x,y=NULL,\dots)
-
-          }
+\method{mvar}{default}(x,y=NULL,\dots)
+\method{mcov}{default}(x,y=x,\dots)
+\method{mcor}{default}(x,y,\dots)
+\method{msd}{default}(x,y=NULL,\dots)
+}
 \arguments{
   \item{x}{a dataset, eventually of amounts or compositions}
   \item{y}{a second dataset, eventually of amounts or compositions}
@@ -33,29 +32,25 @@ msd.default(x,y=NULL,\dots)
 }
 \details{
   The metric variance (\code{mvar}) is defined by the trace of the
-  variance in the
-  natural geometry of the data, or also by the generalized
+  variance in the natural geometry of the data, or also by the generalized
   variance in natural geometry. The natural geometry is equivalently
-  given by the
-  \code{\link{cdt}} or \code{\link{idt}} transforms.\cr
+  given by the \code{\link{cdt}} or \code{\link{idt}} transforms.\cr
 
   The metric standard deviation (\code{msd}) is not the square root
-  of the metric  variance, but the square root of the mean of the eigenvalues of the 
+  of the metric variance, but the square root of the mean of the eigenvalues of the 
   variance matrix. In this way it can be interpreted in units of the original
-  natural geometry, as the diameter of a 1-sigma sperical ball around
-  the mean.
+  natural geometry, as the radius of a sperical ball around
+  the mean with the same volume as the 1-sigma ellipsoid of the data set.
   \cr
   
   The metric covariance (\code{mvar}) is the sum over the absolute
-  singular values of
-  the covariance of two datasets in their respective geometries. It is
-  always positive. The metric covariance of a dataset with itself is
-  its metric variance. The interpretation of a metric covariance is
-  quite difficult.\cr
+  singular values of the covariance of two datasets in their respective 
+  geometries. It is always positive. The metric covariance of a dataset 
+  with itself is its metric variance. The interpretation of a metric 
+  covariance is quite difficult, but useful in regression problems.\cr
 
   The metric correlation (\code{mcor}) is the metric covariance of the
-  datasets in
-  their natural geometry normalized to unit variance matrix. It is a
+  datasets in their natural geometry normalized to unit variance matrix. It is a
   number between 0 and the smaller dimension of both natural spaces. A
   number of 1 means perfect correlation in 1 dimension, but only partial
   correlations in higher dimensions.

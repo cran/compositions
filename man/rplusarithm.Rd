@@ -4,7 +4,7 @@
 \alias{*.rplus}
 \alias{/.rplus}
 \alias{mul.rplus}
-\title{Arithmetik of rplus-scale}
+\title{vectorial arithmetic for data sets with rplus class}
 \description{
   The positive quadrant forms a manifold of the real vector space. The
   induced operations +,-,*,/ give results valued in this real vector space 

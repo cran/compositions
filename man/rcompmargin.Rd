@@ -26,6 +26,10 @@ approach.  }
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}, Raimon
 olosana-Delgado}
 \seealso{ \code{\link{acompmargin}}, \code{\link{rcomp}}}
+\section{Missing Policy}{
+    MNAR has the highest priority, MAR next and WZERO (BDL,SZ),- values are
+    considered as 0 and reported as BDL in the End.  
+}
 
 \references{
 }

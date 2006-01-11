@@ -3,7 +3,7 @@
 \title{Internal function: Scaling rcomp}
 \description{
   This functions tries to compute something similar to a scaling of an
-  acomp object in the context of the rcomp-geometry.
+  acomp object in the context of the rcomp geometry.
 }
 \usage{
 gsi.expandrcomp(x,alpha)

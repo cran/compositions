@@ -19,14 +19,13 @@
 \arguments{
   \item{x}{a dataset of the given type}
   \item{\dots}{further graphical parameters}
-  \item{steps}{the numer of discretisation points to draw the segments not
-    straight on the monitor.}
+  \item{steps}{the number of discretisation points to draw the segments,
+    which might be not visually straight.}
 }
 \details{
 The functions add lines to the graphics generated with the corresponding
 plot functions.
 \cr
-
 Adding to multipaneled plots, redraws the plot completely and is only
 possible, when the plot has been created with the plotting routines from
 this library.

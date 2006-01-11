@@ -18,26 +18,21 @@
           \method{ellipses}{rmult}(mean,var,r=1,\dots,steps=360)
           }
 \arguments{
-  \item{mean}{a dataset/value of means or midpoints of the ellipses}
+  \item{mean}{a dataset/vector of means or midpoints of the ellipses}
   \item{var}{a variance matrix or a set of variance matrices given by
-    \code{var[i,,]}. The principle axis of the variance give the axis of
-  the ellipses. The the square-root of the eigenvalues times r give the
-  large
-  and small halfdiameter of the ellipse.}
-  \item{r}{A scaling of the radius }
+    \code{var[i,,]}. The principal axis of the variance give the axis of
+  the ellipses, whereas the square-root of the eigenvalues times r give the
+  half-diameters of the ellipse.}
+  \item{r}{a scaling of the half-diameters}
   \item{\dots}{further graphical parameters}
-  \item{steps}{the numer of discretisation points to draw the ellipses.}
+  \item{steps}{the number of discretisation points to draw the ellipses.}
 }
 \details{
   The ellipse drawn is given by the solutions of
   \deqn{(x-mean)^tvar^{-1}(x-mean)=r^2}
-  in the respective geometry of the parameter space. Currently the
-  compositional scales (acomp and rcomp) can be used only for three part
-  compositions and plot into a ternary diagram and the not
-  sum constrained scales (aplus, rplus and rmult) can only be used with
-  two parts and draw into any scatterplot.
-  \cr
-  TODO: Adding to multi-panel plots
+  in the respective geometry of the parameter space. Note that
+  these ellipses can be added to panel plots (by means of 
+  orthogonal projections in the corresponding geometry).
 }
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{

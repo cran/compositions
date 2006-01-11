@@ -11,7 +11,7 @@
 \alias{names<-.rmult}
 \title{The names of the parts }
 \description{
-  The names function provide a transparent way to access the names of
+  The \code{names} function provide a transparent way to access the names of
   the parts regardless of the shape of the dataset or data item.
 }
 \usage{

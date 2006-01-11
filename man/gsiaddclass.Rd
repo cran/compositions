@@ -1,6 +1,6 @@
 \name{gsi.addclass}
 \alias{gsi.addclass}
-\title{Internal function: give an object a derived subclass}
+\title{Internal function: give a derived subclass to an object}
 \description{
   This function just extends the class of an object by the given class.
 }
@@ -8,7 +8,7 @@
 gsi.addclass( x , cls)
 }
 \arguments{
-  \item{x}{The object}
+  \item{x}{the object}
   \item{cls}{the new additional class}
 }
 \value{
@@ -18,6 +18,8 @@ gsi.addclass( x , cls)
 \note{Do not use gsi.* functions directly since they are internal
   functions of the package}
 \examples{
-gsi.addclass(1:10,"goofy")
+x=rplus(1:10)
+x
+gsi.addclass(x,"goofy")
 }
 \keyword{}

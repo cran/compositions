@@ -7,19 +7,20 @@
   amounts and its inverse.
 }
 \usage{
-          ilt( x )
-          ilt.inv( z  )
+          ilt( x ,...)
+          ilt.inv( z ,... )
           }
 \arguments{
   \item{x}{a vector or data matrix of amounts}
   \item{z}{the ilt-transform of a vector or data matrix of
     ilt-transforms of amounts}
+  \item{\dots}{generic arguments, not used.}
 }
 \value{
   \code{ilt} gives the isometric log transform, i.e. simply the log of
-  the argument,
-  \code{ilt.inv} gives amounts with the given ilt, i.e. simple the exp
-  of the argument
+  the argument, whereas
+  \code{ilt.inv} gives amounts with the given ilt, i.e. simply the exp
+  of the argument.
   }
 \details{
   The ilt-transform maps  D amounts (considered in log geometry)

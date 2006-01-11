@@ -9,14 +9,12 @@
   (i.e. using iit-transform).   
 }
 \usage{
-\method{princomp}{rplus}(x,\dots,scores=TRUE)
-\method{print}{princomp.rplus}(x,\dots)
-\method{plot}{princomp.rplus}(x,y=NULL,\dots,
-npcs=min(10,length(x$sdev)),
-type=c("screeplot","variance","biplot","loadings","relative"),
-main=NULL,
-scale.sdev=1)
-\method{predict}{princomp.rplus}(object,newdata,\dots)
+ \method{princomp}{rplus}(x,\dots,scores=TRUE)
+ \method{print}{princomp.rplus}(x,\dots)
+ \method{plot}{princomp.rplus}(x,y=NULL,\dots,npcs=min(10,length(x$sdev)),
+          type=c("screeplot","variance","biplot","loadings","relative"),
+          main=NULL,scale.sdev=1)
+ \method{predict}{princomp.rplus}(object,newdata,\dots)
 }
 \arguments{
   \item{x}{an rplus-dataset (for princomp) or a result from
@@ -25,11 +23,11 @@ scale.sdev=1)
   \item{scores}{a logical indicating whether scores should be computed or not}
   \item{npcs}{the number of components to be drawn in the scree plot}
   \item{type}{type of the plot: \code{"screeplot"} is a lined screeplot,
-    \code{"variance"} is a boxplot like the screeplot, \code{"biplot"} is a
+    \code{"variance"} is a boxplot-like screeplot, \code{"biplot"} is a
     biplot, \code{"loadings"} displays the loadings as a 
     \code{\link[graphics]{barplot}}}
-  \item{scale.sdev}{the multiple of sigma to use plotting the loadings}
-  \item{main}{headline of the plot}
+  \item{scale.sdev}{the multiple of sigma to use when plotting the loadings}
+  \item{main}{title of the plot}
   \item{object}{a fitted princomp.rplus object}
   \item{newdata}{another amount dataset of class rcomp}
   \item{\dots}{further arguments to pass to internally-called functions}
@@ -41,26 +39,29 @@ scale.sdev=1)
   \item{loadings}{the matrix of variable loadings (i.e., a matrix which
     columns contain the eigenvectors). This is of class
     \code{"loadings"}}
-  \item{Loadings}{The loadings as an \code{"\link{rmult}"}-object}
+  \item{Loadings}{the loadings as an \code{"\link{rmult}"}-object}
   \item{center}{the iit-transformed vector of means used to center the dataset}
-  \item{Center}{the \code{\link{rplus}} vector of means used to center the dataset}
+  \item{Center}{the \code{\link{rplus}} vector of means used to center the dataset 
+       (\code{center} and \code{Center} have no difference, except that the second has a class)}
   \item{scale}{the scaling applied to each variable}
   \item{n.obs}{number of observations}
   \item{scores}{if \code{scores = TRUE}, the scores of the supplied data
-    on the principal components and the information
-    available. Scores are coordinates in a basis given by the principal
+    on the principal components. Scores are coordinates in a basis given by the principal
     components and thus not compositions}
   \item{call}{the matched call}
   \item{na.action}{not clearly understood}
   \code{predict} returns a matrix of scores of the observations in the
   \code{newdata} dataset.
-  \cr.
+  \cr
   The other routines are mainly called for their side effect of plotting or
   printing and return the object \code{x}.   
 }
 
 \details{
-  Mainly a \code{princomp(iit(x))} is performed.
+  Mainly a \code{princomp(iit(x))} is performed. Note all parts in a composition 
+  or in an amount vector share a natural scaling. Therefore, they do not need any 
+  preliminary standardization (which in fact would produce a loss of important information). 
+  For this reason, \code{princomp.rplus} works on the covariance matrix.
   \cr
   The plot routine provides screeplots (\code{type = "s"},\code{type=
     "v"}), biplots (\code{type = "b"}), plots of the effect of
@@ -72,8 +73,8 @@ scale.sdev=1)
   represent the portions of variance explained by the principal
   components. 
   \cr
-  The interpretation of the these biplot uses additionally to the
-  classical interperation biplots a compositional concept: The
+  The interpretation of the biplot uses, additionally to the
+  classical interperation, a compositional concept: the
   differences between two arrowheads can be interpreted as the shift of mass 
   between the two components represented by the arrows. 
   \cr
@@ -81,8 +82,7 @@ scale.sdev=1)
   loadings plot. The loadings are displayed by a barplot as positive and
   negative changes of amounts.
   \cr
-  The loadings plot can work in
-  two different modes: If
+  The loadings plot can work in two different modes: If
   \code{scale.sdev} is set to \code{NA} it displays the amount vector
   being represented by the unit vector of loadings in the iit-transformed space. If
   \code{scale.sdev} is numeric we use this amount vector scaled by the

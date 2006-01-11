@@ -4,9 +4,9 @@
 \alias{*.rcomp}
 \alias{/.rcomp}
 \alias{convex.rcomp}
-\title{Arithmetic operations for composition in real geometry}
+\title{Arithmetic operations for compositions in a real geometry}
 \description{
-  The real compositions form a manifold of real vector space. The
+  The real compositions form a manifold of the real vector space. The
   induced operations +,-,*,/ give results valued in the real 
   vector space, but possibly outside the simplex. 
 }

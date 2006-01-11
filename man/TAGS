@@ -1,192 +1,0 @@
-
-variation.Rd,0
-
-varAcomp.Rd,0
-
-ult.Rd,0
-
-totals.Rd,0
-
-summaryRcomp.Rd,0
-
-summaryAplus.Rd,0
-
-summaryAcomp.Rd,0
-
-straight.Rd,0
-
-split.Rd,0
-
-SimulatedAmounts.Rd,0
-
-segments.Rd,0
-
-scale.Rd,0
-
-scalar.Rd,0
-
-runif.Rd,0
-
-rplus.Rd,0
-
-rplusarithm.Rd,0
-
-rnorm.Rd,0
-
-rmult.Rd,0
-
-rmultmatmult.Rd,0
-
-rmultarithm.Rd,0
-
-rlnorm.Rd,0
-
-rDirichlet.Rd,0
-
-rcomp.Rd,0
-
-rcompmargin.Rd,0
-
-rcomparithm.Rd,0
-
-ratioLoadings.Rd,0
-
-qqnorm.Rd,0
-
-princomprplus.Rd,0
-
-princomprmult.Rd,0
-
-princomprcomp.Rd,0
-
-princompaplus.Rd,0
-
-princompacomp.Rd,0
-
-powerofmatrix.Rd,0
-
-plot.Rd,0
-
-plotpos.Rd,0
-
-perturbe.Rd,0
-
-oneOrDataset.Rd,0
-
-norm.Rd,0
-
-normalize.Rd,0
-
-names.Rd,0
-
-mvar.Rd,0
-
-meanrow.Rd,0
-
-meanAcomp.Rd,0
-
-matmult.Rd,0
-
-matmultacomp.Rd,0
-
-lines.Rd,0
-
-isAcomp.Rd,0
-
-ipt.Rd,0
-
-ilt.Rd,0
-
-ilr.Rd,0
-
-ilrBase.Rd,0
-
-iit.Rd,0
-
-idt.Rd,0
-
-Hydrochem.Rd,0
-
-gsitextpanel.Rd,0
-
-gsispreadToIsoSpace.Rd,0
-
-gsisimshape.Rd,0
-
-gsiplotmargin.Rd,0
-
-gsiplain.Rd,0
-
-gsipairs.Rd,0
-
-gsipairrelativeMatrix.Rd,0
-
-gsimargin.Rd,0
-
-gsimap01.Rd,0
-
-gsiisSingleRow.Rd,0
-
-gsiinvperm.Rd,0
-
-gsiinternal.Rd,0
-
-gsigetD.Rd,0
-
-gsiexpandrcomp.Rd,0
-
-gsieps.Rd,0
-
-gsidrop.Rd,0
-
-gsidiagGenerate.Rd,0
-
-gsidiagExtract.Rd,0
-
-gsiclosespread.Rd,0
-
-gsicall.Rd,0
-
-gsiadd.Rd,0
-
-gsiaddclass.Rd,0
-
-groupparts.Rd,0
-
-geometricmean.Rd,0
-
-ellipses.Rd,0
-
-dist.Rd,0
-
-cpt.Rd,0
-
-cor.Rd,0
-
-clr.Rd,0
-
-clr2ilr.Rd,0
-
-clo.Rd,0
-
-cdt.Rd,0
-
-boxplot.Rd,0
-
-barplot.Rd,0
-
-asdataframe.Rd,0
-
-apt.Rd,0
-
-aplus.Rd,0
-
-aplusarithm.Rd,0
-
-alr.Rd,0
-
-acomp.Rd,0
-
-acompmargin.Rd,0
-
-acomparith.Rd,0

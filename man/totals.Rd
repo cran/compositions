@@ -10,17 +10,24 @@
 }
 \usage{
 totals(x,\dots)
-\method{totals}{acomp}(x,\dots)
-\method{totals}{rcomp}(x,\dots)
-\method{totals}{aplus}(x,\dots)
-\method{totals}{rplus}(x,\dots)
+\method{totals}{acomp}(x,\dots,missing.ok=TRUE)
+\method{totals}{rcomp}(x,\dots,missing.ok=TRUE)
+\method{totals}{aplus}(x,\dots,missing.ok=TRUE)
+\method{totals}{rplus}(x,\dots,missing.ok=TRUE)
           }
 \arguments{
   \item{x}{an amount/amount dataset}
-  \item{\dots}{not used, only here for generics}
+  \item{\dots}{not used, only here for generic purposes}
+  \item{missing.ok}{if TRUE ignores missings; if FALSE issues an error if
+    the total cannot be calculated due to missings.}
+}
+\section{Missing Policy}{
+    if \code{missing.ok=TRUE} missings are just regarded as 0, if
+    \code{missing.ok=FALSE} WZERO values is still regarded as 0 and other
+    sorts lead to \code{NA} in the respective totals.
 }
 \value{
-  a numeric vector containing the total amounts
+  a numeric vector of length equal to \code{ncol(x)} containing the total amounts
 }
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{

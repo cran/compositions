@@ -21,13 +21,15 @@
   \item{scale}{logical value}
 }
 \value{
-  a vector or data matrix, as x and with the same class, but acordingly transformed.
+  a vector or data matrix, as \code{x} and with the same class, but acordingly transformed.
 }
 \details{
-  scaling is defined in various ways for the different data types. It is
-  always performed as an operation in the enclosing vector space. Not in
-  all cases an independent scaling of the different coordinates is
-  appropriate. This is only done for rplus and rmult.
+  scaling is defined in different ways for the different data types. It is
+  always performed as an operation in the enclosing vector space. In
+  all cases an independent scaling of the different coordinates is not always
+  appropriate. This is only done for rplus and rmult geometries. The other three
+  geometries are treated with a global scaling, keeping the relative variations
+  of every part/amount.
   }
 \examples{
   data(SimulatedAmounts)

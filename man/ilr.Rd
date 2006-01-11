@@ -4,16 +4,21 @@
 \title{Isometric log ratio transform}
 \description{
   Compute the isometric log ratio transform of a (dataset of)
-  composition(s) and its inverse.
+  composition(s), and its inverse.
 }
 \usage{
-          ilr( x , V = ilrBase(x) )
-          ilr.inv( z , V = ilrBase(z=z))
+          ilr( x , V = ilrBase(x) ,...)
+          ilr.inv( z , V = ilrBase(z=z),..., orig=NULL)
           }
 \arguments{
   \item{x}{a composition, not necessarily closed}
   \item{z}{the ilr-transform of a composition}
-  \item{V}{a matrix, with columns giving the chosen basis of the clr-plane}
+  \item{V}{a matrix, with columns giving the chosen basis of the
+    clr-plane}
+  \item{\dots}{generic arguments. not used.}
+  \item{orig}{a compositional object which should be mimicked 
+             by the inverse transformation. It is especially used to
+	     reconstruct the names of the parts.}
 }
 \value{
   \code{ilr} gives the isometric log ratio transform,
@@ -39,8 +44,7 @@
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}, Raimon
 Tolosana-Delgado}
 \seealso{
-  \code{\link{clr}},\code{\link{alr}},\code{\link{apt}}, \code{\link{ilrBase}},
-  \url{http://ima.udg.es/Activitats/CoDaWork03}
+  \code{\link{clr}},\code{\link{alr}},\code{\link{apt}}, \code{\link{ilrBase}}
 }
 \references{
   Egozcue J.J., V. Pawlowsky-Glahn, G. Mateu-Figueras and
@@ -51,7 +55,8 @@ Tolosana-Delgado}
   (2002) A consise guide to the algebraic geometric structure of the
   simplex, the sample space for compositional data analysis, \emph{Terra
     Nostra}, Schriften der Alfred Wegener-Stiftung, 03/2003
-
+  \cr
+  \url{http://ima.udg.es/Activitats/CoDaWork03}
   }
 \examples{
 (tmp <- ilr(c(1,2,3)))

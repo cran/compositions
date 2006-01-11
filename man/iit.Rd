@@ -7,19 +7,21 @@
   amounts and its inverse.
 }
 \usage{
-          iit( x )
-          iit.inv( z  )
+          iit( x ,...)
+          iit.inv( z ,... )
           }
 \arguments{
   \item{x}{a vector or data matrix of amounts}
   \item{z}{the iit-transform of a vector or  data.matrix of
     iit-transforms of amounts}
+  \item{\dots}{generic arguments, to pass to other functions.}
 }
 \value{
   \code{ilt} gives the isometric identity transform, i.e. simply the
-  input striped of the "rplus" class attribute,
+  input stripped of the "rplus" class attribute,
   \code{ipt.inv} gives amounts with class "rplus" with the given iit,
-  i.e. simply the argument checked to be a valid "rplus" object, and with this class attribute.
+  i.e. simply the argument checked to be a valid "rplus" object, and 
+  with this class attribute.
   }
 \details{
   The iit-transform maps D amounts (considered in a real geometry)

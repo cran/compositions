@@ -47,9 +47,10 @@
    discussion. Four essentially different approaches are
    provided in this package around the classes "rplus", "aplus",
    "rcomp", "acomp". There is no absolutely "right" approach, since there is
-   a conection between these approaches and the processes originating the data. We provide here simulated
+   a conection between these approaches and the processes originating the data. 
+   We provide here simulated
    standard datasets and the corresponding simulation procedures
-   following these several models to provide ``good'' analysis examples
+   following these several models to provide "good" analysis examples
    and to show how these models actually look like in data.
    \cr
 
@@ -60,7 +61,7 @@
    uniform distribution on the simplex  (sa.uniform, sa.uniform5), and
    a grouped dataset (sa.groups, sa.groups5) with three
    groups (given in sa.groups.area and sa.groups5.area) all distributed
-   accordingly with a lognormal distribution with group dependent means.\cr
+   accordingly with a lognormal distribution with group-dependent means.\cr
 
    We can imagine that amounts evolve in nature e.g. in part of the soil they are
    diluted and transported in a transport medium, usually water, which
@@ -73,18 +74,18 @@
    of a transport medium is a major argument for a compositional
    approach, because the total amount given by the sum of the
    parts is induced by the dilution given by the medium and
-   thus uninformative for the original investigated process.
+   thus non-informative for the original process investigated.
    \cr
 
    If we imagine now these amounts flowing into a river and sedimenting, the different contributions
    are accumulated along the river and renormalized to a unit portion on
    taking samples again. For each of the dataset
    \var{sa.X}\code{.dil} there is a corresponding
-   \var{sa.X}\code{.mix} dataset which is build from the corresponding
+   \var{sa.X}\code{.mix} dataset which is built from the corresponding
    \var{sa.X} dataset by simulating exactly that accumulation
    process. Mixing of different compositions is a major argument against
    the log based approaches (\code{\link{aplus}}, \code{\link{acomp}})
-   since mixing is a highly nonlinear operation in terms of the logratios.
+   since mixing is a highly nonlinear operation in terms of log-ratios.
 
  }
  \examples{
@@ -337,12 +338,13 @@ objects(pattern="sa.*")
      Data} Monographs on Statistics and Applied Probability. Chapman &
    Hall Ltd., London (UK). 416p.\cr
 
-   Zier Rehder\cr
+  Rehder, S. and U. Zier (2001) Letter to the Editor: Comment on 
+  ''Logratio Analysis and Compositional Distance'' by J. Aitchison, C. 
+  Barcel{\'o}-Vidal, J.A. Mart{\'\i}n-Fern\'andez and V. Pawlowsky-Glahn,
+  \emph{Mathematical Geology}, \bold{33} (7), 845-848.\cr
 
-   xxx Something recommending to use log-transforms
-
-   xxx Something warning against log-transforms
-
+  Zier, U. and S. Rehder (2002) Some comments on log-ratio transformation and compositional distance,
+  \emph{Terra Nostra}, Schriften der Alfred Wegener-Stiftung, 03/2003\cr
 
  }
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}

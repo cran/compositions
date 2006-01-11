@@ -2,17 +2,17 @@
 \alias{gsi.simshape}
 \title{Internal function: Reshape an object to the shape type of another}
 \description{
-Reshape an object to the shape type of another
+Reshape an object to the shape of another
 }
 \usage{
           gsi.simshape(x,oldx)
           }
 \arguments{
-  \item{x}{the data to be returned}
-  \item{oldx}{a data of the intended shape}
+  \item{x}{the data set to be reshaped}
+  \item{oldx}{a data set of the intended shape}
 }
 \value{
-  x is shaped as oldx
+  \code{x}, but re-shaped as \code{oldx}
 }
 \note{Do not use gsi.* functions directly since they are internal
   functions of the package}

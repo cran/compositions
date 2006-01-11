@@ -3,7 +3,8 @@
 \alias{dlnorm.rplus}
 \title{The multivariate lognormal distribution}
 \description{
-  Generates random amounts with a multivariate lognormal distribution . 
+  Generates random amounts with a multivariate lognormal distribution, or gives the 
+  density of that distribution at a given point. 
 }
 \usage{
 rlnorm.rplus(n,meanlog,varlog)
@@ -11,8 +12,8 @@ dlnorm.rplus(x,meanlog,varlog)
           }
 \arguments{
   \item{n}{number of datasets to be simulated}
-  \item{meanlog}{The mean-vector of the logs}
-  \item{varlog}{The variance/covariance matrix of the logs}
+  \item{meanlog}{the mean-vector of the logs}
+  \item{varlog}{the variance/covariance matrix of the logs}
   \item{x}{vectors in the sample space}
 }
 \value{
@@ -29,11 +30,10 @@ dlnorm.rplus(x,meanlog,varlog)
 }
 \note{The main difference between \code{rlnorm.rplus} and
   \code{rnorm.aplus}
-  is that
-  rlnorm.rplus needs a loged mean. The additional difference
+  is that rlnorm.rplus needs a logged mean. The additional difference
   for the calculation of the density by \code{dlnorm.rplus} and
-  \code{dnorm.aplus} is the reference measure. 
-  
+  \code{dnorm.aplus} is the reference measure (a log-Lebesgue one in the
+  second case).
 }
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}, Raimon
 Tolosana-Delgado}

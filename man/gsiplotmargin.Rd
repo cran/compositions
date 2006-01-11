@@ -8,11 +8,11 @@
 gsi.plotmargin(X,d,margin)
 }
 \arguments{
-  \item{X}{A multivariate compositional dataset}
+  \item{X}{a multivariate compositional dataset}
   \item{d}{a numeric or character vector of two elements specifying the
-    margin}
+    parts to be kept in the marginalization process}
   \item{margin}{a character specifying the type of margin to be
-    choosen. Possible values are "acomp", "rcomp" or a column name from
+    chosen. Possible values are "acomp", "rcomp" or a column name from
     the dataset.}
 }
 \value{

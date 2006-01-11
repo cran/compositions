@@ -4,7 +4,7 @@
 \alias{gsi.getCoorInfo}
 \title{Internal functions of the compositions package}
 \description{
-  Sets or gets the current triangular coordinate system for
+  Sets or gets the triangular/barycentric coordinate system for
   the current ternary diagrams in the current plot.
 }
 \usage{
@@ -13,7 +13,7 @@ gsi.setCoorInfo(...)
 gsi.plots
 }
 \arguments{
-  \item{\dots}{The info to be set typically a mean=c(1,1,1) and scale=1}
+  \item{\dots}{The info to be set typically a mean=c(1,1,1) and a scale=1}
 }
 
 \details{

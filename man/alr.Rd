@@ -7,12 +7,18 @@
   composition(s), and its inverse.
 }
 \usage{
-          alr( x  )
-          alr.inv( z )
+          alr( x , ... )
+          alr.inv( z, ...,orig=NULL)
           }
 \arguments{
   \item{x}{a composition, not necessarily closed}
-  \item{z}{the alr-transform of a composition, thus a (D-1)-dimensional real vector}
+  \item{z}{the alr-transform of a composition, thus a (D-1)-dimensional
+    real vector}
+  \item{\dots}{generic arguments. not used.}
+  \item{orig}{a compositional object which should be mimicked 
+             by the inverse transformation. It is especially used to
+	     reconstruct the names of the parts.}
+
 }
 \value{
   \code{alr} gives the additive log ratio transform; accepts a compositional dataset

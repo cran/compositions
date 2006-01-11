@@ -15,14 +15,14 @@ runif.rcomp(n,D)
   \item{D}{number of parts}
 }
 \value{
-  a generated random dataset of class \code{"acomp"} or \code{"rcomp"} with
+  a generated random dataset of class \code{"acomp"} or \code{"rcomp"}
   drawn from a uniform distribution on the simplex of D parts. }
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{rDirichlet.acomp}}
 }
-\note{The only difference between both routines is the type of
-the returned dataset.}
+\note{The only difference between both routines is the class of
+the dataset returned.}
 \references{
   Aitchison, J. (1986) \emph{The Statistical Analysis of Compositional
     Data} Monographs on Statistics and Applied Probability. Chapman &

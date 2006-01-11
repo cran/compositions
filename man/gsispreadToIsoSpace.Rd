@@ -21,7 +21,7 @@ gsi.spreadToIsoSpace(spread)
   functions of the package}
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
-  \code{\link{gsi}}
+  \code{\link{gsi}}, \code{\link{clrvar2ilr}}
 }
 \examples{
 }

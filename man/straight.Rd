@@ -5,9 +5,9 @@
 \alias{straight.rcomp}
 \alias{straight.aplus}
 \alias{straight.rplus}
-\title{Draws infinite straight lines.}
+\title{Draws straight lines.}
 \description{
-  The function draws lines in a given direction d through points x.
+  The function draws lines in a given direction \code{d} through points \code{x}.
 }
 \usage{
           straight(x,...)
@@ -21,19 +21,20 @@
   \item{x}{dataset of points of the given type to draw the line through}
   \item{d}{dataset of directions of the line}
   \item{\dots}{further graphical parameters}
-  \item{steps}{the number of discretisation points to draw the segments not
-    straight on the monitor.}
+  \item{steps}{the number of discretisation points to draw the segments, 
+    since the representation might not visually be a straight line}
 }
 \details{
 The functions add lines to the graphics generated with the corresponding
 plot functions.
 \cr
-Adding to multipaneled plots, redraws the plot completely and is only
-possible, when the plot has been created with the plotting routines from
+Adding to multipaneled plots redraws the plot completely, and is only
+possible when the plot has been created with the plotting routines from
 this library.
 \cr
-Lines end, when they leave the space (e.g. the simplex), which sometimes
-leads to the impression of premature end. 
+Lines end when they leave the space (e.g. the simplex), which sometimes
+leads to the impression of premature end (specially in \code{\link{rcomp}} 
+geometry). 
 }
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{

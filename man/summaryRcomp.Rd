@@ -15,10 +15,11 @@
   A matrix containing summary statistics.
   The value is the same as for the classical summary
   \code{\link[base]{summary}} applied to  a closed dataset.
-
 }
 \details{
   The data is applied a \code{\link{clo}} operation before the computation.
+  Note that the statistics obtained will not keep any consistency 
+  if computed with all the parts available or only with a subcomposition.
 }
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{

@@ -6,7 +6,7 @@
 \alias{as.data.frame.rmult}
 \title{Convert "compositions" classes to data frames}
 \description{
-  Convert a compositional vector to a dataframe
+  Convert a compositional object to a dataframe
 }
 \usage{
 \method{as.data.frame}{acomp}(x,\dots)
@@ -21,7 +21,7 @@
 }
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \value{
-  a dataframe containing the given data.
+  a data frame containing the given data.
 }
 \examples{
 data(SimulatedAmounts)

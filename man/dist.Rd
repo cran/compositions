@@ -3,7 +3,7 @@
 \alias{dist.default}
 \title{Distances in variouse approaches}
 \description{
-  Calculates a distance matrix from a dataset. 
+  Calculates a distance matrix from a data set. 
 }
 \usage{
 dist(x,\dots)

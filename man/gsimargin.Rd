@@ -11,10 +11,10 @@
 }
 \usage{
 gsi.margin(X,\dots)
-gsi.margin.acomp(X,what,\dots,margin="acomp")
-gsi.margin.rcomp(X,what,\dots,margin="rcomp")
-gsi.margin.aplus(X,what,\dots)
-gsi.margin.rplus(X,what,\dots)
+\method{gsi.margin}{acomp}(X,what,\dots,margin="acomp")
+\method{gsi.margin}{rcomp}(X,what,\dots,margin="rcomp")
+\method{gsi.margin}{aplus}(X,what,\dots)
+\method{gsi.margin}{rplus}(X,what,\dots)
 
 }
 \arguments{
@@ -26,7 +26,7 @@ gsi.margin.rplus(X,what,\dots)
   \item{\dots}{ other arguments }
 }
 \value{
-  Some marginal dataset or vector still containing the variables given
+  A marginalized dataset (or vector) still containing the variables given
   by \code{what} and optionally one
   additional part named '"+"', '"*"' or \var{margin}.
 }

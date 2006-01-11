@@ -5,7 +5,7 @@
 \alias{/.aplus}
 \alias{perturbe.aplus}
 \alias{power.aplus}
-\title{vectorial arithmetic for datasets with aplus class}
+\title{vectorial arithmetic for data sets with aplus class}
 \description{
   The positive vectors equipped with the perturbation (defined as
   the element-wise product) as Abelian sum, and powertransform (defined as the element-wise

@@ -30,7 +30,6 @@ gsi.div(x,y)
   functions of the package}
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
-}
   \code{\link{perturbe}}
 }
 \examples{

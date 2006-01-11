@@ -23,10 +23,10 @@ perturbe(x,y)
 \details{
   The perturbation is the basic addition operation of the Aitichson
   simplex as a vector space. It is defined by:
-  \deqn{ (x+y)_i = clo( (x_iy_i)_i )_i }
-  \code{permute} and \code{+} compute this operation. The only
+  \deqn{ (x+y)_i = clo( (x_i  y_i)_i )_i }
+  \code{perturbe} and \code{+} compute this operation. The only
   difference is that \code{+} checks the class of its argument, while
-  \code{permute} does not check the type of the arguments and can thus
+  \code{perturbe} does not check the type of the arguments and can thus
   directly be applied to a composition in any form (unclassed, acomp,
   rcomp).\cr
   The \code{-} operation is the inverse of the addition in the usual way

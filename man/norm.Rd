@@ -1,5 +1,4 @@
 \name{norm}
-\alias{norm}
 \alias{norm.default}
 \alias{norm.acomp}
 \alias{norm.aplus}
@@ -12,18 +11,18 @@
   computed for each element by these functions.
 }
 \usage{
-norm(x,\dots)
-\method{norm}{default}(x,\dots)
-\method{norm}{acomp}(x,\dots)
-\method{norm}{rcomp}(x,\dots)
-\method{norm}{aplus}(x,\dots)
-\method{norm}{rplus}(x,\dots)
-\method{norm}{rmult}(x,\dots)
+\method{norm}{default}(X,\dots)
+\method{norm}{acomp}(X,\dots)
+\method{norm}{rcomp}(X,\dots)
+\method{norm}{aplus}(X,\dots)
+\method{norm}{rplus}(X,\dots)
+\method{norm}{rmult}(X,\dots)
 
           }
 \arguments{
-  \item{x}{a dataset or a single vector of some type}
-  \item{\dots}{currently not used, intended to select a different norm}
+  \item{X}{a dataset or a single vector of some type}
+  \item{\dots}{currently not used, intended to select a 
+              different norm rule in the future}
 }
 \value{
   The norms of the given vectors.

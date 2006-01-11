@@ -19,21 +19,21 @@
  and amount data analysis.
 }
 \usage{
-          var(x,\dots)
-          \method{var}{default}(x, y=NULL, na.rm=FALSE, use, \dots)
-          \method{var}{acomp}(x,y=NULL,\dots)
-          \method{var}{rcomp}(x,y=NULL,\dots)
-          \method{var}{aplus}(x,y=NULL,\dots)
-          \method{var}{rplus}(x,y=NULL,\dots)
-          \method{var}{rmult}(x,y=NULL,\dots)
-          cov(x,y=x,\dots)
-          \method{cov}{default}(x, y=NULL, use="all.obs", method=c("pearson",
-    "kendall", "spearman"), \dots)
-          \method{cov}{acomp}(x,y=NULL,\dots)
-          \method{cov}{rcomp}(x,y=NULL,\dots)
-          \method{cov}{aplus}(x,y=NULL,\dots)
-          \method{cov}{rplus}(x,y=NULL,\dots)
-          \method{cov}{rmult}(x,y=NULL,\dots)
+  var(x,\dots)
+    \method{var}{default}(x, y=NULL, na.rm=FALSE, use, \dots)
+    \method{var}{acomp}(x,y=NULL,\dots)
+    \method{var}{rcomp}(x,y=NULL,\dots)
+    \method{var}{aplus}(x,y=NULL,\dots)
+    \method{var}{rplus}(x,y=NULL,\dots)
+    \method{var}{rmult}(x,y=NULL,\dots)
+  cov(x,y=x,\dots)
+    \method{cov}{default}(x, y=NULL, use="all.obs", 
+       method=c("pearson", "kendall", "spearman"), \dots)
+    \method{cov}{acomp}(x,y=NULL,\dots)
+    \method{cov}{rcomp}(x,y=NULL,\dots)
+    \method{cov}{aplus}(x,y=NULL,\dots)
+    \method{cov}{rplus}(x,y=NULL,\dots)
+    \method{cov}{rmult}(x,y=NULL,\dots)
           }
 \arguments{
   \item{x}{a dataset, eventually of amounts or compositions}
@@ -52,19 +52,19 @@
   \code{\link[stats]{cov}} are turned to
   S3-generics. The original versions are copied to the default
   method. This allows us to introduce generic methods to handle
-  variances and covariances of other datatypes such as amounts or
+  variances and covariances of other data types, such as amounts or
   compositions.
   \cr
-
   If classed amounts or compositions are involved, they are transformed
   with their corresponding transforms, using the centered default
   transform (\code{\link{cdt}}). That implies that the variances have to
   be interpreded in a log scale level for  \code{\link{acomp}} and
   \code{\link{aplus}}.
   \cr
-  We should be aware that variance matrices of compositions are
+  We should be aware that variance matrices of compositions 
+  (\code{\link{acomp}} and \code{\link{rcomp}}) are
   singular. They can be transformed to the correponding nonsingular
-  variances of ilr or ipt -space by \code{\link{clrvar2ilr}}.
+  variances of ilr or ipt-space by \code{\link{clrvar2ilr}}.
 
   In R versions older than v2.0.0, \code{\link[base]{var}} and
   \code{\link[base]{cov}} were defined in package ``base'' instead of in ``stats''.

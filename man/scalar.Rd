@@ -28,7 +28,7 @@ scalar(x,y)
   corresponding to the given geometries are returned for \code{\link{acomp}},
   \code{\link{rcomp}}, \code{\link{aplus}},
   \code{\link{rplus}}-objects. Even a useful scalar product for factors
-  is defined.
+  is induced in this way.
 
 }
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}

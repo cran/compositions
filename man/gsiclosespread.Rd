@@ -11,7 +11,7 @@ gsi.closespread(spread)
   \item{spread}{}
 }
 \value{
-  like spread but projected to the orthognonal complement of \code{c(1,\ldots,1)}
+  like \code{spread}, but projected to the orthogonal complement of \code{c(1,\ldots,1)}
 }
 \details{
 

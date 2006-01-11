@@ -34,30 +34,78 @@ gsi.diagGenerate <- function(x) {
 gsi.getD  <- function(x) ncol(oneOrDataset(x))
 gsi.getN  <- function(x) nrow(oneOrDataset(x))   
 
+# NA   = MAR  =  (Missing at random) = not reported measured
+# -Inf = MNAR =  (Missing not at random) = danger
+# NaN  = SZ   =  (Structural Zero) = It makes no sense to speak about
+# 0.0    = BDL  =  (Below detection limit) = Observed Zero
 
-clo <- function(X,parts=1:NCOL(oneOrDataset(X)),total=1) {
-  X <- gsi.plain(X)
-  parts  <- unique(parts)
-  if( is.character(parts) ) {
-    partsn <- match(parts,colnames(X))
-    if( any(is.na(partsn)) )
-      stop("Unknown variable name",d[is.na(partsn)])
-    parts <- partsn
-  }
-  nparts <- length(parts)
-  Xn <- gsi.plain(oneOrDataset(X))[,parts,drop=FALSE]
-  drop <- length(dim(X)) < 2
-  if( any(na.omit(c(Xn)<0)) )
-    stop("Negative values are not valid for amounts")
-  nas <- is.na(c(Xn))
-  if( length(total) > 1 || !is.na(total) ) {
-    Xn[nas]<-0
-    s <- c(Xn %*% rep(1,nparts))
-    Xn  <- Xn / matrix(rep(s/total,nparts),ncol=nparts)
-    Xn[nas] <- NA
-  }
-  gsi.simshape(Xn,X)
+
+MARvalue <- NaN
+MNARvalue<- NA
+SZvalue  <- -Inf
+BDLvalue <- 0.0   # Use with care, negative values specifiy the detection limit
+
+gsi.recodeM2C <- function(x,y=x,BDL,SZ,MAR,MNAR,NMV) {
+  if( !missing(BDL) ) y[is.BDL(x)]<-BDL
+  if( !missing(SZ)  ) y[is.SZ(x)] <-SZ
+  if( !missing(MAR) ) y[is.MAR(x)]<-MAR
+  if( !missing(MNAR)) y[is.MNAR(x)]<-MNAR
+  if( !missing(NMV) ) y[is.NMV(x)]<-NMV
+  y
 }
+
+#gsi.recodeM2Clean <- function(x,y=x,BDL=NaN,SZ=NaN,MAR=NaN,MNAR=NA) {
+#  y[is.BDL(x)]<-BDL
+#  y[is.SZ(x)] <-SZ
+#  y[is.MAR(x)]<-MAR
+#  y[is.MNAR(x)]<-MNAR
+#  y[is.NMV(x)]<-NMV
+#  y
+#}
+
+
+
+gsi.recodeC2M <- function(x,y=x,na,nan,ninf,inf,neg,zero,pos) {
+  if( !missing(na)  ) y[is.na(x)&!is.nan(x)]<-na
+  if( !missing(nan) ) y[is.nan(x)]          <-nan
+  if( !missing(ninf)) y[is.infinite(x)&x<0] <-ninf
+  if( !missing(inf) ) y[is.infinite(x)&x>0] <-inf
+  if( !missing(neg) ) y[is.finite(x)&x<0]   <-neg
+  if( !missing(zero)) y[is.finite(x)&x==0]  <-zero
+  if( !missing(pos))  y[is.finite(x)&x>0]   <-pos
+  y
+}
+
+gsi.recodeM2Clean <- function(x,y=x,BDL=NaN,SZ=NaN,MAR=NaN,MNAR=NA,NMV) {
+  if( !missing(BDL) ) y[is.BDL(x)]<-BDL
+  if( !missing(SZ)  ) y[is.SZ(x)] <-SZ
+  if( !missing(MAR) ) y[is.MAR(x)]<-MAR
+  if( !missing(MNAR)) y[is.MNAR(x)]<-MNAR
+  if( !missing(NMV) ) y[is.NMV(x)]<-NMV
+  y
+}
+
+
+gsi.cleanR <- function(x) {
+  x[!is.finite(x)]<-0.0
+  x
+}
+
+gsi.eq <-  function(x,y) {
+  if( is.null(y) ) return(is.null(x)) # null
+  if( is.finite(y) ) {           
+    if( is.infinite(1/y) & (1/y)<0 )  # -0
+      return(is.infinite(1/x) & (1/x)<0)
+      else
+        return(is.finite(x) & x==y)     # Zahlencodes 
+  }
+  if( is.nan(y) ) return(is.nan(x))   # NaN
+  if( is.infinite(y)&y>0) return(is.infinite(x)&x>0) # Inf
+  if( is.infinite(y)&y<0) return(is.infinite(x)&x<0) # -Inf
+  if( is.na(y) ) return(is.na(y))                    # NA
+  stop("Unkown comparison type ",y)                  # Was wurde vergessen?
+}
+
 
 names.acomp <- function(x) colnames(oneOrDataset(x))
 names.rcomp <- names.acomp
@@ -67,18 +115,20 @@ names.rmult <- names.acomp
 
 "names<-.acomp" <- "names<-.rcomp" <- "names<-.aplus" <- "names<-.rplus" <- "names<-.rmult" <-
   function(x,value) {
-  if(is.matrix(x)) {
-    colnames(x) <- value
-    x
+    if(is.matrix(x)) {
+      colnames(x) <- value
+      x
+    }
+    else
+      NextMethod("names",x,value=value)
   }
-  else
-    NextMethod("names",x,value=value)
-}
+
 
 groupparts <- function(x,...) UseMethod("groupparts",x)
 
 groupparts.rcomp <- function(x,...,groups=list(...)) {
-  x <- rmult(clo(x))
+                                        # BDL=SZ->0, MAR->MAR, MNAR->MNAR
+  x <- rmult(gsi.recodeM2C(x,clo(x),BDL=0.0,SZ=0.0,MAR=NaN,MNAR=NA))
   usedparts <- unique(unlist(lapply(groups,function(i) {
     if( is.character(i) ) {
       parts <- match(i,names(x))
@@ -92,14 +142,16 @@ groupparts.rcomp <- function(x,...,groups=list(...)) {
     names(otherparts) <- names(x)[otherparts]
     groups <- c(groups,otherparts)
   }
-  rcomp( sapply(groups,function(idx) {
+  erg <- sapply(groups,function(idx) {
     ss <- rplus(x,idx)
     ss %*% rep(1,gsi.getD(ss))
-  }))
+  })
+  rcomp(gsi.recodeC2M(erg,na=MNARvalue,nan=MARvalue))
 }
 
 groupparts.rplus <- function(x,...,groups=list(...)) {
-  x <- rmult(x)
+                                        # BDL=SZ->0, MAR->MAR, MNAR->MNAR
+  x <- rmult(gsi.recodeM2C(x,BDL=0.0,SZ=0.0,MAR=NaN,MNAR=NA))
   usedparts <- unique(unlist(lapply(groups,function(i) {
     if( is.character(i) ) {
       parts <- match(i,names(x))
@@ -113,14 +165,19 @@ groupparts.rplus <- function(x,...,groups=list(...)) {
     names(otherparts) <- names(x)[otherparts]
     groups <- c(groups,otherparts)
   }
-  rplus( sapply(groups,function(idx) {
+  erg <- sapply(groups,function(idx) {
     ss <- rplus(x,idx)
     ss %*% rep(1,gsi.getD(ss))
-  }))
+  })
+  rplus(gsi.recodeC2M(erg,na=MNARvalue,nan=MARvalue))
 }
 
 groupparts.acomp <- function(x,...,groups=list(...)) {
-  x <- rmult(x)
+                                        # BDL: BDL, NA: NA, 0: 0
+  x <- rmult(gsi.recodeM2C(x,clo(x),BDL=NaN,SZ=NA,MAR=Inf,MNAR=NaN))
+  #SZ <- is.SZ(x)               # keep regardless of the rest NA
+  #MNAR <- is.MNAR(x)|is.BDL(x) # keep if no SZ               NaN
+  #MAR  <- is.MAR(x)            # keep if no SZ or MNAR are in the way Inf
   usedparts <- unique(unlist(lapply(groups,function(i) {
     if( is.character(i) ) {
       parts <- match(i,names(x))
@@ -134,17 +191,22 @@ groupparts.acomp <- function(x,...,groups=list(...)) {
     names(otherparts) <- names(x)[otherparts]
     groups <- c(groups,otherparts)
   }
-  acomp( sapply(groups,function(idx) {
+  erg <- sapply(groups,function(idx) {
     ss <- aplus(x,idx)
     if( is.matrix(ss) )
-      geometricmean.row(ss)
+      gsi.geometricmean.row(ss)
     else
-      geometricmean(ss)
-  }))
+      gsi.geometricmean(ss)
+  })
+  acomp(gsi.recodeC2M(erg,na=SZvalue,nan=MNARvalue,inf=MARvalue))
+  
+#  SZ   <- is.na(x)&!is.na(x)   # keep regardless of the rest NA
+#  MNAR <- is.nan(x)            # keep if no SZ               NaN
+#  MAR  <- !is.finite(x)&!is.na(x) # keep if no SZ or MNAR are in the way Inf
 }
 
 groupparts.aplus <- function(x,...,groups=list(...)) {
-  x <- rmult(x)
+  x <- rmult(gsi.recodeM2C(x,clo(x),BDL=NaN,SZ=NA,MAR=Inf,MNAR=NaN))
   usedparts <- unique(unlist(lapply(groups,function(i) {
     if( is.character(i) ) {
       parts <- match(i,names(x))
@@ -158,58 +220,168 @@ groupparts.aplus <- function(x,...,groups=list(...)) {
     names(otherparts) <- names(x)[otherparts]
     groups <- c(groups,otherparts)
   }
-  aplus( sapply(groups,function(idx) {
+  erg <- sapply(groups,function(idx) {
     ss <- aplus(x,idx)
     if( is.matrix(ss) )
-      geometricmean.row(ss)
+      gsi.geometricmean.row(ss)
     else
-      geometricmean(ss)
-  }))
+      gsi.geometricmean(ss)
+  })
+  aplus(gsi.recodeC2M(erg,na=SZvalue,nan=MNARvalue,inf=MARvalue))
 }
-
-
 
 # groupparts(x,G1=c("Cd","S"),G2=c("Co","Ni"),G3=c("As","F"))
 
-acomp <- function(X,parts=1:NCOL(oneOrDataset(X)),total=1) {
-    X <-  structure(clo(X,parts,total),class="acomp")
-    if( any(na.omit(c(X)<=0)) )
-      warning("Compositions has nonpositiv values")
-    X
+clo <- function(X,parts=1:NCOL(oneOrDataset(X)),total=1,
+                detectionlimit=attr(X,"detectionlimit"),
+                BDL=NULL,MAR=NULL,MNAR=NULL,SZ=NULL,
+                storelimit=!is.null(attr(X,"detectionlimit"))) {
+  X <- gsi.plain(X)
+  # Collect the parts
+  parts  <- unique(parts)
+  if( is.character(parts) ) {
+    partsn <- match(parts,colnames(X))
+    if( any(is.na(partsn)) )
+      stop("Unknown variable name",parts[is.na(partsn)])
+    parts <- partsn
+  }
+  nparts <- length(parts)
+  Xn <- gsi.plain(oneOrDataset(X))[,parts,drop=FALSE]
+  drop <- length(dim(X)) < 2
+  #if( any(na.omit(c(Xn)<0)) )
+  #  stop("Negative values are not valid for amounts")
+  # Processing of missings
+  iMAR <- if( !is.null(MAR) ) gsi.eq(Xn,MAR) else FALSE
+  iMNAR<- if( !is.null(MNAR) ) gsi.eq(Xn,MNAR) else FALSE
+  iSZ  <- if( !is.null(SZ) ) gsi.eq(Xn,SZ) else FALSE
+  iBDL <- if( !is.null(BDL) ) gsi.eq(Xn,BDL) else FALSE
+  if( is.null(detectionlimit) ) {
+    if( any(iBDL) )
+      Xn[iBDL]<- BDLvalue
+  } else if( is.matrix(detectionlimit) ) {
+    if( nrow(Xn)!=nrow(detectionlimit) | ncol(Xn)!=ncol(detectionlimit) )
+      warning("Matrix of Detectionlimits does not fit x")
+    Xn <- ifelse( is.finite(detectionlimit) & detectionlimit>=0,
+                ifelse( (is.finite(Xn) & X <= detectionlimit)|iBDL ,
+                       -detectionlimit, Xn ),
+                Xn)
+  } else if( length( detectionlimit) > 1 ) {
+    if( ncol(Xn)!=length(detectionlimit)  )
+      warning("Length of Detectionlimits does not fit x")
+    detectionlimit <- outer(rep(1,nrow(Xn),detectionlimit))
+    Xn <- ifelse( is.finite(detectionlimit) & detectionlimit>=0,
+                ifelse( (is.finite(Xn) & X <= detectionlimit)|iBDL ,
+                       -detectionlimit, Xn ),
+                Xn)
+  } else if( is.finite(detectionlimit) && detectionlimit > 0 ) {
+    Xn <- ifelse((Xn<=detectionlimit&Xn>=0)|iBDL,-detectionlimit,Xn)
+  } else
+    Xn <- ifelse(iBDL,BDLvalue,Xn)
+  if( any(iMAR) ) Xn[iMAR] <- MARvalue
+  if( any(iMNAR)) Xn[iMNAR]<- MNARvalue
+  if( any(iSZ) )  Xn[iSZ]  <- SZvalue
+  # Make the sum 1 ignoring missings
+  scaling <- 1
+  if( length(total) > 1 || !is.na(total) ) {
+    nas <- !is.NMV(Xn)&!is.BDL(Xn) # Missings are not included in closing
+    bdl <- is.BDL(Xn)              # BDLs are accordingly scaled 
+    naValues <- Xn[nas]
+    Xn[nas]<-0
+    s <- c(ifelse(bdl,0,Xn) %*% rep(1,nparts))
+    scaling <-  matrix(rep(s/total,nparts),ncol=nparts)
+    Xn  <- Xn / scaling
+    Xn[nas] <- naValues
+  }
+  erg <- gsi.simshape(Xn,X)
+  if( storelimit) {
+    if( length(detectionlimit) == 1 )
+      detectionlimit <- matrix(detectionlimit,nrow=nrow(Xn),ncol=ncol(Xn))
+    detectionlimit/scaling
+    detectionlimit <- gsi.simshape(detectionlimit[,parts,drop=FALSE],X)
+    attr(erg,"detectionlimit") <- detectionlimit
+  }
+  erg
 }
 
-rcomp <- function(X,parts=1:NCOL(oneOrDataset(X)),total=1) {
-    X <-  structure(clo(X,parts,total),class="rcomp")
-    X
+
+
+
+acomp <- function(X,parts=1:NCOL(oneOrDataset(X)),total=1,warn.na=FALSE,detectionlimit=NULL,BDL=NULL,MAR=NULL,MNAR=NULL,SZ=NULL) {
+
+  X <-  structure(clo(X,parts,total),class="acomp")
+  if( any(is.NMV(X)&X<0)) 
+    warning("Composition has negative values")
+  if( warn.na ) {
+    if( any(is.SZ(X))) 
+      warning("Composition has structural zeros")
+    if( any(is.MAR(X) | is.MNAR(X)))
+      warning("Composition has missings")
+    if( any(is.BDL(X)) )
+      warning("Composition has values below detection limit")
+  }
+  X
+}
+
+rcomp <- function(X,parts=1:NCOL(oneOrDataset(X)),total=1,warn.na=FALSE,detectionlimit=NULL,BDL=NULL,MAR=NULL,MNAR=NULL,SZ=NULL) {
+  X <-  structure(clo(X,parts,total,detectionlimit=detectionlimit,BDL=BDL,MAR=MAR,MNAR=MNAR,SZ=SZ),class="rcomp")
+  if( warn.na ) {
+    if( any(is.SZ(X))) 
+      warning("Composition has structural zeros")
+    if( any(is.MAR(X) | is.MNAR(X)))
+      warning("Composition has missings")
+    #if( any(is.BDL(X)) )
+     # warning("Composition has values below detection limit")
+  }
+  X
 }
 
 
-aplus <- function(X,parts=1:NCOL(oneOrDataset(X)),total=NA) {
-  X <- gsi.simshape(clo(X,parts,total),X)
-  if( any(na.omit(c(X)<0)) )
-    stop("Negativ values in aplus")
-  if( any(na.omit(c(X)<=0)) )
-    warning("Not all values positiv in aplus")
+aplus <- function(X,parts=1:NCOL(oneOrDataset(X)),total=NA,warn.na=FALSE,detectionlimit=NULL,BDL=NULL,MAR=NULL,MNAR=NULL,SZ=NULL) {
+  X <- gsi.simshape(clo(X,parts,total,detectionlimit=detectionlimit,BDL=BDL,MAR=MAR,MNAR=MNAR,SZ=SZ),X)
+  if( warn.na ) {
+    if( any(is.SZ(X))) 
+      warning("aplus has structural zeros")
+    if( any(is.MAR(X) | is.MNAR(X)))
+      warning("aplus has missings")
+    if( any(is.BDL(X)) )
+      warning("aplus has values below detection limit")
+  }
   class(X) <-"aplus"
   X
 }
 
-rplus <- function(X,parts=1:NCOL(oneOrDataset(X)),total=NA) {
-  X <- gsi.simshape(clo(X,parts,total),X)
-  if( any(na.omit(c(X)<0)) )
-    stop("Negativ values in rplus")
+rplus <- function(X,parts=1:NCOL(oneOrDataset(X)),total=NA,warn.na=FALSE,detectionlimit=NULL,BDL=NULL,MAR=NULL,MNAR=NULL,SZ=NULL) {
+  X <- gsi.simshape(clo(X,parts,total,detectionlimit=detectionlimit,BDL=BDL,MAR=MAR,MNAR=MNAR,SZ=SZ),X)
+  if( warn.na ) {
+    if( any(na.omit(c(X)==0)) )
+      warning("rplus has structural zeros")
+    if( any(is.na(c(X)) & ! is.nan(c(X))))
+      warning("rplus has missings")
+    if( any(is.nan(c(X))))
+      warning("rplus has values below detection limit")
+  }
   class(X) <-"rplus"
   X
 }
 
-rmult <- function(X,parts=1:NCOL(oneOrDataset(X))) {
+rmult <- function(X,parts=1:NCOL(oneOrDataset(X)),
+                  orig=attr(X,"orig"),missingProjector=attr(X,"missingProjector")) {
   X <- gsi.simshape(oneOrDataset(X)[,parts,drop=FALSE],X)
+  attr(X,"orig") <- orig
+  attr(X,"missingProjector")<-missingProjector
   class(X) <-"rmult"
   X
 }
 
-
-
+print.rmult <- function(x,...) {
+  Odata <- attr(x,"orig")
+  if( ! is.null(Odata) )
+    attr(x,"orig") <- missingSummary(Odata)
+  mp <- attr(x,"missingProjector")
+  if( ! is.null(mp) )
+    attr(x,"missingProjector") <- dim(mp)
+  NextMethod(x,...)
+}
 gsi2.invperm <- function(i,n){
   i <- unique(c(i,1:n))
   j <- numeric(length(i))
@@ -229,8 +401,9 @@ rcompmargin <- function(X,d=c(1,2),name="+",pos=length(d)+1) {
     return(rcomp(X))
   else if( NCOL(X) == length(d) +1)
     return( rcomp(cbind(X[,d,drop=FALSE],X[,-d,drop=FALSE]) ))
-  Xm <- X[,-d,drop=FALSE]
-  tmp <- rcomp(cbind(Rest=Xm %*% rep(1,NCOL(Xm)) ,X[,d,drop=FALSE] ))
+  Xm <- gsi.recodeM2C(X[,-d,drop=FALSE],BDL=0.0,SZ=0.0,MAR=NaN,MNAR=NA)
+  rest =gsi.recodeC2M(Xm %*% rep(1,NCOL(Xm)),zero=BDLvalue,nan=MARvalue,na=MNARvalue)
+  tmp <- rcomp(cbind(rest=rest ,X[,d,drop=FALSE] ))
   if( !is.null(colnames(tmp)) )
     colnames(tmp)[1]<-name
   if( pos != 1 )
@@ -251,7 +424,10 @@ acompmargin <- function(X,d=c(1,2),name="*",pos=length(d)+1) {
   else if( NCOL(X) == length(d) +1)
     return( cbind(X[,d,drop=FALSE],X[,-d,drop=FALSE]) )
   Xm <- X[,-d,drop=FALSE]
-  tmp <- acomp(cbind(Rest=exp(log(Xm) %*% rep(1/NCOL(Xm),NCOL(Xm))) ,X[,d,drop=FALSE] ))
+  Xm <- gsi.recodeM2C(Xm,log(Xm),BDL=-Inf,MAR=NaN,MNAR=NA)
+  rest <- Xm %*% rep(1/NCOL(Xm),NCOL(Xm))
+  rest <- gsi.recodeC2M(rest,exp(rest),inf=BDLvalue,nan=MARvalue,na=MNARvalue)
+  tmp <- acomp(cbind(rest=rest ,X[,d,drop=FALSE] ))
   if( !is.null(colnames(tmp)) )
     colnames(tmp)[1]<-name
   if( pos != 1 )
@@ -285,58 +461,220 @@ oneOrDataset <- function(W,B=NULL) {
   }
 }
 
+gsi.geometricmean <- function(x,...) {
+    exp(mean(log(c(unclass(x))),...))
+}
+
+gsi.geometricmean.row <- function(x,...) apply(x,1,gsi.geometricmean,...)
+gsi.geometricmean.col <- function(x,...) apply(x,2,gsi.geometricmean,...)
 
 
-geometricmean <- function(x,...) { exp(mean(log(c(unclass(x))),...)) }
+geometricmean <- function(x,...) {
+  if( any(na.omit(x==0)) )
+    0
+  else
+    exp(mean(log(unclass(x)[is.finite(x)&x>0]),...))
+}
 
 geometricmean.row <- function(x,...) apply(x,1,geometricmean,...)
 geometricmean.col <- function(x,...) apply(x,2,geometricmean,...)
 
 mean.col <- function( x , ... , na.action=get(getOption("na.action"))) {
-  apply(na.action(oneOrDataset(x)),2,mean,...)
+  apply(oneOrDataset(x),2,function(x,...) mean(x,na.action=na.action),...)
 }
 
 mean.row <- function( x , ... , na.action=get(getOption("na.action"))) {
-  apply(na.action(oneOrDataset(x)),1,mean,...)
+  apply(oneOrDataset(x),1,function(x,...) mean(x,na.action=na.action),...)
 }
 
 
 totals <- function( x , ... ) UseMethod("totals",x)
 
-totals.acomp <- function(x,...) {
-apply(oneOrDataset(x),1,sum,...)
+totals.acomp <- function(x,...,missing.ok=TRUE) {
+  x <- oneOrDataset(x)
+  if( missing.ok )
+    x <- gsi.recodeM2C(x,BDL=0.0,SZ=0.0,MAR=0.0,MNAR=0.0)
+  else 
+    x <- gsi.recodeM2C(x,BDL=0.0,SZ=0.0,MAR=NaN,MNAR=NA)
+  erg <- gsi.recodeC2M(apply(x,1,sum,...),zero=BDLvalue,nan=MARvalue,na=MNARvalue)
 }
 
-totals.rcomp <- totals.acomp
 totals.aplus <- totals.acomp
+totals.rcomp <- totals.acomp
 totals.rplus <- totals.acomp
 
-
-mean.acomp <- function( x,..., na.action=get(getOption("na.action")) ) {
-  clr.inv(mean.col(clr(na.action(x)),...))
+gsi.svdsolve <- function(a,b,...,cond=1E-10) {
+  s <- svd(a,...)
+  lambda1 <- s$d[1] 
+  drop(s$v %*% (gsi.diagGenerate(ifelse(s$d<lambda1*cond,0,1/s$d)) %*% (t(s$u) %*% b)))
+  
 }
 
-mean.rcomp <- function( x,..., na.action=get(getOption("na.action")) ) {
-  cpt.inv(mean.col(cpt(na.action(x)),..., na.action=get(getOption("na.action"))))
+missingProjector <- function(x,...,by="s") UseMethod("missingProjector")
+
+missingProjector.acomp <- function(x,has=is.NMV(x),...,by="s") {
+  if( is.tensor(has) ) {
+  } else if( is.matrix(has) ) {
+    has <- as.tensor(has)
+    names(has) <- c(by,"i")
+  } else
+    has <- to.tensor(c(has),c(i=length(has)))
+  iii <- function(x) {a<-ifelse(unclass(x)==0,0,1/unclass(x));attributes(a)<-attributes(x);a}
+  reorder.tensor( diag.tensor(has,by=by,mark="'") - 
+                 einstein.tensor(has,mark(has,mark="'",by=by),
+                                 diag=iii(margin.tensor(has,by=by)),
+                                 by=by))
+  #  gsi.diagGenerate(as.numeric(has))-(has %o% has)/sum(has) 
 }
 
-mean.aplus <- function( x,..., na.action=get(getOption("na.action")) ) {
-  ilt.inv(mean.col(ilt(na.action(x)),...))
+missingProjector.rcomp <- function(x,has=!(is.MAR(x)|is.MNAR(x)),...,by="s") {
+  if( is.tensor(has) ) {
+  } else  if( is.matrix(has) ) {
+    has <- as.tensor(has)
+    names(has) <- c(by,"i")
+  } else
+    has <- to.tensor(c(has),c(i=length(has)))
+  iii <- function(x) {a<-ifelse(unclass(x)==0,0,1/unclass(x));attributes(a)<-attributes(x);a}
+  reorder.tensor( diag.tensor(has,by=by,mark="'") -
+                 einstein.tensor(has,has[[i=~"i'"]],
+                                 diag=iii(margin.tensor(has,by=by)),
+                                 by=by))
+                 
+  #  gsi.diagGenerate(as.numeric(has))-(has %o% has)/sum(has) 
 }
 
-mean.rplus <- function( x,..., na.action=get(getOption("na.action")) ) {
-  iit.inv(mean.col(iit(na.action(x)),...))
+
+missingProjector.aplus <- function(x,has=is.NMV(x),...,by="s") {
+  if( is.tensor(has) ) {
+  } else if( is.matrix(has) ) {
+    has <- as.tensor(has)
+    names(has) <- c(by,"i")
+  } else
+    has <- to.tensor(c(has),c(i=length(has)))
+  reorder.tensor( diag.tensor(has,by=by,mark="'"), by=by) 
+  #  gsi.diagGenerate(as.numeric(has)) 
 }
 
-mean.rmult <- function( x,..., na.action=get(getOption("na.action")) ) {
-  rmult(mean.col(unclass(na.action(x)),...))
+missingProjector.rplus <- function(x,has=!(is.MAR(x)|is.MNAR(x)),...,by="s") {
+  if( is.tensor(has) ) {
+  } else if( is.matrix(has) ) {
+    has <- as.tensor(has)
+    names(has) <- c(by,"i")
+  } else
+    has <- to.tensor(c(has),c(i=length(has)))
+  reorder.tensor( diag.tensor(has,by=by,mark="'"), by=by) 
+  #  gsi.diagGenerate(as.numeric(has)) 
+}
+  
+missingProjector.rmult <- function(x,has=is.finite(x),...,by="s") {
+  if( !is.null(attr(x,"missingProjector") ) )
+     return(attr(x,"missingProjector"))
+  if( !is.null(attr(x,"orig") ) )
+     return(missingProjector(attr(x,"orig") ))
+  if( is.tensor(has) ) {
+  } else if( is.matrix(has) ) {
+    has <- as.tensor(has)
+    names(has) <- c(by,"i")
+  } else
+    has <- to.tensor(c(has),c(i=length(has)))
+  reorder.tensor( diag.tensor(has,by=by,mark="'"), by=by) 
+  #  gsi.diagGenerate(as.numeric(has)) 
 }
 
 
+sumMissingProjector <- function(x,...) UseMethod("sumMissingProjector")
+
+sumMissingProjector.acomp <- function(x,has=is.NMV(x),...) {
+  n <- nrow(has)
+  m <- ncol(has)
+  canz <- rep(1,n) %*% has 
+  ranz <- c(has %*% rep(1,m))
+  erg <- diag(c(canz)) -  t(has/ranz) %*% has 
+  erg
+}
+
+sumMissingProjector.aplus <- function(x,has=is.NMV(x),...) {
+  n <- nrow(has)
+  canz <- rep(1,n) %*% has 
+  erg <- diag(c(canz))
+  erg
+}
+
+sumMissingProjector.rcomp <- function(x,has=!(is.MAR(x)|is.MNAR(x)),...) {
+  n <- nrow(has)
+  m <- ncol(has)
+  canz <- rep(1,n) %*% has 
+  ranz <- c(has %*% rep(1,m))
+  erg <- diag(c(canz)) -  t( has / ranz ) %*% has 
+  erg
+}
+
+sumMissingProjector.rplus <- function(x,has=!(is.MAR(x)|is.MNAR(x)),...) {
+  n <- nrow(has)
+  canz <- rep(1,n) %*% has 
+  erg <- diag(c(canz))
+  erg
+}
+
+sumMissingProjector.rmult <- function(x,has=is.finite(x),...) {
+  if( !is.null(mp<- attr(x,"missingProjector"))  )
+    return( mp %e% one.tensor(c(s=dim(mp)["s"])))
+  if( !is.null(orig<-attr(x,"orig")))
+     return(sumMissingProjector(orig))
+  n <- nrow(has)
+  canz <- rep(1,n) %*% has 
+  erg <- diag(canz)
+  erg
+}
+
+  
+gsi.csum <- function(x) {c(rep(1,nrow(x)) %*% ifelse(is.finite(x),x,0))}
+gsi.rsum <- function(x) {c(ifelse(is.finite(x),x,0)%*%rep(1,ncol(x))) }
+
+
+mean.aplus<- mean.rplus <- mean.rcomp <- mean.acomp <- function( x, ... ) {
+  cdt.inv(mean(cdt(x),...),x)
+}
+ 
+#mean.acomp <- function( x, ... ) {
+#  if( has.missings(x) ) 
+#    clr.inv(gsi.svdsolve(sumMissingProjector(x),gsi.csum(gsi.cleanR(clr(x)))))
+#  else
+#    clr.inv(mean(clr(x),...))
+#}
+
+
+#mean.rcomp <- function( x,... ) {
+#  if( has.missings(x) ) 
+#    cpt.inv(gsi.svdsolve(sumMissingProjector(x), gsi.csum(gsi.cleanR(cpt(x))) ) )
+#  else
+#    cpt.inv(mean.col(cpt(x),...))
+#}
+
+#mean.aplus <- function( x,... ) {
+#  if( has.missings(x) ) 
+#    ilt.inv(gsi.svdsolve(sumMissingProjector(x), gsi.csum(gsi.cleanR(ilt(x))) ) )
+#  else
+#    ilt.inv(mean.col(ilt(x),...))
+#}
+
+#mean.rplus <- function( x,...) {
+#  if( has.missings(x) ) 
+#    iit.inv(gsi.svdsolve(sumMissingProjector(x), gsi.csum(gsi.cleanR(iit(x))) ) )
+ # else
+#    iit.inv(mean.col(iit(x),...))
+#}
+
+mean.rmult <- function( x,...,na.action=get(getOption("na.action"))) {
+  if( has.missings(x) ) 
+    rmult(gsi.svdsolve(sumMissingProjector(x), gsi.csum(x,...)))
+  else
+    rmult(mean.col(unclass(x),...,na.action=na.action))
+}
 
 
 clr2ilr <- function( x , V=ilrBase(x) ) {
-  gsi.simshape( oneOrDataset(x) %*% V , x)
+  gsi.simshape(gsi.recodeC2M(oneOrDataset(x),ninf=0,nan=0,na=0,inf=0) %*% V , x)
 }
 
 ilr2clr <- function( z , V=ilrBase(z=z) ) {
@@ -351,6 +689,69 @@ clrvar2ilr <- function( varx , V=ilrBase(D=ncol(varx)) ) {
 ilrvar2clr <- function( varz , V=ilrBase(D=ncol(varz)+1) ) {
   V %*% varz %*% t(V)
 }
+
+
+
+var         <- function(x,...) UseMethod("var",x)
+var.default <- stats::var
+formals(var.default) <- c(formals(var.default),alist(...= ))
+
+
+  
+var.acomp   <- function(x,y=NULL,...) {
+  if( has.missings(x) ||  has.missings(y) ) 
+    return(var(cdt(x),cdt(y),...))
+  else
+    return(var(cdt(x),cdt(y),...))
+}
+var.rcomp <- var.acomp
+var.aplus <- var.acomp
+var.rplus <- var.acomp
+
+var.rmult <- function(x,y=NULL,...) {
+  return(var(unclass(x),unclass(y),...))
+  # XXXXXXXXX
+  stop("Not yet implemented")
+  if( is.null(y) ) {
+    # Variance
+    
+
+
+  } else {
+    # Covariance
+
+  }
+
+}
+
+cov         <- function(x,y=x,...) UseMethod("cov",x)
+cov.default <- stats::cov
+formals(cov.default) <- c(formals(cov.default),alist(...= ))
+cov.acomp   <- var.acomp
+cov.rcomp <- cov.acomp
+cov.aplus <- cov.acomp
+cov.rplus <- cov.acomp
+cov.rmult <- var.rmult
+
+cor <- function(x,y=NULL,...) UseMethod("cor",x)
+cor.default <- stats::cor
+formals(cor.default) <- c(formals(cor.default),alist(...= ))
+
+cor.acomp <- function(x,y=NULL,...) {
+  if( has.missings(x) || has.missings(y) )
+    cor(cdt(x),cdt(y),...)
+  else
+    cor(cdt(x),cdt(y),...)
+}
+
+cor.rcomp <- cor.acomp 
+cor.aplus <- cor.acomp
+cor.rplus <- cor.acomp
+cor.rmult <- function(x,y=NULL,...) {
+  cor(unclass(x),unclass(cdt(y)),...)
+  
+}
+
 
 powerofpsdmatrix <- function(M,p,...) {
   s <- svd(M,...)
@@ -384,11 +785,14 @@ mcor.default <- function(x,y,...) {
 }
 
 
+
 summary.acomp <- function( object,... ) {
   W <- clo(gsi.plain(object))
-  Wq <- apply(W,1,function(w) outer(w,w,"/"))
+  Wq <- apply(gsi.recodeM2C(W,BDL=NaN,SZ=NaN,MAR=NaN,MNAR=NaN),
+              1,function(w) outer(w,w,"/"))
   dim(Wq)<-c(ncol(W),ncol(W),nrow(W))
   dimnames(Wq) <- list(colnames(W),colnames(W),NULL)
+  
   structure(list(mean=mean(acomp(W)),
        mean.ratio=apply(Wq,1:2,function(x) exp(mean(log(x)))),
        variation=variation.acomp(acomp(W)),
@@ -459,8 +863,8 @@ gsi.textpanel <- function(x,y,lab,...) {
 }
 
 boxplot.acomp <- function(x,fak=NULL,...,
-                          xlim=x.lim,ylim=c(minq,maxq),
-                          log=TRUE,panel=vp.logboxplot,dots=!boxes,boxes=TRUE) {
+                          xlim=x.lim,ylim=c(minq,maxq),log=TRUE,
+                          panel=vp.logboxplot,dots=!boxes,boxes=TRUE) {
   X <- acomp(x)
   if( is.null(fak) )
     fak <- factor(rep("",nrow(X)))
@@ -474,8 +878,8 @@ boxplot.acomp <- function(x,fak=NULL,...,
   if( is.function(panel) )
     panel <- list(panel)
   ipanel <- function(x,y,...) {
-    a <- unclass(X)[,gsi.mapfrom01(log(x))]
-    b <- unclass(X)[,gsi.mapfrom01(log(y))]
+    a <- gsi.recodeM2Clean(unclass(X)[,gsi.mapfrom01(log(x))])
+    b <- gsi.recodeM2Clean(unclass(X)[,gsi.mapfrom01(log(y))])
     for( thispanel in panel ) 
       thispanel(fak,b/a,...,dots=dots,boxes=boxes)
   }
@@ -558,7 +962,7 @@ boxplot.rcomp <- function(x,fak=NULL,...,
   su <- summary.acomp(X)
   minq <- log(min(su$min)/(min(su$min)+max(su$max)))
   maxq <- log(max(su$max)/(min(su$min)+max(su$max)))
-
+  
   ipairs <- function (x, labels, panel = points, ..., 
                       font.main = par("font.main"),
                       cex.main = par("cex.main"), diag.panel = NULL, 
@@ -908,8 +1312,17 @@ power.acomp <- function(x,s) {
 
 
 "+.rcomp" <- function(x,y) {
-  warning("+ is meaningless for rcomp")
-  rcomp(gsi.add(x,y))
+#  warning("+ is meaningless for rcomp")
+  if( is.rcomp(x) )
+    if( is.rcomp(y) ) {
+      stop("+ is meaningless for two rcomp objects")
+   } else if( is.rcomp(x)) {
+      rmult(clo(x))+rmult(y)
+    } else if( is.rcomp(y) ) {
+      rmult(x)+rmult(clo(y))
+    } else
+      stop("Why are we here in +.rcomp without rcomp?")
+  #rcomp(gsi.add(x,y))
 }
 
 "-.rcomp" <- function(x,y) {
@@ -1093,60 +1506,60 @@ gsi.expandrcomp <- function(x,alpha) {
   cpt.inv(cpt(x)*alpha)
 }
 
-endpointCoordinates <- function(X,...) UseMethod("endpointCoordinates")
+endmemberCoordinates <- function(X,...) UseMethod("endmemberCoordinates")
 
-endpointCoordinates.default <- function(X,endpoints=diag(gsi.getD(X)),...) {
-  class(endpoints) <- class(X)
+endmemberCoordinates.default <- function(X,endmembers=diag(gsi.getD(X)),...) {
+  class(endmembers) <- class(X)
   X <- oneOrDataset(idt(X))
-  A <- t(unclass(idt(endpoints)))
+  A <- t(unclass(idt(endmembers)))
   erg <- solve( rbind(cbind(t(A)%*%A,1),c(rep(1,ncol(A)),0)),
                rbind(t(A)%*%t(unclass(X)),1))
   erg <- rmult(t(erg[-nrow(erg),,drop=FALSE]))
-  colnames(erg) <- rownames(endpoints)
+  colnames(erg) <- rownames(endmembers)
   erg
 }
 
-endpointCoordinates.acomp <- function(X,endpoints=clr.inv(diag(gsi.getD(X))),...) {
-  ep <- ilr(endpoints)
-  rownames(ep) <- rownames(endpoints)
-  endpointCoordinates(idt(X),ep,...)
+endmemberCoordinates.acomp <- function(X,endmembers=clr.inv(diag(gsi.getD(X))),...) {
+  ep <- ilr(endmembers)
+  rownames(ep) <- rownames(endmembers)
+  endmemberCoordinates(idt(X),ep,...)
 }
 
-endpointCoordinates.aplus <- function(X,endpoints,...) {
-  ep <- ilt(endpoints)
-  rownames(ep) <- rownames(endpoints)
-  endpointCoordinates(idt(X),ep,...)
-}
-
-
-endpointCoordinates.rplus <- function(X,endpoints,...) {
-  ep <- iit(endpoints)
-  rownames(ep) <- rownames(endpoints)
-  endpointCoordinates(idt(X),ep,...)
+endmemberCoordinates.aplus <- function(X,endmembers,...) {
+  ep <- ilt(endmembers)
+  rownames(ep) <- rownames(endmembers)
+  endmemberCoordinates(idt(X),ep,...)
 }
 
 
-endpointCoordinatesInv <- function(K,endpoints,...) UseMethod("endpointCoordinatesInv",endpoints)
-
-endpointCoordinatesInv.rmult <- function(K,endpoints,...) {
-  rmult(t(t(unclass(endpoints)) %*% t(unclass(K))))
-}
-
-endpointCoordinatesInv.acomp <- function(K,endpoints,...) {
-  ilr.inv(endpointCoordinatesInv(K,ilr(endpoints)))
-}
-
-endpointCoordinatesInv.rcomp <- function(K,endpoints,...) {
-  ipt.inv(endpointCoordinatesInv(K,ipt(endpoints)))
+endmemberCoordinates.rplus <- function(X,endmembers,...) {
+  ep <- iit(endmembers)
+  rownames(ep) <- rownames(endmembers)
+  endmemberCoordinates(idt(X),ep,...)
 }
 
 
-endpointCoordinatesInv.aplus <- function(K,endpoints,...) {
-  ilt.inv(endpointCoordinatesInv(K,ilt(endpoints)))
+endmemberCoordinatesInv <- function(K,endmembers,...) UseMethod("endmemberCoordinatesInv",endmembers)
+
+endmemberCoordinatesInv.rmult <- function(K,endmembers,...) {
+  rmult(t(t(unclass(endmembers)) %*% t(unclass(K))))
 }
 
-endpointCoordinatesInv.rplus <- function(K,endpoints,...) {
-  iit.inv(endpointCoordinatesInv(K,iit(endpoints)))
+endmemberCoordinatesInv.acomp <- function(K,endmembers,...) {
+  ilr.inv(endmemberCoordinatesInv(K,ilr(endmembers)))
+}
+
+endmemberCoordinatesInv.rcomp <- function(K,endmembers,...) {
+  ipt.inv(endmemberCoordinatesInv(K,ipt(endmembers)))
+}
+
+
+endmemberCoordinatesInv.aplus <- function(K,endmembers,...) {
+  ilt.inv(endmemberCoordinatesInv(K,ilt(endmembers)))
+}
+
+endmemberCoordinatesInv.rplus <- function(K,endmembers,...) {
+  iit.inv(endmemberCoordinatesInv(K,iit(endmembers)))
 }
 
 
@@ -1159,7 +1572,7 @@ scale.acomp <- function( x,center=TRUE, scale=TRUE ) {
       W <- power.acomp(W,as.numeric(scale)/
                        sqrt(sum(gsi.diagExtract(var(clr(W))))))
   } else if( scale ) {
-    mean <- c(mean.acomp(W))
+    mean <- c(mean(acomp(W)))
     W <- perturbe(power.acomp(perturbe(W,1/mean),as.numeric(scale)/sqrt(sum(gsi.diagExtract(var(clr(W)))))),mean)
   }
   W
@@ -1172,7 +1585,7 @@ scale.rcomp <- function( x,center=TRUE, scale=TRUE ) {
     if( scale )
       W <- gsi.expandrcomp(W,as.numeric(scale)/sqrt(sum(gsi.diagExtract(var(cpt(W))))))
   } else if( scale ) {
-    mean <- c(mean.rcomp(W))
+    mean <- c(mean(rcomp(W)))
     W <- gsi.add(mean,gsi.sub(W,mean)/sqrt(sum(gsi.diagExtract(var(cpt(W))))))
   }
   W
@@ -1185,7 +1598,7 @@ scale.aplus <- function( x,center=TRUE, scale=TRUE ) {
     if( scale )
       W <- power.aplus(W,as.numeric(scale)/sqrt(sum(gsi.diagExtract(var(ilt(W))))))
   } else if( scale ) {
-    mean <- c(mean.aplus(W))
+    mean <- c(mean(aplus(W)))
     W <- perturbe.aplus(power.aplus(perturbe.aplus(W,1/mean),as.numeric(scale)/sqrt(sum(gsi.diagExtract(var(ilt(W)))))),mean)
   }
   W
@@ -1202,20 +1615,20 @@ scale.rmult <- function( x,center=TRUE, scale=TRUE ) {
 normalize <- function(x,...) UseMethod("normalize",x)
 normalize.default <- function(x,...) x/norm(x)
 
-norm <- function(x,...) UseMethod("norm",x)
+if( !exists("norm")) norm <- function(x,...) UseMethod("norm",x)
 
-norm.default <- function(x,...) {
-  sqrt( sum(x^2) )
+norm.default <- function(X,...) {
+  sqrt( sum(X^2) )
 }
 
-norm.acomp <- function(x,...) {
-  norm.rmult(cdt(x),...)
+norm.acomp <- function(X,...) {
+  norm.rmult(cdt(X),...)
 }
 norm.rcomp <- norm.acomp
 norm.aplus <- norm.acomp
 norm.rplus <- norm.acomp
-norm.rmult <- function(x,...) {
-   sqrt(x %*% x)
+norm.rmult <- function(X,...) {
+   sqrt(X %*% X)
 }
 
 dist <- function(x,...) UseMethod("dist")
@@ -1232,150 +1645,305 @@ scalar.default <- function(x,y) {
 }
 
 
-clr <- function( x ) {
+clr <- function( x ,... ) {
   W <- oneOrDataset(x)
-  rmult(gsi.simshape(unclass(log( W / c(geometricmean.row(W)))),x)) 
+  nmv <- is.NMV(W)
+  LOG <- unclass(log(ifelse(nmv,W,1)))
+  erg <- ifelse(nmv,LOG-gsi.rsum(LOG)/gsi.rsum(nmv),0)
+  #M   <- gsi.rsum(gsi.recodeM2C(W,LOG,BDL=0,SZ=0,MAR=0,MNAR=0))
+  rmult(gsi.simshape(erg,x),orig=x) 
 }
 
-clr.inv <- function( z ) {
-  acomp( exp(z) )
+clr.inv <- function( z,... ) {
+  acomp( gsi.recodeC2M(exp(z),ninf=BDLvalue,nan=MARvalue,na=MNARvalue) )
 }
 
-ult <- function( x ) {
-  ilt(clo(x))
+ult <- function( x,... ) {
+  ilt(clo(x),...)
 }
 
 ult.inv <- clr.inv
 
-Kappa <- function( x ) {
+Kappa <- function( x, ...) {
   W <- oneOrDataset(x)
   (clr(W)-ult(W))[,1]
 }
 
-gsi.ilrBase <- function(D) {
-  if( D==1 )
+#gsi.ilrBase <- function(D) {
+#  if( D==1 )
+#    return(matrix(nrow=0,ncol=0))
+#  tmp <- diag(D) - 1/(D)* matrix(1,ncol=D,nrow=D)
+#  for( i in 1:(NCOL(tmp)-1)  ) {
+#    tmp[,i] <- tmp[,i]/sqrt(sum(tmp[,i]^2))
+#    rest <- (i+1):NCOL(tmp)
+#    if( length(rest) != 1 ) {
+#      tmp[,rest]  <-tmp[,rest,drop=FALSE] - tmp[,rep(i,length(rest)),drop=FALSE]%*%
+#        gsi.diagGenerate( c(t(tmp[,i])%*%tmp[,rest,drop=FALSE] ) )
+#    } 
+#  }
+#  tmp[,-NROW(tmp)]
+#}
+
+gsi.ilrBase <-function(D){
+  if(D<=1)
     return(matrix(nrow=0,ncol=0))
-  tmp <- diag(D) - 1/(D)* matrix(1,ncol=D,nrow=D)
-  for( i in 1:(NCOL(tmp)-1)  ) {
-    tmp[,i] <- tmp[,i]/sqrt(sum(tmp[,i]^2))
-    rest <- (i+1):NCOL(tmp)
-    if( length(rest) != 1 ) {
-      tmp[,rest]  <-tmp[,rest,drop=FALSE] - tmp[,rep(i,length(rest)),drop=FALSE]%*%
-        gsi.diagGenerate( c(t(tmp[,i])%*%tmp[,rest,drop=FALSE] ) )
-    } 
+  else 
+    t(unclass(normalize(rmult(t(contr.helmert(n=D))))))
+}
+
+
+
+
+                                        # Old ilrBase
+#ilrBase <- function( x=NULL , z=NULL , D = NULL ) {
+#  if( missing(D) )
+#    D <- if(is.null(x))
+#      NCOL(oneOrDataset(z))+1
+#    else
+#      NCOL(oneOrDataset(x))
+#  while( D > length(ilrBaseList) )
+#    ilrBaseList <<- c(ilrBaseList,gsi.ilrBase(length(ilrBaseList)+1))
+#  ilrBaseList[[D]]gsi.OrderIlr
+#}
+# ilrBaseList <- lapply(1:20,gsi.ilrBase)
+
+
+ilrBase <- function(x=NULL, z=NULL, D=NULL, method="basic"){
+ if (method=="basic"){
+    if (missing(D))
+        D <- if (is.null(x))
+            NCOL(oneOrDataset(z)) + 1
+        else NCOL(oneOrDataset(x))
+#     while (D > length(ilrBaseList)) ilrBaseList <<- c(ilrBaseList,
+#         gsi.ilrBase(length(ilrBaseList) + 1))
+#     V=ilrBaseList[[D]]
+  V = gsi.ilrBase(D)
+ } #end if basic
+ if (method=="balanced"){
+    # build the merge structure (as in hclust)
+    if(is.null(D)==TRUE){D=max(ncol(x),ncol(z))}
+    M = c(-c(1:D),c(floor(D/2):1),c((floor(D/2)+1):(D-2)))
+    M = matrix(M, byrow=TRUE, nrow=D-1, ncol=2)
+    V = gsi.merge2signary(M)
+    V = gsi.buildilrBase(V)
+ }#end if balanced
+ if (method=="optimal"){
+  if(length(dim(x))<2){
+   warning("method 'optimal' requires a data set")
   }
-tmp[,-NROW(tmp)]
+  else{
+    V = gsi.optimalilrBase(x)
+    V = gsi.buildilrBase(V)
+
+  }
+ } #end if optimal
+ return(V)
 }
 
-ilrBaseList <- lapply(1:20,gsi.ilrBase)
-ilrBase <- function( x=NULL , z=NULL , D = NULL ) {
-  if( missing(D) )
-    D <- if(is.null(x))
-      NCOL(oneOrDataset(z))+1
-    else
-      NCOL(oneOrDataset(x))
-  while( D > length(ilrBaseList) )
-    ilrBaseList <<- c(ilrBaseList,gsi.ilrBase(length(ilrBaseList)+1))
-  ilrBaseList[[D]]
+gsi.buildilrBase <-function(W=c(1,-1)){
+  # builds an ilr base from a matrix of 1, -1 and 0 (a partition)
+  if(length(W)<2){
+    return(ilrBase(D=1))
+  }
+if(length(dim(W))==0){
+  return(ilrBase(D=2))
+  }
+  if(length(dim(W))>0){
+   W = as.matrix(W)
+   nc = ncol(W)
+   D = nrow(W)
+   isPos = (W>0)
+   isNeg = (W<0)
+   nPos = matrix(1,D,D) %*% isPos
+   nNeg = matrix(1,D,D) %*% isNeg
+   W = (isPos * nNeg - isNeg * nPos)
+   nn = sapply(1:nc,function(i){1/norm.rmult(W[,i])})
+   nn = matrix(nn, ncol=ncol(W), nrow=nrow(W), byrow=TRUE)
+   W = W * nn
+   return(W)
+  }
+}
+gsi.signary2ilrBase <- gsi.buildilrBase
+
+
+gsi.optimalilrBase <- function(x){
+  # Takes as data a binary data frame: 0=case unobserved, 1=case observed
+  # performs a cluster analysis of variables on it
+  # and recodes the structure to a signary matrix (pre-ilr)
+  if(is.null(attr(x,"Losts"))==TRUE){
+    Ones = !oneOrDataset(is.infinite(log(as.matrix(x))),x) # find zeroes
+  }
+  if(is.null(attr(x,"Losts"))==FALSE){
+    Ones = !attr(x,"Losts")
+  }
+  h= hclust(dist(t(Ones)))
+  V = gsi.merge2signary(h$merge)
+  return(V)
 }
 
-ilr    <- function( x , V=ilrBase(x) ) {
+
+gsi.merge2signary <- function(M){
+  # takes a merge structure (as explained in hclust) and converts it to a sign matrix (encoding the ilr partition: 0=no influence, 1=numerator, -1=denominator)
+ V = matrix(0,ncol=nrow(M)+1,nrow=nrow(M))
+  for(i in 1:nrow(M)){
+   for(j in 1:2){
+    weight = (-1)^j
+    k = M[i,j]
+    if(k<0){
+      V[i,abs(k)] = weight
+    } # for singletons
+    if(k>0){ # for groups
+      take = as.logical(V[k,])
+      V[i,take] = rep(weight,sum(take))
+    }
+  }
+ }
+return(t(V))
+}
+
+
+
+
+ilr    <- function( x , V=ilrBase(x),... ) {
   rmult(clr2ilr( clr(oneOrDataset(x)),V ))
 }
 
-ilr.inv <- function( z, V=ilrBase(z=z)) {
-  clr.inv( ilr2clr(z,V) )
+ilr.inv <- function( z, V=ilrBase(z=z),...,orig=NULL) {
+  erg <- clr.inv( ilr2clr(z,V) )
+  if( ! is.null(orig) && gsi.getD(erg) == gsi.getD(orig) ) {
+    names(erg)<-names(orig)
+  }
+  erg
 }
 
-alr <- function( x ) {
-  W <- oneOrDataset(x)
-  rmult(gsi.simshape( log( unclass(W)[,-NCOL(W)] / c(W[,NCOL(W)]) ) , x))
+alr <- function( x ,...) {
+W <- unclass(clo(oneOrDataset(x)))
+V <- gsi.recodeM2C(W,log(W),BDL=-Inf,SZ=NaN,MAR=NaN,MNAR=NA)
+rmult(gsi.simshape( V[,-NCOL(V),drop=FALSE] - c(V[,NCOL(V)]), x))
 }
 
-alr.inv <- function( z ) {
+alr.inv <- function( z ,...,orig=NULL) {
   Z <- cbind(oneOrDataset(z),0)
-  acomp(gsi.simshape( clo(exp(Z)) , z ))
+  erg <- acomp(gsi.simshape( clo(gsi.recodeC2M(Z,exp(Z),
+                                        ninf=BDLvalue,
+                                        inf =MNARvalue,
+                                        nan =MARvalue,
+                                        na  =MNARvalue
+                                        )) , z ))
+  if( ! is.null(orig) && gsi.getD(erg) == gsi.getD(orig) ) {
+    names(erg)<-names(orig)
+  }
+  erg
 }
 
 
-apt <- function( x ) {
+apt <- function( x ,...) {
   W <- oneOrDataset(x)
-  rmult(gsi.simshape( gsi.plain(clo( W )[,-NCOL(W)]) , x))
+  V <- gsi.recodeM2C(W,gsi.plain(clo( W )),BDL=0.0,SZ=0.0,MAR=NaN,MNAR=NA)
+  rmult(gsi.simshape(V[,-NCOL(W)],x))
 }
 
-apt.inv <- function( z ) {
+apt.inv <- function( z ,...,orig=NULL) {
   Z <- oneOrDataset(z)
-  Z <- cbind(Z, 1 - Z %*% rep(1,NCOL(Z)))
-  rcomp(gsi.simshape( Z ,z ))
+  Z <- cbind(Z, 1 - gsi.recodeC2M(Z,na=0.0,nan=0.0) %*% rep(1,NCOL(Z)))
+  erg <- rcomp(gsi.simshape( Z ,z ))
+  if( ! is.null(orig) && gsi.getD(erg) == gsi.getD(orig) ) {
+    names(erg)<-names(orig)
+  }
+  erg
 }
 
-cpt <- function( x ) {
-  x <- oneOrDataset(x)
-  rmult(clo(x)- 1/NCOL(x))
+cpt <- function( x ,...) {
+  X <- oneOrDataset(x)
+  rmult(clo(x) - 1/NCOL(X),orig=x)
 }
 
-cpt.inv <- function( z ) {
+cpt.inv <- function( z ,...) {
   if( abs(sum(z))>0.0001 )
-    warning( "z not closed in cpt.inv")
+    warning( "z not in cpt plane in cpt.inv")
   rcomp(z + 1/NCOL(oneOrDataset(z)))
 }
 
-ipt    <- function( x , V=ilrBase(x)) {
-  rmult(clr2ilr(cpt(x),V))
+ipt    <- function( x , V=ilrBase(x),...) {
+  rmult(clr2ilr(cpt(x),V),orig=x)
+  
 }
 
-ipt.inv <- function( z, V=ilrBase(z=z) ) {
-  cpt.inv( ilr2clr(z,V) )
+ipt.inv <- function( z, V=ilrBase(z=z) ,...,orig=NULL) {
+  erg<-cpt.inv( ilr2clr(z,V) )
+  if( ! is.null(orig) && gsi.getD(erg) == gsi.getD(orig) ) {
+    names(erg)<-names(orig)
+  }
+  erg
 }
 
-ucipt.inv <- function( z, V=ilrBase(z=z) ) {
-    tmp <- ilr2clr(z,V) + 1/(NCOL(oneOrDataset(z))+1)
-    tmp[tmp<0]<-NA
-    rcomp(tmp)
+ucipt.inv <- function( z, V=ilrBase(z=z) ,...,orig=NULL) {
+  tmp <- ilr2clr(z,V) + 1/(gsi.getD(z)+1)
+  tmp[tmp<0]<-MNARvalue
+  erg<-rcomp(tmp)
+  if( ! is.null(orig) && gsi.getD(erg) == gsi.getD(orig) ) {
+    names(erg)<-names(orig)
+  }
+  erg
 }
 
 
-ilt <- function( x ) {
-  rmult(log(gsi.plain(x)))
+ilt <- function( x ,...) {
+  W <- gsi.plain(x)
+  rmult(log(ifelse(is.NMV(W),W,1)),orig=x)
 }
 
-ilt.inv <- function( z ) {
-  aplus(exp(z))
+ilt.inv <- function( z ,...) {
+  aplus(gsi.recodeC2M(z,exp(z),ninf=BDLvalue,nan=MARvalue,na=MNARvalue))
 }
 
-iit <- function( x ) {
-  rmult( x )
+iit <- function( x ,...) {
+  rmult( gsi.recodeM2C(x,BDL=0.0,SZ=0.0,MAR=0.0,MNAR=0.0 ) ,orig=x)
 }
 
-iit.inv <- function(z) {
-  rplus(z)
+iit.inv <- function(z,...) {
+  rplus(gsi.recodeC2M(z,na=MNARvalue,nan=MARvalue))
 }
 
-idt         <- function(x) UseMethod("idt",x)
-idt.default <- function(x) x
-idt.acomp   <- function(x) ilr(x) 
-idt.rcomp   <- function(x) ipt(x) 
+idt         <- function(x,...) UseMethod("idt",x)
+idt.default <- function(x,...) x
+idt.acomp   <- function(x,...) ilr(x,...) 
+idt.rcomp   <- function(x,...) ipt(x,...) 
 idt.aplus   <- ilt 
 idt.rplus   <- iit 
-idt.rmult   <- function(x) x
-idt.factor  <- function(x) rmult(clr2ilr(cdt(factor)))
+idt.rmult   <- function(x,...) x
+idt.factor  <- function(x,...) rmult(clr2ilr(cdt(x)))
 
 
-cdt         <- function(x) UseMethod("cdt",x)
-cdt.default <- function(x) x
+cdt         <- function(x,...) UseMethod("cdt",x)
+cdt.default <- function(x,...) x
 cdt.acomp   <- clr 
 cdt.rcomp   <- cpt 
 cdt.aplus   <- ilt 
 cdt.rplus   <- iit 
-cdt.rmult   <- function(x) x
-cdt.factor  <- function(x) {
+cdt.rmult   <- function(x,...) x
+cdt.factor  <- function(x,...) {
   #x <- matrix(0,nrow=length(x),ncol=nlevels(x),dimnames=list(names(x),levels(x)))
   x[1:ncol(x)+unclass(x)] <- model.matrix(~-1+x)
   
   rmult(matrix(x,nrow=nrow(x),dimnames=dimnames(x)))
 }
 
+cdt.inv <- function(x,orig,...) UseMethod("cdt.inv",orig)
+cdt.inv.default <- function(x,orig,...) x
+cdt.inv.acomp   <- function(x,orig,...) clr.inv(x,...,orig=orig)
+cdt.inv.rcomp   <- function(x,orig,...) cpt.inv(x,...,orig=orig)
+cdt.inv.aplus   <- function(x,orig,...) ilt.inv(x,...,orig=orig)
+cdt.inv.rplus   <- function(x,orig,...) iit.inv(x,...,orig=orig)
+cdt.inv.rmult   <- function(x,orig,...) x
 
+idt.inv <- function(x,orig,...) UseMethod("idt.inv",orig)
+idt.inv.default <- function(x,orig,...) x
+idt.inv.acomp   <- function(x,orig,...) ilr.inv(x,...,orig=orig)
+idt.inv.rcomp   <- function(x,orig,...) ipt.inv(x,...,orig=orig)
+idt.inv.aplus   <- function(x,orig,...) ilt.inv(x,...,orig=orig)
+idt.inv.rplus   <- function(x,orig,...) iit.inv(x,...,orig=orig)
+idt.inv.rmult   <- function(x,orig,...) x
 
 
 variation <- function( x, ... ) UseMethod("variation",x)
@@ -1422,63 +1990,153 @@ variation.rmult <- function( x ,...) {
 }
 variation.rplus <- variation.rmult
 
-if( FALSE ) {
-covariation <- function(x,...) UseMethod("covariation",x)
 
-covariation.acomp <- function( x ,...) {
-  i <- rep(1:NCOL(x),each=NCOL(x))
-  j <- rep(1:NCOL(x),NCOL(x))
-  take <- i<j
-  TM <- matrix(0,ncol=sum(take),nrow=NCOL(x))
-  TM[i[take]+NROW(TM)*((1:sum(take))-1)] <- 1
-  TM[j[take]+NROW(TM)*((1:sum(take))-1)] <- -1
-  dim(TM) <- c(NCOL(X),sum(take))
-  colnames(TM) <- paste( colnames(x)[i[take]],colnames(x)[j[take]],sep="")
-  
-  t(TM) %*% var(clr(x)) %*% TM 
+
+is.BDL <- function(x,mc=attr(x,"missingClassifier")) {if( is.null(mc) ) is.finite(x)&x<=0.0  else do.call(mc,list(x))=="BDL"  }
+is.SZ  <- function(x,mc=attr(x,"missingClassifier")) {if( is.null(mc) ) is.infinite(x)&x<0  else do.call(mc,list(x))=="SZ" }
+is.MAR <- function(x,mc=attr(x,"missingClassifier")) {if( is.null(mc) ) is.nan(x)  else do.call(mc,list(x))=="MAR" }
+is.MNAR<- function(x,mc=attr(x,"missingClassifier")) {if( is.null(mc) )  is.na(x)&!is.nan(x)  else do.call(mc,list(x))=="MNAR" }
+is.NMV <- function(x,mc=attr(x,"missingClassifier")) {if( is.null(mc) )  is.finite(x)&x>0.0 else do.call(mc,list(x))=="NMV" }
+is.WZERO <- function(x,mc=attr(x,"missingClassifier")) {is.BDL(x)|is.SZ(x) }
+is.WMNAR <- function(x,mc=attr(x,"missingClassifier")) {is.BDL(x)|is.MNAR(x) }
+
+has.missings <- function(x,...) UseMethod("has.missings")
+
+has.missings.default     <- function(x,mc=attr(x,"missingClassifier"),...) {
+  (!is.null(x))&&!all(is.NMV(x,mc))
 }
 
-covariation.rcomp <- function( x ,...) {
-  i <- rep(1:NCOL(x),each=NCOL(x))
-  j <- rep(1:NCOL(x),NCOL(x))
-  take <- i<j
-  TM <- matrix(0,ncol=sum(take),nrow=NCOL(x))
-  TM[i[take]+NROW(TM)*((1:sum(take))-1)] <- 1
-  TM[j[take]+NROW(TM)*((1:sum(take))-1)] <- -1
-  dim(TM) <- c(NCOL(x),sum(take))
-  colnames(TM) <- paste( colnames(x)[i[take]],colnames(x)[j[take]],sep="")
-  
-  t(TM) %*% var(ipt(x)) %*% TM 
+has.missings.rmult     <- function(x,mc=attr(x,"missingClassifier"),...) {
+  if( is.null(x) )
+    return( FALSE )
+  if( !is.null(attr(x,"missingProjector")) )
+    return( TRUE )
+  if( !is.null(orig <- attr(x,"orig")) )
+    return( has.missings(orig) )
+  else
+    !all(is.finite(x))
+}
+     
+getDetectionlimit <- function(x,dl=attr(x,"detectionlimit")) {
+  if( is.null(dl) ) dl <- NA
+  ifelse(is.finite(x)&x<0,-x,dl)
 }
 
-covariation.aplus <- function( x ,...) {
-  i <- rep(1:NCOL(x),each=NCOL(x))
-  j <- rep(1:NCOL(x),NCOL(x))
-  take <- i<j
-  TM <- matrix(0,ncol=sum(take),nrow=NCOL(x))
-  TM[i[take]+NROW(TM)*((1:sum(take))-1)] <- 1
-  TM[j[take]+NROW(TM)*((1:sum(take))-1)] <- -1
-  dim(TM) <- c(NCOL(x),sum(take))
-  colnames(TM) <- paste( colnames(x)[i[take]],colnames(x)[j[take]],sep="")
-  
-  t(TM) %*% var(ilt(x)) %*% TM 
+missingType <- function(x,...,mc=attr(x,"missingClassifier"),values=c("NMV","BDT","MAR","MNAR","SZ","Err")) {
+  #      finite, infinit, nan, na, x>0&!na  q=(x>0&!na)|nan
+  # NA     -       -       -   +    -           -     
+  # NaN    -       -       +   +    -           +
+  # -Inf   -       +       -   -    -           -         
+  # Inf    -       +       -   -    +           +
+  # 0/-1   +       -       -   -    -           -
+  # +1     +       -       -   -    +           +
+  # 6 Faelle -> 3 Bit noetig
+  #     infinit, na , !q
+  # +1    0      0    0
+  # 0/-1  0      0    1
+  # NaN   0      1    0
+  # NA    0      1    1
+  # Inf   1      0    0
+  # -Inf  1      0    1
+  if( is.null(mc) || identical(mc,missingType)) {
+    na <- is.na(x)
+    values <- values[c(1,2,3,4,6,5)]
+    structure(values[2+is.infinite(x)*4+na*2-((!na&x>0)|is.nan(x))],dim=dim(x),dimnames=dimnames(x))
+  }
+  else
+    do.call(mc,list(x,...))
 }
 
-covariation.rmult <- function( x ,...) {
-  i <- rep(1:NCOL(x),each=NCOL(x))
-  j <- rep(1:NCOL(x),NCOL(x))
-  take <- i<j
-  TM <- matrix(0,ncol=sum(take),nrow=NCOL(x))
-  TM[i[take]+NROW(TM)*((1:sum(take))-1)] <- 1
-  TM[j[take]+NROW(TM)*((1:sum(take))-1)] <- -1
-  dim(TM) <- c(NCOL(x),sum(take))
-  colnames(TM) <- paste( colnames(x)[i[take]],colnames(x)[j[take]],sep="")
-  
-  t(TM) %*% var(iit(x)) %*% TM 
-}
-covariation.rplus <- covariation.rmult
 
+
+missingSummary <- function(x,...,vlabs=colnames(x),mc=attr(x,"missingClassifier"),values=eval(formals(missingType)$values)) {
+  if( is.data.frame(x) )
+     x <- data.matrix(x)
+  missingType <- structure(c(missingType(x,...,values=1:6)),levels=as.character(values),
+            class=c("ordered","factor"))
+  # meaning, only faster:
+  # missingType <- factor(missingType(x,values=values),levels=values)
+  if( length(dim(x)==2 )) {
+    if(length(vlabs)!=ncol(x))
+      vlabs <- paste("V",1:ncol(x),sep="")
+    variable <- structure(rep(1:ncol(x),each=nrow(x)),
+                          levels=as.character(vlabs),class="factor")
+
+    as.missingSummary(table(variable,missingType))
+  } else {
+    as.missingSummary(t(table(missingType)))
+  }
 }
+
+as.missingSummary <- function(x,...) {
+  class(x) <- c("missingSummary",class(x))
+  x
+}
+
+plot.missingSummary <-function(x,...,main="Missings",legend.text=TRUE,
+                    col=c("gray","lightgray","yellow","red","white","magenta")) {
+  barplot(t(x),main=main,legend.text=legend.text,...,
+          col=col)
+}
+
+simulateMissings <- function(x,detectionlimit=NULL,knownlimit=FALSE,MARprob=0.0,MNARprob=0.0,mnarity=0.5,SZprob=0.0) {
+  if( is.data.frame(x) )
+    x <- data.matrix(x)
+  at <- attributes(x)
+  x <- unclass(x)
+  n <- length(x)
+  SZ   <- runif(n)<SZprob
+  MAR  <- runif(n)<MARprob
+  normal <- function(x) {
+    x<- rank(ifelse(is.finite(x),x,1));
+    qnorm(x/(length(x)+1))
+  }
+  w1 <- sqrt(1-mnarity)
+  w2 <- sqrt(mnarity)
+  MNAR <- pnorm(rnorm(n)*w1+normal(x)*w2) < MNARprob
+  x <- clo(x,detectionlimit=detectionlimit,total=NA)
+  if( !knownlimit )
+    x[is.BDL(x)]<-BDLvalue
+  n <- length(x)
+  x[MNAR]<-MNARvalue
+  x[MAR]<- MARvalue
+  x[SZ]<-SZvalue
+  attributes(x) <- at
+  x
+}
+
+zeroreplace <- function(x,d=NULL,a=2/3){
+  # ensure objects are either equivalent matrices, data frames or vectors
+  W = oneOrDataset(x)
+  if(!is.null(d)){
+    # if the detection limit is explicitly given, give it the same shape
+    Losts = oneOrDataset(is.WZERO(as.matrix(W)),W) # find wide zeroes
+    d = oneOrDataset(d,W)
+  }else{
+    # if not, extract from the data set
+    Losts = oneOrDataset(is.BDL(as.matrix(W)),W) # find values below detection limit (encoded as negative)
+    d = getDetectionlimit(W)
+  }
+  # scale down the detection limit...
+  d = a*d
+  # ... and replace
+  W[Losts]=d[Losts]
+  attr(W,"Losts")=Losts
+  return(W)
+}
+
+#zeroreplace <- function(x,d,a=2/3){
+#  # ensure all objects are either equivalent matrices, data frames or vectors
+#  W = oneOrDataset(x)
+#  Losts = oneOrDataset(is.WZERO(as.matrix(W)),W) # find zeroes
+#  d = oneOrDataset(d,W)
+#  # scale down the detection limit
+#  d = a*d
+#  # replace
+#  W[Losts]=d[Losts]
+#  attr(W,"Losts")=Losts
+#  return(W)
+#}
 
 
 gsi.mapin01 <- function(i,min=0,max=1) {c(min,min+(max-min)/i,max)}
@@ -1727,44 +2385,81 @@ isoProportionLines <- function(...) {
   UseMethod("isoProportionLines",gsi.getCoorInfo()$mean)
 }
 
+
+
 isoPortionLines.acomp <- function(by=0.2,at=seq(0,1,by=by),...,parts=1:3,total=1,labs=TRUE,lines=TRUE,unit="") {
   coor <- gsi.getCoorInfo()
   if( coor$scale != 1 )
     stop("Scaling not implemented  in isoPortionLines.acomp")
   for(k in parts) {
-    isoCollaps <- function(kw,k) {
-      s <- sum(kw[-k])
-      rcomp(switch(k,c(kw[k],0,s),c(s,kw[k],0),c(0,s,kw[k])))
+    isoCollaps <- function(kkw,k) {
+      s <- sum(kkw[-k])
+      rcomp(switch(k,c(kkw[k],0,s),c(s,kkw[k],0),c(0,s,kkw[k])))
     }
     dir   <- rep(0,3)
     dir[k]<- 0
     dir[-k]<-c(1,-1)
+    dir = rmult(rcomp(dir*unclass(coor$mean))) # directions must be also perturbed!
     for(p in at) {
       start <- rep((1-p)/2,3)
       start[k] <- p
+      tx <- rep(0,3)    # to place the text, it is easy to...
+      tx[k] <- p         # ... take points on the sides of the diagram
+      tx[c(3,1,2)[k]] <- 1-p
       if( p>0 && p<1 ) {
-        kw<-rcomp(acomp(start)-coor$mean)
-        if(lines) straight(kw,rmult(dir),...)
-        kw <- isoCollaps(kw,k)
-        if( labs ) text(kw[2]+cos(60*pi/180)*kw[3],kw[3]*sin(60*pi/180),
-             paste(p*total,unit[(k-1)%%length(unit)+1]),...,pos=c(2,1,4)[k],xpd=TRUE)
+        kw <- clo(start*unclass(coor$mean)) # perturbation must be positive
+        tx <- clo(tx*unclass(coor$mean))
+        if(lines) straight.rcomp(kw,dir,...)
+        kw <- isoCollaps(tx,k)
+        if( labs ){
+            text(kw[2]+cos(60*pi/180)*kw[3],kw[3]*sin(60*pi/180),
+            paste(p*total,unit[(k-1)%%length(unit)+1]),pos=c(2,1,4)[k],...,xpd=TRUE)
+           }
       }
     }
   }
   invisible(NULL)
 }
 
+#isoPortionLines.acomp <- function(by=0.2,at=seq(0,1,by=by),...,parts=1:3,total=1,labs=TRUE,lines=TRUE,unit="") {
+#  coor <- gsi.getCoorInfo()
+#  if( coor$scale != 1 )
+#    stop("Scaling not implemented  in isoPortionLines.acomp")
+#  for(k in parts) {
+#    isoCollaps <- function(kw,k) {
+#      s <- sum(kw[-k])
+#      rcomp(switch(k,c(kw[k],0,s),c(s,kw[k],0),c(0,s,kw[k])))
+#    }
+#    dir   <- rep(0,3)
+#    dir[k]<- 0
+#    dir[-k]<-c(1,-1)
+#    for(p in at) {
+#      start <- rep((1-p)/2,3)
+#      start[k] <- p
+#      if( p>0 && p<1 ) {
+#        kw<-rcomp(acomp(start)-coor$mean)
+#        if(lines) straight(kw,rmult(dir),...)
+#        kw <- isoCollaps(kw,k)
+#        if( labs ) text(kw[2]+cos(60*pi/180)*kw[3],kw[3]*sin(60*pi/180),
+#             paste(p*total,unit[(k-1)%%length(unit)+1]),...,pos=c(2,1,4)[k],xpd=TRUE)
+#      }
+#    }
+#  }
+#  invisible(NULL)
+#}
 
 isoProportionLines.acomp <- function(by=0.2,at=seq(0,1,by=by),...,parts=1:3,labs=TRUE,lines=TRUE) {
   coor <- gsi.getCoorInfo()
   for(k in parts) {
     dir   <- rep(0.25,3)
     dir[k]<- 0.5
+    dir = acomp(dir) # * coor$scale # not needed
     for(p in at) {
       if( p>0 && p<1) {
         start <- acomp(switch(k,c(1,1-p,p),c(p,1,1-p),c(1-p,p,1)))
-        kw<-(start-coor$mean)*coor$scale
-        if(lines) straight(kw,acomp(dir),...)
+#        start <- acomp(switch(k,c(1E-17,1-p,p),c(p,1E-17,1-p),c(1-p,p,1E-17)))
+        kw<-(start+coor$mean)*(coor$scale)  # perturbation must be positive
+        if(lines) straight(kw,dir,...)
         kw[k]<- 1E-17
         kw <- acomp(kw)
         if( labs ) text(kw[2]+cos(60*pi/180)*kw[3],kw[3]*sin(60*pi/180),
@@ -1774,6 +2469,26 @@ isoProportionLines.acomp <- function(by=0.2,at=seq(0,1,by=by),...,parts=1:3,labs
   }
   invisible(NULL)
 }
+
+#isoProportionLines.acomp <- function(by=0.2,at=seq(0,1,by=by),...,parts=1:3,labs=TRUE,lines=TRUE) {
+#  coor <- gsi.getCoorInfo()
+#  for(k in parts) {
+#    dir   <- rep(0.25,3)
+#    dir[k]<- 0.5
+#    for(p in at) {
+#      if( p>0 && p<1) {
+#        start <- acomp(switch(k,c(1,1-p,p),c(p,1,1-p),c(1-p,p,1)))
+#        kw<-(start-coor$mean)*coor$scale
+#        if(lines) straight(kw,acomp(dir),...)
+#        kw[k]<- 1E-17
+#        kw <- acomp(kw)
+#        if( labs ) text(kw[2]+cos(60*pi/180)*kw[3],kw[3]*sin(60*pi/180),
+#             paste(p),...,pos=c(4,2,1)[k],xpd=TRUE)
+#      }
+#    }
+#  }
+#  invisible(NULL)
+#}
 
 
 isoPortionLines.rcomp <- function(by=0.2,at=seq(0,1,by=by),...,parts=1:3,total=1,labs=TRUE,lines=TRUE,unit="") {
@@ -1908,7 +2623,7 @@ if( NCOL(X) > 3 ) {
   }
 if( pca && ! aspanel) {
   pca.d <- princomp(cpt(oX))$loadings[,1]
-  pca.c <- mean.rcomp(oX)
+  pca.c <- mean(rcomp(oX))
   straight.rcomp(pca.c,pca.d,col=col.pca)
 }
 return( invisible(NULL))
@@ -1938,9 +2653,10 @@ if( NCOL(X) > 2 ) {
       if( aspanel ) {
         usr <- par("usr"); on.exit(par(usr))
         if( logscale )
-          par( xlog=TRUE,ylog=TRUE,usr=c(log10(min(x)),log10(max(x)),log10(min(y)),log10(max(y))))
+          par( xlog=TRUE,ylog=TRUE,usr=c(min(log10(x[is.NMV(x)])),max(log10(x[is.NMV(x)])),
+                                         min(log10(y[is.NMV(y)])),max(log10(y[is.NMV(y)]))))
         else
-          par( usr=c(min(x),max(x),min(y),max(y)) )
+          par( usr=c(min(x,na.rm=TRUE),max(x,na.rm=TRUE),min(y,na.rm=TRUE),max(y,na.rm=TRUE)) )
                                         #axis(1)
                                         #axis(2)
       } else {
@@ -1962,13 +2678,13 @@ if( NCOL(X) > 2 ) {
   }
 if( pca && ! aspanel) {
   pca.d <- ilt.inv(princomp(ilt(oX))$loadings[,1])
-  pca.c <- mean.aplus(oX)
+  pca.c <- mean(aplus(oX))
   straight.aplus(pca.c,pca.d,col=col.pca)
 }
 return( invisible(NULL))
 }
 
-plot.rplus <- function(x,...,labels=colnames(X),cn=colnames(X),aspanel=FALSE,id=FALSE,idlabs=NULL,idcol=2,center=FALSE,scale=FALSE,pca=FALSE,col.pca=par("col"),add=FALSE,logscale=FALSE,xlim=apply(X,2,function(x) c(0,max(x))),ylim=xlim,col=par("col")) {
+plot.rplus <- function(x,...,labels=colnames(X),cn=colnames(X),aspanel=FALSE,id=FALSE,idlabs=NULL,idcol=2,center=FALSE,scale=FALSE,pca=FALSE,col.pca=par("col"),add=FALSE,logscale=FALSE,xlim=apply(X,2,function(x) c(0,max(x,na.rm=TRUE))),ylim=xlim,col=par("col")) {
   col<- unclass(col)
 if( scale )
   warning("Centering meaningless for rplus-amounts");
@@ -2016,7 +2732,7 @@ if( NCOL(X) > 2 ) {
   }
 if( pca && ! aspanel ) {
   pca.d <- princomp(iit(oX))$loadings[,1]
-  pca.c <- mean.rplus(oX)
+  pca.c <- mean(rplus(oX))
   straight.rplus(pca.c,pca.d,col=col.pca)
 }
 
@@ -2352,7 +3068,7 @@ gsi.spreadToIsoSpace <- function(spread) {
 ellipses <- function(mean,...) UseMethod("ellipses",mean)
 
 ellipses.rcomp <- function(mean,var,r=1,...,steps=360) {
-mean <- ipt(mean)
+mean <- oneOrDataset(ipt(mean))
 sp <- var
 w  <- seq(0,2*pi,length.out=steps)
 for(i in 1:nrow(mean)) {
@@ -2482,7 +3198,7 @@ straight.aplus <- function(x,d,...,steps=30) {
     if( ! par("ylog") ) r[3:4] <- log(c(r[4]/100,r[4]))
     r   <- abs(r[2]-r[1])+abs(r[4]-r[3])
     XP  <- aplus(X[i,]) + r*l*normalize(aplus(d[i,]))
-    lines.aplus(XP,...)
+    lines.rmult(XP,...) # lines.aplus(XP,...) produced double lines
                                         #    warning("straight.aplus not yet implemented in nonlog coordinates");
                                         #  }
   }
@@ -2644,7 +3360,7 @@ dnorm.rmult <- function(x,mean,var) {
 
 rnorm.acomp <- function(n,mean,var) {
   D <- NCOL(oneOrDataset(mean))
-  perturbe(ilr.inv(matrix(rnorm(n*length(mean)),ncol=D-1) %*%
+  perturbe(ilr.inv(matrix(rnorm(n*(D-1)),ncol=D-1) %*%
                          chol(clrvar2ilr(var))),
                 mean)
 }
@@ -2895,6 +3611,7 @@ princomp.rcomp <- function(x,...,scores=TRUE) {
   tmp$call <- cl
   gsi.addclass(tmp,"princomp.rcomp")
 }
+
 
 print.princomp.rcomp <- function(x,...) {
   NextMethod("print",x,...)
@@ -3164,45 +3881,6 @@ plot.relativeLoadings.princomp.rplus<- function(x,...) {
   invisible(x)
 }
 
-
-var         <- function(x,...) UseMethod("var",x)
-var.default <- stats::var
-formals(var.default) <- c(formals(var.default),alist(...= ))
-var.acomp   <- function(x,y=NULL,...) {
-  var(cdt(x),cdt(y),...)
-}
-var.rcomp <- var.acomp
-var.aplus <- var.acomp
-var.rplus <- var.acomp
-var.rmult <- function(x,y=NULL,...) {
-  var(unclass(x),unclass(cdt(y)),...)
-}
-
-cov         <- function(x,y=x,...) UseMethod("cov",x)
-cov.default <- stats::cov
-formals(cov.default) <- c(formals(cov.default),alist(...= ))
-cov.acomp   <- function(x,y=NULL,...) {
-  cov(cdt(x),cdt(y),...)
-}
-cov.rcomp <- cov.acomp
-cov.aplus <- cov.acomp
-cov.rplus <- cov.acomp
-cov.rmult <- function(x,y=NULL,...) {
-  cov(unclass(x),unclass(cdt(y)),...)
-}
-
-cor <- function(x,y=NULL,...) UseMethod("cor",x)
-cor.default <- stats::cor
-formals(cor.default) <- c(formals(cor.default),alist(...= ))
-
-cor.acomp <- function(x,y=NULL,...) {
-  cr <- cor(cdt(x),cdt(y),...)
-}
-
-cor.rcomp <- cor.acomp 
-cor.aplus <- cor.acomp
-cor.rplus <- cor.acomp
-cor.rmult <- function(x,y=NULL,...) cor(unclass(x),unclass(cdt(y)),...)
 
 
 read.geoeas <- function (file){

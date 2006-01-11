@@ -1,11 +1,13 @@
 \name{kingTetrahedron}
 \alias{kingTetrahedron}
-\title{Ploting composition into rotatable tetrahedron}
+\title{Ploting composition into rotable tetrahedron}
 \description{
-  Plots acomp/rcomp object  into tetrahedron and exports it in kinemage format.
+  Plots acomp/rcomp objects into tetrahedron exported in kinemage format.
   }
 \usage{
-   kingTetrahedron(X,parts=1:4,file="tmptetrahedron.kin",clu=NULL,vec=NULL,king=TRUE,scale=0.2,col=1,title="Compositional Tetrahedron")
+   kingTetrahedron(X, parts=1:4, file="tmptetrahedron.kin",
+   clu=NULL,vec=NULL, king=TRUE, scale=0.2, col=1, 
+   title="Compositional Tetrahedron")
           }
 \arguments{
   \item{X}{a compositional acomp or rcomp object of 4 or more parts}
@@ -23,7 +25,7 @@
   \item{title}{The title of the plot}
   }
   \value{
-    The function is called for its sideeffect of generating 
+    The function is called for its side effect of generating 
   a file  for 3D display  with the KiNG (Kinemage, Next Generation) interactive
        system for three-dimensional vector graphics.
        Works only with KiNG viewer available at \url{http://kinemage.biochem.duke.edu}
@@ -44,9 +46,9 @@
   With the right button drag we can zoom in and out of the picture.
   This animation supports coloring and different sizing of points.
   
-  We can display the kin file as 3-D animation also with MAGE viewer previous version of KiNG,
+  We can display the kin file as 3-D animation also with MAGE viewer a previous version of KiNG,
   also a free software available at http://kinemage.biochem.duke.edu.
-  For this we put king=FALSE in the command line.
+  For this one has to put king=FALSE as a parameter.
 }
 \note{
   This routine and the documentation is based on mix.Quad2net from the

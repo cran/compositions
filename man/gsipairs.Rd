@@ -4,7 +4,7 @@
 \alias{gsi.plots}
 \title{Internal functions of the compositions package}
 \description{
-  Creates a paired plot like pairs but allows to add additional panels
+  Creates a paired plot like \code{pairs} but allows to add additional panels
   afterwards
 }
 \usage{
@@ -12,7 +12,8 @@ gsi.pairs(x, labels, panel = points, \dots, main = NULL, oma = NULL,
     font.main = par("font.main"), cex.main = par("cex.main"), 
     lower.panel = panel, upper.panel = panel, diag.panel = NULL, 
     text.panel = textPanel, label.pos = 0.5 + has.diag/3, cex.labels = NULL, 
-    font.labels = 1, row1attop = TRUE, gap = 1,add=list(),xlim=apply(x,2,range),ylim=apply(x,2,range),log="",noplot=FALSE)
+    font.labels = 1, row1attop = TRUE, gap = 1, add=list(), 
+    xlim=apply(x,2,range), ylim=apply(x,2,range), log="", noplot=FALSE)
 gsi.add2pairs(x,panel,...,noplot=FALSE)
 gsi.plots
 }
@@ -51,11 +52,10 @@ gsi.plots
   \code{gsi.pairs}  essentially copies the functionality of
   \code{\link[graphics]{pairs}}. However it additionally stores its own
   parameters in the dev.cur() position of gsi.plots and allows to modify
-  the parameters and redo a modified plot afterwards. This is mainly
-  done by \code{gsi.add2pairs} by modifying the additional add
-  parameter, that specifies more panels. This meachnism showed not be
-  used directly since it is planed to replace the whole meachnism by a
-  more rigor solution soon.  
+  the parameters and re-do a modified plot afterwards. This is mainly
+  done by \code{gsi.add2pairs} by modifying the additional \code{add}
+  parameter, that specifies more panels. This mechanism should not be
+  used directly, since it is planed to replace it by a more rigorous solution soon.
 }
 
 \note{Do not use gsi.* functions directly since they are internal

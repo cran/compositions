@@ -3,9 +3,9 @@
 \alias{barplot.rcomp}
 \alias{barplot.aplus}
 \alias{barplot.rplus}
-\title{Barcharts of amounts}
+\title{Bar charts of amounts}
 \description{
-  Compositions and amounts dispalyed by barplots. 
+  Compositions and amounts dispalyed as bar plots. 
 }
 \usage{
 \method{barplot}{acomp}(height,...,legend.text=TRUE,beside=FALSE,total=1)
@@ -15,7 +15,7 @@
           }
 \arguments{
   \item{height}{an acomp, rcomp, aplus, or rplus object giving amounts
-    to be displayed by a barplot}
+    to be displayed}
   \item{\dots}{further graphical parameters as in
     \code{\link[graphics]{barplot}}}
   \item{legend.text}{same as legend.text in \code{\link[graphics]{barplot}}}
@@ -27,8 +27,8 @@
   the coordinates of all the bar midpoints drawn, as in
   \code{\link[graphics]{barchart}} }
 \details{
-  The functions are essentially light weighted warpers for
-  \code{\link[graphics]{barplot}} just adding a adequate default
+  The functions are essentially light-weighted wrappers for
+  \code{\link[graphics]{barplot}}, just adding an adequate default
   behavior for each of the scales.  
 
 

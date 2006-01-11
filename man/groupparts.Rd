@@ -29,6 +29,13 @@ groupparts(x,\dots)
   means. The new parts are named by named
   formal arguments. Not-mentioned parts remain ungrouped.
 }
+\section{Missing Policy}{
+  For the real geometries, SZ and BDL are considered as 0, and MAR and MNAR
+  are kept as missing of the same type. For the relative geometries, a BDL is a
+  special kind of MNAR, whereas a SZ is qualitatively different (thus a
+  balance with a SZ has no sense). MAR values transfer their MAR property to the 
+  resulting new variable. 
+}
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}, Raimon
 Tolosana-Delgado}
 \seealso{

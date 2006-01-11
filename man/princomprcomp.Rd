@@ -10,14 +10,12 @@
   interpretation of the obtained components.  
 }
 \usage{
-\method{princomp}{rcomp}(x,\dots,scores=TRUE)
-\method{print}{princomp.rcomp}(x,\dots)
-\method{plot}{princomp.rcomp}(x,y=NULL,\dots,
-npcs=min(10,length(x$sdev)),
-type=c("screeplot","variance","biplot","loadings","relative"),
-main=NULL,
-scale.sdev=1)
-\method{predict}{princomp.rcomp}(object,newdata,\dots)
+ \method{princomp}{rcomp}(x,\dots,scores=TRUE)
+ \method{print}{princomp.rcomp}(x,\dots)
+ \method{plot}{princomp.rcomp}(x,y=NULL,\dots,npcs=min(10,length(x$sdev)),
+        type=c("screeplot","variance","biplot","loadings","relative"),
+        main=NULL,scale.sdev=1)
+ \method{predict}{princomp.rcomp}(object,newdata,\dots)
 }
 \arguments{
   \item{x}{an rcomp dataset (for princomp) or a result from
@@ -26,11 +24,11 @@ scale.sdev=1)
   \item{scores}{a logical indicating whether scores should be computed or not}
   \item{npcs}{the number of components to be drawn in the scree plot}
   \item{type}{type of the plot: \code{"screeplot"} is a lined screeplot,
-    \code{"variance"} is a boxplot like screeplot, \code{"biplot"} is a
+    \code{"variance"} is a boxplot-like screeplot, \code{"biplot"} is a
     biplot, \code{"loadings"} displays the loadings as a 
     \code{\link[graphics]{barplot}}}
-  \item{scale.sdev}{The multiple of sigma to use plotting the loadings}
-  \item{main}{headline of the plot}
+  \item{scale.sdev}{the multiple of sigma to use when plotting the loadings}
+  \item{main}{title of the plot}
   \item{object}{a fitted princomp.rcomp object}
   \item{newdata}{another compositional dataset of class rcomp}
   \item{\dots}{further arguments to pass to internally-called functions}
@@ -38,31 +36,30 @@ scale.sdev=1)
 \value{
   \code{princomp} gives an object of type
   \code{c("princomp.rcomp","princomp")} with the following content:
-  \item{sdev}{the standard deviation of the principal components.}
-  \item{loadings}{the matrix of variable loadings (i.e., a matrix which
-    columns contain the eigenvectors). This is of class
-    \code{"loadings"}. The last eigenvalue is removed since it should
-    contain the irrelevant scaling.}
-  \item{Loadings}{The loadings as an rmult-object}
-  \item{center}{the cpt-transformed vector of means used to center the dataset}
-  \item{Center}{the \code{\link{rcomp}} vector of means used to center the dataset}
-  \item{scale}{the scaling applied to each variable}
-  \item{n.obs}{number of observations}
-  \item{scores}{if \code{scores = TRUE}, the scores of the supplied data
-    on the principal components and the information
-    available. Scores are coordinates in a basis given by the principal
-    components and thus not compositions}
-  \item{call}{the matched call}
-  \item{na.action}{not clearly understood}
+  \itemize{
+    \item{sdev}{the standard deviation of the principal components.}
+    \item{loadings}{the matrix of variable loadings (i.e., a matrix which
+      columns contain the eigenvectors). This is of class
+      \code{"loadings"}. The last eigenvalue is removed since it should
+      contain the irrelevant scaling.}
+    \item{Loadings}{the loadings as an rmult-object}
+    \item{center}{the cpt-transformed vector of means used to center the dataset}
+    \item{Center}{the \code{\link{rcomp}} vector of means used to center the dataset}
+    \item{scale}{the scaling applied to each variable}
+    \item{n.obs}{number of observations}
+    \item{scores}{if \code{scores = TRUE}, the scores of the supplied data
+      on the principal components. Scores are coordinates in a basis given by the principal
+      components and thus not compositions}
+    \item{call}{the matched call}
+    \item{na.action}{not clearly understood}
+  }
   \code{predict} returns a matrix of scores of the observations in the
-  \code{newdata} dataset
-  \cr.
+  \code{newdata} dataset.
   The other routines are mainly called for their side effect of plotting or
   printing and return the object \code{x}.   
 }
-
 \details{
-  Mainly a \code{princomp(cpt(x))} is performed.  To avoid confusion the
+  Mainly a \code{princomp(cpt(x))} is performed.  To avoid confusion, the
   meaningless last principal component is removed.
   \cr
   The plot routine provides screeplots (\code{type = "s"},\code{type=
@@ -75,11 +72,12 @@ scale.sdev=1)
   represent the portions of variance explained by the principal
   components. 
   \cr
-  The interpretation of the the biplot differs from classical
-  one. The relevant variables are not the drawn
-  arrows of the components, but rather the differences between two
-  arrowheads, which can be interpreted as transfer of mass from one 
-  component to the other. 
+  The interpretation of the biplot strongly differs from a classical one.
+  The relevant variables are not the arrows drawn (one for each component), 
+   but rather the links (i.e., the differences) between two
+  arrow heads, which represents the difference between the two
+  components represented by the arrows, or the transfer of mass from 
+  one to the other.
   \cr
   The compositional loading plot is more or less a standard
   one. The loadings are displayed by a barplot as positve and

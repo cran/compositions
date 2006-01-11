@@ -5,12 +5,22 @@
   A class to analyse positive amounts in a classical (non-logarithmic) framework.
 }
 \usage{
-          rplus(X,parts=1:NCOL(oneOrDataset(X)),total=NA)
+          rplus(X,parts=1:NCOL(oneOrDataset(X)),total=NA,warn.na=FALSE,detectionlimit=NULL,BDL=NULL,MAR=NULL,MNAR=NULL,SZ=NULL)
           }
 \arguments{
   \item{X}{vector or dataset of positive numbers considered as amounts}
   \item{parts}{vector containing the indices  xor names of the columns to be used}
-  \item{total}{a numeric vectors giving the total amount of each dataset. }
+  \item{total}{a numeric vectors giving the total amount of each
+    dataset}
+  \item{warn.na}{should the user be warned in case of NA,NaN or 0
+    coding different types of missing values?}
+  \item{detectionlimit}{a number, vector or matrix of positive
+    numbers giving the detection limit of all values, all columns or
+    each value, respectively}
+  \item{BDL}{the code for 'Below Detection Limit' in X}
+  \item{SZ}{the code for 'Structural Zero' in X}
+  \item{MAR}{the code for 'Missing At Random' in X}
+  \item{MNAR}{the code for 'Missing Not At Random' in X}
 }
 \value{
   a vector of class \code{"rplus"} representing a vector of amounts
@@ -46,6 +56,10 @@
   
 
 }
+\section{Missing Policy}{
+  Missing and Below Detecion Limit Policy is in mored detailed
+  explained in \link{compositions.missing}. 
+  }
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{iit}},\code{\link{rcomp}}, \code{\link{aplus}},
@@ -57,7 +71,9 @@
 }
 
 \references{
-
+  van den Boogaart, K.G. and R. Tolosana-Delgado (2007) "compositions": a unified 
+  R package to analyze Compositional Data, \emph{Computers & Geosciences}. 
+  (in press).
 }
 \examples{
 data(SimulatedAmounts)

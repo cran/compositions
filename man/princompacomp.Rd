@@ -11,14 +11,12 @@
   interpretation of the computed components as compositional perturbations.  
 }
 \usage{
-\method{princomp}{acomp}(x,\dots,scores=TRUE)
-\method{print}{princomp.acomp}(x,\dots)
-\method{plot}{princomp.acomp}(x,y=NULL,\dots,
-npcs=min(10,length(x$sdev)),
-type=c("screeplot","variance","biplot","loadings","relative"),
-main=NULL,
-scale.sdev=1)
-\method{predict}{princomp.acomp}(object,newdata,\dots)
+ \method{princomp}{acomp}(x,\dots,scores=TRUE)
+ \method{print}{princomp.acomp}(x,\dots)
+ \method{plot}{princomp.acomp}(x,y=NULL,\dots, npcs=min(10,length(x$sdev)),
+        type=c("screeplot","variance","biplot","loadings","relative"),
+        main=NULL,scale.sdev=1)
+ \method{predict}{princomp.acomp}(object,newdata,\dots)
 }
 \arguments{
   \item{x}{a acomp-dataset (in princomp) or a result from
@@ -27,11 +25,11 @@ scale.sdev=1)
   \item{scores}{a logical indicating whether scores should be computed or not}
   \item{npcs}{the number of components to be drawn in the scree plot}
   \item{type}{type of the plot: \code{"screeplot"} is a lined screeplot,
-    \code{"variance"} is a boxplot like screeplot, \code{"biplot"} is a
-    biplot, \code{"loadings"} displayes the Loadings as a 
+    \code{"variance"} is a boxplot-like screeplot, \code{"biplot"} is a
+    biplot, \code{"loadings"} displays the loadings as a 
     \code{\link{barplot.acomp}}}
   \item{scale.sdev}{the multiple of sigma to use plotting the loadings}
-  \item{main}{headline of the plot}
+  \item{main}{title of the plot}
   \item{object}{a fitted princomp.acomp object}
   \item{newdata}{another compositional dataset of class acomp}
   \item{\dots}{further arguments to pass to internally-called functions}
@@ -49,8 +47,7 @@ scale.sdev=1)
   \item{scale}{the scaling applied to each variable}
   \item{n.obs}{number of observations}
   \item{scores}{if \code{scores = TRUE}, the scores of the supplied data
-    on the principal components and the information was
-    available. Scores are coordinates in a basis given by the principal
+    on the principal components. Scores are coordinates in a basis given by the principal
     components and thus not compositions}
   \item{call}{the matched call}
   \item{na.action}{not clearly understood}
@@ -77,14 +74,14 @@ scale.sdev=1)
   additional information the compositional representation of the
   returned vectors in the space of the data: the center as a composition
   \code{Center}, and the loadings in terms of a composition to perturbe
-  with positively
+  with, either positively
   (\code{Loadings}) or negatively (\code{DownLoadings}). The Up- and
   DownLoadings are normalized to the number of parts in the simplex
   and not to one to simplify the interpretation. A value of about one
   means no change in the specific component. To avoid confusion the
   meaningless last principal component is removed.
   \cr
-  The plot routine provides screeplots (\code{type = "s"},\code{type=
+  The \code{plot} routine provides screeplots (\code{type = "s"},\code{type=
     "v"}), biplots (\code{type = "b"}), plots of the effect of
   loadings (\code{type = "b"}) in \code{scale.sdev*sdev}-spread, and
   loadings of pairwise (log-)ratios (\code{type = "r"}).
@@ -94,10 +91,10 @@ scale.sdev=1)
   represent the portions of variance explained by the principal
   components. 
   \cr
-  The interpretation of the biplot strongly differs from one. 
-  The relevant variables are not the drawn
-  arrows of the components, but rather the links or differences between two
-  arrowheads, which can be interpreted as log-ratios between the two
+  The interpretation of the biplot strongly differs from a classical one.
+  The relevant variables are not the arrows drawn (one for each component), 
+   but rather the links (i.e., the differences) between two
+  arrow heads, which represents the log-ratio between the two
   components represented by the arrows. 
   \cr
   The compositional loading plot is introduced with this
@@ -109,8 +106,7 @@ scale.sdev=1)
   effect. This is similar to (but not exactly the same as) a zero loading in a real
   principal component analysis. 
   \cr
-  The loadings plot can work in
-  two different modes: if
+  The loadings plot can work in two different modes: if
   \code{scale.sdev} is set to \code{NA} it displays the composition
   beeing represented by the unit vector of loadings in the clr-transformed space. If
   \code{scale.sdev} is numeric we use this composition scaled by the
@@ -137,9 +133,6 @@ scale.sdev=1)
   Aitchison, J. and M. Greenacre (2002) \emph{Biplots for Compositional
     Data} Journal of the Royal Statistical Society, Series C (Applied Statistics)
     \bold{51} (4) 375-392\cr
-
-  Pawlowsky-Glahn, V. and J.J. Egozcue (2001) Geometric approach to
-  statistical analysis on the simplex. \emph{SERRA} \bold{15}(5), 384-398\cr
   
   \url{http://ima.udg.es/Activitats/CoDaWork03}\cr
   

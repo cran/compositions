@@ -7,31 +7,52 @@
 \alias{cdt.rplus}
 \alias{cdt.rmult}
 \alias{cdt.factor}
+\alias{cdt.inv}
+\alias{cdt.inv.default}
+\alias{cdt.inv.acomp}
+\alias{cdt.inv.rcomp}
+\alias{cdt.inv.aplus}
+\alias{cdt.inv.rplus}
+\alias{cdt.inv.rmult}
 \title{Centered default transform}
 \description{
-  Compute the centered default transform of a (dataset of)
-  composition or amount.
+  Compute the centered default transform of a (data set of)
+  compositions or amounts (or its inverse).
 }
 \usage{
-          cdt(x)
-          \method{cdt}{default}( x )
-          \method{cdt}{acomp}( x )
-          \method{cdt}{rcomp}( x )
-          \method{cdt}{aplus}( x )
-          \method{cdt}{rplus}( x )
-          \method{cdt}{rmult}( x )
-          \method{cdt}{factor}( x )
+          cdt(x,...)
+          \method{cdt}{default}( x ,...)
+          \method{cdt}{acomp}( x ,...)
+          \method{cdt}{rcomp}( x ,...)
+          \method{cdt}{aplus}( x ,...)
+          \method{cdt}{rplus}( x ,...)
+          \method{cdt}{rmult}( x ,...)
+          \method{cdt}{factor}( x ,...)
+          cdt.inv(x,orig,...)
+          \method{cdt.inv}{default}( x ,orig,...)
+          \method{cdt.inv}{acomp}( x ,orig,...)
+          \method{cdt.inv}{rcomp}( x ,orig,...)
+          \method{cdt.inv}{aplus}( x ,orig,...)
+          \method{cdt.inv}{rplus}( x ,orig,...)
+          \method{cdt.inv}{rmult}( x ,orig,...)
           }
 \arguments{
-  \item{x}{a classed amount or composition (or a matrix of), to be transformed with its
-    centered default transform}
+  \item{x}{a classed (matrix of) amount or composition, to be transformed with its
+    centered default transform, or its inverse}
+  \item{\dots}{generic arguments past to underlying functions.}
+  \item{orig}{a compositional object which should be mimicked
+             by the inverse transformation. It is used to determine the
+	     backtransform to be used and eventually to
+	     reconstruct the names of the parts. It is the generic
+	     argument. Typically this argument is the data set that
+	     has be transformed in the first place.}
 }
 \value{
   A corresponding matrix or vector containing the transforms.
 }
 \details{
   The general idea of this package is to analyse the same data with
-  different geometric concepts as similar as possible. For each of the
+  different geometric concepts, in a fashion as similar as possible. For each of the
   four concepts there exists a unique transform expressing the geometry
   in a linear subspace, keeping the relation to the variables. This
   unique transformation is computed by \code{cdt}. For
@@ -46,13 +67,14 @@
 
   
 }
-\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
+\author{R. Tolosana-Delgado, K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{idt}}, \code{\link{clr}}, \code{\link{cpt}}, \code{\link{ilt}}, \code{\link{iit}}
 }
 \references{
-  
-
+    van den Boogaart, K.G. and R. Tolosana-Delgado (2007) "compositions": a unified 
+  R package to analyze Compositional Data, \emph{Computers & Geosciences}. 
+  (in press).
 }
 \examples{
 \dontrun{
@@ -64,8 +86,18 @@ cdt.rcomp   <- cpt
 cdt.aplus   <- ilt 
 cdt.rplus   <- iit 
 }
-cdt(acomp(1:5))
-cdt(rcomp(1:5))
+x <- acomp(1:5)
+(ds <- cdt(x))
+cdt.inv(ds,x)
+(ds <- cdt(rcomp(1:5)))
+cdt.inv(ds,rcomp(x))
+  data(Hydrochem)
+  x = Hydrochem[,c("Na","K","Mg","Ca")]
+  y = acomp(x)
+  z = cdt(y)
+  y2 = cdt.inv(z,y)
+  par(mfrow=c(2,2))
+  for(i in 1:4){plot(y[,i],y2[,i])}
 
 }
 \keyword{multivariate}

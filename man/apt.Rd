@@ -4,16 +4,21 @@
 \title{Additive planar transform}
 \description{
   Compute the additive planar  transform of a (dataset of)
-  compositions and its inverse.
+  compositions or its inverse.
 }
 \usage{
-          apt( x )
-          apt.inv( z )
+          apt( x ,...)
+          apt.inv( z ,..., orig=NULL)
           }
 \arguments{
   \item{x}{a composition or a matrix of compositions, not necessarily closed}
   \item{z}{the apt-transform of a composition or  a matrix of
     alr-transforms of compositions}
+  \item{\dots}{generic arguments, not used.}
+  \item{orig}{a compositional object which should be mimicked 
+             by the inverse transformation. It is especially used to
+	     reconstruct the names of the parts.}
+
 }
 \value{
   \code{apt} gives the centered planar transform,

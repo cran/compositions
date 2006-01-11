@@ -5,12 +5,23 @@
   A class to analyse positive amounts in a logistic framework.
 }
 \usage{
-          aplus(X,parts=1:NCOL(oneOrDataset(X)),total=NA)
+          aplus(X,parts=1:NCOL(oneOrDataset(X)),total=NA,warn.na=FALSE,detectionlimit=NULL,BDL=NULL,MAR=NULL,MNAR=NULL,SZ=NULL)
           }
 \arguments{
   \item{X}{vector or dataset of positive numbers}
   \item{parts}{vector containing the indices  xor names of the columns to be used}
-  \item{total}{a numeric vectors giving the total amounts of each dataset. }
+  \item{total}{a numeric vectors giving the total amounts of each
+    dataset. }
+  \item{warn.na}{should the user be warned in case of NA,NaN or 0
+    coding different types of missing values?}
+  \item{detectionlimit}{a number, vector or matrix of positive
+    numbers giving the detection limit of all values, all columns or
+    each value, respectively}
+  \item{BDL}{the code for 'Below Detection Limit' in X}
+  \item{SZ}{the code for 'Structural Zero' in X}
+  \item{MAR}{the code for 'Missing At Random' in X}
+  \item{MNAR}{the code for 'Missing Not At Random' in X}
+
 }
 \value{
   a vector of class \code{"aplus"} representing a vector of amounts
@@ -28,10 +39,9 @@
   \cr
   Like compositions, amounts have some important properties. Amounts are
   always positive. An amount of exactly zero essentially means that we have a
-  substance of an other quality. Different amounts - spanning different
+  substance of another quality. Different amounts - spanning different
   orders of magnitude  -  are often given in
-  different units (ppm, ppb, \%) and conversion factors need not to be
-fixed (e.g. for ppm, g/l, vol.\%, mass \%, molar
+  different units (ppm, ppb, g/l, vol.\%, mass \%, molar
   fraction). Often, these amounts are also taken as indicators of
   other non-measured components (e.g. K as indicator for potassium feldspar),
   which might be proportional to the measured amount. 
@@ -40,8 +50,8 @@ fixed (e.g. for ppm, g/l, vol.\%, mass \%, molar
   skewed and in many practical cases a log-transform makes their
   distribution roughly symmetric, even normal.
   \cr
-  In full analogy to Aitchison's compositions, we introduce vector
-  space operations for amounts: the perturbation
+  In full analogy to Aitchison's compositions, vector
+  space operations are introduced for amounts: the perturbation
   \code{\link{perturbe.aplus}} as a vector space addition (corresponding
   to change of units), the power transformation
   \code{\link{power.aplus}} as scalar multiplication describing the law
@@ -50,8 +60,8 @@ fixed (e.g. for ppm, g/l, vol.\%, mass \%, molar
   isometrically to a classical \eqn{R^D} by a simple log-transformation called
   \code{\link{ilt}}, resembling classical log transform approaches.  
   \cr
-  The general approach in analysing aplus objects is thus to performe
-  classical multivariate analysis on ilt-transformed coordinates
+  The general approach in analysing aplus objects is thus to perform
+  classical multivariate analysis on ilt-transformed coordinates (i.e., logs)
   and to backtransform or display the results in such a way that they
   can be interpreted in terms of the original amounts.   
   \cr
@@ -59,7 +69,7 @@ fixed (e.g. for ppm, g/l, vol.\%, mass \%, molar
   analyse amounts directly as real numbers, and by the classes
   \code{\link{acomp}} and \code{\link{rcomp}} to analyse the same data
   as compositions disregarding the total amounts, focusing on relative
-  amounts only.
+  weights only.
   \cr
   The classes rcomp, acomp, aplus, and rplus are designed as similar as
   possible in order to allow direct comparison between results achieved  
@@ -76,10 +86,15 @@ fixed (e.g. for ppm, g/l, vol.\%, mass \%, molar
   \code{\link{var.aplus}}, \code{\link{variation.aplus}},
   \code{\link{cov.aplus}}, \code{\link{msd}}
 }
+\section{Missing Policy}{
+  The policy of treatment of zeroes, missing values and values 
+  below detecion limit is explained in depth in \link{compositions.missing}. 
+  }
 \author{Raimon Tolosana-Delgado, K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
-
 \references{
-
+  van den Boogaart, K.G. and R. Tolosana-Delgado (2007) "compositions": a unified 
+  R package to analyze Compositional Data, \emph{Computers & Geosciences}. 
+  (in press).
 }
 \examples{
 data(SimulatedAmounts)

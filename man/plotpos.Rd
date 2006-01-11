@@ -6,41 +6,52 @@
 \description{
 }
 \usage{
-\method{plot}{aplus}(x,...,labels=colnames(X),cn=colnames(X),aspanel=FALSE,id=FALSE,idlabs=NULL,idcol=2,center=FALSE,scale=FALSE,pca=FALSE,col.pca=par("col"),add=FALSE,logscale=TRUE,col=par("col"))
-\method{plot}{rplus}(x,...,labels=colnames(X),cn=colnames(X),aspanel=FALSE,id=FALSE,idlabs=NULL,idcol=2,center=FALSE,scale=FALSE,pca=FALSE,col.pca=par("col"),add=FALSE,logscale=FALSE,xlim=apply(X,2,function(x) c(0,max(x))),ylim=xlim,col=par("col"))
-\method{plot}{rmult}(x,...,labels=colnames(X),cn=colnames(X),aspanel=FALSE,id=FALSE,idlabs=NULL,idcol=2,center=FALSE,scale=FALSE,pca=FALSE,col.pca=par("col"),add=FALSE,logscale=FALSE,col=par("col"))
+  \method{plot}{aplus}(x,...,labels=colnames(X),cn=colnames(X),
+                     aspanel=FALSE,id=FALSE,idlabs=NULL,idcol=2,
+                     center=FALSE,scale=FALSE,pca=FALSE,col.pca=par("col"),
+                     add=FALSE,logscale=TRUE,col=par("col"))
+  \method{plot}{rplus}(x,...,labels=colnames(X),cn=colnames(X),
+                     aspanel=FALSE,id=FALSE,idlabs=NULL,idcol=2,
+                     center=FALSE,scale=FALSE,pca=FALSE,col.pca=par("col"),
+                     add=FALSE,logscale=FALSE,
+                     xlim=apply(X,2,function(x) c(0,max(x, na.rm = TRUE))),
+                     ylim=xlim,col=par("col"))
+  \method{plot}{rmult}(x,...,labels=colnames(X),cn=colnames(X),
+                     aspanel=FALSE,id=FALSE,idlabs=NULL,idcol=2,
+                     center=FALSE,scale=FALSE,pca=FALSE,col.pca=par("col"),
+                     add=FALSE,logscale=FALSE,col=par("col"))
           }
 \arguments{
-  \item{x}{a dataset of an amount class}
+  \item{x}{a dataset with class aplus, rplus or rmult}
   \item{\dots}{further graphical parameters passed (see
     \code{\link[graphics]{par}})}
   \item{add}{a logical indicating whether the information should just
-    be added to an existing plot. In case of false a new plot is
-    created.}
-  \item{col}{The color to plot the data.}
-  \item{labels}{The names of the parts}
-  \item{cn}{The names of the parts to be used in a single
-    panel. Internal use only.}
-  \item{aspanel}{Logical indicating that only a single panel should be
-    drawn and not the whole plot. Internal use only.}
-  \item{id}{A logical. If true one can identify the points like with the
-    \code{\link[graphics]{identify}} command. }
+    be added to an existing plot. If FALSE, a new plot is
+    created}
+  \item{col}{the color to plot the data}
+  \item{labels}{the labels for names of the parts}
+  \item{cn}{the names of the parts to be used in a single
+    panel. Internal use only}
+  \item{aspanel}{logical indicating that only a single panel should be
+    drawn and not the whole plot. Internal use only}
+  \item{id}{a logical. If TRUE one can identify the points like with the
+    \code{\link[graphics]{identify}} command}
   \item{idlabs}{A character vector providing the labels to be used with
     the identification, when \code{id=TRUE}}
-  \item{idcol}{color of the idlabs-labels}
-  \item{center}{a logical indicating whether a the data should be
-    centered prior to the plot. Centering is done in the choosen
-    philosophy. See \code{\link{scale}}}
-  \item{scale}{a logical indicating whether a the data should be
-    scaled prior to the plot. Scaling is done in the choosen
-    philosophy. See \code{\link{scale}}}
-  \item{pca}{A logical indicating whether the first principle component
-    should be displayed in the plot. Currently direction of the
-    principle component
-    of the displayed subcomposition is displayed as a line. Later on a
-    the principle componenent of the whole dataset should be displayed.}
-  \item{col.pca}{The color to draw the principle component.}
-  \item{logscale}{logical indication, whether logscale should be used}
+  \item{idcol}{color of the \code{idlabs} labels}
+  \item{center}{a logical indicating whether the data should be
+    centered prior to the plot. Centering is done in the chosen
+    geometry. See \code{\link{scale}}}
+  \item{scale}{a logical indicating whether the data should be
+    scaled prior to the plot. Scaling is done in the chosen
+    geometry. See \code{\link{scale}}}
+  \item{pca}{a logical indicating whether the first principal component
+    should be displayed in the plot. Currently, the direction of the
+    principal component of the displayed subcomposition is displayed as 
+    a line. In a future, the projected principal componenent of the whole 
+    dataset should be displayed.}
+  \item{col.pca}{the color to draw the principal component.}
+  \item{logscale}{logical indicating whether a log scale should be used}
   \item{xlim}{2xncol(x)-matrix giving the xlims for the columns of x}
   \item{ylim}{2xncol(x)-matrix giving the ylims for the columns of x}
 }

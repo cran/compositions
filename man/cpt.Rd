@@ -7,13 +7,15 @@
   compositions and its inverse.
 }
 \usage{
-          cpt( x )
-          cpt.inv( z )
+          cpt( x,... )
+          cpt.inv( z,... )
           }
 \arguments{
   \item{x}{a composition or a data.matrix of compositions, not necessarily closed}
   \item{z}{the cpt-transform of a composition or a data matrix of
-    cpt-transforms of compositions. It is checked that the z sum up to 0.}
+    cpt-transforms of compositions. It is checked that the z sum up to
+    0.}
+  \item{\dots}{generic arguments. not used.}
 }
 \value{
   \code{cpt} gives the centered planar transform,
@@ -31,7 +33,7 @@
   be analysed in this transformed space by all classical multivariate
   analysis tools not relying on a full rank of the covariance matrix. See
   \code{\link{ipt}} and \code{\link{apt}} for alternatives. The
-  interpretation of the results is relitevly easy since the relation of each 
+  interpretation of the results is relatively easy since the relation of each 
   transformed component to the original parts is preserved.\cr
     
   The centered planar transform is given by
@@ -43,6 +45,9 @@
   \code{\link{clr}},\code{\link{apt}},\code{\link{ipt}}
 }
 \references{
+  van den Boogaart, K.G. and R. Tolosana-Delgado (2007) "compositions": a unified 
+  R package to analyze Compositional Data, \emph{Computers & Geosciences}. 
+  (in press).
 }
 \examples{
 (tmp <- cpt(c(1,2,3)))

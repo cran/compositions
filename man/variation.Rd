@@ -13,7 +13,7 @@
  covariance matrix!
 }
 \usage{
-          variation(x,\dots)
+    variation(x,\dots)
           \method{variation}{acomp}(x, \dots)
           \method{variation}{rcomp}(x, \dots)
           \method{variation}{aplus}(x, \dots)
@@ -28,13 +28,15 @@
   The variation matrix of x.
 }
 \details{
-   The variation matrix was defined in the acomp context for 
+   The variation matrix was defined in the \code{\link{acomp}} context of
    analysis of compositions as the matrix of variances of all 
    possible log-ratios among components (Aitchison, 1986). The 
    generalization to rcomp objects is simply to reproduce the 
    variance of all possible differences between components. The 
-   amount and rmult objects should not be treated with variation 
-   matrices, because this implies always the existence of a closure.
+   amount (\code{\link{aplus}}, \code{\link{rplus}}) and rmult objects 
+   should not be treated with variation 
+   matrices, because this was intended to skip the existence of a closure
+   (which does not exist in the case of amounts).
 }
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{

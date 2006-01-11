@@ -16,19 +16,19 @@
           \method{segments}{rmult}(x0,y,...,steps=30)
           }
 \arguments{
-  \item{x0}{dataset of points of the given type to draw the line from}
-  \item{y}{dataset of points of the given type to draw the line to}
+  \item{x0}{dataset of points (of the given type) to draw the line from}
+  \item{y}{dataset of points (of the given type) to draw the line to}
   \item{\dots}{further graphical parameters}
-  \item{steps}{the number of discretisation points to draw the segments not
-    straight on the monitor.}
+  \item{steps}{the number of discretisation points to draw the segments,
+          since the representation might not visually be a straight line}
 }
 \details{
 The functions add lines to the graphics generated with the corresponding
 plot functions.
 \cr
 
-Adding to multipaneled plots, redraws the plot completely and is only
-possible, when the plot has been created with the plotting routines from
+Adding to multipaneled plots redraws the plot completely, and is only
+possible when the plot has been created with the plotting routines from
 this library.
 
 }

@@ -91,25 +91,25 @@ var(aplus(cdata))
 var(rplus(cdata))
 
 # clr
-clr(mean.acomp(cdata))
+clr(mean(acomp(cdata)))
 mean.col(clr(cdata))
 clr.inv(mean.col(clr(cdata)))
-mean.acomp(cdata)
+mean(acomp(cdata))
 
 # ilr
-ilr(mean.acomp(cdata))
+ilr(mean(acomp(cdata)))
 mean.col(ilr(cdata))
 ilr.inv(mean.col(ilr(cdata)))
-mean.acomp(cdata)
+mean(acomp(cdata))
 
 # alr
-alr(mean.acomp(cdata))
+alr(mean(acomp(cdata)))
 mean.col(alr(cdata))
 alr.inv(mean.col(alr(cdata)))
-mean.acomp(cdata)
+mean(acomp(cdata))
 
 # Operations
-mean.acomp(3 * (cdata - mean.acomp(cdata)))
+mean(acomp(3 * (cdata - mean(acomp(cdata)))))
 
 
 # barplot
@@ -118,75 +118,75 @@ barplot(rcomp(cdata[1:10,]))
 barplot(aplus(cdata[1:10,]))
 barplot(rplus(cdata[1:10,]))
 
-barplot(mean.acomp(cdata))
-barplot(mean.rcomp(cdata))
-barplot(mean.aplus(cdata))
-barplot(mean.rplus(cdata))
+barplot(mean(acomp(cdata)))
+barplot(mean(rcomp(cdata)))
+barplot(mean(aplus(cdata)))
+barplot(mean(rplus(cdata)))
 
 # piechart
-pie(mean.acomp(cdata))
-pie(mean.rcomp(cdata))
-pie(mean.aplus(cdata))
+pie(mean(acomp(cdata)))
+pie(mean(rcomp(cdata)))
+pie(mean(aplus(cdata)))
 
 
 
 # Triangular Diagrams
-plot.acomp(cdata[,1:3])
-mean.acomp(cdata[,1:3])
-plot.acomp(cdata,margin="rcomp",pca=TRUE)
-plot.acomp(cdata,margin="acomp",pca=TRUE)
-#plot.acomp(cdata,margin="Cd",pca=TRUE) # Bug!!!
-mean.acomp(cdata)
+plot(acomp(cdata[,1:3]))
+mean(acomp(cdata[,1:3]))
+plot(acomp(cdata),margin="rcomp",pca=TRUE)
+plot(acomp(cdata),margin="acomp",pca=TRUE)
+#plot(acomp(cdata),margin="Cd",pca=TRUE) # Bug!!!
+mean(acomp(cdata))
 
-boxplot.acomp(cdata)              # boxplotscale
-boxplot.acomp(cdata,Land,notch=TRUE) # notch
-#boxplot.acomp(cdata,Rock)
+boxplot(acomp(cdata))              # boxplotscale
+boxplot(acomp(cdata),Land,notch=TRUE) # notch
+#boxplot(acomp(cdata),Rock)
 
-boxplot.acomp(cdata,log=FALSE)
-boxplot.acomp(cdata,Land,log=FALSE)
-#boxplot.acomp(cdata,Rock,log=FALSE)
+boxplot(acomp(cdata),log=FALSE)
+boxplot(acomp(cdata),Land,log=FALSE)
+#boxplot(acomp(cdata),Rock,log=FALSE)
 
-boxplot.acomp(cdata,log=FALSE,ylim=c(0,5))
-boxplot.acomp(cdata,Land,log=FALSE,ylim=c(0,5))
-#boxplot.acomp(cdata,Rock,log=FALSE,ylim=c(0,5))
+boxplot(acomp(cdata),log=FALSE,ylim=c(0,5))
+boxplot(acomp(cdata),Land,log=FALSE,ylim=c(0,5))
+#boxplot(acomp(cdata),Rock,log=FALSE,ylim=c(0,5))
 
-qqnorm.acomp(cdata,alpha=100)
-qqnorm.acomp(cdata,alpha=0.05)
-qqnorm.acomp(cdata[,-3],alpha=0.05)
-qqnorm.acomp(cdata[,-3],alpha=0.05)
+qqnorm(acomp(cdata),alpha=100)
+qqnorm(acomp(cdata),alpha=0.05)
+qqnorm(acomp(cdata[,-3]),alpha=0.05)
+qqnorm(acomp(cdata[,-3]),alpha=0.05)
  
-#boxplot.acomp(cdata[,-1],js$Cd)
+#boxplot(acomp(cdata[,-1]),js$Cd)
 plot(Land,data.matrix(cdata)%*% rep(1,ncol(cdata)))
 
 
 # rcomp.plots
 
-boxplot.rcomp(cdata)
-boxplot.rcomp(cdata,Land)
-#boxplot.rcomp(cdata,Rock)
+boxplot(rcomp(cdata))
+boxplot(rcomp(cdata),Land)
+#boxplot(rcomp)(cdata,Rock)
 
-qqnorm.rcomp(cdata)
-qqnorm.rcomp(cdata,alpha=0.05)
-qqnorm.rcomp(cdata[,1:3],alpha=0.05)
-plot.acomp(cdata[,1:3])
-ellipses.acomp(mean.acomp(cdata[,1:3]), var(acomp(cdata,1:3)),col="red",r=2)
+qqnorm(rcomp(cdata))
+qqnorm(rcomp(cdata),alpha=0.05)
+qqnorm(rcomp(cdata[,1:3]),alpha=0.05)
+plot(acomp(cdata[,1:3]))
+ellipses(mean(acomp(cdata[,1:3])), var(acomp(cdata,1:3)),col="red",r=2)
 
-ellipses.rcomp(mean.rcomp(cdata[,1:3]), var(rcomp(cdata[,1:3])),col="blue",r=2)
-
-
-plot.rplus(cdata[,1:2])
-ellipses.rplus(mean(rplus(cdata[,1:2])), var(rplus(cdata[,1:2])),col="blue",r=2)
-ellipses.aplus(mean(aplus(cdata[,1:2])), var(aplus(cdata[,1:2])),col="red",r=2)
-
-plot.aplus(cdata[,1:2])
-ellipses.aplus(mean(aplus(cdata[,1:2])), var(aplus(cdata[,1:2])),col="red",r=2)
-ellipses.rplus(mean(rplus(cdata[,1:2])), var(rplus(cdata[,1:2])),col="blue",r=2)
+ellipses(mean(rcomp(cdata[,1:3])), var(rcomp(cdata[,1:3])),col="blue",r=2)
 
 
-straight.acomp(c(1,1,1),c(2,1,3))
+plot(rplus(cdata[,1:2]))
+ellipses(rplus(mean(rplus(cdata[,1:2]))), var(rplus(cdata[,1:2])),col="blue",r=2)
+ellipses(aplus(mean(aplus(cdata[,1:2]))), var(aplus(cdata[,1:2])),col="red",r=2)
+
+plot(aplus(cdata[,1:2]))
+ellipses(aplus(mean(aplus(cdata[,1:2]))), var(aplus(cdata[,1:2])),col="red",r=2)
+ellipses(rplus(mean(rplus(cdata[,1:2]))), var(rplus(cdata[,1:2])),col="blue",r=2)
 
 
-boxplot.rcomp(cdata[,-1],cdata$Cd)
+straight(acomp(c(1,1,1)),c(2,1,3))
+
+
+boxplot(rcomp(cdata[,-1]),cdata$Cd)
 
 # biplot, princomp
 
@@ -211,7 +211,7 @@ loadings(princomp(rplus(cdata)))
 
 #names
 mean.col(cdata[,1:3])
-mean.acomp(cdata[,1:3])
+mean(acomp(cdata[,1:3]))
 oneOrDataset(c(a=1,b=2,c=3))
 
 # covariance
@@ -220,7 +220,7 @@ cov(rcomp(cd1),rcomp(cd2))
 cov(aplus(cd1),aplus(cd2))
 cov(rplus(cd1),rplus(cd2))
 
-#tmp <- princov.acomp(cd1,cd2)
+#tmp <- princov(acomp(cd1,cd2))
 #tmp
 #plot(tmp)
 #biplot(tmp)

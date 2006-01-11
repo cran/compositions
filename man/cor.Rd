@@ -13,8 +13,7 @@
 }
 \usage{
           cor(x,y=NULL,\dots)
-          \method{cor}{default}(x, y=NULL, use="all.obs", method=c("pearson", 
-    "kendall", "spearman"),\dots)
+          \method{cor}{default}(x, y=NULL, use="all.obs", method=c("pearson", "kendall", "spearman"),\dots)
           \method{cor}{acomp}(x,y=NULL,\dots)
           \method{cor}{rcomp}(x,y=NULL,\dots)
           \method{cor}{aplus}(x,y=NULL,\dots)
@@ -22,8 +21,8 @@
           \method{cor}{rmult}(x,y=NULL,\dots)
           }
 \arguments{
-  \item{x}{a dataset, eventually of amounts or compositions}
-  \item{y}{a second dataset, eventually of amounts or compositions}
+  \item{x}{a data set, eventually of amounts or compositions}
+  \item{y}{a second data set, eventually of amounts or compositions}
   \item{use}{see \code{\link[stats]{cor}}}
   \item{method}{see \code{\link[stats]{cor}}}
   \item{\dots}{further arguments to \code{\link[stats]{cor}}

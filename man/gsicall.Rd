@@ -16,7 +16,7 @@ gsi.call(fkt,\dots)
 }
 \details{
 This is only useful in conjunction with do.call and allows to call
-anonymous functions with a parameters given by a list. 
+anonymous functions with parameters given by a list. 
 }
 
 \note{Do not use gsi.* functions directly since they are internal

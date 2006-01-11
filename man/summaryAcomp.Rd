@@ -4,31 +4,30 @@
 \description{
   Summaries in terms of compositions are quite different from classical
   ones. Instead of analysing each variable individually, we must
-  analyse each pairwise ratio in a log geometry.
+  analyse each pair-wise ratio in a log geometry.
 }
 \usage{
           \method{summary}{acomp}( object, \dots )
           }
 \arguments{
-  \item{object}{a data.matrix of compositions, not necessarily closed}
+  \item{object}{a data matrix of compositions, not necessarily closed}
   \item{\dots}{not used, only here for generics}
 }
 \value{
   The result is an object of type \code{"summary.acomp"}
-  \item{mean}{The \code{\link{mean.acomp}} composition}
-  \item{mean.ratio}{A matrix containing the geometric mean of the
+  \item{mean}{the \code{\link{mean.acomp}} composition}
+  \item{mean.ratio}{a matrix containing the geometric mean of the
     pairwise ratios}
-  \item{variation}{The variation matrix of the dataset (\code{{\link{variation.acomp}}})}
-  \item{expsd}{A matrix containing the  one-sigma factor for
+  \item{variation}{the variation matrix of the dataset (\code{{\link{variation.acomp}}})}
+  \item{expsd}{a matrix containing the  one-sigma factor for
     each ratio, computed as \code{exp(sqrt(variation.acomp(W)))}. To
-    obtain two-sigma-factor it needs to be squared. To obtain the
+    obtain a two-sigma-factor, one has to take its squared value. To obtain the
     reverse bound we compute 1/expsd}
-  \item{min}{A matrix containing the minimum of each of the pairwise ratios}
-  \item{q1}{A matrix containing the 1-Quartile of each of the pairwise ratios}
-  \item{median}{A matrix containing the median of each of the pairwise ratios}
-  \item{q1}{A matrix containing the 3-Quartile of each of the pairwise ratios}
-  \item{max}{A matrix containing the maximum of each of the pairwise
-    ratios}
+  \item{min}{a matrix containing the minimum of each of the pairwise ratios}
+  \item{q1}{a matrix containing the 1-Quartile of each of the pairwise ratios}
+  \item{median}{a matrix containing the median of each of the pairwise ratios}
+  \item{q1}{a matrix containing the 3-Quartile of each of the pairwise ratios}
+  \item{max}{a matrix containing the maximum of each of the pairwise ratios}
 
 }
 \details{

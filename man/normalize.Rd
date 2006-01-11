@@ -11,14 +11,15 @@ normalize(x,\dots)
 }
 \arguments{
   \item{x}{a dataset or a single vector of some type}
-  \item{\dots}{currently not used, intended to select a different norm}
+  \item{\dots}{currently not used, intended to select 
+               a different norm in the future}
 }
 \value{
   The vectors given, but normalized to norm 1.
 }
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
-  \code{\link{norm}}
+  \code{\link{norm.rmult}}
 }
 \examples{
 data(SimulatedAmounts)

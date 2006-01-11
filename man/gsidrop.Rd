@@ -8,7 +8,7 @@
 gsi.drop(X,drop)
 }
 \arguments{
-  \item{X}{ an array needing dimensions dropped}
+  \item{X}{ an array which dimensions should be dropped}
   \item{drop}{ a logical whether to drop dimensions}
 }
 \value{

@@ -10,18 +10,16 @@
   data analysis.
 }
 \usage{
-          mean.acomp(x,\dots, na.action=get(getOption("na.action")))
-          mean.rcomp(x,\dots, na.action=get(getOption("na.action")))
-          mean.aplus(x,\dots, na.action=get(getOption("na.action")))
-          mean.rplus(x,\dots, na.action=get(getOption("na.action")))
-          mean.rmult(x,\dots, na.action=get(getOption("na.action")))
+          \method{mean}{acomp}(x,\dots)
+          \method{mean}{rcomp}(x,\dots)
+          \method{mean}{aplus}(x,\dots)
+          \method{mean}{rplus}(x,\dots)
+          \method{mean}{rmult}(x,\dots,na.action=get(getOption("na.action")))
           }
 \arguments{
   \item{x}{a classed dataset of amounts or compositions}
   \item{\dots}{further arguments to \code{\link{mean}} e.g. \code{trim}}
-  \item{na.action}{ The na.action to be used: one of
-    \code{\link{na.omit}},\code{\link{na.fail}},\code{\link{na.pass}}}
-
+  \item{na.action}{na.action }
 }
 \value{
   The mean is given as a composition or amount vector of the same class as the original dataset.
@@ -44,12 +42,28 @@ In all cases the mean is again an object of the same class.
 
 }
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
+
 \seealso{
   \code{\link{clo}}, \code{\link{mean.col}},
   \code{\link{geometricmean}}, \code{\link{acomp}},
 \code{\link{rcomp}}, \code{\link{aplus}}, \code{\link{rplus}}
 }
-
+\section{Missing Policy}{
+  For the additive scales (rcomp,rplus) the SZ and BDT are 
+  treated as zeros and MAR and MNAR as missing information. 
+  This is not strictly correct for MNAR. 
+  \cr
+  For relative scales (acomp,aplus), all four types of missings 
+  are treated as missing information. This corresponds to the 
+  idea that BDT are truncated values (and have the correspoding 
+  effect in taking means). For SZ and MAR, only the components in 
+  the observed subcomposition are fully relevant. Finally, for MNAR 
+  the problem is again that nothing could be done without knowing
+  the MNAR mechanism, so the analysis is limited to taking them as 
+  MAR, and being \emph{careful} with the interpretation.
+  Missing and Below Detecion Limit Policy is explained in more detail 
+  in \link{compositions.missing}. 
+  }
 \examples{
 data(SimulatedAmounts)
 mean.col(sa.lognormals)

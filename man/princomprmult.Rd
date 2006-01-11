@@ -1,30 +1,28 @@
 \name{princomp.rmult}
 \alias{princomp.rmult}
-\title{Principle component analysis for Real data}
+\title{Principal component analysis for real data}
 \description{
-  Performes a principle component analysis for datasets of type rmult.
+  Performs a principal component analysis for datasets of type rmult.
 }
 \usage{
 \method{princomp}{rmult}(x,\dots)
 }
 \arguments{
   \item{x}{a rmult-dataset}
-  \item{\dots}{Further arguments to call of princomp.default}
+  \item{\dots}{Further arguments to call \code{\link{princomp.default}}}
 }
 \value{
   An object of type \code{princomp} with the following fields
-  \item{sdev}{the standard deviation of the principle components.}
+  \item{sdev}{the standard deviation of the principal components.}
   \item{loadings}{the matrix of variable loadings (i.e., a matrix whose
     columns contain the eigenvectors). This is of class
-    \code{"loadings"}. The last eigenspace is removed since it should
-    contain the irrelevant scaling.}
-  \item{center}{the clr of the means that was substracted}
+    \code{"loadings"}.}
+  \item{center}{the mean that was substracted from the data set}
   \item{scale}{the scaling applied to each variable}
   \item{n.obs}{number of observations}
   \item{scores}{if \code{scores = TRUE}, the scores of the supplied data
-    on the principle components and the information was
-    available. Scores are coordinates in a basis given by the principle
-    components and thus not compositions.}
+    on the principal components. Scores are coordinates in a basis given by the 
+    principal components.}
   \item{call}{the matched call}
   \item{na.action}{Not clearly understood}
 }

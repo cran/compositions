@@ -3,11 +3,12 @@
 \alias{ilr2clr}
 \alias{clrvar2ilr}
 \alias{ilrvar2clr}
-\title{Convert between clr and ilr, and between cpt and ipt. Acts in vectors and in bilinear forms.}
+\title{Convert between clr and ilr, and between cpt and ipt. }
 \description{
   Compute the centered log ratio transform of a (dataset of)
   isometric log-ratio transform(s) and its inverse. Equivalently, 
   compute centered and isometric planar transforms from each other.
+  Acts in vectors and in bilinear forms.
 }
 \usage{
 clr2ilr( x , V=ilrBase(x) )

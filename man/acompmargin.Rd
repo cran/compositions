@@ -24,13 +24,19 @@ consistent with the \code{\link{acomp}} approach and gives clear ternary
 diagrams. However, this geometric mean is difficult to interpret.
 }
 \author{Raimon Tolosana-Delgado, K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
-
+\section{Missing Policy}{
+    MNAR has the highest priority, MAR afterwards, and WZERO (BDL,SZ) values are
+    considered as 0 and finally reported as BDL. 
+}
 \seealso{ \code{\link{rcompmargin}}, \code{\link{acomp}}
 }
 \references{
-  Vera Pawlowsky-Glahn (2003) personal communication. Seminaris 
-  d'Estadística, Departament d'Informàtica i Matemàtica Aplicada,
-  Universitat de Girona.
+  Vera Pawlowsky-Glahn (2003) personal communication.
+  Universitat de Girona. vera.pawlowsky@udg.es
+
+  van den Boogaart, K.G. and R. Tolosana-Delgado (2007) "compositions": a unified 
+  R package to analyze Compositional Data, \emph{Computers & Geosciences}. 
+  (in press).
 }
 \examples{
 data(SimulatedAmounts)

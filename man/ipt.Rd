@@ -8,22 +8,26 @@
   composition(s) and its inverse.
 }
 \usage{
-          ipt( x , V = ilrBase(x) )
-          ipt.inv( z , V = ilrBase(z=z) )
-          ucipt.inv( z , V = ilrBase(z=z) )
+          ipt( x , V = ilrBase(x),... )
+          ipt.inv( z , V = ilrBase(z=z),...,orig=NULL)
+          ucipt.inv( z , V = ilrBase(z=z),...,orig=NULL )
           }
 \arguments{
   \item{x}{a composition or a data matrix of compositions, not necessarily closed}
   \item{z}{the ipt-transform of a composition or a data matrix of
     ipt-transforms of compositions}
   \item{V}{a matrix with columns giving the chosen basis of the clr-plane}
+  \item{\dots}{generic arguments. not used.}
+  \item{orig}{a compositional object which should be mimicked 
+             by the inverse transformation. It is especially used to
+	     reconstruct the names of the parts.}
 
 }
 \value{
   \code{ipt} gives the centered planar transform,
   \code{ipt.inv} gives closed compositions with with the given ipt-transforms,
   \code{ucipt.inv} unconstrained ipt.inv does the same as ipt.inv but
-  sets illegal values to NA rather then giving an error. This is a
+  sets illegal values to NA rather than giving an error. This is a
   workaround to allow procedures not honoring the constraints of the
   space.  
   }
@@ -54,6 +58,11 @@
   \code{\link{ilr}},\code{\link{ilrBase}}, \code{\link{cpt}}
 }
 \references{
+
+  van den Boogaart, K.G. and R. Tolosana-Delgado (2007) "compositions": a unified 
+  R package to analyze Compositional Data, \emph{Computers & Geosciences}. 
+  (in press).
+
 }
 \examples{
 (tmp <- ipt(c(1,2,3)))

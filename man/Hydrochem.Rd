@@ -3,7 +3,7 @@
 \alias{Hydrochem}
 \title{Hydrochemical composition data set of Llobregat river basin water (NE Spain)}
 \description{
-  Contains the hydrochemical compositional data set obtained from
+  Contains a hydrochemical amount/compositional data set obtained from
   several rivers in the Llobregat river basin, in northeastern Spain.
 }
 \usage{
@@ -11,12 +11,11 @@ data(Hydrochem)
 }
 \format{Data matrix with 485 cases and 19 variables.}
 \source{
-  The datasets are also accessible in Otero et al. (2005), and are here
+  The dataset is also accessible in Otero et al. (2005), and are here
   included under the  GNU Public Library Licence Version 2 or newer.
 }
 \author{Raimon Tolosana-Delgado}
 \details{
-
   This hydrochemical data set contains measurements of 14 components, H,
   Na, K, Ca, Mg, Sr, Ba, \eqn{\mathrm{NH}_4}{NH4},
   Cl, \eqn{\mathrm{HCO}_3}{HCO3}, \eqn{\mathrm{NO}_3}{NO3},
@@ -57,7 +56,11 @@ data(Hydrochem)
   Otero, N.; R. Tolosana-Delgado, A. Soler, V. Pawlowsky-Glahn
   and A. Canals (2005).  Relative vs. absolute statistical analysis of
   compositions: A comparative study of surface waters of a Mediterranean
-  river. Water Research, in press. doi: 10.1016/j.watres.2005.01.012
+  river. Water Research, 39(7): 1404-1414. doi: 10.1016/j.watres.2005.01.012
+
+  Tolosana-Delgado, R.; Otero, N.; Pawlowsky-Glahn, V.; Soler, A. (2005). 
+  Latent Compositional Factors in The Llobregat River Basin (Spain) 
+  Hydrogeochemistry. Mathematical Geology 37(7): 681-702.
 }
 \examples{
 data(Hydrochem)

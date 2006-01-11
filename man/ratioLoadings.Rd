@@ -15,7 +15,7 @@
 \title{Loadings of relations of two amounts}
 \description{
   In a compositional dataset the relation of two objects can be
-  interpreted better than a single amount. These functions compute,
+  interpreted safer than a single amount. These functions compute,
   display and plot the corresponding pair-information for the various
   principal component analysis results. 
 }
@@ -25,18 +25,13 @@ relativeLoadings(x,...)
 \method{relativeLoadings}{princomp.aplus}(x,\dots,log=FALSE,scale.sdev=NA,cutoff=0.1)
 \method{relativeLoadings}{princomp.rcomp}(x,\dots,scale.sdev=NA,cutoff=0.1)
 \method{relativeLoadings}{princomp.rplus}(x,\dots,scale.sdev=NA,cutoff=0.1)
-\method{print}{relativeLoadings.princomp.acomp}(x,\dots,cutoff=attr(x,"cutoff"),
-                                                 digits=2
-                                                 )
+\method{print}{relativeLoadings.princomp.acomp}(x,\dots,cutoff=attr(x,"cutoff"),digits=2)
 \method{print}{relativeLoadings.princomp.aplus}(x,\dots,cutoff=attr(x,"cutoff"),
-                                                 digits=2
-                                                 )
+                                                 digits=2)
 \method{print}{relativeLoadings.princomp.rcomp}(x,\dots,cutoff=attr(x,"cutoff"),
-                                                 digits=2
-                                                 )
+                                                 digits=2)
 \method{print}{relativeLoadings.princomp.rplus}(x,\dots,cutoff=attr(x,"cutoff"),
-                                                 digits=2
-                                                 )
+                                                 digits=2)
 \method{plot}{relativeLoadings.princomp.acomp}(x,\dots)
 \method{plot}{relativeLoadings.princomp.aplus}(x,\dots)
 \method{plot}{relativeLoadings.princomp.rcomp}(x,\dots)
@@ -45,11 +40,11 @@ relativeLoadings(x,...)
 \arguments{
   \item{x}{a result from an amount PCA \code{\link{princomp.acomp}}/\code{\link{princomp.aplus}}/\code{\link{princomp.rcomp}}/\code{\link{princomp.rplus}}}
   \item{log}{a logical indicating to use log-ratios instead of ratios}
-  \item{scale.sdev}{If not \code{NA}, a number specifying the
-    multiple of a standard deviation the component is to be multiplied with.}
-  \item{cutoff}{A single number. Changes under that (log)-cutoff are not
-    displayed.}
-  \item{digits}{The number of digits to be displayed}
+  \item{scale.sdev}{if not \code{NA}, a number specifying the
+    multiple of a standard deviation, used to scale the components}
+  \item{cutoff}{a single number. Changes under that (log)-cutoff are not
+    displayed}
+  \item{digits}{the number of digits to be displayed}
   \item{\dots}{further parameters to internally-called functions}
   }
 \value{
@@ -63,11 +58,12 @@ relativeLoadings(x,...)
   of principal components. For acomp/aplus classes the relation is
   induced by a ratio, which can optionally be log-transformed. For the
   rcomp/rplus-classes the relation is induced by a difference, which
-  is quite meaningless when the units are different.  
+  is meaningless when the units are different.
 }
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{princomp.acomp}},   \code{\link{princomp.aplus}},
+  \code{\link{princomp.rcomp}},   \code{\link{princomp.rplus}},
   \code{\link[graphics]{barplot}}
 }
 
