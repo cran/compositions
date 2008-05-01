@@ -15,15 +15,13 @@ Reshape an object to the shape of another
   \code{x}, but re-shaped as \code{oldx}
 }
 \note{Do not use gsi.* functions directly since they are internal
-  functions of the package}
+  functions of the package. To use a gsi function, attach the \code{gsi}
+environment.}
 \details{
+This function changes the dimension attribute accordingly.    
 }
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
-\seealso{
-}
-\references{
-}
 \examples{
-gsi.simshape(matrix(1:4,nrow=1),1:3)
+#gsi.simshape(matrix(1:4,nrow=1),1:3)
 }
-\keyword{}
+\keyword{internal}

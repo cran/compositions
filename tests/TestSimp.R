@@ -40,21 +40,21 @@ checker <- function(x,y) {
   x
 }
 clr(cdata)
-checker( clr.inv(clr(cdata)) , clo(cdata) )
+checker( clrInv(clr(cdata)) , clo(cdata) )
 ilr(cdata)
-checker( ilr.inv(ilr(cdata)) , clo(cdata) )
+checker( ilrInv(ilr(cdata)) , clo(cdata) )
 alr(cdata)
-checker( alr.inv(alr(cdata)) , clo(cdata) )
+checker( alrInv(alr(cdata)) , clo(cdata) )
 cpt(cdata)
-checker( cpt.inv(cpt(cdata)) , clo(cdata) )
+checker( cptInv(cpt(cdata)) , clo(cdata) )
 ipt(cdata)
-checker( ipt.inv(ipt(cdata)) , clo(cdata) )
+checker( iptInv(ipt(cdata)) , clo(cdata) )
 apt(cdata)
-checker( apt.inv(apt(cdata)) , clo(cdata) )
+checker( aptInv(apt(cdata)) , clo(cdata) )
 ilt(cdata)
-checker( ilt.inv(ilt(cdata)) , cdata )
+checker( iltInv(ilt(cdata)) , cdata )
 iit(cdata)
-checker( iit.inv(iit(cdata)) , cdata )
+checker( iitInv(iit(cdata)) , cdata )
 
 clr(c(a=1,2,3))
 ilr(c(a=1,2,3))
@@ -64,14 +64,14 @@ ipt(c(a=1,2,3))
 apt(c(a=1,2,3))
 ilt(c(a=1,2,3))
 iit(c(a=1,2,3))
-checker( clr.inv(clr(c(a=1,2,3))) , clo(c(1,2,3)))
-checker( ilr.inv(ilr(c(a=1,2,3))) , clo(c(1,2,3)))
-checker( alr.inv(alr(c(a=1,2,3))) , clo(c(1,2,3)))
-checker( cpt.inv(cpt(c(a=1,2,3))) , clo(c(1,2,3)))
-checker( ipt.inv(ipt(c(a=1,2,3))) , clo(c(1,2,3)))
-checker( apt.inv(apt(c(a=1,2,3))) , clo(c(1,2,3)))
-checker( ilt.inv(ilt(c(a=1,2,3))) , c(1,2,3))
-checker( iit.inv(iit(c(a=1,2,3))) , c(1,2,3))
+checker( clrInv(clr(c(a=1,2,3))) , clo(c(1,2,3)))
+checker( ilrInv(ilr(c(a=1,2,3))) , clo(c(1,2,3)))
+checker( alrInv(alr(c(a=1,2,3))) , clo(c(1,2,3)))
+checker( cptInv(cpt(c(a=1,2,3))) , clo(c(1,2,3)))
+checker( iptInv(ipt(c(a=1,2,3))) , clo(c(1,2,3)))
+checker( aptInv(apt(c(a=1,2,3))) , clo(c(1,2,3)))
+checker( iltInv(ilt(c(a=1,2,3))) , c(1,2,3))
+checker( iitInv(iit(c(a=1,2,3))) , c(1,2,3))
 
 # mean
 
@@ -80,9 +80,9 @@ mean(rcomp(cdata))
 mean(aplus(cdata))
 mean(rplus(cdata))
 
-mean.col(cdata)
-mean.col(clo(cdata))
-clo(mean.col(cdata))
+meanCol(cdata)
+meanCol(clo(cdata))
+clo(meanCol(cdata))
 
 # var (Variation Matrix)
 var(rcomp(cdata))
@@ -92,20 +92,20 @@ var(rplus(cdata))
 
 # clr
 clr(mean(acomp(cdata)))
-mean.col(clr(cdata))
-clr.inv(mean.col(clr(cdata)))
+meanCol(clr(cdata))
+clrInv(meanCol(clr(cdata)))
 mean(acomp(cdata))
 
 # ilr
 ilr(mean(acomp(cdata)))
-mean.col(ilr(cdata))
-ilr.inv(mean.col(ilr(cdata)))
+meanCol(ilr(cdata))
+ilrInv(meanCol(ilr(cdata)))
 mean(acomp(cdata))
 
 # alr
 alr(mean(acomp(cdata)))
-mean.col(alr(cdata))
-alr.inv(mean.col(alr(cdata)))
+meanCol(alr(cdata))
+alrInv(meanCol(alr(cdata)))
 mean(acomp(cdata))
 
 # Operations
@@ -186,7 +186,7 @@ ellipses(rplus(mean(rplus(cdata[,1:2]))), var(rplus(cdata[,1:2])),col="blue",r=2
 straight(acomp(c(1,1,1)),c(2,1,3))
 
 
-boxplot(rcomp(cdata[,-1]),cdata$Cd)
+boxplot(rcomp(cdata[,-1]),cdata[,"Cd"])
 
 # biplot, princomp
 
@@ -210,7 +210,7 @@ loadings(princomp(rplus(cdata)))
 
 
 #names
-mean.col(cdata[,1:3])
+meanCol(cdata[,1:3])
 mean(acomp(cdata[,1:3]))
 oneOrDataset(c(a=1,b=2,c=3))
 

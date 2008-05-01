@@ -1,6 +1,6 @@
 \name{cpt}
 \alias{cpt}
-\alias{cpt.inv}
+\alias{cptInv}
 \title{Centered planar transform}
 \description{
   Compute the centered planar  transform of a (dataset of)
@@ -8,7 +8,7 @@
 }
 \usage{
           cpt( x,... )
-          cpt.inv( z,... )
+          cptInv( z,... )
           }
 \arguments{
   \item{x}{a composition or a data.matrix of compositions, not necessarily closed}
@@ -19,7 +19,7 @@
 }
 \value{
   \code{cpt} gives the centered planar transform,
-  \code{cpt.inv} gives closed compositions with the given cpt-transforms.
+  \code{cptInv} gives closed compositions with the given cpt-transforms.
   }
 \details{
   The cpt-transform maps a composition in the D-part real-simplex
@@ -45,16 +45,16 @@
   \code{\link{clr}},\code{\link{apt}},\code{\link{ipt}}
 }
 \references{
-  van den Boogaart, K.G. and R. Tolosana-Delgado (2007) "compositions": a unified 
-  R package to analyze Compositional Data, \emph{Computers & Geosciences}. 
-  (in press).
+    van den Boogaart, K.G. and R. Tolosana-Delgado (2008) "compositions": a unified 
+  R package to analyze Compositional Data, \emph{Computers &
+    Geosciences}, 34 (4), pages 320-338, doi:10.1016/j.cageo.2006.11.017.
 }
 \examples{
 (tmp <- cpt(c(1,2,3)))
-cpt.inv(tmp)
-cpt.inv(tmp) - clo(c(1,2,3)) # 0
+cptInv(tmp)
+cptInv(tmp) - clo(c(1,2,3)) # 0
 data(Hydrochem)
 cdata <- Hydrochem[,6:19]
-pairs(cpt(cdata)) 
+pairs(cpt(cdata),pch=".") 
 }
 \keyword{multivariate}

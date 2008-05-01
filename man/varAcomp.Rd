@@ -21,19 +21,19 @@
 \usage{
   var(x,\dots)
     \method{var}{default}(x, y=NULL, na.rm=FALSE, use, \dots)
-    \method{var}{acomp}(x,y=NULL,\dots)
-    \method{var}{rcomp}(x,y=NULL,\dots)
-    \method{var}{aplus}(x,y=NULL,\dots)
-    \method{var}{rplus}(x,y=NULL,\dots)
-    \method{var}{rmult}(x,y=NULL,\dots)
+    \method{var}{acomp}(x,y=NULL,\dots,robust=getOption("robust"), use="all.obs",giveCenter=FALSE)
+    \method{var}{rcomp}(x,y=NULL,\dots,robust=getOption("robust"), use="all.obs",giveCenter=FALSE)
+    \method{var}{aplus}(x,y=NULL,\dots,robust=getOption("robust"), use="all.obs",giveCenter=FALSE)
+    \method{var}{rplus}(x,y=NULL,\dots,robust=getOption("robust"), use="all.obs",giveCenter=FALSE)
+    \method{var}{rmult}(x,y=NULL,\dots,robust=getOption("robust"), use="all.obs",giveCenter=FALSE)
   cov(x,y=x,\dots)
-    \method{cov}{default}(x, y=NULL, use="all.obs", 
+    \method{cov}{default}(x, y=NULL, use="everything", 
        method=c("pearson", "kendall", "spearman"), \dots)
-    \method{cov}{acomp}(x,y=NULL,\dots)
-    \method{cov}{rcomp}(x,y=NULL,\dots)
-    \method{cov}{aplus}(x,y=NULL,\dots)
-    \method{cov}{rplus}(x,y=NULL,\dots)
-    \method{cov}{rmult}(x,y=NULL,\dots)
+    \method{cov}{acomp}(x,y=NULL,\dots,robust=getOption("robust"), use="all.obs",giveCenter=FALSE)
+    \method{cov}{rcomp}(x,y=NULL,\dots,robust=getOption("robust"), use="all.obs",giveCenter=FALSE)
+    \method{cov}{aplus}(x,y=NULL,\dots,robust=getOption("robust"), use="all.obs",giveCenter=FALSE)
+    \method{cov}{rplus}(x,y=NULL,\dots,robust=getOption("robust"), use="all.obs",giveCenter=FALSE)
+    \method{cov}{rmult}(x,y=NULL,\dots,robust=getOption("robust"), use="all.obs",giveCenter=FALSE)
           }
 \arguments{
   \item{x}{a dataset, eventually of amounts or compositions}
@@ -43,6 +43,16 @@
   \item{method}{see \code{\link[stats]{cov}}}
   \item{\dots}{further arguments to \code{\link[stats]{var}}
     e.g. \code{use}}
+    \item{robust}{
+    A description of a robust estimator. FALSE for the classical
+    estimators. See \link{robustnessInCompositions} for
+    further details.
+  }
+  \item{giveCenter}{If TRUE the center used in the variance calculation
+    is reported as a "center" attribute. This is especially necessary
+    for robust estimations, where a reasonable center can not be
+    computed independently for the me variance calculation.}
+
 }
 \value{
   The variance matrix of x or the covariance matrix of x and
@@ -79,7 +89,7 @@
 
 \examples{
 data(SimulatedAmounts)
-mean.col(sa.lognormals)
+meanCol(sa.lognormals)
 var(acomp(sa.lognormals))
 var(rcomp(sa.lognormals))
 var(aplus(sa.lognormals))

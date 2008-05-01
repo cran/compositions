@@ -24,7 +24,8 @@ msd(x,\dots)
 \arguments{
   \item{x}{a dataset, eventually of amounts or compositions}
   \item{y}{a second dataset, eventually of amounts or compositions}
-  \item{\dots}{further arguments to \code{\link[base]{var}} or \code{\link[base]{cov}} 
+  \item{\dots}{further arguments to \code{\link[base]{var}} or
+    \code{\link[base]{cov}. Typically a \code{robust=TRUE} argument.} 
     e.g. \code{use}}
 }
 \value{

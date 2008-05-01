@@ -20,8 +20,6 @@
    then \code{W} is repeated \code{nrow(B)} times.
  }
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
-\seealso{
-}
 \examples{
 oneOrDataset(c(1,2,3))
 oneOrDataset(c(1,2,3),matrix(1:12,nrow=4))

@@ -20,16 +20,21 @@ data(Supervisor)
   Aitchison: CODA microcomputer statistical package, 1986, the file name SUPERVIS.DAT,
   here included under the GNU Public Library Licence Version 2 or newer.
 }
+\format{A 18x13  matrix}
 \details{
-For each session the 'statements' of the supervisor were classified into four categories
-\item{C:}{commanding, posing a specific instruction to the supervisee,}
-\item{D:}{demanding, posing a specific question to the supervisee,}
-\item{E:}{exposing, providing the supervisee with an explanation,}
-\item{F:}{faulting, pointing out faulty technique to the supervisee.}
+For each session the 'statements' of the supervisor were classified into
+four categories
+\itemize{
+  \item{C:}{commanding, posing a specific instruction to the supervisee,}
+  \item{D:}{demanding, posing a specific question to the supervisee,}
+  \item{E:}{exposing, providing the supervisee with an explanation,}
+  \item{F:}{faulting, pointing out faulty technique to the supervisee.}
+}
 Thus for each session the proportion of statements in the four categories
 are set out in a two-way table according to the fortnight (6) and the supervisee (3).
 The  C, D, E, F values in the rows sum mostly to 1, except for some rounding errors.
 }
+\note{Courtesy of J. Aitchison}
 \references{
    Aitchison, J. (1986): The Statistical Analysis of Compositional Data, (Data 7) pp12.
  }

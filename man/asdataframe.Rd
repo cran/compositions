@@ -26,6 +26,8 @@
 \examples{
 data(SimulatedAmounts)
 as.data.frame(acomp(sa.groups))
+# The central perpose of providing this command is that the following
+# works properly:
 data.frame(acomp(sa.groups),groups=sa.groups.area)
 }
 \keyword{multivariate}

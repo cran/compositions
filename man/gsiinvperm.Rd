@@ -25,9 +25,7 @@ gsi2.invperm( i,n )
 \seealso{
     \code{\link{gsi}}
 }
-\references{
-}
 \examples{
-gsi2.invperm(c(2,3),10)
+#gsi2.invperm(c(2,3),10)
 }
-\keyword{}
+\keyword{internal}

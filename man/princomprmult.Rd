@@ -5,11 +5,22 @@
   Performs a principal component analysis for datasets of type rmult.
 }
 \usage{
-\method{princomp}{rmult}(x,\dots)
+\method{princomp}{rmult}(x,cor=FALSE,scores=TRUE,
+                           covmat=var(rmult(x[subset,]),robust=robust,giveCenter=TRUE),center=attr(covmat,"center"),  subset = rep(TRUE, nrow(x)),...,robust=getOption("robust"))
 }
 \arguments{
   \item{x}{a rmult-dataset}
   \item{\dots}{Further arguments to call \code{\link{princomp.default}}}
+  \item{cor}{logical: shall the computation be based on correlations
+    rather than covariances?}
+  \item{scores}{logical: shall scores be computed?}
+  \item{covmat}{provides the covariance matrix to be used for the
+    principle component analysis}
+  \item{center}{provides the  be used for the computation of scores}
+  \item{subset}{A rowindex to x giving the columns that should be used
+    to estimate the variance.}
+  \item{robust}{Gives the robustness type for the calculation of the
+    covariance matrix. See \code{\link{var.rmult}} for details.}
 }
 \value{
   An object of type \code{princomp} with the following fields

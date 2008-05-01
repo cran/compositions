@@ -1,6 +1,6 @@
 \name{clr}
 \alias{clr}
-\alias{clr.inv}
+\alias{clrInv}
 \title{Centered log ratio transform}
 \description{
   Compute the centered log ratio transform of a (dataset of)
@@ -8,7 +8,7 @@
 }
 \usage{
           clr( x,... )
-          clr.inv( z,... )
+          clrInv( z,... )
           }
 \arguments{
   \item{x}{a composition or a data matrix of compositions, not necessarily closed}
@@ -19,7 +19,7 @@
 }
 \value{
   \code{clr} gives the centered log ratio transform,
-  \code{clr.inv} gives closed compositions with the given clr-transform
+  \code{clrInv} gives closed compositions with the given clr-transform
   }
 \details{
   The clr-transform maps a composition in the D-part Aitchison-simplex
@@ -53,10 +53,10 @@
 }
 \examples{
 (tmp <- clr(c(1,2,3)))
-clr.inv(tmp)
-clr.inv(tmp) - clo(c(1,2,3)) # 0
+clrInv(tmp)
+clrInv(tmp) - clo(c(1,2,3)) # 0
 data(Hydrochem)
 cdata <- Hydrochem[,6:19]
-pairs(clr(cdata)) 
+pairs(clr(cdata),pch=".") 
 }
 \keyword{multivariate}

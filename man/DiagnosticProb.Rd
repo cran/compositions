@@ -49,4 +49,5 @@ diagnosis probabilities are known to be $(.08, .05, .87).$
 \references{
    Aitchison: The Statistical Analysis of Compositional Data, 1986, Data 17, pp20.
  }
+\note{Courtesy of J. Aitchison}
 \keyword{datasets}

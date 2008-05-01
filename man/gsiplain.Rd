@@ -16,14 +16,8 @@ gsi.plain( x )
 }
 \note{Do not use gsi.* functions directly since they are internal
   functions of the package}
-\details{
-}
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
-\seealso{
-}
-\references{
-}
 \examples{
-gsi.plain(acomp(c(12,3,4)))
+#gsi.plain(acomp(c(12,3,4)))
 }
-\keyword{}
+\keyword{internal}

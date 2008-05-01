@@ -1,21 +1,23 @@
 \name{geometricmean}
 \alias{geometricmean}
-\alias{geometricmean.row}
-\alias{geometricmean.col}
+\alias{geometricmeanRow}
+\alias{geometricmeanCol}
 \alias{gsi.geometricmean}
-\alias{gsi.geometricmean.row}
-\alias{gsi.geometricmean.col}
+\alias{gsi.geometricmeanRow}
+\alias{gsi.geometricmeanCol}
+\alias{gsi.geometricmean.Row}
+\alias{gsi.geometricmean.Col}
 \title{The geometric mean}
 \description{
   Computes the geometric mean.
 }
 \usage{
           geometricmean(x,\dots)
-          geometricmean.row(x,\dots)
-          geometricmean.col(x,\dots)
+          geometricmeanRow(x,\dots)
+          geometricmeanCol(x,\dots)
           gsi.geometricmean(x,\dots)
-          gsi.geometricmean.row(x,\dots)
-          gsi.geometricmean.col(x,\dots)
+          gsi.geometricmeanRow(x,\dots)
+          gsi.geometricmeanCol(x,\dots)
           }
 \arguments{
   \item{x}{a numeric vector or matrix of data }
@@ -23,7 +25,7 @@
 }
 \value{
   The geometric means of x as a whole (geometricmean), its rows
-  (geometricmean.row) or its columns (geometricmean.col).
+  (geometricmeanRow) or its columns (geometricmeanCol).
 }
 \details{
   The geometric mean is defined as:
@@ -57,7 +59,7 @@ geometricmean(1:10)
 geometricmean(c(1,0,NA,NaN))  # 0
 X <- matrix(c(1,NA,NaN,0,1,2,3,4),nrow=4)
 X  
-geometricmean.row(X)
-geometricmean.col(X)
+geometricmeanRow(X)
+geometricmeanCol(X)
 }
 \keyword{univar}

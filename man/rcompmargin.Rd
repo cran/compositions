@@ -5,7 +5,7 @@
   Compute marginal compositions by amalgamating the rest (additively).
 }
 \usage{
-          rcompmargin(X,d=c(1,2),name="+",pos=length(d)+1)
+          rcompmargin(X,d=c(1,2),name="+",pos=length(d)+1,what="data")
           }
 \arguments{
   \item{X}{composition or dataset of compositions}
@@ -13,6 +13,8 @@
   \item{name}{The new name of the amalgamation column}
   \item{pos}{The position where the new amalgamation column should be
     stored. This defaults to the last column.}
+  \item{what}{The role of X either \code{"data"} for data (or means) to be
+    transformed or \code{"var"} for variances to be transformed.}
 }
 \value{
   A closed compositions with class \code{"rcomp"} containing the
@@ -22,7 +24,11 @@ non-selected components after closing the composition. This is
 consistent with the \code{\link{rcomp}} approach and is widely used because
 of its easy interpretation. However, it often leads to difficult-to-read
 ternary diagrams and is inconsistent with the \code{\link{acomp}}
-approach.  }
+approach.
+
+With the argument \code{what="var"} the function transformes an rcomp
+variance to the resulting variance of the resulting composition.
+}
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}, Raimon
 olosana-Delgado}
 \seealso{ \code{\link{acompmargin}}, \code{\link{rcomp}}}
@@ -32,6 +38,7 @@ olosana-Delgado}
 }
 
 \references{
+  References missing
 }
 \examples{
 data(SimulatedAmounts)

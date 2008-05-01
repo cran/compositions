@@ -13,6 +13,4 @@ gsi.eps
 \seealso{
   \code{\link{gsi}}
 }
-\examples{
-}
-\keyword{}
+\keyword{internal}

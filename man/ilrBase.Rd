@@ -1,6 +1,6 @@
 \name{ilrBase}
 \alias{ilrBase}
-\alias{gsi.ilrBase}
+%\alias{gsi.ilrBase}
 \alias{ilrBaseList}
 \title{The canonical basis in the clr plane used for ilr and ipt transforms.}
 \description{
@@ -9,7 +9,7 @@
 }
 \usage{
           ilrBase( x=NULL , z=NULL , D = NULL, method = "basic" )
-          gsi.ilrBase(D)
+%         gsi.ilrBase(D)
           }
 \arguments{
   \item{x}{ optional dataset or vector of compositions}

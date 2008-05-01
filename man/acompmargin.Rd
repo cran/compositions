@@ -6,7 +6,7 @@
   geometric mean of the non-selected parts.
 }
 \usage{
-          acompmargin(X,d=c(1,2),name="*",pos=length(d)+1)
+          acompmargin(X,d=c(1,2),name="*",pos=length(d)+1,what="data")
           }
 \arguments{
   \item{X}{composition or dataset of compositions}
@@ -14,6 +14,8 @@
   \item{name}{The new name of the amalgamation column}
   \item{pos}{The position where the new amalgamation column should be
     stored. This defaults to the last column.}
+  \item{what}{The role of X either \code{"data"} for data (or means) to be
+    transformed or \code{"var"} for (acomp-clr)-variances to be transformed.}
 }
 \value{
   A closed compositions with class \code{"acomp"} containing the
@@ -32,11 +34,13 @@ diagrams. However, this geometric mean is difficult to interpret.
 }
 \references{
   Vera Pawlowsky-Glahn (2003) personal communication.
-  Universitat de Girona. vera.pawlowsky@udg.es
+  Universitat de Girona. vera.pawlowsky@udg.es\cr
+  
+      van den Boogaart, K.G. and R. Tolosana-Delgado (2008)
+  "compositions": a unified R package to analyze Compositional Data,
+  \emph{Computers & Geosciences}, 34 (4), pages 320-338,
+  doi:10.1016/j.cageo.2006.11.017.
 
-  van den Boogaart, K.G. and R. Tolosana-Delgado (2007) "compositions": a unified 
-  R package to analyze Compositional Data, \emph{Computers & Geosciences}. 
-  (in press).
 }
 \examples{
 data(SimulatedAmounts)

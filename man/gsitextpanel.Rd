@@ -24,8 +24,7 @@ gsi.textpanel(x,y,lab,\dots)
   \code{\link{gsi}}
 }
 \examples{
-data(iris)
-pairs(iris,text.panel=gsi.textpanel)
+#data(iris)
+#pairs(iris,text.panel=gsi.textpanel)
 }
-
-\keyword{}
+\keyword{internal}

@@ -32,4 +32,5 @@ data(Skulls)
 \references{
    Aitchison, J. (1986) The Statistical Analysis of Compositional Data, (Data 24), pp22. 
  }
+\note{Courtesy of J. Aitchison}
 \keyword{datasets}

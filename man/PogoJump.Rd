@@ -27,5 +27,6 @@ data(PogoJump)
 }
 \references{
    Aitchison, J. (1982) The Statistical Analysis of Compositional Data, (Data 19) pp21.
-}
+ }
+\note{Courtesy of J. Aitchison}
 \keyword{datasets}

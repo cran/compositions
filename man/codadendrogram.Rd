@@ -5,15 +5,16 @@
   Function for plotting CoDa-dendrograms of acomp or rcomp objects.
 }
 \usage{
-CoDaDendrogram(X,V=NULL,mergetree=NULL,signary=NULL,range=c(-4,4),...,
-        xlim=NULL, ylim=NULL,yaxt=NULL, box.pos=0, box.space=0.25,
-        col.tree="black", lty.tree=1, lwd.tree=1,
-        col.leaf="black", lty.leaf=1, lwd.leaf=1,
-        add=FALSE,type="boxplot")
+CoDaDendrogram(X, V = NULL, expr=NULL, mergetree = NULL, signary = NULL, 
+    range = c(-4,4), ..., xlim = NULL, ylim = NULL, yaxt = NULL, box.pos = 0,
+    box.space = 0.25, col.tree = "black", lty.tree = 1, lwd.tree = 1,
+    col.leaf = "black", lty.leaf = 1, lwd.leaf = 1, add = FALSE,border=NULL,
+    type = "boxplot")
           }
 \arguments{
   \item{X}{ data set to plot (an rcomp or acomp object) }
   \item{V}{ basis to use, described as an ilr matrix }
+  \item{expr}{ a formula describing the partition basis, as with \code{\link{balanceBase}} }
   \item{mergetree}{ basis to use, described as a merging tree (as in \code{\link{hclust}}) }
   \item{signary}{ basis to use, described as a sign matrix (as in the example below)}
   \item{range}{ minimum and maximum value for all coordinates (horizontal axes) }
@@ -30,7 +31,11 @@ CoDaDendrogram(X,V=NULL,mergetree=NULL,signary=NULL,range=c(-4,4),...,
   \item{lty.leaf}{ line type for the leaves }
   \item{lwd.leaf}{ line width for the leaves }
   \item{add}{ should a new plot be triggered, or is the material to be added to an existing CoDa-dendrogram? }
-  \item{type}{ what to represent? one of "boxplot","density","histogram","lines","nothing" or "points", or an univocal abbreviation }
+  \item{border}{the color for drawing the rectangles}
+  \item{type}{ what to represent? one of
+    "boxplot","density","histogram","lines","nothing" or "points", or an
+    univocal abbreviation }
+  
 }
 \details{
   The object \emph{and an isometric basis} are represented in a
@@ -45,7 +50,7 @@ CoDaDendrogram(X,V=NULL,mergetree=NULL,signary=NULL,range=c(-4,4),...,
 
   Each coordinate is represented in a horizontal axis, which limits correspond to the values given in the parameter \code{range}. The vertical bar going up from each one of these coordinate axes represent the variance of that specific coordinate, and the contact point the coordinate mean. Note that to be able to represent an initial dendrogram, the first call to this function must be given a full data set, as means and variances must be computed. This information is afterwards stored in a global list, to add any sort of new material to all coordinates.
 \cr
-The default option is \code{type="boxplot"}, which produces a box-plot for each coordinate, customizable using \code{box.pos} and \code{box.space}, as well as typical \code{\link{par}} parameters (col, border, lty, lwd, etc.). To obtain only the first three aspects, the function must be called with \code{type="lines"}. As extensions, one might represent a single datum/few data (e.g., a mean or a random subsample of the data set) calling the function with \code{add=TRUE} and \code{type="points"}. Other options (calling functions \code{\link{histogram}} or code{\link{density}}, and admitting their parameters) will be  also soon available.
+The default option is \code{type="boxplot"}, which produces a box-plot for each coordinate, customizable using \code{box.pos} and \code{box.space}, as well as typical \code{\link{par}} parameters (col, border, lty, lwd, etc.). To obtain only the first three aspects, the function must be called with \code{type="lines"}. As extensions, one might represent a single datum/few data (e.g., a mean or a random subsample of the data set) calling the function with \code{add=TRUE} and \code{type="points"}. Other options (calling functions \code{\link{histogram}} or \code{\link{density}}, and admitting their parameters) will be  also soon available.
 \cr
 Note that the original coda-dendrogram as defined by Egozcue and Pawlowsky-Glahn (2005) works with acomp objects and ilr bases. Functionality is extended to rcomp objects using calls to \code{\link{idt}}.
 }
@@ -53,7 +58,7 @@ Note that the original coda-dendrogram as defined by Egozcue and Pawlowsky-Glahn
 \author{Raimon Tolosana-Delgado, K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 
 \seealso{
-  \code{\link{ilrBase}},\code{\link{rcomp}}, \code{\link{acomp}},
+  \code{\link{ilrBase}},\code{\link{balanceBase}}, \code{\link{rcomp}}, \code{\link{acomp}},
 }
 
 \references{
@@ -65,7 +70,7 @@ Note that the original coda-dendrogram as defined by Egozcue and Pawlowsky-Glahn
   Egozcue, J.J. and V. Pawlowsky-Glahn (2005). CoDa-Dendrogram: a new exploratory tool.
   In: Mateu-Figueras, G. and Barcel\'o-Vidal, C. (Eds.)
   \emph{Proceedings of the 2nd International Workshop on Compositional Data Analysis},
-  Universitat de Girona, {ISBN} 84-8458-222-1, \url{http://ima.udg.es/Activitats/CoDaWork05}\cr
+  Universitat de Girona, ISBN 84-8458-222-1, \url{http://ima.udg.es/Activitats/CoDaWork05}\cr
 
 
 }
@@ -83,7 +88,7 @@ mergetree=hc1$merge
 CoDaDendrogram(X=acomp(x),mergetree=mergetree,col="red",range=c(-8,8),box.space=1)
 # add the mean of each river
 color=c("green3","red","blue","darkviolet")
-aux = clr.inv(t(sapply(split(clr(x),gr),mean)))
+aux = clrInv(t(sapply(split(clr(x),gr),mean)))
 CoDaDendrogram(X=aux,add=TRUE,col=color,type="points",pch=4)
 
 # second example: box-plots by rivers (filled)
@@ -110,7 +115,5 @@ for(i in 1:4){
   CoDaDendrogram(X=acomp(xsplit[[i]]),col=color[i],
        type="line",add=TRUE)
 }
-# see how easy are warnings produced ;-)
-warnings()
 }
 \keyword{hplot}

@@ -20,6 +20,6 @@ gsi.expandrcomp(x,alpha)
   functions of the package
 }  
 \examples{
-gsi.expandrcomp(rcomp(1:3),0.5)
+#gsi.expandrcomp(rcomp(1:3),0.5)
 }
-\keyword{multivariate}
+\keyword{internal}

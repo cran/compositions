@@ -40,7 +40,7 @@
     Data} Monographs on Statistics and Applied Probability. Chapman &
   Hall Ltd., London (UK). 416p.\cr
 
-  Martn-Fern\'andez, J.A.; Barcel\'o-Vidal, C. and Pawlowsky-Glahn, V. (2003)
+  Mart\'in-Fern\'andez, J.A.; Barcel\'o-Vidal, C. and Pawlowsky-Glahn, V. (2003)
   Dealing With Zeros and Missing Values in Compositional Data Sets
   Using Nonparametric Imputation. \emph{Mathematical Geology}, 35 , 253-278
 
@@ -55,6 +55,6 @@ x <- acomp(sa.lognormals)
 xnew <- simulateMissings(x,detectionlimit=0.05,knownlimit=FALSE)
 xnew
 xrep <- zeroreplace(xnew,0.05)
-xnew
+xrep
 }
 \keyword{multivariate}

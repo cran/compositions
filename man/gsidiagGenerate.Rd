@@ -28,8 +28,8 @@ gsi.diagGenerate(x)
 }
 \examples{
 diag(1:3)
-gsi.diagGenerate(1:3)
-gsi.diagGenerate(3)
+#gsi.diagGenerate(1:3)
+#gsi.diagGenerate(3)
 diag(3)
 }
-\keyword{}
+\keyword{internal}

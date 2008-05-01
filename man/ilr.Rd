@@ -1,6 +1,6 @@
 \name{ilr}
 \alias{ilr}
-\alias{ilr.inv}
+\alias{ilrInv}
 \title{Isometric log ratio transform}
 \description{
   Compute the isometric log ratio transform of a (dataset of)
@@ -8,7 +8,7 @@
 }
 \usage{
           ilr( x , V = ilrBase(x) ,...)
-          ilr.inv( z , V = ilrBase(z=z),..., orig=NULL)
+          ilrInv( z , V = ilrBase(z=z),..., orig=NULL)
           }
 \arguments{
   \item{x}{a composition, not necessarily closed}
@@ -22,7 +22,7 @@
 }
 \value{
   \code{ilr} gives the isometric log ratio transform,
-  \code{ilr.inv} gives closed compositions with the given ilr-transforms
+  \code{ilrInv} gives closed compositions with the given ilr-transforms
 }
 \details{
   The ilr-transform maps a composition in the D-part Aitchison-simplex
@@ -60,8 +60,8 @@ Tolosana-Delgado}
   }
 \examples{
 (tmp <- ilr(c(1,2,3)))
-ilr.inv(tmp)
-ilr.inv(tmp) - clo(c(1,2,3)) # 0
+ilrInv(tmp)
+ilrInv(tmp) - clo(c(1,2,3)) # 0
 data(Hydrochem)
 cdata <- Hydrochem[,6:19]
 pairs(ilr(cdata))

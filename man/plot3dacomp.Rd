@@ -10,11 +10,11 @@
  \method{plot3D}{acomp}(x, parts=1:min(ncol(X),4),..., 
              lwd=2, axis.col="gray", add=FALSE, cex=2, 
              vlabs=colnames(x), vlabs.col=axis.col, center=FALSE, 
-             scale=FALSE, log=FALSE, bbox=FALSE, axes=TRUE, size=cex)
+             scale=FALSE, log=FALSE, bbox=FALSE, axes=TRUE, size=cex,col=par("col"))
 \method{plot3D}{rcomp}(x,parts=1:min(ncol(X),4),...,
              lwd=2,axis.col="gray",add=FALSE,cex=2,
              vlabs=colnames(x),vlabs.col=axis.col,center=FALSE,
-             scale=FALSE,log=FALSE,bbox=FALSE,axes=TRUE,size=cex)
+             scale=FALSE,log=FALSE,bbox=FALSE,axes=TRUE,size=cex,col=par("col"))
 }
 \arguments{
   \item{x}{an aplus object to be plotted}
@@ -35,6 +35,8 @@
   \item{bbox}{logical, whether to add a bounding box}
   \item{axes}{logical, whether plot a coordinate cross}
   \item{size}{size of the plotting symbols}
+  \item{col}{the color}
+
 }
 \value{
   Called for its side effect of a 3D plot of an acomp object in an rgl plot.
@@ -80,9 +82,9 @@ be downloaded separately.
 }
 \examples{
 data(SimulatedAmounts)
-plot3D(acomp(sa.lognormals5),1:3)
-plot3D(acomp(sa.lognormals5),1:3,log=TRUE)
-plot3D(acomp(sa.lognormals5),1:4)
-plot3D(acomp(sa.lognormals5),1:4,log=TRUE)
+plot3D(acomp(sa.lognormals5),1:3,col="green")
+plot3D(acomp(sa.lognormals5),1:3,log=TRUE,col="green")
+plot3D(acomp(sa.lognormals5),1:4,col="green")
+plot3D(acomp(sa.lognormals5),1:4,log=TRUE,col="green")
 }
 \keyword{multivariate}

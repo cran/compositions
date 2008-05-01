@@ -6,9 +6,9 @@
 \description{
 Data shows the urinary excretion (mg/24 hours) of 37 normal adults and 30 normal children
 of
-\item total cortisol meatbolites,
-\item total corticosterone meatbolites,
-\item total pregnanetriol and $\Delta$-5-pregnentriol.
+total cortisol meatbolites,
+total corticosterone meatbolites,
+total pregnanetriol and \eqn{\Delta}{Delta}-5-pregnentriol.
 }
 \usage{
 data(Metabolites)
@@ -28,4 +28,5 @@ in mg for 24 hours are given.
 \references{
    Aitchison, J. (1986) The Statistical Analysis of Compositional Data, (Data 9), pp14.
  }
+\note{Courtesy of J. Aitchison}
 \keyword{datasets}

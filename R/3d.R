@@ -1,6 +1,7 @@
 plot3D <- function(x,...) UseMethod("plot3D")
 
-plot3D.rmult <- function(x,parts=1:3,...,center=FALSE,scale=FALSE,add=FALSE,axes=!add,cex=2,vlabs=colnames(x),size=cex,bbox=FALSE) {
+plot3D.rmult <- function(x,parts=1:3,...,center=FALSE,scale=FALSE,add=FALSE,axes=!add,cex=2,vlabs=colnames(x),size=cex,bbox=FALSE,col=par("col")) {
+  #require("rgl")
   X<-x
   if( ! add ) 
       gsi.reset3D()
@@ -15,7 +16,7 @@ plot3D.rmult <- function(x,parts=1:3,...,center=FALSE,scale=FALSE,add=FALSE,axes
       scale <- diag(scale,1)
     }
     scale[4,4] <- max(diag(scale)[-4]) 
-    points3d(x[,1],x[,2],x[,3],size=size,...)
+    points3d(x[,1],x[,2],x[,3],size=size,...,col=col)
     par3d(userMatrix=scale)
     gsi.filtercall("axis3D")
                                         #  axis3D(axis.origin=axis.origin,axis.scale=axis.scale,
@@ -27,6 +28,7 @@ plot3D.rmult <- function(x,parts=1:3,...,center=FALSE,scale=FALSE,add=FALSE,axes
   }
 
 gsi.reset3D <- function(userMatrix=diag(rep(1,4))) {
+  #require("rgl")
   rgl::clear3d()
   rgl::par3d(userMatrix=userMatrix)
 }
@@ -35,6 +37,7 @@ gsi.reset3D <- function(userMatrix=diag(rep(1,4))) {
 gsi.filtercall <- function(fkt,...,overwrite=NULL,transmit=character(0),default=list(...),prefix=if(is.character(fkt)) fkt else NULL) {
   #oo <- function(x) {cat(deparse(substitute(x)),"=\n");print(x)}
   #oo <- function(x) {}
+  #require("rgl")
   prefix
   if(is.character(fkt)) fkt <- get(fkt,mode="function")
   #oo(fkt)
@@ -76,12 +79,13 @@ gsi.filtercall <- function(fkt,...,overwrite=NULL,transmit=character(0),default=
   do.call(fkt,args[nn],envir=parent.frame(2)) # this line is the source of error!!!
 }
 
-plot3D.default <- function(x,...,add=FALSE,bbox=TRUE,axes=FALSE,cex=1,size=cex) {
+plot3D.default <- function(x,...,add=FALSE,bbox=TRUE,axes=FALSE,cex=1,size=cex,col=par("col")) {
+  #require("rgl")
   X<-x
   if( ! add )
     gsi.reset3D()
   radius <- max(max(X[,1])-min(X[,1]),max(X[,2])-min(X[,2]),max(X[,3])-min(X[,3]))/100*cex
-  rgl::spheres3d(X[,1],X[,2],X[,3],...,radius=radius)
+  rgl::spheres3d(X[,1],X[,2],X[,3],...,radius=radius,col=col)
   if( bbox) rgl.bbox()
   if( any(axes) ) arrows3D(diag(c(0,0,0)),diag(c(1,1,1))) 
   invisible(NULL)
@@ -89,7 +93,8 @@ plot3D.default <- function(x,...,add=FALSE,bbox=TRUE,axes=FALSE,cex=1,size=cex) 
 
 
 
-plot3D.acomp <- function(x,parts=1:min(ncol(X),4),...,lwd=2,axis.col="gray",add=FALSE,cex=2,vlabs=colnames(x),vlabs.col=axis.col,center=FALSE,scale=FALSE,log=FALSE,bbox=FALSE,axes=TRUE,size=cex) {
+plot3D.acomp <- function(x,parts=1:min(ncol(X),4),...,lwd=2,axis.col="gray",add=FALSE,cex=2,vlabs=colnames(x),vlabs.col=axis.col,center=FALSE,scale=FALSE,log=FALSE,bbox=FALSE,axes=TRUE,size=cex,col=par("col")) {
+  #require("rgl")
   X<-x
   if( length(parts) == 3 ) {
    if( log ) {
@@ -99,7 +104,7 @@ plot3D.acomp <- function(x,parts=1:min(ncol(X),4),...,lwd=2,axis.col="gray",add=
        if( axes )
          arrows3D(diag(c(0,0,0)),diag(c(1,1,1)),labs=vlabs,col=axis.col)
      }
-      points3d(x[,1],x[,2],x[,3],size=size,...)
+      points3d(x[,1],x[,2],x[,3],size=size,...,col=col)
     } else {
       x <- scale(acomp(X,parts=parts),center=center,scale=scale)
       if( ! add ) {
@@ -111,7 +116,7 @@ plot3D.acomp <- function(x,parts=1:min(ncol(X),4),...,lwd=2,axis.col="gray",add=
         if( !is.null(vlabs) )
           texts3d(corners[,1],corners[,2],corners[,3],c(vlabs,"0"),col=vlabs.col)
       }
-      points3d(x[,1],x[,2],x[,3],size=size,...)
+      points3d(x[,1],x[,2],x[,3],size=size,...,col=col)
     }
    rgl.viewpoint(45,35.4)
  } else if( length(parts)==4 ) {
@@ -124,7 +129,7 @@ plot3D.acomp <- function(x,parts=1:min(ncol(X),4),...,lwd=2,axis.col="gray",add=
          arrows3D(corners*0,corners,col=axis.col,size=lwd,labs=vlabs)
      }
      ilrx <- ilr(scale(acomp(x),center=center,scale=scale))
-     points3d(ilrx[,1],ilrx[,2],ilrx[,3],size=size,...)
+     points3d(ilrx[,1],ilrx[,2],ilrx[,3],size=size,...,col=col)
    } else {
      if( ! add ) {
        gsi.reset3D()
@@ -135,7 +140,7 @@ plot3D.acomp <- function(x,parts=1:min(ncol(X),4),...,lwd=2,axis.col="gray",add=
          lines3d(cl[,1],cl[,2],cl[,3],col=axis.col,size=lwd)
      }
      iptx <- ipt(scale(acomp(x),center=center,scale=scale))
-     points3d(iptx[,1],iptx[,2],iptx[,3],size=size,...)
+     points3d(iptx[,1],iptx[,2],iptx[,3],size=size,...,col=col)
      if( !is.null(vlabs) ) {
        cc <- ipt(corners)
        texts3d(cc[,1],cc[,2],cc[,3],c(vlabs),col=vlabs.col)
@@ -165,23 +170,24 @@ axis3D <- function(axis.origin=c(0,0,0),axis.scale=1,axis.col="gray",vlabs=c("x"
   }
 }
 
-
-plot3D.rplus <- function(x,parts=1:3,...,vlabs=NULL,add=FALSE,bbox=FALSE,cex=1,size=cex,axes=TRUE) {
+plot3D.rplus <- function(x,parts=1:3,...,vlabs=NULL,add=FALSE,bbox=FALSE,cex=1,size=cex,axes=TRUE,col=par("col")) {
+  #require("rgl")
   X<-x
   if(! add )
     gsi.reset3D()
   XX <- oneOrDataset(iit(rplus(X,parts=parts)))
-  plot3D(rmult(XX),...,bbox=bbox)
+  plot3D(rmult(XX),...,bbox=bbox,col=col)
   if( missing(vlabs) )
     vlabs <- colnames(XX)
   if( axes ) arrows3D(diag(c(0,0,0)),diag(mean(rplus(XX))),labs=vlabs)
   invisible(NULL)
 }
 
-plot3D.aplus <- function(x,parts=1:3,...,vlabs=NULL,add=FALSE,log=TRUE,bbox=FALSE,axes=TRUE) {
+plot3D.aplus <- function(x,parts=1:3,...,vlabs=NULL,add=FALSE,log=TRUE,bbox=FALSE,axes=TRUE,col=par("col")) {
+  #require("rgl")
   X<-x
   if( ! log ) {
-    plot3D(rplus(X),parts=parts,...,vlabs=vlabs,add=add,bbox=bbox)
+    plot3D(rplus(X),parts=parts,...,col=col,vlabs=vlabs,add=add,bbox=bbox)
     return()
   }
   if(! add )
@@ -189,7 +195,7 @@ plot3D.aplus <- function(x,parts=1:3,...,vlabs=NULL,add=FALSE,log=TRUE,bbox=FALS
   XX <- oneOrDataset(ilt(aplus(X,parts=parts)))
   if( missing(vlabs) )
     vlabs <- colnames(XX)
-  plot3D(rmult(XX),...,bbox=bbox)
+  plot3D(rmult(XX),...,col=col,bbox=bbox)
   mm <- mean(rmult(XX))
   if( axes )
     arrows3D(diag(mm+c(0,0,0)),diag(mm+c(1,1,1)),labs=vlabs)
@@ -206,7 +212,7 @@ arrows3D.default <- function(x0,x1,...,length=0.25,
   X <- oneOrDataset(x0,x1)
   Y <- oneOrDataset(x1,x0)
   if( ! is.null(labs))
-    texts3d(Y[,1],Y[,2],Y[,3],labs,...)
+    texts3d(Y[,1],Y[,2],Y[,3],labs,...,col=col)
   XX <- rbind(X,Y)
   XX[(1:nrow(X)-1)*2+1,]<- X
   XX[(1:nrow(X)-1)*2+2,]<- Y
@@ -248,6 +254,7 @@ biplot3D.default <- function(x,y,var.axes=TRUE,
 #            xlim  = NULL, ylim  = NULL, 
 #            main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
                              ...,add=FALSE){
+  #require("rgl")
   if( !add ) {
     gsi.reset3D();
   }
@@ -275,6 +282,7 @@ biplot3D.default <- function(x,y,var.axes=TRUE,
 }
 
 biplot3D.princomp <- function(x,choices=1:3,scale=1,...,comp.col=par("fg"),comp.labs=paste("Comp.",1:3),scale.scores=lambda[choices]^(1-scale),scale.var=scale.comp,scale.comp=sqrt(lambda[choices]),scale.disp=1/scale.comp) {
+  #require("rgl")
   lambda <- x$sdev^2
   if( length(scale.var) == 1 ) scale.var <- rep(scale.var,3)
   if( length(scale.scores) == 1 ) scale.scores <-  rep(scale.scores,3)

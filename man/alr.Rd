@@ -1,6 +1,6 @@
 \name{alr}
 \alias{alr}
-\alias{alr.inv}
+\alias{alrInv}
 \title{Additive log ratio transform}
 \description{
   Compute the additive log ratio transform of a (dataset of)
@@ -8,7 +8,7 @@
 }
 \usage{
           alr( x , ... )
-          alr.inv( z, ...,orig=NULL)
+          alrInv( z, ...,orig=NULL)
           }
 \arguments{
   \item{x}{a composition, not necessarily closed}
@@ -22,7 +22,7 @@
 }
 \value{
   \code{alr} gives the additive log ratio transform; accepts a compositional dataset
-  \code{alr.inv} gives a closed composition with the given alr-transform; accepts a dataset
+  \code{alrInv} gives a closed composition with the given alr-transform; accepts a dataset
 }
 \details{
   The alr-transform maps a composition in the D-part Aitchison-simplex
@@ -51,10 +51,10 @@
 }
 \examples{
 (tmp <- alr(c(1,2,3)))
-alr.inv(tmp)
-unclass(alr.inv(tmp)) - clo(c(1,2,3)) # 0
+alrInv(tmp)
+unclass(alrInv(tmp)) - clo(c(1,2,3)) # 0
 data(Hydrochem)
 cdata <- Hydrochem[,6:19]
-pairs(alr(cdata))
+pairs(alr(cdata),pch=".")
 }
 \keyword{multivariate}

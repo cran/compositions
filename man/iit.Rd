@@ -1,6 +1,6 @@
 \name{iit}
 \alias{iit}
-\alias{iit.inv}
+\alias{iitInv}
 \title{Isometric identity transform}
 \description{
   Compute the isometric identity  transform of a vector (dataset) of
@@ -8,7 +8,7 @@
 }
 \usage{
           iit( x ,...)
-          iit.inv( z ,... )
+          iitInv( z ,... )
           }
 \arguments{
   \item{x}{a vector or data matrix of amounts}
@@ -19,7 +19,7 @@
 \value{
   \code{ilt} gives the isometric identity transform, i.e. simply the
   input stripped of the "rplus" class attribute,
-  \code{ipt.inv} gives amounts with class "rplus" with the given iit,
+  \code{iptInv} gives amounts with class "rplus" with the given iit,
   i.e. simply the argument checked to be a valid "rplus" object, and 
   with this class attribute.
   }
@@ -47,11 +47,15 @@
   \code{\link{ilt}}, \code{\link{ilr},} \code{\link{rplus}}
 }
 \references{
+      van den Boogaart, K.G. and R. Tolosana-Delgado (2008) "compositions": a unified 
+  R package to analyze Compositional Data, \emph{Computers &
+    Geosciences}, 34 (4), pages 320-338, doi:10.1016/j.cageo.2006.11.017.
+
 }
 \examples{
 (tmp <- iit(c(1,2,3)))
-iit.inv(tmp)
-iit.inv(tmp) - c(1,2,3) # 0
+iitInv(tmp)
+iitInv(tmp) - c(1,2,3) # 0
 data(Hydrochem)
 cdata <- Hydrochem[,6:19]
 pairs(iit(cdata)) 

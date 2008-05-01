@@ -37,6 +37,7 @@ and sums
  useful for any type of missing value, when used with care).
 }
 \details{
+  See the references for details on that function.
 }
 \references{
   Boogaart, K.G. v.d. (2006) Concepts for handling of zeros and missing
@@ -46,6 +47,7 @@ and sums
   \url{http://www.math-inf.uni-greifswald.de/~boogaart/Publications/iamg06_s07_01.pdf}
 }
 \seealso{
+  \code{\link{missingsInCompositions}}
 }
 \examples{
 data(SimulatedAmounts)
@@ -61,4 +63,4 @@ missingProjector(rplus(xnew))
 
 }
 \author{K.G.van den Boogaart}
-\keyword{}
+\keyword{NA}

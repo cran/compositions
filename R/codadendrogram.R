@@ -1,10 +1,14 @@
 
-gsi.ilrBase2signary=function(V){
+# updated by Raimon in August 2007:
+gsi.ilrBase2signary = function(V){
+  if(is.null(dim(V))){ dim(V)=c(length(V),1)  }
   signary = sign(V)
   Vzero = abs(V)>1.e-15
   signary = signary * Vzero
-  if(!any(geometricmean.row(signary)==0)){
-    stop("this ilr base matrix does not correspond to a partition!")
+  if(ncol(signary)>1){
+    if(!any(geometricmeanRow(signary)==0)){
+      stop("this ilr base matrix does not correspond to a partition!")
+    }
   }
   return(signary)
 }
@@ -26,18 +30,21 @@ gsi.OrderIlr = function(V){
 }
 
 
-CoDaDendrogram = function (X, V = NULL, mergetree = NULL, signary = NULL, range = c(-4,
-    4), ..., xlim = NULL, ylim = NULL, yaxt = NULL, box.pos = 0,
+# updated by Raimon in April 2008
+CoDaDendrogram = function (X, V = NULL, expr=NULL, mergetree = NULL, signary = NULL, 
+    range = c(-4,4), ..., xlim = NULL, ylim = NULL, yaxt = NULL, box.pos = 0,
     box.space = 0.25, col.tree = "black", lty.tree = 1, lwd.tree = 1,
-    col.leaf = "black", lty.leaf = 1, lwd.leaf = 1, add = FALSE,
-    type = "boxplot")
-{
+    col.leaf = "black", lty.leaf = 1, lwd.leaf = 1, add = FALSE,border=NULL,
+    type = "boxplot"){
     if (is.na(match(class(X), c("acomp", "rcomp")))) {
         stop("CoDaDendrogram only valid for relative compositions, of class acomp or rcomp")
     }
     if (!add) {
-        if (is.null(V) & is.null(mergetree) & is.null(signary)) {
-            stop("a hierarchical basis is needed! give one and only one of mergetree, signary or V")
+        if (is.null(V) & is.null(expr) & is.null(mergetree) & is.null(signary)) {
+            stop("a hierarchical basis is needed! give one and only one of mergetree, signary, expr or V")
+        }
+        if (!is.null(expr)) {
+            V = balanceBase(X, expr)
         }
         if (!is.null(mergetree)) {
             V = gsi.buildilrBase(gsi.merge2signary(mergetree))
@@ -47,6 +54,7 @@ CoDaDendrogram = function (X, V = NULL, mergetree = NULL, signary = NULL, range 
         }
         Vo = gsi.OrderIlr(V = V)
         idtx = idt(X, V = Vo$ilrBase)
+         if(is.null(range)){ range=range(idtx) }
         varx = diag(var(idtx))
         meanx = mean(idtx)
         signary = gsi.ilrBase2signary(Vo$ilrBase)
@@ -145,14 +153,14 @@ CoDaDendrogram = function (X, V = NULL, mergetree = NULL, signary = NULL, range 
             mbx = box.space * minheight
             hx = heights[i] + mbx * (box.pos - 1)/2
             rect(xleft = aux(qx[2]), ybottom = hx, xright = aux(qx[3]),
-                ytop = hx + mbx, ...)
+                ytop = hx + mbx, ...,border=border)
             rect(xleft = aux(qx[3]), ybottom = hx, xright = aux(qx[4]),
-                ytop = hx + mbx, ...)
+                ytop = hx + mbx, ...,border=border)
             hx = heights[i] + mbx/2 * (box.pos - 1)/2
             rect(xleft = aux(qx[1]), ybottom = hx, xright = aux(qx[2]),
-                ytop = hx + mbx/2, ...)
+                ytop = hx + mbx/2, ...,border=border)
             rect(xleft = aux(qx[4]), ybottom = hx, xright = aux(qx[5]),
-                ytop = hx + mbx/2, ...)
+                ytop = hx + mbx/2, ...,border=border)
         }
     }
     if (what == "points") {
@@ -169,4 +177,5 @@ CoDaDendrogram = function (X, V = NULL, mergetree = NULL, signary = NULL, range 
     if (what == "density") {
         stop("sorry, type=density still unimplemented")
     }
-}
+    replot(plot=match.call(),add=FALSE)  
+  }

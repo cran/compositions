@@ -11,7 +11,8 @@
   interpretation of the computed components as perturbations of amounts.
 }
 \usage{
-\method{princomp}{aplus}(x,\dots,scores=TRUE)
+\method{princomp}{aplus}(x,\dots,scores=TRUE,center=attr(covmat,"center"),
+                           covmat=var(x,robust=robust,giveCenter=TRUE),robust=getOption("robust"))
 \method{print}{princomp.aplus}(x,\dots)
 \method{plot}{princomp.aplus}(x,y=NULL,\dots, npcs=min(10,length(x$sdev)),
                type=c("screeplot","variance","biplot","loadings","relative"),
@@ -33,6 +34,11 @@
   \item{object}{a fitted princomp.aplus object}
   \item{newdata}{another amount dataset of class aplus}
   \item{\dots}{further arguments to pass to internally-called functions}
+  \item{covmat}{provides the covariance matrix to be used for the
+    principle component analysis}
+  \item{center}{provides the  be used for the computation of scores}
+  \item{robust}{Gives the robustness type for the calculation of the
+    covariance matrix. See \code{\link{var.rmult}} for details.}
 }
 \value{
   \code{princomp} gives an object of type

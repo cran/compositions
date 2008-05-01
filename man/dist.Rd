@@ -25,12 +25,13 @@ dist(x,\dots)
 }
 
 \examples{
-data(iris)
-dist(iris[,1:4])
 data(SimulatedAmounts)
-dist(acomp(sa.lognormals),method="manhattan")
-dist(rcomp(sa.lognormals))
-dist(aplus(sa.lognormals))
-dist(rplus(sa.lognormals))
+phc <- function(d) { plot(hclust(d))}
+phc(dist(iris[,1:4]))
+phc(dist(acomp(sa.lognormals),method="manhattan"))
+phc(dist(rcomp(sa.lognormals)))
+phc(dist(aplus(sa.lognormals)))
+phc(dist(rplus(sa.lognormals)))
+
 }
 \keyword{multivariate}

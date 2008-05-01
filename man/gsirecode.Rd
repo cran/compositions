@@ -36,16 +36,17 @@ gsi.cleanR(x)
   with 0.
 }
 \note{Do not use gsi.* functions directly since they are internal
-  functions of the package}
+  functions of the package. To use a gsi function, attach the \code{gsi}
+environment. }
 \details{
+  This functions are used internally to transform the different types of
+  missings correctly.
 }
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{compositions.missing}}
 }
-\references{
-}
 \examples{
-gsi.plain(acomp(c(12,3,4)))
+#gsi.plain(acomp(c(12,3,4)))
 }
-\keyword{}
+\keyword{internal}

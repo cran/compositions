@@ -73,7 +73,6 @@ Tolosana-Delgado}
 (tmp <- clo(c(1,2,3)))
 clo(tmp,total=100)
 data(Hydrochem)
-cdata <- Hydrochem[,6:19]
 plot( clo(Hydrochem,8:9) ) # Giving points on a line 
 
 }

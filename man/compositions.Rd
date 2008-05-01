@@ -8,10 +8,12 @@
 multivariate positive data (generally called "amounts"), based on several alternative approaches.
 }
 \details{
-  To get detailed "getting started" introduction use
+   To get detailed "getting started" introduction use
    \code{help.start()} or \code{help.start(browser="myfavouritebrowser")}
    Go to "Packages" then "compositions" and then "overview"
-   and then launch the file "UsingCompositions.pdf" from there.
+   and then launch the file "UsingCompositions.pdf" from there. Please
+   also check the web-site: http://www.stat.boogaart.de/compositions for
+   improved material and our new book expected to appear spring 2009.  
    \cr
    The package is devoted to the analysis of multiple amounts. Amounts
    have typically non-negative values, and often sum up to 100\% or one. These
@@ -85,17 +87,17 @@ Aitchison, J. (1986) \emph{The Statistical Analysis of Compositional
   statistical analysis on the simplex. \emph{SERRA} \bold{15}(5), 384-398\cr
 
   Pawlowsky-Glahn, V. (2003) Statistical modelling on coordinates. In: 
-  Thi{\'o}-Henestrosa, S. and Mart{\'\i}n-Fern{\'a}ndez, J.A. (Eds.)
+  Thi\'o -Henestrosa, S. and Mart\'in-Fern\'a ndez, J.A. (Eds.)
   \emph{Proceedings of the 1st International Workshop on Compositional Data Analysis},
-  Universitat de Girona, {ISBN} 84-8458-111-X, \url{http://ima.udg.es/Activitats/CoDaWork03}\cr
+  Universitat de Girona, ISBN 84-8458-111-X, \url{http://ima.udg.es/Activitats/CoDaWork03}\cr
 
   Mateu-Figueras, G. and Barcel\'o-Vidal, C. (Eds.)
   \emph{Proceedings of the 2nd International Workshop on Compositional Data Analysis},
-  Universitat de Girona, {ISBN} 84-8458-222-1, \url{http://ima.udg.es/Activitats/CoDaWork05}\cr
+  Universitat de Girona, ISBN 84-8458-222-1, \url{http://ima.udg.es/Activitats/CoDaWork05}\cr
 
-  van den Boogaart, K.G. and R. Tolosana-Delgado (2007) "compositions": a unified 
-  R package to analyze Compositional Data, \emph{Computers & Geosciences}. 
-  (in press).  
+    van den Boogaart, K.G. and R. Tolosana-Delgado (2008) "compositions": a unified 
+  R package to analyze Compositional Data, \emph{Computers &
+    Geosciences}, 34 (4), pages 320-338, doi:10.1016/j.cageo.2006.11.017.
  }
 \examples{
 library(compositions)      # load library
@@ -114,6 +116,19 @@ ellipses(mean(x),var(x),r=2,col="red")  # Real 2sigma predictive region
 pr <- princomp(x)          
 straight(mean(x),pr$Loadings) 
 }
-\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}, Raimon
-Tolosana Delgado, with contributions of Matev Bren}
-\keyword{ package }
+\seealso{
+  \link{compositions-package}, \link{missingsInCompositions},
+  \link{robustnessInCompositions}, \link{outliersInCompositions},
+}
+\note{The package compositions has grown a lot in the last year:
+  missings, robust estimations, outlier detection and classification,
+  codadendrogram. This makes everything much more complex especially
+  from the side of programm testing. Thus we would like to urge our
+  users to report all errors and problems of the lastest version (please
+  check first) to
+  support@boogaart.de.
+
+}
+\author{K.Gerald v.d. Boogaart
+\url{http://www.stat.boogaart.de}, Raimon Tolosana Delgado, and Matevz Bren}
+\keyword{package}

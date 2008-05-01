@@ -17,7 +17,7 @@ data(ArcticLake)
 
 \details{
 Sand, silt and clay compositions of 39 sediment samples at different water depth (in meters)
- in an Arctic lake. The additional feature is a concomitant variable or {\em covariate,\/}
+ in an Arctic lake. The additional feature is a concomitant variable or \emph{covariate,}
  water depth, which may account for some of the variation in the compositions.
  In statistical terminology we have a multivariate regression problem with sediment composition 
  as regressand and water depth as regressor.
@@ -28,4 +28,5 @@ Sand, silt and clay compositions of 39 sediment samples at different water depth
 \references{
    Aitchison: The Statistical Analysis of Compositional Data, 1986, Data 5, pp5.
  }
+\note{Courtesy of J. Aitchison}
 \keyword{datasets}

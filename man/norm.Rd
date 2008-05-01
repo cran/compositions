@@ -1,4 +1,5 @@
 \name{norm}
+%\alias{norm}
 \alias{norm.default}
 \alias{norm.acomp}
 \alias{norm.aplus}

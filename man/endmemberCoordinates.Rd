@@ -1,6 +1,6 @@
 \name{endmemberCoordinates}
 \alias{endmemberCoordinates}
-\alias{endmemberCoordinates.inv}
+\alias{endmemberCoordinatesInv}
 \alias{endmemberCoordinates.default}
 \alias{endmemberCoordinates.acomp}
 \alias{endmemberCoordinates.aplus}
@@ -21,7 +21,7 @@
           endmemberCoordinates(X,\dots)
           endmemberCoordinatesInv(K,endmembers,...)
           \method{endmemberCoordinates}{default}(X,endmembers=diag(gsi.getD(X)), \dots)
-          \method{endmemberCoordinates}{acomp}(X,endmembers=clr.inv(diag(gsi.getD(X))),...)
+          \method{endmemberCoordinates}{acomp}(X,endmembers=clrInv(diag(gsi.getD(X))),...)
           \method{endmemberCoordinates}{aplus}(X,endmembers,...)
           \method{endmemberCoordinates}{rplus}(X,endmembers,...)
           \method{endmemberCoordinatesInv}{rmult}(K,endmembers,...)

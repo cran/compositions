@@ -14,7 +14,7 @@ as well as the treatment: 1 for the treated trees, -1 for untreated trees.
 \usage{
 data(Yatquat)
 }
-\format{}
+\format{A 40x7 data matrix}
 \source{
   Aitchison: CODA microcomputer statistical package, 1986, the file name YATQUAT.DAT,
   here included under the GNU Public Library Licence Version 2 or newer.
@@ -42,6 +42,7 @@ All 3-part compositions sum to one.
 #plot(acomp(Yatquat[,1:3]),col=as.numeric(Yatquat[,4])+2)
 #plot(acomp(Yatquat[,5:7]),col=as.numeric(Yatquat[,4])+2)
 }
+\note{Courtesy of J. Aitchison}
 \references{
    Aitchison, J. (1986) The Statistical Analysis of Compositional Data, (Data 12) pp17. 
  }

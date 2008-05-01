@@ -29,4 +29,5 @@ All rows sum to 1, except for some rounding errors.
 \references{
    Aitchison: The Statistical Analysis of Compositional Data, 1986, Data 25, pp22. 
  }
+\note{Courtesy of J. Aitchison}
 \keyword{datasets}

@@ -5,11 +5,15 @@
   Compute a summary of a composition based on real geometry.
 }
 \usage{
-          \method{summary}{rcomp}( object, \dots )
+          \method{summary}{rcomp}( object, \dots ,robust=NULL)
           }
 \arguments{
   \item{object}{an \code{\link{rcomp}} dataset of compositions }
   \item{\dots}{further arguments to \code{summary}}
+  \item{robust}{A robustness description. See
+    \link{robustnessInCompositions} for details. The option is currently
+  not supported. If support is added the default will change to
+  getOption(robust). }
 }
 \value{
   A matrix containing summary statistics.
@@ -28,6 +32,7 @@
 \examples{
 data(SimulatedAmounts)
 summary(rcomp(sa.lognormals))
+summary(rcomp(sa.tnormals))
 
 }
 \keyword{multivariate}

@@ -24,4 +24,5 @@ data(Kongite)
 \references{
    Aitchison, J. (1986) The Statistical Analysis of Compositional Data, (Data 2), pp2.
  }
+\note{Courtesy of J. Aitchison}
 \keyword{datasets}

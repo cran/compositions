@@ -25,4 +25,5 @@ data(Hongite)
 \references{
    Aitchison (1986): The Statistical Analysis of Compositional Data; (Data 1), pp2, 9.
  }
+\note{Courtesy of J. Aitchison}
 \keyword{datasets}

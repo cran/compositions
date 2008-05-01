@@ -11,11 +11,11 @@
 }
 \usage{
           straight(x,...)
-          \method{straight}{acomp}(x,d,...,steps=30)
-          \method{straight}{rcomp}(x,d,...,steps=30)
-          \method{straight}{aplus}(x,d,...,steps=30)
-          \method{straight}{rplus}(x,d,...,steps=30)
-          \method{straight}{rmult}(x,d,...,steps=30)
+          \method{straight}{acomp}(x,d,...,steps=30,aspanel=FALSE)
+          \method{straight}{rcomp}(x,d,...,steps=30,aspanel=FALSE)
+          \method{straight}{aplus}(x,d,...,steps=30,aspanel=FALSE)
+          \method{straight}{rplus}(x,d,...,steps=30,aspanel=FALSE)
+          \method{straight}{rmult}(x,d,...,steps=30,aspanel=FALSE)
           }
 \arguments{
   \item{x}{dataset of points of the given type to draw the line through}
@@ -23,6 +23,7 @@
   \item{\dots}{further graphical parameters}
   \item{steps}{the number of discretisation points to draw the segments, 
     since the representation might not visually be a straight line}
+  \item{aspanel}{Logical, indicates use as slave to do acutal drawing only.}
 }
 \details{
 The functions add lines to the graphics generated with the corresponding
@@ -59,4 +60,5 @@ straight(mean(rplus(sa.lognormals[,1:2])),princomp(rplus(sa.lognormals[,1:2]))$l
 
 
 }
+
 \keyword{multivariate}

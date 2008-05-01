@@ -13,14 +13,10 @@ gsi.reset3D(userMatrix=diag(rep(1,4)))
 \value{
   none
 }
-\details{
-}
 \note{Do not use gsi.* functions directly since they are internal
   functions of the package}
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{gsi}}
 }
-\examples{
-}
-\keyword{}
+\keyword{internal}

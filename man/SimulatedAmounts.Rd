@@ -33,6 +33,14 @@
  \alias{sa.groups5.mix}
  \alias{sa.groups.area}
  \alias{sa.groups5.area}
+ \alias{sa.outliers1}
+ \alias{sa.outliers2}
+ \alias{sa.outliers3}
+ \alias{sa.outliers4}
+ \alias{sa.outliers5}
+ \alias{sa.outliers6}
+ \alias{sa.missings}
+ \alias{sa.missings5}
  \title{Simulated amount datasets}
  \description{
    Several simulated datasets intended as reference examples for various
@@ -97,7 +105,10 @@ plot.acomp(sa.lognormals5)
 plot.acomp(sa.lognormals5.dil)
 plot.acomp(sa.lognormals5.mix)
 
-library(MASS)
+plot(acomp(sa.missings))
+plot(acomp(sa.missings5))
+
+#library(MASS)
 plot.rcomp(sa.tnormals)
 plot.rcomp(sa.tnormals.dil)
 plot.rcomp(sa.tnormals.mix)
@@ -128,7 +139,7 @@ plot.acomp(sa.dirichlet5.mix)
 
 # The data was simulated with the following commands:
 
-library(MASS)
+#library(MASS)
 dilution <- function(x) {clo(cbind(x,exp(rnorm(nrow(x),5,1))))[,1:ncol(x)]*1E6}
 seqmix   <- function(x) {clo(apply(x,2,cumsum))*1E6}
 
@@ -329,10 +340,44 @@ sa.uniform5.mix <- seqmix(sa.uniform5.dil)
 plot.acomp(sa.uniform5.mix)
 pairs(sa.uniform5.mix)
 
+tmp<-set.seed(1400)
+A <- matrix(c(0.1,0.2,0.3,0.1),nrow=2)
+Mvar <- 0.1*ilrvar2clr(A \%*\% t(A))
+Mcenter <- acomp(c(1,2,1))
+typicalData <- rnorm.acomp(100,Mcenter,Mvar) # main population
+colnames(typicalData)<-c("A","B","C")
+# A dataset without outliers
+sa.outliers1 <- acomp(rnorm.acomp(100,Mcenter,Mvar))
+# A dataset with 10\% data with a large error in the first component
+sa.outliers2 <- acomp(rbind(typicalData+rbinom(100,1,p=0.1)*rnorm(100)*acomp(c(4,1,1))))
+# A dataset with a single outlier
+sa.outliers3 <- acomp(rbind(typicalData,acomp(c(0.5,1.5,2))))
+colnames(sa.outliers3)<-colnames(typicalData)
+tmp<-set.seed(30)
+rcauchy.acomp <- function (n, mean, var){
+    D <- gsi.getD(mean)-1
+    perturbe(ilrInv(matrix(rnorm(n*D)/rep(rnorm(n),D), ncol = D) \%*\% chol(clrvar2ilr(var))), mean)
+}
+# A dataset with a Cauchy type distribution
+sa.outliers4 <- acomp(rcauchy.acomp(100,acomp(c(1,2,1)),Mvar/4))
+colnames(sa.outliers4)<-colnames(typicalData)
+# A dataset with like sa.outlier2 but a differently strong distortions
+sa.outliers5 <- acomp(rbind(unclass(typicalData)+outer(rbinom(100,1,p=0.1)*runif(100),c(0.1,1,2))))
+# A dataset with a second population
+sa.outliers6 <- acomp(rbind(typicalData,rnorm.acomp(20,acomp(c(4,4,1)),Mvar)))
+
+# Missings
+sa.missings <- simulateMissings(sa.lognormals,detectionlimit=0.05,MAR=0.05,MNAR=0.05,SZ=0.05)
+sa.missings[5,2]<-BDLvalue
+
+sa.missings5 <- simulateMissings(sa.lognormals5,detectionlimit=0.05,MAR=0.05,MNAR=0.05,SZ=0.05)
+sa.missings5[5,2]<-BDLvalue
+
+
 objects(pattern="sa.*")
  }
  \references{
-   http://statistic.boogaart.de/compositions/data\cr
+   http://www.stat.boogaart.de/compositions/data\cr
 
    Aitchison, J. (1986) \emph{The Statistical Analysis of Compositional
      Data} Monographs on Statistics and Applied Probability. Chapman &
@@ -340,7 +385,7 @@ objects(pattern="sa.*")
 
   Rehder, S. and U. Zier (2001) Letter to the Editor: Comment on 
   ''Logratio Analysis and Compositional Distance'' by J. Aitchison, C. 
-  Barcel{\'o}-Vidal, J.A. Mart{\'\i}n-Fern\'andez and V. Pawlowsky-Glahn,
+  Barcel\'o -Vidal, J.A. Mart\'in-Fern\'andez and V. Pawlowsky-Glahn,
   \emph{Mathematical Geology}, \bold{33} (7), 845-848.\cr
 
   Zier, U. and S. Rehder (2002) Some comments on log-ratio transformation and compositional distance,

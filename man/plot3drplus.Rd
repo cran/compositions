@@ -5,7 +5,7 @@
   3-dimensional plots, which can be rotated and zoomed in/out
 }
 \usage{
-\method{plot3D}{rplus}(x,parts=1:3,...,vlabs=NULL,add=FALSE,bbox=FALSE,cex=1,size=cex,axes=TRUE)
+\method{plot3D}{rplus}(x,parts=1:3,...,vlabs=NULL,add=FALSE,bbox=FALSE,cex=1,size=cex,axes=TRUE,col=par("col"))
 }
 \arguments{
   \item{x}{an rplus object to be plotted}
@@ -18,6 +18,8 @@
   \item{cex}{size of the plotting symbol (as character expansion factor)}
   \item{size}{size of the plotting symbol, only size or cex should be used}
   \item{axes}{logical, whether to plot a coordinate cross}
+  \item{col}{the color}
+
 }
 \value{
   Nothing

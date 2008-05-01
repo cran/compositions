@@ -1,6 +1,6 @@
 \name{ult}
 \alias{ult}
-\alias{ult.inv}
+\alias{ultInv}
 \alias{Kappa}
 \title{Uncentered log transform}
 \description{
@@ -9,7 +9,7 @@
 }
 \usage{
           ult( x ,...)
-          ult.inv( z ,...)
+          ultInv( z ,...)
           Kappa( x ,...)
           }
 \arguments{
@@ -21,7 +21,7 @@
 }
 \value{
   \code{ult} gives the uncentered log transform,\cr
-  \code{ult.inv} gives closed compositions with the given
+  \code{ultInv} gives closed compositions with the given
   ult/clr-transforms\cr
   \code{Kappa} gives the difference between the clr and the ult
   transforms. It is quite linked to information measures.
@@ -39,11 +39,11 @@
 }
 \examples{
 (tmp <- ult(c(1,2,3)))
-ult.inv(tmp)
-ult.inv(tmp) - clo(c(1,2,3)) # 0
+ultInv(tmp)
+ultInv(tmp) - clo(c(1,2,3)) # 0
 data(Hydrochem)
 cdata <- Hydrochem[,6:19]
-pairs(ult(cdata))
+pairs(ult(cdata),pch=".")
 Kappa(c(1,2,3))
 }
 \keyword{multivariate}

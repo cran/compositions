@@ -28,6 +28,7 @@
   type for each variable.
 }
 \details{
+  The function mainly counts the various types of missing values.
 }
 \references{
   Boogaart, K.G., R. Tolosana-Delgado, M. Bren (2006) Concepts for the
@@ -45,5 +46,5 @@ xnew <- simulateMissings(x,detectionlimit=0.05,MAR=0.05,MNAR=0.05,SZ=0.05)
 xnew
 missingSummary(xnew)
 }
-\author{}
-\keyword{}
+\author{K. Gerald van den Boogaart}
+\keyword{NA}

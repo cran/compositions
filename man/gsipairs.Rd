@@ -13,7 +13,8 @@ gsi.pairs(x, labels, panel = points, \dots, main = NULL, oma = NULL,
     lower.panel = panel, upper.panel = panel, diag.panel = NULL, 
     text.panel = textPanel, label.pos = 0.5 + has.diag/3, cex.labels = NULL, 
     font.labels = 1, row1attop = TRUE, gap = 1, add=list(), 
-    xlim=apply(x,2,range), ylim=apply(x,2,range), log="", noplot=FALSE)
+    xlim=apply(x,2,range), ylim=apply(x,2,range), log="",
+    onlyPanel=NULL,noplot=FALSE,trimode=FALSE)
 gsi.add2pairs(x,panel,...,noplot=FALSE)
 gsi.plots
 }
@@ -64,6 +65,4 @@ gsi.plots
 \seealso{
   \code{\link{gsi}}, 
 }
-\examples{
-}
-\keyword{}
+\keyword{internal}

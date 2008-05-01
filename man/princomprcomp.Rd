@@ -10,7 +10,8 @@
   interpretation of the obtained components.  
 }
 \usage{
- \method{princomp}{rcomp}(x,\dots,scores=TRUE)
+ \method{princomp}{rcomp}(x,\dots,scores=TRUE,center=attr(covmat,"center"),
+                           covmat=var(x,robust=robust,giveCenter=TRUE),robust=getOption("robust"))
  \method{print}{princomp.rcomp}(x,\dots)
  \method{plot}{princomp.rcomp}(x,y=NULL,\dots,npcs=min(10,length(x$sdev)),
         type=c("screeplot","variance","biplot","loadings","relative"),
@@ -32,11 +33,16 @@
   \item{object}{a fitted princomp.rcomp object}
   \item{newdata}{another compositional dataset of class rcomp}
   \item{\dots}{further arguments to pass to internally-called functions}
+  \item{covmat}{provides the covariance matrix to be used for the
+    principle component analysis}
+  \item{center}{provides the  be used for the computation of scores}
+  \item{robust}{Gives the robustness type for the calculation of the
+    covariance matrix. See \code{\link{var.rmult}} for details.}
 }
 \value{
   \code{princomp} gives an object of type
   \code{c("princomp.rcomp","princomp")} with the following content:
-  \itemize{
+%  \itemize{
     \item{sdev}{the standard deviation of the principal components.}
     \item{loadings}{the matrix of variable loadings (i.e., a matrix which
       columns contain the eigenvectors). This is of class
@@ -52,7 +58,7 @@
       components and thus not compositions}
     \item{call}{the matched call}
     \item{na.action}{not clearly understood}
-  }
+%  }
   \code{predict} returns a matrix of scores of the observations in the
   \code{newdata} dataset.
   The other routines are mainly called for their side effect of plotting or

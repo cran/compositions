@@ -19,14 +19,14 @@ gsi.eq(x,y)
 \note{Do not use gsi.* functions directly since they are internal
   functions of the package}
 \details{
+  unlike \code{==} does not return NA's and all sorts of NA's as an
+  actuall value.
 }
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{compositions.missing}}
 }
-\references{
-}
 \examples{
-gsi.plain(acomp(c(12,3,4)))
+#gsi.plain(acomp(c(12,3,4)))
 }
-\keyword{}
+\keyword{internal}

@@ -9,18 +9,21 @@
   The function draws lines from a points x to a point y in the given geometry.
 }
 \usage{
-          \method{segments}{acomp}(x0,y,...,steps=30)
-          \method{segments}{rcomp}(x0,y,...,steps=30)
-          \method{segments}{aplus}(x0,y,...,steps=30)
-          \method{segments}{rplus}(x0,y,...,steps=30)
-          \method{segments}{rmult}(x0,y,...,steps=30)
+          
+          \method{segments}{acomp}(x0,y,...,steps=30,aspanel=FALSE)
+          \method{segments}{rcomp}(x0,y,...,steps=30,aspanel=FALSE)
+          \method{segments}{aplus}(x0,y,...,steps=30,aspanel=FALSE)
+          \method{segments}{rplus}(x0,y,...,steps=30,aspanel=FALSE)
+          \method{segments}{rmult}(x0,y,...,steps=30,aspanel=FALSE)
           }
 \arguments{
   \item{x0}{dataset of points (of the given type) to draw the line from}
   \item{y}{dataset of points (of the given type) to draw the line to}
   \item{\dots}{further graphical parameters}
   \item{steps}{the number of discretisation points to draw the segments,
-          since the representation might not visually be a straight line}
+    since the representation might not visually be a straight line}
+  \item{aspanel}{Logical, indicates use as slave to do acutal drawing only.}
+
 }
 \details{
 The functions add lines to the graphics generated with the corresponding

@@ -28,7 +28,7 @@
   These functions will not be usually called on themselves, but 
   through their wrappers, mainly \code{ilrBase}. Functions
   \code{gsi.merge2signary} and \code{gsi.ilrBase2signary} return 
-   a signary matrix (as explained in "details"), code{gsi.optimalilrBase} 
+   a signary matrix (as explained in "details"), \code{gsi.optimalilrBase} 
   returns a merge structure (as epxlained in \code{hclust}), and
   \code{gsi.buildilrBase} (and its alias \code{gsi.signary2ilrBase}) 
   returns an ilr matrix. These functions are thought to be called 
@@ -81,4 +81,4 @@ V
 gsi.ilrBase2signary(V)
 gsi.OrderIlr(V)
 }
-\keyword{multivariate}
+\keyword{internal}

@@ -23,7 +23,11 @@ getDetectionlimit(x,dl=attr(x,"detectionlimit"))
   is no clear way to encode this information without annoying the user.
 }
 \references{
-  
+  Boogaart, K.G. v.d., R. Tolosana-Delgado, M. Bren (2006) Concepts for
+  handling of zeros and missing values in compositional data, in
+  E. Pirard (ed.) (2006)Proceedings of the IAMG'2006 Annual Conference
+  on "Quantitative Geology from multiple sources", September 2006,
+  Liege, Belgium, S07-01, 4pages, ISBN 978-2-9600644-0-7, \url{http://www.stat.boogaart.de/Publications/iamg06_s07_01.pdf}
 }
 \seealso{
   \code{\link{compositions.missings}},\code{\link{zeroreplace}}
@@ -33,5 +37,5 @@ x <- c(2,-0.5,4,3,-0.5,5,BDLvalue,MARvalue,MNARvalue)
 getDetectionlimit(x)
 
 }
-\author{}
-\keyword{}
+\author{K.Gerald van den Boogaart}
+\keyword{NA}

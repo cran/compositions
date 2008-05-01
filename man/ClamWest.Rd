@@ -17,7 +17,7 @@ data(ClamWest)
 }
 
 \details{
-The data consist of 20 cases and $2\times 3$ variables denoted:
+The data consist of 20 cases and \eqn{2\times 3}{2x3} variables denoted:
 
 \tabular{rll}{
  \tab dl\tab  portion of dark large clams, \cr
@@ -33,5 +33,6 @@ All 6-part compositions sum up to one.}
 \references{
    Aitchison: The Statistical Analysis of Compositional Data, 1986, Data 15, pp17. 
  }
+\note{Courtesy of J. Aitchison}
 \keyword{datasets}
 

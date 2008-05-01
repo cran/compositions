@@ -20,6 +20,6 @@ gsi.addclass( x , cls)
 \examples{
 x=rplus(1:10)
 x
-gsi.addclass(x,"goofy")
+#gsi.addclass(x,"goofy")
 }
-\keyword{}
+\keyword{internal}

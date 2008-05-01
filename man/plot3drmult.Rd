@@ -7,7 +7,7 @@
 \usage{
 \method{plot3D}{rmult}(x,parts=1:3,...,
                  center=FALSE,scale=FALSE,add=FALSE,axes=!add,
-                 cex=2,vlabs=colnames(x),size=cex,bbox=FALSE)
+                 cex=2,vlabs=colnames(x),size=cex,bbox=FALSE,col=par("col"))
 }
 \arguments{
   \item{x}{an object to be plotted, e.g. a data frame or a data matrix}
@@ -24,6 +24,7 @@
   \item{cex}{size of the plotting symbol (as expanding factor)}
   \item{vlabs}{labels for the variables}
   \item{size}{size of the plotting symbol, only size or cex should be used}
+  \item{col}{the plotting color}
 }
 \value{
   Nothing

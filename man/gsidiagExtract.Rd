@@ -27,9 +27,9 @@ gsi.diagExtract(x)
 }
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \examples{
-data(SimulatedAmounts)
-gsi.diagExtract(var(acomp(sa.lognormals,c(1,2))))
-gsi.diagExtract(var(ilr(acomp(sa.lognormals,c(1,2)))))
-gsi.diagExtract(var(ilt(aplus(sa.lognormals,c(1)))))
+#data(SimulatedAmounts)
+#gsi.diagExtract(var(acomp(sa.lognormals,c(1,2))))
+#gsi.diagExtract(var(ilr(acomp(sa.lognormals,c(1,2)))))
+#gsi.diagExtract(var(ilt(aplus(sa.lognormals,c(1)))))
 }
-\keyword{}
+\keyword{internal}

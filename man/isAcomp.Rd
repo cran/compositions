@@ -36,4 +36,4 @@ is.acomp(acomp(1:3))
 is.rcomp(acomp(1:3))
 is.acomp(acomp(1:3)+acomp(1:3))
 }
-\keyword{}
+\keyword{classes}

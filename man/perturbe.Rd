@@ -44,8 +44,6 @@ Tolosana-Delgado}
   Aitchison, J. (1986) \emph{The Statistical Analysis of Compositional
     Data} Monographs on Statistics and Applied Probability. Chapman &
   Hall Ltd., London (UK). 416p.
-  
-
 }
 \examples{
 tmp <- -acomp(1:3)

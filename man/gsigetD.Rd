@@ -25,11 +25,11 @@ gsi.getN(x)
 
 \examples{
 gsi.getD(1:5)
-gsi.getN(1:5)
+#gsi.getN(1:5)
 NCOL(1:5)
 NROW(1:5)
 data(SimulatedAmounts)
 gsi.getD(sa.lognormals5)
-gsi.getN(sa.lognormals5)
+#gsi.getN(sa.lognormals5)
 }
-\keyword{multivariate}
+\keyword{internal}

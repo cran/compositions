@@ -1,6 +1,6 @@
 \name{apt}
 \alias{apt}
-\alias{apt.inv}
+\alias{aptInv}
 \title{Additive planar transform}
 \description{
   Compute the additive planar  transform of a (dataset of)
@@ -8,7 +8,7 @@
 }
 \usage{
           apt( x ,...)
-          apt.inv( z ,..., orig=NULL)
+          aptInv( z ,..., orig=NULL)
           }
 \arguments{
   \item{x}{a composition or a matrix of compositions, not necessarily closed}
@@ -22,7 +22,7 @@
 }
 \value{
   \code{apt} gives the centered planar transform,
-  \code{apt.inv} gives closed compositions with the given apt-transforms
+  \code{aptInv} gives closed compositions with the given apt-transforms
   }
 \details{
   The apt-transform maps a composition in the D-part real-simplex
@@ -46,14 +46,17 @@
   \code{\link{alr}},\code{\link{cpt}},\code{\link{ipt}}
 }
 \references{
+    van den Boogaart, K.G. and R. Tolosana-Delgado (2008) "compositions": a unified 
+  R package to analyze Compositional Data, \emph{Computers &
+    Geosciences}, 34 (4), pages 320-338, doi:10.1016/j.cageo.2006.11.017.
 }
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \examples{
 (tmp <- apt(c(1,2,3)))
-apt.inv(tmp)
-apt.inv(tmp) - clo(c(1,2,3)) # 0
+aptInv(tmp)
+aptInv(tmp) - clo(c(1,2,3)) # 0
 data(Hydrochem)
 cdata <- Hydrochem[,6:19]
-pairs(apt(cdata)) 
+pairs(apt(cdata),pch=".") 
 }
 \keyword{multivariate}

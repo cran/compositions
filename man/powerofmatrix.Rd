@@ -23,12 +23,7 @@
   The symmetry of the matrix is not checked.
 }
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
-\seealso{
-}
-\references{
-
-  }
-  \examples{
+\examples{
 data(SimulatedAmounts)
 d <- ilr(sa.lognormals)
 var( d \%*\% powerofpsdmatrix(var(d),-1/2)) # Unit matrix

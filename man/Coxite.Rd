@@ -30,5 +30,6 @@ A mineral compositions of 25 rock specimens of coxite type.
 \references{
    Aitchison: The Statistical Analysis of Compositional Data, 1986, Data 4, pp4.
  }
+\note{Courtesy of J. Aitchison}
 \keyword{datasets}
 

@@ -30,5 +30,6 @@ data(Blood23)
 \references{
    Aitchison: The Statistical Analysis of Compositional Data, 1986, Data 23, pp22. 
  }
+\note{Courtesy of J. Aitchison}
 \keyword{datasets}
 

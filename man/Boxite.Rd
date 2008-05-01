@@ -26,4 +26,5 @@ A mineral compositions of 25 rock specimens of boxite type are given.
 \references{
    Aitchison: The Statistical Analysis of Compositional Data, 1986, Data 3, pp4.
  }
+\note{Courtesy of J. Aitchison}
 \keyword{datasets}

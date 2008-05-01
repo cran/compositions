@@ -30,6 +30,6 @@ gsi.isSingleRow(X)
   \code{\link{gsi}}
 }
 \examples{
-gsi.isSingleRow(1:10)
+#gsi.isSingleRow(1:10)
 }
-\keyword{}
+\keyword{internal}

@@ -40,5 +40,7 @@ totals(rcomp(sa.lognormals,total=100))
 totals(aplus(sa.lognormals))
 totals(rplus(sa.lognormals))
 aplus(acomp(sa.lognormals),total=totals(aplus(sa.lognormals)))
+
+
 }
 \keyword{multivariate}

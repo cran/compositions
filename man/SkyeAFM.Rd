@@ -29,5 +29,6 @@ in the Eocene lavas of the Isle of Skye, Scotland. All row percentage sums to 10
    Thompson, Esson and Duncan: Major element chemical variations 
 in the Eocene lavas of the Isle of Skye, Scotland. 1972, J.Petrology, 13, 219-235. 
  }
+\note{Courtesy of J. Aitchison}
 \keyword{datasets}
 

@@ -14,15 +14,20 @@
 }
 \usage{
     variation(x,\dots)
-          \method{variation}{acomp}(x, \dots)
-          \method{variation}{rcomp}(x, \dots)
-          \method{variation}{aplus}(x, \dots)
-          \method{variation}{rplus}(x, \dots)
-          \method{variation}{rmult}(x, \dots)
+          \method{variation}{acomp}(x, \dots,robust=getOption("robust"))
+          \method{variation}{rcomp}(x, \dots,robust=getOption("robust"))
+          \method{variation}{aplus}(x, \dots,robust=getOption("robust"))
+          \method{variation}{rplus}(x, \dots,robust=getOption("robust"))
+          \method{variation}{rmult}(x, \dots,robust=getOption("robust"))
           }
 \arguments{
   \item{x}{a dataset, eventually of amounts or compositions}
   \item{\dots}{currently unused}
+  \item{robust}{
+    A description of a robust estimator. FALSE for the classical
+    estimators. See \link{robustnessInCompositions} for
+    further details.
+  }
 }
 \value{
   The variation matrix of x.
@@ -46,7 +51,7 @@
 
 \examples{
 data(SimulatedAmounts)
-mean.col(sa.lognormals)
+meanCol(sa.lognormals)
 variation(acomp(sa.lognormals))
 variation(rcomp(sa.lognormals))
 variation(aplus(sa.lognormals))

@@ -1,6 +1,29 @@
+Version 0.92-1 (R (>= 2.2.0), rgl, tensorA, robustBase)
 
+Added:	Robustness: see robustnessInCompositions (robust= parameter)
+	Outlier classification: see outliersInCompositions 
+	advanced treatment of Missings: see missigsInCompositions
+	CodaDendrogram (Tolosana)
+	A replot functionallity, changing plot parameters on the fly
+	A onlyPanel Parameter to zoom individual panels of highdimensional
+	 plots
+	ternaryAxis
+	A new coordinate subsystem
+	
+Changed:
+	*.row *.col and *.inv replaces by *Row, *Col, *Inv to
+	ensure compatibility wiht R>=2.7
+	added NAMESPACE: most gsi. functions are now hidden.
+	When you need them use attach(gsi) 
+	
+Bugfixes: "s" and "m" warnings 
+	  wrong axis-labels in logrithmic paris plots fixed
+	  log option in boxplot.rplus now shows really logodds rather than
+	  log relative portions.
+	  Labeling in plots, missing treatment in plots.
 
-Version 1.0-0  ( R >= 2.2.0 , rgl )
+------------------------------------	
+Version 0.91-6  ( R >= 2.2.0 , rgl )
 
 Added:	plot3d, biplot3d, 
 	Basic treatment of missings
@@ -16,3 +39,6 @@ Added:
 Version 0.9-10 (R > 2.0.0 )
 
 Was the first complete version 
+
+
+	

@@ -34,8 +34,6 @@
   \code{\link{rplus}}
   \code{\link{rmult}}  
 }
-\references{
-}
 \examples{
 \dontrun{
 m <- mix.Read("Glac.dat")      # reads the Glacial data set from Aitchison (1986)
@@ -45,4 +43,4 @@ ac <- mix.2acomp(m)   # ac is a 'compositions' object of the acomp class
 }
 
 }
-\keyword{}
+\keyword{classes}

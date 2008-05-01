@@ -96,16 +96,18 @@
   Hall Ltd., London (UK). 416p.\cr
 
   Rehder, S. and U. Zier (2001) Letter to the Editor: Comment on 
-  ``Logratio Analysis and Compositional Distance'' by {J}. {A}itchison, {C}. 
-  {B}arcel\'o-{V}idal, {J.A.} {M}art{\'\i}n-{F}ern\'andez and {V}. Pawlowsky-Glahn,
+  ``Logratio Analysis and Compositional Distance'' by J. Aitchison, C. 
+  Barcel\'o-Vidal, J.A. Mart\'in-Fern\'a ndez and V. Pawlowsky-Glahn,
   \emph{Mathematical Geology}, \bold{33} (7), 845-848.\cr
 
   Zier, U. and S. Rehder (2002) Some comments on log-ratio transformation and compositional distance,
   \emph{Terra Nostra}, Schriften der Alfred Wegener-Stiftung, 03/2003\cr
+  
+    van den Boogaart, K.G. and R. Tolosana-Delgado (2008) "compositions": a unified 
+  R package to analyze Compositional Data, \emph{Computers &
+    Geosciences}, 34 (4), pages 320-338, doi:10.1016/j.cageo.2006.11.017.
 
-  van den Boogaart, K.G. and R. Tolosana-Delgado (2007) "compositions": a unified 
-  R package to analyze Compositional Data, \emph{Computers & Geosciences}. 
-  (in press).
+  
 }
 \examples{
 data(SimulatedAmounts)

@@ -39,4 +39,5 @@ All rows sum to one.
 \references{
 Aitchison: The Statistical Analysis of Compositional Data, 1986, Data 10, pp15.
 }
+\note{Courtesy of J. Aitchison}
 \keyword{datasets}

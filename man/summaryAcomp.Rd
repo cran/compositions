@@ -7,11 +7,14 @@
   analyse each pair-wise ratio in a log geometry.
 }
 \usage{
-          \method{summary}{acomp}( object, \dots )
+          \method{summary}{acomp}( object, \dots ,robust=getOption("robust"))
           }
 \arguments{
   \item{object}{a data matrix of compositions, not necessarily closed}
   \item{\dots}{not used, only here for generics}
+  \item{robust}{A robustness description. See
+    \link{robustnessInCompositions} for details. The parameter can be
+    null for avoiding any estimation.}
 }
 \value{
   The result is an object of type \code{"summary.acomp"}

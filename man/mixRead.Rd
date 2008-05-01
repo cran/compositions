@@ -21,10 +21,12 @@ mix.Read(file,eps=1e-6)
 }
 \details{
   The data files must have the adequate structure:
-    \item the first row with a title of the data set,
-    \item the second row with variables names,
-    \item the data set in a matrix, rows as cases, variables in columns
-          with the firs colum comprising cases labels.
+  \itemize{
+    \item{1}{the first row with a title of the data set,}
+    \item{2}{the second row with variables names}
+    \item{3}{the data set in a matrix, rows as cases, variables in columns
+      with the firs colum comprising cases labels.}
+    }
   A mixture object 'm' consists of  m\$tit  the title, m\$mat the matrix with the data, 
   m\$sum the value of the rows total, if constant and  m\$sta the status of the mixture object
   with values:
@@ -43,14 +45,10 @@ mix.Read(file,eps=1e-6)
   \code{\link{read.geoEAS}}
   \code{\link{read.table}}
 }
-
-\references{
-}
 \examples{
 \dontrun{
   mix.Read("GLACIAL.DAT")
   mix.Read("ACTIVITY.DAT")
 }
 }
-\keyword{
-}
+\keyword{IO}

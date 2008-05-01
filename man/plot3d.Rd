@@ -7,7 +7,7 @@
 }
 \usage{
 plot3D(x,...)
-\method{plot3D}{default}(x,\dots,add=FALSE,bbox=TRUE,axes=FALSE,cex=1,size=cex)
+\method{plot3D}{default}(x,\dots,add=FALSE,bbox=TRUE,axes=FALSE,cex=1,size=cex,col=par("col"))
 }
 \arguments{
   \item{x}{an object to be plotted, e.g. a data frame or a data matrix}
@@ -17,7 +17,9 @@ plot3D(x,...)
   \item{bbox}{logical, whether to add a bounding box}
   \item{axes}{logical, whether to plot an axes of coordinates}
   \item{cex}{size of the plotting symbol}
-  \item{size}{size of the plotting symbol, only size or cex should be used}
+  \item{size}{size of the plotting symbol, only size or cex should be
+    used}
+  \item{col}{the color}
 }
 \value{
   Nothing

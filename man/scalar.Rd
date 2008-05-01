@@ -3,6 +3,7 @@
 \alias{scalar.default}
 \title{Parallel scalar products }
 \description{
+Computes scalar products of datasets of vectors or vectorial quantities.
 }
 \usage{
 scalar(x,y)
@@ -34,5 +35,6 @@ scalar(x,y)
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \examples{
 scalar(acomp(c(1,2,3)),acomp(c(1,2,3)))
+scalar(rmult(c(1,2,3)),rmult(c(1,2,3)))
 }
 \keyword{multivariate}

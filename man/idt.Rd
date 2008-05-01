@@ -7,13 +7,13 @@
 \alias{idt.rplus}
 \alias{idt.rmult}
 \alias{idt.factor}
-\alias{idt.inv}
-\alias{idt.inv.default}
-\alias{idt.inv.acomp}
-\alias{idt.inv.rcomp}
-\alias{idt.inv.aplus}
-\alias{idt.inv.rplus}
-\alias{idt.inv.rmult}
+\alias{idtInv}
+\alias{idtInv.default}
+\alias{idtInv.acomp}
+\alias{idtInv.rcomp}
+\alias{idtInv.aplus}
+\alias{idtInv.rplus}
+\alias{idtInv.rmult}
 \title{Isometric default transform}
 \description{
   Compute the isometric default transform of a vector (or dataset) of
@@ -28,13 +28,13 @@
           \method{idt}{rplus}( x ,...)
           \method{idt}{rmult}( x ,...)
           \method{idt}{factor}( x ,...)
-          idt.inv(x,orig,...)
-          \method{idt.inv}{default}( x ,orig,...)
-          \method{idt.inv}{acomp}( x ,orig,...)
-          \method{idt.inv}{rcomp}( x ,orig,...)
-          \method{idt.inv}{aplus}( x ,orig,...)
-          \method{idt.inv}{rplus}( x ,orig,...)
-          \method{idt.inv}{rmult}( x ,orig,...)
+          idtInv(x,orig,...)
+          \method{idtInv}{default}( x ,orig,...)
+          \method{idtInv}{acomp}( x ,orig,...)
+          \method{idtInv}{rcomp}( x ,orig,...)
+          \method{idtInv}{aplus}( x ,orig,...)
+          \method{idtInv}{rplus}( x ,orig,...)
+          \method{idtInv}{rmult}( x ,orig,...)
 
           }
 \arguments{
@@ -65,9 +65,9 @@
   one-to-one relation between the original parts and each transformed
   variable.
   \cr
-  The inverse \code{idt.inv} is intended to allow for an "easy" and automatic 
+  The inverse \code{idtInv} is intended to allow for an "easy" and automatic 
   back-transformation, without intervention of the user. The argument \code{orig} 
-  (the one determining the behaviour of \code{idt.inv} as a generic function) 
+  (the one determining the behaviour of \code{idtInv} as a generic function) 
   tells the function which back-transformation should be applied, and
   gives the column names of \code{orig} to the back-transformed
   values of \code{x}. Therefore, it is very conventient to give the original classed
@@ -76,13 +76,13 @@
 \author{R. Tolosana-Delgado, K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{cdt}}, \code{\link{ilr}}, \code{\link{ipt}},
-  \code{\link{ilt}}, \code{\link{cdt.inv}}, \code{\link{ilr.inv}}, \code{\link{ipt.inv}}, 
-            \code{\link{ilt.inv}}, \code{\link{iit.inv}}
+  \code{\link{ilt}}, \code{\link{cdtInv}}, \code{\link{ilrInv}}, \code{\link{iptInv}}, 
+            \code{\link{iltInv}}, \code{\link{iitInv}}
 }
 \references{
-    van den Boogaart, K.G. and R. Tolosana-Delgado (2007) "compositions": a unified 
-  R package to analyze Compositional Data, \emph{Computers & Geosciences}. 
-  (in press).
+    van den Boogaart, K.G. and R. Tolosana-Delgado (2008) "compositions": a unified 
+  R package to analyze Compositional Data, \emph{Computers &
+    Geosciences}, 34 (4), pages 320-338, doi:10.1016/j.cageo.2006.11.017.
 }
 \examples{
 \dontrun{
@@ -100,7 +100,7 @@ idt(rcomp(1:5))
   x = Hydrochem[,c("Na","K","Mg","Ca")]
   y = acomp(x)
   z = idt(y)
-  y2 = idt.inv(z,y)
+  y2 = idtInv(z,y)
   par(mfrow=c(2,2))
   for(i in 1:4){plot(y[,i],y2[,i])}
 }

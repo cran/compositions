@@ -1,14 +1,15 @@
 \name{meanrow}
+\alias{meanRow}
+\alias{meanCol}
 \alias{mean.row}
 \alias{mean.col}
-
 \title{The arithmetic mean of rows or columns}
 \description{
   Computes the arithmetic mean.
 }
 \usage{
-          mean.row(x,\dots, na.action=get(getOption("na.action")))
-          mean.col(x,\dots, na.action=get(getOption("na.action")))
+          meanRow(x,\dots, na.action=get(getOption("na.action")))
+          meanCol(x,\dots, na.action=get(getOption("na.action")))
           }
 \arguments{
   \item{x}{a numeric vector or matrix of data }
@@ -18,10 +19,11 @@
 }
 \value{
   The arithmetic means of the rows
-  (mean.row) or  columns (mean.col) of x.
+  (meanRow) or  columns (meanCol) of x.
 }
 \details{
-
+  Computes the arithmetic means of the rows
+  (meanRow) or  columns (meanCol) of x.
 }
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
@@ -29,8 +31,8 @@
 
 \examples{
 data(SimulatedAmounts)
-mean.col(sa.tnormals)
-mean.row(sa.tnormals)
+meanCol(sa.tnormals)
+meanRow(sa.tnormals)
 
 }
 \keyword{univar}

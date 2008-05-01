@@ -37,5 +37,6 @@ data(Activity31)
 \references{
 Aitchison: The Statistical Analysis of Compositional Data, 1986, Data 31.
 }
+\note{Courtesy of J. Aitchison}
 \keyword{datasets}
 

@@ -13,16 +13,10 @@ gsi.closespread(spread)
 \value{
   like \code{spread}, but projected to the orthogonal complement of \code{c(1,\ldots,1)}
 }
-\details{
-
-}
-
 \note{Do not use gsi.* functions directly since they are internal
   functions of the package}
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{gsi}}
 }
-\examples{
-}
-\keyword{}
+\keyword{internal}

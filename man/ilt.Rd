@@ -1,6 +1,6 @@
 \name{ilt}
 \alias{ilt}
-\alias{ilt.inv}
+\alias{iltInv}
 \title{Isometric log transform}
 \description{
   Compute the isometric log  transform of a vector (dataset) of
@@ -8,7 +8,7 @@
 }
 \usage{
           ilt( x ,...)
-          ilt.inv( z ,... )
+          iltInv( z ,... )
           }
 \arguments{
   \item{x}{a vector or data matrix of amounts}
@@ -19,7 +19,7 @@
 \value{
   \code{ilt} gives the isometric log transform, i.e. simply the log of
   the argument, whereas
-  \code{ilt.inv} gives amounts with the given ilt, i.e. simply the exp
+  \code{iltInv} gives amounts with the given ilt, i.e. simply the exp
   of the argument.
   }
 \details{
@@ -41,11 +41,14 @@
   \code{\link{ilr}}, \code{\link{iit}}, \code{\link{aplus}}
 }
 \references{
+    van den Boogaart, K.G. and R. Tolosana-Delgado (2008) "compositions": a unified 
+  R package to analyze Compositional Data, \emph{Computers &
+    Geosciences}, 34 (4), pages 320-338, doi:10.1016/j.cageo.2006.11.017.
 }
 \examples{
 (tmp <- ilt(c(1,2,3)))
-ilt.inv(tmp)
-ilt.inv(tmp) - c(1,2,3) # 0
+iltInv(tmp)
+iltInv(tmp) - c(1,2,3) # 0
 data(Hydrochem)
 cdata <- Hydrochem[,6:19]
 pairs(ilt(cdata)) 

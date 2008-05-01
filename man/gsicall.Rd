@@ -12,8 +12,6 @@ gsi.call(fkt,\dots)
   \item{fkt}{The function to be called}
   \item{\dots}{The arguments to call the function with}
 }
-\value{
-}
 \details{
 This is only useful in conjunction with do.call and allows to call
 anonymous functions with parameters given by a list. 
@@ -27,6 +25,6 @@ anonymous functions with parameters given by a list.
 }
 \examples{
 mypars <- list(x=3)
-do.call("gsi.call",c(list(function(x){x}),mypars))
+#do.call("gsi.call",c(list(function(x){x}),mypars))
 }
-\keyword{}
+\keyword{internal}

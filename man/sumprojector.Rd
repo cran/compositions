@@ -72,6 +72,7 @@ handling of zeros and missing
 }
 \examples{
 data(SimulatedAmounts)
-plot(acomp(sa.lognormals))
+sumMissingProjector(acomp(sa.lognormals))
+sumMissingProjector(acomp(sa.tnormals))
 }
 \keyword{multivariate}

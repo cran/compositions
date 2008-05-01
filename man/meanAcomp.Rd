@@ -10,16 +10,25 @@
   data analysis.
 }
 \usage{
-          \method{mean}{acomp}(x,\dots)
-          \method{mean}{rcomp}(x,\dots)
-          \method{mean}{aplus}(x,\dots)
-          \method{mean}{rplus}(x,\dots)
-          \method{mean}{rmult}(x,\dots,na.action=get(getOption("na.action")))
+          \method{mean}{acomp}(x,\dots,robust=getOption("robust"))
+          \method{mean}{rcomp}(x,\dots,robust=getOption("robust"))
+          \method{mean}{aplus}(x,\dots,robust=getOption("robust"))
+          \method{mean}{rplus}(x,\dots,robust=getOption("robust"))
+          \method{mean}{rmult}(x,\dots,na.action=NULL,robust=getOption("robust"))
           }
 \arguments{
   \item{x}{a classed dataset of amounts or compositions}
   \item{\dots}{further arguments to \code{\link{mean}} e.g. \code{trim}}
   \item{na.action}{na.action }
+  \item{robust}{
+    A description of a robust estimator. Possible values are FALSE or
+    "pearson" for no robustness, or TRUE or "mcd" for a
+\link[robustbase]{covMCD} based
+    robust location scale estimation. Additional control parameters such
+    as \code{list(trim=0.2)} or an \code{rrcov.control} object can
+    be given as an attribute "control". 
+  }
+
 }
 \value{
   The mean is given as a composition or amount vector of the same class as the original dataset.
@@ -30,7 +39,7 @@
   \code{\link{aplus}}, \code{\link{rplus}} correpond to different
   geometries. The mean is calculated in the respective canonical
   geometry by applying a canonical transform (see \code{\link{cdt}}), taking ordinary
-  \code{\link{mean.col}} and backtransforming.\cr
+  \code{\link{meanCol}} and backtransforming.\cr
 
   The Aitchison geometries imply that \code{mean.acomp} and \code{mean.aplus} are
   geometric means, the first one closed. The real geometry implies that
@@ -44,7 +53,7 @@ In all cases the mean is again an object of the same class.
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 
 \seealso{
-  \code{\link{clo}}, \code{\link{mean.col}},
+  \code{\link{clo}}, \code{\link{meanCol}},
   \code{\link{geometricmean}}, \code{\link{acomp}},
 \code{\link{rcomp}}, \code{\link{aplus}}, \code{\link{rplus}}
 }
@@ -66,7 +75,7 @@ In all cases the mean is again an object of the same class.
   }
 \examples{
 data(SimulatedAmounts)
-mean.col(sa.lognormals)
+meanCol(sa.lognormals)
 mean(acomp(sa.lognormals))
 mean(rcomp(sa.lognormals))
 mean(aplus(sa.lognormals))

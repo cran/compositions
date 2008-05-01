@@ -28,5 +28,6 @@ data(Glacial)
 \references{
 Aitchison: The Statistical Analysis of Compositional Data, 1986, Data 18, pp21.
 }
+\note{Courtesy of J. Aitchison}
 \keyword{datasets}
 

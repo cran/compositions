@@ -1,15 +1,15 @@
 %*%                     inner product for matrices and vectors
-acomp                   Aitchison compositions
 %*%.acomp               inner product for datasets with a vector space
                         structure
+acomp                   Aitchison compositions
 acompmargin             Marginal compositions in Aitchison Compositions
 Activity10              Activity patterns of a statistician for 20 days
 Activity31              Activity patterns of a statistician for 20 days
 alr                     Additive log ratio transform
 AnimalVegetation        Animal and vegetation measurement
-aplus                   Amounts analysed in log-scale
 +.aplus                 vectorial arithmetic for data sets with aplus
                         class
+aplus                   Amounts analysed in log-scale
 apt                     Additive planar transform
 ArcticLake              Artic lake sediment samples of different water
                         depth
@@ -17,8 +17,10 @@ arrows3D                arrows in 3D, based on package rgl
 as.data.frame.acomp     Convert "compositions" classes to data frames
 axis3D                  Drawing a 3D coordiante system to a plot, based
                         on package rgl
+balance                 Compute balances for a compositional dataset.
 barplot.acomp           Bar charts of amounts
 Bayesite                Permeabilities of bayesite
+binary                  Treating binary and g-adic numbers
 biplot3D                Three-dimensional biplots, based on package rgl
 Blood23                 Blood samples
 Boxite                  Compositions and depth of 25 specimens of
@@ -34,10 +36,13 @@ clo                     Closure of a composition
 clr                     Centered log ratio transform
 clr2ilr                 Convert between clr and ilr, and between cpt
                         and ipt.
+ClusterFinder1          Heuristics to find subpopulations of outliers
 CoDaDendrogram          Dendrogram representation of acomp or rcomp
                         objects
-compositions.missing    The policy of treatment of missing values in
-                        the "compositions" package
+coloredBiplot           A biplot providing somewhat easier access to
+                        details of the plot.
+colorsForOutliers1      Create a color/char palette or for groups of
+                        outliers
 compositions-package    library(compositions)
 cor.acomp               Correlations of amounts and compositions
 Coxite                  Compositions, depths and porosities of 25
@@ -53,51 +58,6 @@ getDetectionlimit       Gets the detection limit stored in the data set
 Glacial                 Compositions and total pebble counts of 92
                         glacial tills
 groupparts              Group amounts of parts
-gsi                     Internal functions of the compositions package
-gsi2.invperm            Internal function: Invert a permutation
-gsi.add                 Internal functions: Parallel operations of
-                        single and multiple datasets
-gsi.addclass            Internal function: give a derived subclass to
-                        an object
-gsi.call                Internal functions of the compositions package
-gsi.closespread         Internal functions of the compositions package
-gsi.coorInfo            Internal functions of the compositions package
-gsi.csum                Internal function: row and column sums of
-                        matrices
-gsi.diagExtract         Internal functions: Get the diagonal of a
-                        matrix
-gsi.diagGenerate        Internal functions: Generate a diagonal matrix
-gsi.drop                Internal functions: A conditional drop
-gsi.eps                 Internal variable: Negligible differences
-gsi.eq                  Internal function: Checking equality of IEEE
-                        special numbers
-gsi.expandrcomp         Internal function: Scaling rcomp
-gsi.filtercall          Calling from a function with the own parameters
-gsi.getD                Interal function: Get number of samples and
-                        number of parts in a compositional object
-gsi.isSingleRow         Internal function: Can something be considered
-                        as a single multivariate data item?
-gsi.mapin01             Internal functions: Storing integers as reals
-gsi.margin              Internal function: Compute a desired
-                        compositional margin
-gsi.merge2signary       Auxiliary functions to compute user-defined ilr
-                        and ipt transforms.
-gsi.pairrelativeMatrix
-                        Internal functions of the compositions package
-gsi.pairs               Internal functions of the compositions package
-gsi.plain               Internal function: Convert to plain vector or
-                        matrix
-gsi.plotmargin          Internal functions of the compositions package
-gsi.recodeM2C           Internal function: Recode missings with IEEE
-                        number and vice versa
-gsi.reset3D             Internal functions of the compositions package
-gsi.simshape            Internal function: Reshape an object to the
-                        shape type of another
-gsi.spreadToIsoSpace    Internal functions of the compositions package
-gsi.svdsolve            Internal function: Solves singular and non
-                        square equation systems
-gsi.textpanel           Internal function: A panel displaying a label
-                        only
 Hongite                 Compositions of 25 specimens of hongite
 HouseholdExp            Household Expenditures
 Hydrochem               Hydrochemical composition data set of Llobregat
@@ -110,16 +70,22 @@ ilrBase                 The canonical basis in the clr plane used for
 ilt                     Isometric log transform
 ipt                     Isometric planar transform
 is.acomp                Check for compositional data type
+IsMahalanobisOutlier    Checking for outliers
 isoPortionLines         Isoportion- and Isoproportion-lines
 kingTetrahedron         Ploting composition into rotable tetrahedron
 Kongite                 Compositions of 25 specimens of kongite
 lines.rmult             Draws connected lines from point to point.
+MahalanobisDist         Compute Mahalanobis distances based von robust
+                        Estimations
 mean.acomp              Mean amounts and mean compositions
-mean.row                The arithmetic mean of rows or columns
+meanRow                 The arithmetic mean of rows or columns
 Metabolites             Steroid metabolite patterns in adults and
                         children
 missingProjector        Returns a projector the the observed space in
                         case of missings.
+missingsInCompositions
+                        The policy of treatment of missing values in
+                        the "compositions" package
 missingSummary          Classify and summarize missing values in a
                         dataset
 mix.2aplus              Transformations from 'mixtures' to
@@ -132,15 +98,23 @@ normalize               Normalize vectors to norm 1
 norm.default            Vector space norm
 oneOrDataset            Treating single compositions as one-row
                         datasets
+OutlierClassifier1      Detect and classify compositional outliers.
+outlierplot             Plot various graphics to analyse outliers.
+outliersInCompositions
+                        Analysing outliers in compositions.
+pairwisePlot            Creates a paneled plot like pairs for two
+                        different datasets.
 perturbe                Perturbation of compositions
 plot3D                  plot in 3D based on rgl
 plot3D.acomp            3D-plot of compositional data
 plot3D.aplus            3D-plot of positive data
 plot3D.rmult            plot in 3D based on rgl
 plot3D.rplus            plot in 3D based on rgl
-plot.acomp              Displaying compositions in ternary diagrams
+plot.acomp              Ternary diagrams
 plot.aplus              Displaying amounts in scatterplots
 plot.missingSummary     Plot a Missing Summary
+pMaxMahalanobis         Compute distributions of empirical Mahalanobis
+                        distances based on simulations
 PogoJump                Honk Kong Pogo-Jumps Championship
 power.acomp             Power transform in the simplex
 powerofpsdmatrix        power transform of a matrix
@@ -152,34 +126,40 @@ princomp.rcomp          Principal component analysis for real
                         compositions
 princomp.rmult          Principal component analysis for real data
 princomp.rplus          Principal component analysis for real amounts
+print.acomp             Printing compositional data.
 qqnorm.acomp            Normal quantile plots for compositions and
                         amounts
-rcomp                   Compositions as elements of the simplex
-                        embedded in the D-dimensional real space
 +.rcomp                 Arithmetic operations for compositions in a
                         real geometry
+rcomp                   Compositions as elements of the simplex
+                        embedded in the D-dimensional real space
 rcompmargin             Marginal compositions in real geometry
 rDirichlet              Dirichlet distribution
 read.geoeas             Reads a data file in a geoeas format
 relativeLoadings        Loadings of relations of two amounts
+replot                  Modify parameters of compositional plots.
 rlnorm.rplus            The multivariate lognormal distribution
-rmult                   Simple treatment of real vectors
 %*%.rmult               inner product for datasets with vector scale
 +.rmult                 vectorial arithmetic for datasets in a
                         classical vector scale
+rmult                   Simple treatment of real vectors
 rnorm.acomp             Normal distributions on special spaces
-rplus                   Amounts i.e. positive numbers analysed as
-                        objects of the real vector space
+robustnessInCompositions
+                        Handling robustness issues and outliers in
+                        compositions.
 +.rplus                 vectorial arithmetic for data sets with rplus
                         class
+rplus                   Amounts i.e. positive numbers analysed as
+                        objects of the real vector space
 runif.acomp             The uniform distribution on the simplex
 scalar                  Parallel scalar products
-scale.acomp             Normalizing datasets by centering and scaling
+scale                   Normalizing datasets by centering and scaling
 Sediments               Proportions of sand, silt and clay in sediments
                         specimens
 segments.rmult          Draws straight lines from point to point.
 SerumProtein            Serum Protein compositions of blood samples
 ShiftOperators          Shifts of machine operators
+simpleMissingSubplot    Ternary diagrams
 SimulatedAmounts        Simulated amount datasets
 simulateMissings        Artifical simulation of various kinds of
                         missings
@@ -195,6 +175,7 @@ sumMissingProjector     Compute the global projector to the observed
                         subspace.
 Supervisor              Proportions of supervisor's statements assigned
                         to different categories
+ternaryAxis             Axis for ternary diagrams
 totals                  Total sum of amounts
 ult                     Uncentered log transform
 var.acomp               Variances and covariances of amounts and

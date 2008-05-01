@@ -30,9 +30,6 @@ gsi.margin(X,\dots)
   by \code{what} and optionally one
   additional part named '"+"', '"*"' or \var{margin}.
 }
-\details{
-}
-
 \note{Do not use gsi.* functions directly since they are internal
   functions of the package}
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}, Raimon
@@ -42,7 +39,7 @@ Tolosana-Delgado}
   \code{\link{gsi}}
 }
 \examples{
-data(SimulatedAmounts)
-plot(gsi.margin(acomp(sa.lognormals5),c("Cd","Cu")))
+#data(SimulatedAmounts)
+#plot(gsi.margin(acomp(sa.lognormals5),c("Cd","Cu")))
 }
-\keyword{}
+\keyword{internal}

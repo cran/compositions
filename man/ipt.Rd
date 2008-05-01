@@ -1,7 +1,7 @@
 \name{ipt}
 \alias{ipt}
-\alias{ipt.inv}
-\alias{ucipt.inv}
+\alias{iptInv}
+\alias{uciptInv}
 \title{Isometric planar transform}
 \description{
   Compute the isometric planar  transform of a (dataset of)
@@ -9,8 +9,8 @@
 }
 \usage{
           ipt( x , V = ilrBase(x),... )
-          ipt.inv( z , V = ilrBase(z=z),...,orig=NULL)
-          ucipt.inv( z , V = ilrBase(z=z),...,orig=NULL )
+          iptInv( z , V = ilrBase(z=z),...,orig=NULL)
+          uciptInv( z , V = ilrBase(z=z),...,orig=NULL )
           }
 \arguments{
   \item{x}{a composition or a data matrix of compositions, not necessarily closed}
@@ -25,8 +25,8 @@
 }
 \value{
   \code{ipt} gives the centered planar transform,
-  \code{ipt.inv} gives closed compositions with with the given ipt-transforms,
-  \code{ucipt.inv} unconstrained ipt.inv does the same as ipt.inv but
+  \code{iptInv} gives closed compositions with with the given ipt-transforms,
+  \code{uciptInv} unconstrained iptInv does the same as iptInv but
   sets illegal values to NA rather than giving an error. This is a
   workaround to allow procedures not honoring the constraints of the
   space.  
@@ -58,16 +58,15 @@
   \code{\link{ilr}},\code{\link{ilrBase}}, \code{\link{cpt}}
 }
 \references{
-
-  van den Boogaart, K.G. and R. Tolosana-Delgado (2007) "compositions": a unified 
-  R package to analyze Compositional Data, \emph{Computers & Geosciences}. 
-  (in press).
+    van den Boogaart, K.G. and R. Tolosana-Delgado (2008) "compositions": a unified 
+  R package to analyze Compositional Data, \emph{Computers &
+    Geosciences}, 34 (4), pages 320-338, doi:10.1016/j.cageo.2006.11.017.
 
 }
 \examples{
 (tmp <- ipt(c(1,2,3)))
-ipt.inv(tmp)
-ipt.inv(tmp) - clo(c(1,2,3)) # 0
+iptInv(tmp)
+iptInv(tmp) - clo(c(1,2,3)) # 0
 data(Hydrochem)
 cdata <- Hydrochem[,6:19]
 pairs(ipt(cdata)) 

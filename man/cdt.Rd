@@ -7,13 +7,13 @@
 \alias{cdt.rplus}
 \alias{cdt.rmult}
 \alias{cdt.factor}
-\alias{cdt.inv}
-\alias{cdt.inv.default}
-\alias{cdt.inv.acomp}
-\alias{cdt.inv.rcomp}
-\alias{cdt.inv.aplus}
-\alias{cdt.inv.rplus}
-\alias{cdt.inv.rmult}
+\alias{cdtInv}
+\alias{cdtInv.default}
+\alias{cdtInv.acomp}
+\alias{cdtInv.rcomp}
+\alias{cdtInv.aplus}
+\alias{cdtInv.rplus}
+\alias{cdtInv.rmult}
 \title{Centered default transform}
 \description{
   Compute the centered default transform of a (data set of)
@@ -28,13 +28,13 @@
           \method{cdt}{rplus}( x ,...)
           \method{cdt}{rmult}( x ,...)
           \method{cdt}{factor}( x ,...)
-          cdt.inv(x,orig,...)
-          \method{cdt.inv}{default}( x ,orig,...)
-          \method{cdt.inv}{acomp}( x ,orig,...)
-          \method{cdt.inv}{rcomp}( x ,orig,...)
-          \method{cdt.inv}{aplus}( x ,orig,...)
-          \method{cdt.inv}{rplus}( x ,orig,...)
-          \method{cdt.inv}{rmult}( x ,orig,...)
+          cdtInv(x,orig,...)
+          \method{cdtInv}{default}( x ,orig,...)
+          \method{cdtInv}{acomp}( x ,orig,...)
+          \method{cdtInv}{rcomp}( x ,orig,...)
+          \method{cdtInv}{aplus}( x ,orig,...)
+          \method{cdtInv}{rplus}( x ,orig,...)
+          \method{cdtInv}{rmult}( x ,orig,...)
           }
 \arguments{
   \item{x}{a classed (matrix of) amount or composition, to be transformed with its
@@ -72,9 +72,9 @@
   \code{\link{idt}}, \code{\link{clr}}, \code{\link{cpt}}, \code{\link{ilt}}, \code{\link{iit}}
 }
 \references{
-    van den Boogaart, K.G. and R. Tolosana-Delgado (2007) "compositions": a unified 
-  R package to analyze Compositional Data, \emph{Computers & Geosciences}. 
-  (in press).
+    van den Boogaart, K.G. and R. Tolosana-Delgado (2008) "compositions": a unified 
+  R package to analyze Compositional Data, \emph{Computers &
+    Geosciences}, 34 (4), pages 320-338, doi:10.1016/j.cageo.2006.11.017.
 }
 \examples{
 \dontrun{
@@ -88,14 +88,14 @@ cdt.rplus   <- iit
 }
 x <- acomp(1:5)
 (ds <- cdt(x))
-cdt.inv(ds,x)
+cdtInv(ds,x)
 (ds <- cdt(rcomp(1:5)))
-cdt.inv(ds,rcomp(x))
+cdtInv(ds,rcomp(x))
   data(Hydrochem)
   x = Hydrochem[,c("Na","K","Mg","Ca")]
   y = acomp(x)
   z = cdt(y)
-  y2 = cdt.inv(z,y)
+  y2 = cdtInv(z,y)
   par(mfrow=c(2,2))
   for(i in 1:4){plot(y[,i],y2[,i])}
 

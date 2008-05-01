@@ -32,4 +32,4 @@ the dataset returned.}
 plot(runif.acomp(10,3))
 plot(runif.rcomp(10,3))
 }
-\keyword{multivariate}
+\keyword{distribution}

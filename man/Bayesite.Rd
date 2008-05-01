@@ -33,4 +33,5 @@ All 4-part compositions sum to one.
 \references{
    Aitchison: The Statistical Analysis of Compositional Data, 1986, Data 21, pp21.
  }
+\note{Courtesy of J. Aitchison}
 \keyword{datasets}

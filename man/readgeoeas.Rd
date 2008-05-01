@@ -21,11 +21,13 @@ read.geoEAS(file)
   "read.geoeas" read geoEAS format.
 
   The geoEAS format has the following structure:
-    \item a first row with a description of the data set
-    \item the number of variables (=nvars)
-    \item "nvars"  rows, each containing the name of a variable
-    \item the data set, in a matrix of "nvars" columns
-          and as many rows as individuals
+  \itemize{
+    \item{}{a first row with a description of the data set}
+    \item{}{the number of variables (=nvars)}
+    \item{}{"nvars"  rows, each containing the name of a variable}
+    \item{}{the data set, in a matrix of "nvars" columns
+      and as many rows as individuals}
+    }
 }
 
 \note{ Labels and title should not contain tabs.
@@ -36,6 +38,7 @@ read.geoEAS(file)
 }
 
 \references{
+  Missing references
 }
 \examples{
 #
@@ -46,4 +49,4 @@ read.geoEAS(file)
   read.geoEAS("TRUE.DAT")
 }
 }
-\keyword{}
+\keyword{IO}

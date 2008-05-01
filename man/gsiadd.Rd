@@ -35,20 +35,20 @@ gsi.div(x,y)
 \examples{
 tmp1 <- matrix(1:12,ncol=3)
 tmp2 <- 1:3
-gsi.add(tmp1,tmp2)
-gsi.sub(tmp1,tmp2)
-gsi.mul(tmp1,tmp2)
-gsi.div(tmp1,tmp2)
+#gsi.add(tmp1,tmp2)
+#gsi.sub(tmp1,tmp2)
+#gsi.mul(tmp1,tmp2)
+#gsi.div(tmp1,tmp2)
 
-gsi.add(tmp2,tmp2)
-gsi.sub(tmp2,tmp2)
-gsi.mul(tmp2,tmp2)
-gsi.div(tmp2,tmp2)
+#gsi.add(tmp2,tmp2)
+#gsi.sub(tmp2,tmp2)
+#gsi.mul(tmp2,tmp2)
+#gsi.div(tmp2,tmp2)
 
-gsi.add(tmp1,tmp1)
-gsi.sub(tmp1,tmp1)
-gsi.mul(tmp1,tmp1)
-gsi.div(tmp1,tmp1)
+#gsi.add(tmp1,tmp1)
+#gsi.sub(tmp1,tmp1)
+#gsi.mul(tmp1,tmp1)
+#gsi.div(tmp1,tmp1)
 
 }
-\keyword{}
+\keyword{internal}

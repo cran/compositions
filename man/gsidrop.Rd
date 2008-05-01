@@ -15,17 +15,10 @@ gsi.drop(X,drop)
   \code{X} or \code{drop(X)}
 }
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
-\details{
-
-}
-
 \note{Do not use gsi.* functions directly since they are internal
   functions of the package}
 
 \seealso{
   \code{\link[base]{drop}}, \code{\link{gsi}}
 }
-\examples{
-
-}
-\keyword{}
+\keyword{internal}

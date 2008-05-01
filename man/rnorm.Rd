@@ -98,4 +98,4 @@ dnorm.acomp(x,MyMean,MyVar)
 dnorm.aplus(x,MyMean,MyVar)
 dnorm.rmult(x,MyMean,MyVar)
 }
-\keyword{multivariate}
+\keyword{distribution}

@@ -7,7 +7,7 @@ testvalues <- structure(c(1, 0, NA, NaN, -Inf, Inf, 1, -2), .Dim = c(2, 4), clas
 # class(testvalues) <-"acomp"
 
 classi <- function(x) {
-  ifelse( is.NMV(x) , "NMV" , ifelse( is.BDT(x) , "BDT" , ifelse( is.MAR(x), "MAR", ifelse( is.SZ(x) , "SZ", ifelse(is.MNAR(x),"MNAR","ERR")))))
+  ifelse( is.NMV(x) , "NMV" , ifelse( is.BDL(x) , "BDL" , ifelse( is.MAR(x), "MAR", ifelse( is.SZ(x) , "SZ", ifelse(is.MNAR(x),"MNAR","ERR")))))
 }
 
 missingset <- matrix(

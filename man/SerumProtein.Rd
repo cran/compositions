@@ -11,12 +11,19 @@ of 30 patients, 14 with known disease A, 16 with known disease B, and
 \usage{
 data(SerumProtein)
 }
-\format{}
+\format{
+  \itemize{
+    \item{a}{numeric a protein type}
+    \item{b}{numeric a protein type}
+    \item{c}{numeric a protein type}
+    \item{d}{numeric a protein type}
+    \item{Type}{1 deasease A, 2 disease B, 3 new cases}
+  }
+}
 \source{
   Aitchison: CODA microcomputer statistical package, 1986, the file name SERPROT.DAT,
   here included under the GNU Public Library Licence Version 2 or newer.
 }
-
 \details{
 The data consist of 36 cases: 14 with known disease A, 16 with known disease B, and
 6 new cases and 5 v variables: a, b, c, and d for 4 serum proteins and Type
@@ -26,4 +33,5 @@ for the diseases: 1 for  disease A, 2 for  disease B, and 3 for new cases.
 \references{
    Aitchison, J. (1986) The Statistical Analysis of Compositional Data (Data 16) pp20.
  }
+\note{Courtesy of J. Aitchison}
 \keyword{datasets}

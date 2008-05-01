@@ -12,13 +12,14 @@
 }
 \usage{
 clr2ilr( x , V=ilrBase(x) )
-ilr2clr( z , V=ilrBase(z=z) )
+ilr2clr( z , V=ilrBase(z=z),x=NULL )
 clrvar2ilr( varx , V=ilrBase(D=ncol(varx)) )
-ilrvar2clr( varz , V=ilrBase(D=ncol(varz)+1) )
+ilrvar2clr( varz , V=ilrBase(D=ncol(varz)+1) ,x=NULL)
 
           }
 \arguments{
-  \item{x}{the clr/cpt-transform of composition(s)}
+  \item{x}{the clr/cpt-transform of composition(s) (in the ilr2-routines
+    provided only to give column names.)}
   \item{z}{the ilr/ipt-transform of composition(s)}
   \item{varx}{variance or covariance matrix of clr/cpt-transformed
     compositions}
@@ -58,8 +59,8 @@ ilrvar2clr( varz , V=ilrBase(D=ncol(varz)+1) )
 }
 \examples{
 data(SimulatedAmounts)
-ilr.inv(clr2ilr(clr(sa.lognormals)))-clo(sa.lognormals)
-clr.inv(ilr2clr(ilr(sa.lognormals)))-clo(sa.lognormals)
+ilrInv(clr2ilr(clr(sa.lognormals)))-clo(sa.lognormals)
+clrInv(ilr2clr(ilr(sa.lognormals)))-clo(sa.lognormals)
 ilrvar2clr(var(ilr(sa.lognormals)))-var(clr(sa.lognormals))
 clrvar2ilr(var(cpt(sa.lognormals)))-var(ipt(sa.lognormals))
 

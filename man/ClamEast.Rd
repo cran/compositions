@@ -16,7 +16,7 @@ data(ClamEast)
   here included under the GNU Public Library Licence Version 2 or newer.
 }
 \details{
-The data consist of 20 cases and $2\times 3$ variables denoted:
+The data consist of 20 cases and \eqn{2\times 3}{2x3} variables denoted:
 
 \tabular{rll}{
  \tab dl\tab  portion of dark large clams, \cr
@@ -30,5 +30,6 @@ All 6-part compositions sum to one, except for rounding errors.}
 \references{
    Aitchison: The Statistical Analysis of Compositional Data, 1986, Data 14, pp18. 
  }
+\note{Courtesy of J. Aitchison}
 \keyword{datasets}
 

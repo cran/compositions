@@ -22,20 +22,13 @@ gsi.svdsolve(a,b,...,cond=1E-10)
 }
 \note{Do not use gsi.* functions directly since they are internal
   functions of the package}
-\details{
-}
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
-\seealso{
- 
-}
-\references{
-}
 \examples{
-A <- matrix(c(0,1,0,0,0,0),ncol=2)
-b <- diag(3)
-erg <- gsi.svdsolve(A,b)
-erg
-A %*% erg 
-diag(c(0,1,0))  # richtig
+#A <- matrix(c(0,1,0,0,0,0),ncol=2)
+#b <- diag(3)
+#erg <- gsi.svdsolve(A,b)
+#erg
+#A \%*\% erg 
+#diag(c(0,1,0))  # richtig
 }
-\keyword{}
+\keyword{internal}
