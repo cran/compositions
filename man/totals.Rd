@@ -4,6 +4,7 @@
 \alias{totals.aplus}
 \alias{totals.rcomp}
 \alias{totals.rplus}
+\alias{totals.ccomp}
 \title{Total sum of amounts }
 \description{
   Calculates the total amount by summing the individual parts. 
@@ -14,6 +15,7 @@ totals(x,\dots)
 \method{totals}{rcomp}(x,\dots,missing.ok=TRUE)
 \method{totals}{aplus}(x,\dots,missing.ok=TRUE)
 \method{totals}{rplus}(x,\dots,missing.ok=TRUE)
+\method{totals}{ccomp}(x,\dots,missing.ok=TRUE)
           }
 \arguments{
   \item{x}{an amount/amount dataset}

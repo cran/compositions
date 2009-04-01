@@ -22,26 +22,26 @@ gsi.plots
   \item{x}{a multivariate dataset}
   \item{labels}{The names of the variables}
   \item{panel}{The function to performe the actual pairwise plots.}
-  \item{\dots}{see \code{\link[base]{pairs}}}
-  \item{main}{see \code{\link[base]{pairs}}}
-  \item{oma}{see \code{\link[base]{pairs}}}
-  \item{font.main}{see \code{\link[base]{pairs}}}
-  \item{cex.main}{see \code{\link[base]{pairs}}}
-  \item{lower.panel}{see \code{\link[base]{pairs}}}
-  \item{upper.panel}{see \code{\link[base]{pairs}}}
-  \item{diag.panel}{see \code{\link[base]{pairs}}}
-  \item{text.panel}{see \code{\link[base]{pairs}}}
-  \item{label.pos}{see \code{\link[base]{pairs}}}
-  \item{cex.labels}{see \code{\link[base]{pairs}}}
-  \item{font.labels}{see \code{\link[base]{pairs}}}
-  \item{row1attop}{see \code{\link[base]{pairs}}}
-  \item{gap}{see \code{\link[base]{pairs}}}
+  \item{\dots}{see \code{\link[graphics]{pairs}}}
+  \item{main}{see \code{\link[graphics]{pairs}}}
+  \item{oma}{see \code{\link[graphics]{pairs}}}
+  \item{font.main}{see \code{\link[graphics]{pairs}}}
+  \item{cex.main}{see \code{\link[graphics]{pairs}}}
+  \item{lower.panel}{see \code{\link[graphics]{pairs}}}
+  \item{upper.panel}{see \code{\link[graphics]{pairs}}}
+  \item{diag.panel}{see \code{\link[graphics]{pairs}}}
+  \item{text.panel}{see \code{\link[graphics]{pairs}}}
+  \item{label.pos}{see \code{\link[graphics]{pairs}}}
+  \item{cex.labels}{see \code{\link[graphics]{pairs}}}
+  \item{font.labels}{see \code{\link[graphics]{pairs}}}
+  \item{row1attop}{see \code{\link[graphics]{pairs}}}
+  \item{gap}{see \code{\link[graphics]{pairs}}}
   \item{add}{additional parameter containing a list of additional
     panels}
   \item{xlim}{additional 2x\code{ncol(x)}-matrix parameter giving in
     \code{xlim[,j]} the xlims of the j-th column
   }
-  \item{ylim}{additional 2x\code{ncol(x)}-matrix parameter giving in
+  \item{ylim}{additional 2x\code{ncol()}-matrix parameter giving in
     \code{ylim[,i]} the ylims of the j-th column
   }
   \item{log}{additional parameter with possible values like in

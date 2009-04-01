@@ -1,4 +1,4 @@
-\name{plot3D}
+\name{plot3Daplus}
 \alias{plot3D.aplus}
 \title{3D-plot of positive data}
 \description{
@@ -7,7 +7,7 @@
 }
 \usage{
 \method{plot3D}{aplus}(x,parts=1:3,...,
-                vlabs=NULL,add=FALSE,log=TRUE,bbox=FALSE,coors=TRUE,col=par("col"))
+                vlabs=NULL,add=FALSE,log=TRUE,bbox=FALSE,axes=TRUE,col=par("col"))
 }
 \arguments{
   \item{x}{an aplus object to be plotted}
@@ -20,7 +20,7 @@
     the column names of the selected columns of X}
   \item{log}{logical, indicating wether to plot in log scale}
   \item{bbox}{logical, whether to add a bounding box}
-  \item{coors}{logical, plot a coordinate system}
+  \item{axes}{logical, plot a coordinate system}
   \item{col}{the color}
 }
 \value{
@@ -37,7 +37,7 @@
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 
 \seealso{
-  \code{\link[rgl]{points3D}},   \code{\link{plot3D}},
+  \code{\link[rgl]{points3d}},   \code{\link{plot3D}},
   \code{\link[graphics]{plot}}, \code{\link{plot3D.rmult}},
   
   \code{\link{plot3D.acomp}},\code{\link{plot3D.rcomp}},,

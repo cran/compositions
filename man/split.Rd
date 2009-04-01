@@ -4,6 +4,7 @@
 \alias{split.rcomp}
 \alias{split.rplus}
 \alias{split.rmult}
+\alias{split.ccomp}
 \title{Splitting datasets in groups given by factors}
 \description{
   Splits data sets of compositions in groups given by factors, 
@@ -15,6 +16,7 @@
 \method{split}{aplus}(x,f,drop=FALSE,\dots)
 \method{split}{rplus}(x,f,drop=FALSE,\dots)
 \method{split}{rmult}(x,f,drop=FALSE,\dots)
+\method{split}{ccomp}(x,f,drop=FALSE,\dots)
           }
 \arguments{
   \item{x}{a dataset or a single vector of some type}

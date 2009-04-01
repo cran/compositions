@@ -39,7 +39,7 @@ axis3D(axis.origin=c(0,0,0),axis.scale=1,axis.col="gray",vlabs=c("x","y","z"),vl
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 
 \seealso{
-  \code{\link[rgl]{points3D}},
+  \code{\link[rgl]{points3d}},
   \code{\link[graphics]{plot}}, \code{\link{plot3D}},\code{\link{arrows3D}}
 }
 \examples{

@@ -6,6 +6,7 @@
 \alias{cdt.aplus}
 \alias{cdt.rplus}
 \alias{cdt.rmult}
+\alias{cdt.ccomp}
 \alias{cdt.factor}
 \alias{cdtInv}
 \alias{cdtInv.default}
@@ -14,6 +15,7 @@
 \alias{cdtInv.aplus}
 \alias{cdtInv.rplus}
 \alias{cdtInv.rmult}
+\alias{cdtInv.ccomp}
 \title{Centered default transform}
 \description{
   Compute the centered default transform of a (data set of)
@@ -27,6 +29,7 @@
           \method{cdt}{aplus}( x ,...)
           \method{cdt}{rplus}( x ,...)
           \method{cdt}{rmult}( x ,...)
+          \method{cdt}{ccomp}( x ,...)
           \method{cdt}{factor}( x ,...)
           cdtInv(x,orig,...)
           \method{cdtInv}{default}( x ,orig,...)
@@ -35,6 +38,7 @@
           \method{cdtInv}{aplus}( x ,orig,...)
           \method{cdtInv}{rplus}( x ,orig,...)
           \method{cdtInv}{rmult}( x ,orig,...)
+          \method{cdtInv}{ccomp}( x ,orig,...)
           }
 \arguments{
   \item{x}{a classed (matrix of) amount or composition, to be transformed with its

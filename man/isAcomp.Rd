@@ -1,6 +1,7 @@
 \name{is.acomp}
 \alias{is.acomp}
 \alias{is.aplus}
+\alias{is.ccomp}
 \alias{is.rcomp}
 \alias{is.rplus}
 \alias{is.rmult}
@@ -14,6 +15,7 @@ is.rcomp(x)
 is.aplus(x)
 is.rplus(x)
 is.rmult(x)
+is.ccomp(x)
           }
 \arguments{
   \item{x}{any object to be checked}

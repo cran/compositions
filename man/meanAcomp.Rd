@@ -2,6 +2,7 @@
 \alias{mean.acomp}
 \alias{mean.rcomp}
 \alias{mean.aplus}
+\alias{mean.ccomp}
 \alias{mean.rplus}
 \alias{mean.rmult}
 \title{Mean amounts and mean compositions}
@@ -14,6 +15,7 @@
           \method{mean}{rcomp}(x,\dots,robust=getOption("robust"))
           \method{mean}{aplus}(x,\dots,robust=getOption("robust"))
           \method{mean}{rplus}(x,\dots,robust=getOption("robust"))
+          \method{mean}{ccomp}(x,\dots,robust=getOption("robust"))
           \method{mean}{rmult}(x,\dots,na.action=NULL,robust=getOption("robust"))
           }
 \arguments{
@@ -23,7 +25,7 @@
   \item{robust}{
     A description of a robust estimator. Possible values are FALSE or
     "pearson" for no robustness, or TRUE or "mcd" for a
-\link[robustbase]{covMCD} based
+    \link[robustbase]{covMcd} based
     robust location scale estimation. Additional control parameters such
     as \code{list(trim=0.2)} or an \code{rrcov.control} object can
     be given as an attribute "control". 

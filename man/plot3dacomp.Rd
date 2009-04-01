@@ -1,4 +1,4 @@
-\name{plot3D}
+\name{plot3Dacomp}
 \alias{plot3D.acomp}
 \alias{plot3D.rcomp}
 \title{3D-plot of compositional data}
@@ -74,7 +74,7 @@ be downloaded separately.
 
 \seealso{
   \code{\link{kingTetrahedron}}
-  \code{\link[rgl]{points3D}},   \code{\link{plot3D}},
+  \code{\link[rgl]{points3d}},   \code{\link{plot3D}},
   \code{\link[graphics]{plot}}, \code{\link{plot3D.rmult}},
  
   \code{\link{plot3D.acomp}},\code{\link{plot3D.rcomp}},,

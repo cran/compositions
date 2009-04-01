@@ -32,14 +32,15 @@ ellipses(mm,erg,r=2)
 
 
 
-cdata <- rcomp(mydata)
-cdata
-mean(cdata)
-mean(rcomp(sa.groups5))
-plot(rcomp(sa.groups5))
-plot(mean(cdata),add=T,col="red",pch=20)
-plot(mean(rcomp(sa.groups5)),add=T,col="green",pch=20)
-mean(cdata - mean(cdata)) # Nonsense because the difference is noncompositional
+#cdata <- rcomp(mydata)
+#cdata
+
+#mean(cdata)
+#mean(rcomp(sa.groups5))
+#plot(rcomp(sa.groups5))
+#plot(mean(cdata),add=T,col="red",pch=20)
+#plot(mean(rcomp(sa.groups5)),add=T,col="green",pch=20)
+#mean(cdata - mean(cdata)) # Nonsense because the difference is noncompositional
 
 
 cdata <- aplus(mydata)

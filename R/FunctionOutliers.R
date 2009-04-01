@@ -235,7 +235,7 @@ if( ! exists("gsi.pStore") )
 # resample = Do a new simulation rather than using the old one.
 # ...=further arguments to the covMcd-routine
 pMaxMahalanobis <- function(q,N,d,...,pow=1,replicates=998,resample=FALSE,robust=TRUE) {
-  id <- paste(deparse(list(N=N,d=d,...,replicates=replicates,robust=robust,type="MaxMahalanobis")),col="\n")
+  id <- paste(deparse(list(N=N,d=d,...,replicates=replicates,robust=robust,type="MaxMahalanobis")),collapse="\n")
   if( resample || is.null(s<-mget(id,gsi.pStore,ifnotfound=list(NULL))[[1]])   ) {
     s <- rMaxMahalanobis(replicates,N,d,...,pow=1,robust=robust)
     assign(id,sort(s),envir=gsi.pStore)
@@ -250,7 +250,7 @@ pMaxMahalanobis <- function(q,N,d,...,pow=1,replicates=998,resample=FALSE,robust
 # resample = Do a new simulation rather than using the old one.
 # ...=further arguments to the covMcd-routine
 qMaxMahalanobis <- function(p,N,d,...,pow=1,replicates=998,resample=FALSE,robust=TRUE) {
-  id <- paste(deparse(list(N=N,d=d,...,pow=pow,replicates=replicates,robust=robust,type="MaxMahalanobis")),col="\n")
+  id <- paste(deparse(list(N=N,d=d,...,pow=pow,replicates=replicates,robust=robust,type="MaxMahalanobis")),collapse="\n")
   if( resample || is.null(s<-mget(id,gsi.pStore,ifnotfound=list(NULL))[[1]])   ) {
     s <- rMaxMahalanobis(replicates,N,d,...,pow=1,robust=robust) 
     assign(id,sort(s),envir=gsi.pStore)
@@ -312,7 +312,7 @@ rMaxMahalanobis <- function(n,N,d,...,pow=1,robust=TRUE) {
 # ...=further arguments to the covMcd-routine
 pEmpiricalMahalanobis <- function(q,N,d,...,pow=1,replicates=100,resample=FALSE,robust=TRUE) {
   require(robustbase)
-  id <- paste(deparse(list(N=N,d=d,...,replicates=replicates,robust=robust,type="EmpiricalMahalanobis")),col="\n")
+  id <- paste(deparse(list(N=N,d=d,...,replicates=replicates,robust=robust,type="EmpiricalMahalanobis")),collapse="\n")
   if( resample || is.null(s<-mget(id,gsi.pStore,ifnotfound=list(NULL))[[1]])   ) {
     s <- rEmpiricalMahalanobis(replicates,N,d,...,pow=1,robust=robust)
     assign(id,sort(s),envir=gsi.pStore)
@@ -331,7 +331,7 @@ pEmpiricalMahalanobis <- function(q,N,d,...,pow=1,replicates=100,resample=FALSE,
 
 qEmpiricalMahalanobis <- function(p,N,d,...,pow=1,replicates=100,resample=FALSE,robust=TRUE) {
   require(robustbase)
-  id <- paste(deparse(list(N=N,d=d,...,replicates=replicates,robust=robust,type="EmpiricalMahalanobis")),col="\n")
+  id <- paste(deparse(list(N=N,d=d,...,replicates=replicates,robust=robust,type="EmpiricalMahalanobis")),collapse="\n")
   if( resample || is.null(s<-mget(id,gsi.pStore,ifnotfound=list(NULL))[[1]])   ) {
     s <- rEmpiricalMahalanobis(replicates,N,d,...,pow=1,robust=robust) 
     assign(id,sort(s),envir=gsi.pStore)
@@ -405,7 +405,7 @@ rEmpiricalMahalanobis <- function(n,N,d,...,sorted=FALSE,pow=1,robust=TRUE) {
 # ...=further arguments to the covMcd-routine
 pPortionMahalanobis <- function(q,N,d,cut,...,replicates=1000,resample=FALSE,pow=1,robust=TRUE) {
   require(robustbase)
-  id <- paste(deparse(list(N=N,d=d,...,replicates=replicates,robust=robust,type="PortionMahalanobis")),col="\n")
+  id <- paste(deparse(list(N=N,d=d,...,replicates=replicates,robust=robust,type="PortionMahalanobis")),collapse="\n")
   if( resample || is.null(s<-mget(id,gsi.pStore,ifnotfound=list(NULL))[[1]])   ) {
     s <- rEmpiricalMahalanobis(replicates,N,d,...,sorted=TRUE,robust=robust)
     assign(id,s,envir=gsi.pStore)
@@ -430,7 +430,7 @@ rPortionMahalanobis <- function(n,N,d,cut,...,pow=1,robust=TRUE) {
 # ...=further arguments to the covMcd-routine
 qPortionMahalanobis <- function(p,N,d,cut,...,replicates=1000,resample=FALSE,pow=1,robust=TRUE) {
   require(robustbase)
-  id <- paste(deparse(list(N=N,d=d,...,replicates=replicates,type="PortionMahalanobis")),col="\n")
+  id <- paste(deparse(list(N=N,d=d,...,replicates=replicates,type="PortionMahalanobis")),collapse="\n")
   if( resample || is.null(s<-mget(id,gsi.pStore,ifnotfound=list(NULL))[[1]])   ) {
     s <- rEmpiricalMahalanobis(replicates,N,d,...,sorted=TRUE,robust=robust) 
     assign(id,s,envir=gsi.pStore)
@@ -485,7 +485,7 @@ qPortionMahalanobis <- function(p,N,d,cut,...,replicates=1000,resample=FALSE,pow
 
 pQuantileMahalanobis <- function(q,N,d,p,...,replicates=1000,resample=FALSE,ulimit=TRUE,pow=1,robust=TRUE) {
   require(robustbase)
-  id <- paste(deparse(list(N=N,d=d,...,pow=pow,robust=robust,replicates=replicates,type="pQuantileMahalanobis")),col="\n")
+  id <- paste(deparse(list(N=N,d=d,...,pow=pow,robust=robust,replicates=replicates,type="pQuantileMahalanobis")),collapse="\n")
   if( resample || is.null(PreSort<-mget(id,gsi.pStore,ifnotfound=list(NULL))[[1]])   ) {
     s <- rEmpiricalMahalanobis(replicates,N,d,...,pow=pow,robust=robust,sorted=TRUE)
 #    attr(s,"palphaEnv") <- new.env(hash=TRUE,emptyenv())
@@ -700,18 +700,24 @@ ClusterFinder1.acomp <- function(X,...,sigma=0.3,radius=1,asig=1,minGrp=3,robust
 
 
 ## function to provide a coloured biplot (admits SVD, princomp and prcomp)
-coloredBiplot <- function(xrf,xcol="black",ycol="red",scale=1,choice=c(1,2),pc.biplot=FALSE,pch=19,ypch=2,cex=1,xarrows=FALSE,yarrows=TRUE,...){
+coloredBiplot <- function(xrf, scale=1, choice=c(1,2), pc.biplot=FALSE, 
+        xcol="black", ycol="red", xpch=4, ypch=1, cex=1, 
+        xarrows=FALSE, yarrows=!xarrows, xnames=NULL, ynames=NULL,...){
  # X : cases (points)
  # Y : variables (arrows)
    if(class(xrf)=="princomp"){
       X = xrf$scores
       Y = xrf$loadings
+      if(is.null(xnames)){xnames=rownames(X)}
+      if(is.null(ynames)){ynames=rownames(Y)}
       l = xrf$sdev
       fac = ifelse(pc.biplot,sqrt(nrow(X)),1)
    }
    if(class(xrf)=="prcomp"){
       X = xrf$x
       Y = xrf$rotation
+      if(is.null(xnames)){xnames=rownames(X)}
+      if(is.null(ynames)){ynames=rownames(Y)}
       l = xrf$sdev
       fac = ifelse(pc.biplot,sqrt(nrow(X)),1)
    }
@@ -729,17 +735,15 @@ coloredBiplot <- function(xrf,xcol="black",ycol="red",scale=1,choice=c(1,2),pc.b
       warning("recall that singular value decomposition does not center the data set")
       fac = 1
    }
-   Xx = X[,choice[1]]*(l[1]^(1-scale))*fac
-   Xy = X[,choice[2]]*(l[2]^(1-scale))*fac
-   Yx = Y[,choice[1]]*(l[1]^(scale))/fac
-   Yy = Y[,choice[2]]*(l[2]^(scale))/fac
+   Xx = X[,choice[1]]*(l[choice[1]]^(1-scale))*fac
+   Xy = X[,choice[2]]*(l[choice[2]]^(1-scale))*fac
+   Yx = Y[,choice[1]]*(l[choice[1]]^(scale))/fac
+   Yy = Y[,choice[2]]*(l[choice[2]]^(scale))/fac
 # abandoned attempts to scale X and Y in the same way as R does:
 #      span = function(x){ c(range(x)%*%c(-1,1)) }
 #      escala = 0.8*max(span(Xx)/span(Yx),span(Xy)/span(Yy))
 #      Yx = Yx #* span(Xx)/span(Yx) # escala
 #      Yy = Yy #* span(Xy)/span(Yy) # escala
-   xlm=range(Xx,Yx)
-   ylm=range(Xy,Yy)
 # more abandoned attempts to scale X and Y in the same way as R does:
 #    escala =0.8*as.double(xlm%*%c(-1,1)/(xlml%*%c(-1,1)))
 #    xlm=c(min(xlml*escala,xlm),max(xlml*escala,xlm))
@@ -752,16 +756,18 @@ coloredBiplot <- function(xrf,xcol="black",ycol="red",scale=1,choice=c(1,2),pc.b
 #      print(c(xlm,ylm))
 
    par(pty="s")
-   if( xarrows)
-     plot(Xx,Xy,type="n",col=xcol,ann=FALSE,xlim=xlm,ylim=ylm,pch=pch,cex=cex,...)#xaxt="n",yaxt="n",
-   else 
-     plot(Xx,Xy,col=xcol,ann=FALSE,xlim=xlm,ylim=ylm,pch=pch,cex=cex,...)#xaxt="n",yaxt="n",
-   if( xarrows ) arrows(x0=0,y0=0, x1=Xx, y1=Xy,length=0.1,col=xcol)
-   if( yarrows )
-     arrows(x0=0,y0=0, x1=Yx, y1=Yy,length=0.1,col=ycol)
+   plot(c(Xx,Yx)*1.05,c(Xy,Yy)*1.05,type="n",col=xcol,ann=FALSE,pch=xpch,cex=cex,...)
+   if( xarrows ) 
+     arrows(x0=0,y0=0, x1=Xx, y1=Xy,length=0.1,col=xcol)
    else
-     points(x1=Yx, y1=Yy,length=0.1,col=ycol,pch=ypch)
-   text(x=Yx*1.2,y=Yy*1.2,labels=rownames(Y),cex=1.5)
+     points(x=Xx, y=Xy,col=xcol,pch=xpch)
+   if( yarrows ){
+     arrows(x0=0,y0=0, x1=Yx, y1=Yy,length=0.1,col=ycol)
+   }else{
+     points(x=Yx, y=Yy,col=ycol,pch=ypch)
+   }
+   text(x=Xx*1.05,y=Xy*1.05,labels=xnames,...)
+   text(x=Yx*1.05,y=Yy*1.05,labels=ynames,...)
 }
 
 
@@ -860,7 +866,7 @@ outlierplot.acomp <- function(X,colcode=colorsForOutliers1,pchcode=pchForOutlier
       pr <- princomp(cdt(X),robust=princomp.robust)
     else
       pr <- princomp.robust
-    coloredBiplot(xrf=pr,xcol=colcode[as.integer(myCls)],pc.biplot=FALSE,pch=pch,...)
+    coloredBiplot(xrf=pr,xcol=colcode[as.integer(myCls)],pc.biplot=FALSE,xpch=pch,...)
     title(main=main)
     if(!missing(legend.position))
       legend(legend.position,legend=levels(myCls),col=colcode,pch=pch)

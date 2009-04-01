@@ -24,10 +24,11 @@ msd(x,\dots)
 \arguments{
   \item{x}{a dataset, eventually of amounts or compositions}
   \item{y}{a second dataset, eventually of amounts or compositions}
-  \item{\dots}{further arguments to \code{\link[base]{var}} or
-    \code{\link[base]{cov}. Typically a \code{robust=TRUE} argument.} 
-    e.g. \code{use}}
+  \item{\dots}{further arguments to \code{\link[stats]{var}} or
+    \code{\link[stats]{cov}}. Typically a \code{robust=TRUE} argument. 
+     e.g. \code{use}}
 }
+
 \value{
   a scalar number, informing of the degree of variation/covariation of one/two datasets.
 }

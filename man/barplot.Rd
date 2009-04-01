@@ -3,6 +3,7 @@
 \alias{barplot.rcomp}
 \alias{barplot.aplus}
 \alias{barplot.rplus}
+\alias{barplot.ccomp}
 \title{Bar charts of amounts}
 \description{
   Compositions and amounts dispalyed as bar plots. 
@@ -15,6 +16,8 @@ plotMissings=TRUE,missingColor="red",missingPortion=0.01)
 \method{barplot}{aplus}(height,...,legend.text=TRUE,beside=TRUE,total=NULL,
 plotMissings=TRUE,missingColor="red",missingPortion=0.01)
 \method{barplot}{rplus}(height,...,legend.text=TRUE,beside=TRUE,total=NULL,
+plotMissings=TRUE,missingColor="red",missingPortion=0.01)
+\method{barplot}{ccomp}(height,...,legend.text=TRUE,beside=FALSE,total=1,
 plotMissings=TRUE,missingColor="red",missingPortion=0.01)
           }
 \arguments{
@@ -33,7 +36,7 @@ plotMissings=TRUE,missingColor="red",missingPortion=0.01)
 }
 \value{A numeric vector (or matrix, when \code{beside = TRUE}) giving
   the coordinates of all the bar midpoints drawn, as in
-  \code{\link[graphics]{barchart}} }
+  \code{\link[graphics]{barplot}} }
 \details{
   These functions are essentially light-weighted wrappers for
   \code{\link[graphics]{barplot}}, just adding an adequate default

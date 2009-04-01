@@ -2,6 +2,7 @@
 \alias{idt}
 \alias{idt.default}
 \alias{idt.acomp}
+\alias{idt.ccomp}
 \alias{idt.rcomp}
 \alias{idt.aplus}
 \alias{idt.rplus}
@@ -10,6 +11,7 @@
 \alias{idtInv}
 \alias{idtInv.default}
 \alias{idtInv.acomp}
+\alias{idtInv.ccomp}
 \alias{idtInv.rcomp}
 \alias{idtInv.aplus}
 \alias{idtInv.rplus}
@@ -27,6 +29,7 @@
           \method{idt}{aplus}( x ,...)
           \method{idt}{rplus}( x ,...)
           \method{idt}{rmult}( x ,...)
+          \method{idt}{ccomp}( x ,...)
           \method{idt}{factor}( x ,...)
           idtInv(x,orig,...)
           \method{idtInv}{default}( x ,orig,...)
@@ -34,6 +37,7 @@
           \method{idtInv}{rcomp}( x ,orig,...)
           \method{idtInv}{aplus}( x ,orig,...)
           \method{idtInv}{rplus}( x ,orig,...)
+          \method{idtInv}{ccomp}( x ,orig,...)
           \method{idtInv}{rmult}( x ,orig,...)
 
           }

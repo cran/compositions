@@ -76,8 +76,8 @@
   singular. They can be transformed to the correponding nonsingular
   variances of ilr or ipt-space by \code{\link{clrvar2ilr}}.
 
-  In R versions older than v2.0.0, \code{\link[base]{var}} and
-  \code{\link[base]{cov}} were defined in package ``base'' instead of in ``stats''.
+  In R versions older than v2.0.0, \code{\link[stats]{var}} and
+  \code{\link[stats]{cov}} were defined in package ``base'' instead of in ``stats''.
   This might produce some misfunction.
 }
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}

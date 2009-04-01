@@ -39,7 +39,7 @@
 \details{
 The correlation matrix does not make much sense for compositions.
 
-  In R versions older than v2.0.0, \code{\link[base]{cor}} was defined
+  In R versions older than v2.0.0, \code{\link[stats]{cor}} was defined
   in package ``base'' instead of in ``stats''.
   This might produce some misfunction.
 }

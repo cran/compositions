@@ -1,6 +1,7 @@
 \name{plot.acomp}
 \alias{plot.acomp}
 \alias{plot.rcomp}
+\alias{plot.ccomp}
 \title{Ternary diagrams}
 \description{
   Displaying compositions in ternary diagrams
@@ -24,6 +25,7 @@
           mp=~simpleMissingSubplot(c(0,1,0.95,1),
                                    missingInfo,c("NM","TM",cn)),
           robust=getOption("robust"))
+ \method{plot}{ccomp}(x,...)
           }
 \arguments{
   \item{x}{a dataset of a compositional class}
@@ -130,6 +132,7 @@
   Note that these \code{\link{isoPortionLines}} remain straight under an 
   arbitrary perturbation. 
   \cr
+  ccomp ternary diagrams are always jittered to avoid overplotting.
 } \references{
     Aitchison, J. (1986) \emph{The Statistical Analysis of Compositional
       Data} Monographs on Statistics and Applied Probability. Chapman &

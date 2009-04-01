@@ -4,6 +4,7 @@
 \alias{rnorm.aplus}
 \alias{rnorm.rplus}
 \alias{rnorm.rmult}
+\alias{rnorm.ccomp}
 \alias{dnorm.acomp}
 \alias{dnorm.aplus}
 \alias{dnorm.rmult}
@@ -18,6 +19,7 @@ rnorm.rcomp(n,mean,var)
 rnorm.aplus(n,mean,var)
 rnorm.rplus(n,mean,var)
 rnorm.rmult(n,mean,var)
+rnorm.ccomp(n,mean,var,lambda)
 dnorm.acomp(x,mean,var)
 dnorm.aplus(x,mean,var)
 dnorm.rmult(x,mean,var)
@@ -26,6 +28,7 @@ dnorm.rmult(x,mean,var)
   \item{n}{number of datasets to be simulated}
   \item{mean}{The mean of the dataset to be simulated}
   \item{var}{The variance covariance matrix}
+  \item{lambda}{The expected total count}
   \item{x}{vectors in the sampling space}
 }
 \value{
@@ -59,7 +62,9 @@ dnorm.rmult(x,mean,var)
   measure. In the other cases this is not possible since the resulting
   distributions are not absolutly continues with respect to such a
   measure due to the truncation. 
-
+  \cr
+  For count compositions \code{ccomp} a rnorm.acomp is realized and used
+  as a parameter to a Poisson distribution (see \code{\link{rpois.ccomp}}).
 }
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{

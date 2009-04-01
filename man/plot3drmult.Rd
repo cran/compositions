@@ -37,7 +37,7 @@
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 
 \seealso{
-  \code{\link[rgl]{points3D}},
+  \code{\link[rgl]{points3d}},
   \code{\link[graphics]{plot}}, \code{\link{plot3D.rmult}},
   
   \code{\link{plot3D.acomp}},\code{\link{plot3D.rcomp}},,

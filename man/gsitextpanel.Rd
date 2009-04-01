@@ -11,7 +11,7 @@ gsi.textpanel(x,y,lab,\dots)
   \item{x}{discarded}
   \item{y}{discarded}
   \item{lab}{text to be plotted to the middle of the panel}
-  \item{\dots}{further graphical parameters passed to \code{\link[base]{text}}}
+  \item{\dots}{further graphical parameters passed to \code{\link[graphics]{text}}}
 }
 \details{
   The function is used against log-scale problems in pairs

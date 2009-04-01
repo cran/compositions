@@ -4,6 +4,7 @@
 \alias{groupparts.rcomp}
 \alias{groupparts.aplus}
 \alias{groupparts.rplus}
+\alias{groupparts.ccomp}
 \title{Group amounts of parts}
 \description{
   Groups parts by amalgamation or balancing of their amounts or proportions.
@@ -14,6 +15,7 @@ groupparts(x,\dots)
 \method{groupparts}{rcomp}(x,\dots,groups=list(...))
 \method{groupparts}{aplus}(x,\dots,groups=list(...))
 \method{groupparts}{rplus}(x,\dots,groups=list(...))
+\method{groupparts}{ccomp}(x,\dots,groups=list(...))
           }
 \arguments{
   \item{x}{an amount/compositional dataset}

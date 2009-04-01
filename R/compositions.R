@@ -1,6 +1,10 @@
 # (C) 2005/2008 by Gerald van den Boogaart, Greifswald
 # License: GPL version 2 or newer
 
+
+gsiInt <- function(x,n=NULL) {if(!is.null(n))stopifnot(length(x)==n);as.integer(x)}
+gsiDouble <- function(x,n=NULL) {if(!is.null(n))stopifnot(length(x)==n);as.numeric(x)}
+
 gsi.plain <- function(x) {
   if( is.data.frame(x) )
     unclass(data.matrix(x))
@@ -55,8 +59,9 @@ names.rcomp <- names.acomp
 names.aplus <- names.acomp
 names.rplus <- names.acomp
 names.rmult <- names.acomp
+names.ccomp <- names.acomp
 
-"names<-.acomp" <- "names<-.rcomp" <- "names<-.aplus" <- "names<-.rplus" <- "names<-.rmult" <-
+"names<-.acomp" <- "names<-.rcomp" <- "names<-.aplus" <- "names<-.rplus" <- "names<-.rmult" <- "names<-.ccomp" <-
   function(x,value) {
     if(is.matrix(x)) {
       colnames(x) <- value
@@ -173,6 +178,61 @@ groupparts.aplus <- function(x,...,groups=list(...)) {
   aplus(gsi.recodeC2M(erg,na=SZvalue,nan=MNARvalue,inf=MARvalue))
 }
 
+groupparts.acomp <- function(x,...,groups=list(...)) {
+                                        # BDL: BDL, NA: NA, 0: 0
+  x <- rmult(gsi.recodeM2C(x,clo(x),BDL=NaN,SZ=NA,MAR=Inf,MNAR=NaN))
+  #SZ <- is.SZ(x)               # keep regardless of the rest NA
+  #MNAR <- is.MNAR(x)|is.BDL(x) # keep if no SZ               NaN
+  #MAR  <- is.MAR(x)            # keep if no SZ or MNAR are in the way Inf
+  usedparts <- unique(unlist(lapply(groups,function(i) {
+    if( is.character(i) ) {
+      parts <- match(i,names(x))
+      if( any(is.na(parts)))
+        stop("Unknown part",i[is.na(parts)])
+      parts
+    } else i
+  })))
+  otherparts <- (1:gsi.getD(x))[-usedparts]
+  if( length(otherparts) >0 ) {
+    names(otherparts) <- names(x)[otherparts]
+    groups <- c(groups,otherparts)
+  }
+  erg <- sapply(groups,function(idx) {
+    ss <- aplus(x,idx)
+    if( is.matrix(ss) )
+      gsi.geometricmeanRow(ss)
+    else
+      gsi.geometricmean(ss)
+  })
+  acomp(gsi.recodeC2M(erg,na=SZvalue,nan=MNARvalue,inf=MARvalue))
+  
+#  SZ   <- is.na(x)&!is.na(x)   # keep regardless of the rest NA
+#  MNAR <- is.nan(x)            # keep if no SZ               NaN
+#  MAR  <- !is.finite(x)&!is.na(x) # keep if no SZ or MNAR are in the way Inf
+}
+
+groupparts.ccomp <- function(x,...,groups=list(...)) {
+  x <- rmult(x)
+  usedparts <- unique(unlist(lapply(groups,function(i) {
+    if( is.character(i) ) {
+      parts <- match(i,names(x))
+      if( any(is.na(parts)))
+        stop("Unknown part",i[is.na(parts)])
+      parts
+    } else i
+  })))
+  otherparts <- (1:gsi.getD(x))[-usedparts]
+  if( length(otherparts) >0 ) {
+    names(otherparts) <- names(x)[otherparts]
+    groups <- c(groups,otherparts)
+  }
+  erg <- sapply(groups,function(idx) {
+    totals(ccomp(x,idx))
+  })
+  ccomp(erg)
+}
+
+
 # groupparts(x,G1=c("Cd","S"),G2=c("Co","Ni"),G3=c("As","F"))
 
 clo <- function(X,parts=1:NCOL(oneOrDataset(X)),total=1,
@@ -250,7 +310,8 @@ clo <- function(X,parts=1:NCOL(oneOrDataset(X)),total=1,
 
 
 acomp <- function(X,parts=1:NCOL(oneOrDataset(X)),total=1,warn.na=FALSE,detectionlimit=NULL,BDL=NULL,MAR=NULL,MNAR=NULL,SZ=NULL) {
-
+  if( is.ccomp(X) )
+    X <- unclass(X)+0.5
   X <-  structure(clo(X,parts,total),class="acomp")
   if( any(is.NMV(X)&X<0)) 
     warning("Composition has negative values")
@@ -264,6 +325,8 @@ acomp <- function(X,parts=1:NCOL(oneOrDataset(X)),total=1,warn.na=FALSE,detectio
   }
   X
 }
+
+
 
 rcomp <- function(X,parts=1:NCOL(oneOrDataset(X)),total=1,warn.na=FALSE,detectionlimit=NULL,BDL=NULL,MAR=NULL,MNAR=NULL,SZ=NULL) {
   X <-  structure(clo(X,parts,total,detectionlimit=detectionlimit,BDL=BDL,MAR=MAR,MNAR=MNAR,SZ=SZ),class="rcomp")
@@ -280,6 +343,8 @@ rcomp <- function(X,parts=1:NCOL(oneOrDataset(X)),total=1,warn.na=FALSE,detectio
 
 
 aplus <- function(X,parts=1:NCOL(oneOrDataset(X)),total=NA,warn.na=FALSE,detectionlimit=NULL,BDL=NULL,MAR=NULL,MNAR=NULL,SZ=NULL) {
+  if( is.ccomp(X) )
+    X <- unclass(X)+0.5
   X <- gsi.simshape(clo(X,parts,total,detectionlimit=detectionlimit,BDL=BDL,MAR=MAR,MNAR=MNAR,SZ=SZ),X)
   if( warn.na ) {
     if( any(is.SZ(X))) 
@@ -306,6 +371,21 @@ rplus <- function(X,parts=1:NCOL(oneOrDataset(X)),total=NA,warn.na=FALSE,detecti
   class(X) <-"rplus"
   X
 }
+
+ccomp <- function(X,parts=1:NCOL(oneOrDataset(X)),total=NA,warn.na=FALSE,detectionlimit=NULL,BDL=NULL,MAR=NULL,MNAR=NULL,SZ=NULL) {
+  X <- gsi.simshape(clo(X,parts,total,detectionlimit=detectionlimit,BDL=BDL,MAR=MAR,MNAR=MNAR,SZ=SZ),X)
+  if( warn.na ) {
+    if( any(na.omit(c(X)==0)) )
+      warning("ccomp has structural zeros")
+    if( any(is.na(c(X)) & ! is.nan(c(X))))
+      warning("ccomp has missings")
+    if( any(is.nan(c(X))))
+      warning("ccomp has values below detection limit")
+  }
+  class(X) <-"ccomp"
+  X
+}
+
 
 rmult <- function(X,parts=1:NCOL(oneOrDataset(X)),
                   orig=attr(X,"orig"),missingProjector=attr(X,"missingProjector")) {
@@ -492,6 +572,7 @@ totals.acomp <- function(x,...,missing.ok=TRUE) {
 totals.aplus <- totals.acomp
 totals.rcomp <- totals.acomp
 totals.rplus <- totals.acomp
+totals.ccomp <- totals.acomp
 
 gsi.svdsolve <- function(a,b,...,cond=1E-10) {
   s <- svd(a,...)
@@ -500,15 +581,25 @@ gsi.svdsolve <- function(a,b,...,cond=1E-10) {
   
 }
 
-  
+gsi.svdinverse <- function(a,...,cond=1E-10) {
+  s <- svd(a,...)
+  lambda1 <- s$d[1] 
+  s$v %*% (gsi.diagGenerate(ifelse(s$d<lambda1*cond,0,1/s$d)) %*% t(s$u))
+}
+
+
 gsi.csum <- function(x) {c(rep(1,nrow(x)) %*% ifelse(is.finite(x),x,0))}
 gsi.rsum <- function(x) {c(ifelse(is.finite(x),x,0)%*%rep(1,ncol(x))) }
 
 
 mean.aplus<- mean.rplus <- mean.rcomp <- mean.acomp <- function( x, ... ,robust=getOption("robust")) {
-  cdtInv(mean(cdt(x),...,robust=robust),x)
+  idtInv(mean(idt(x),...,robust=robust),x)
 }
- 
+
+mean.ccomp <- function( x, ... ,robust=getOption("robust")) {
+  ccomp(c(rep(1,nrow(x))%*% unclass(x)))
+}
+
 #mean.acomp <- function( x, ... ) {
 #  if( has.missings(x) ) 
 #    clrInv(gsi.svdsolve(sumMissingProjector(x),gsi.csum(gsi.cleanR(clr(x)))))
@@ -599,8 +690,6 @@ ilrvar2clr <- function( varz , V=ilrBase(D=ncol(varz)+1),x=NULL ) {
 var         <- function(x,...) UseMethod("var",x)
 var.default <- stats::var
 formals(var.default) <- c(formals(var.default),alist(...= ))
-
-
 
 var.acomp <- function(x,y=NULL,...,
                       robust=getOption("robust"), use="all.obs",
@@ -1443,6 +1532,7 @@ is.rplus <- function(x) inherits(x,"rplus")
    
 is.rmult <- function(x) inherits(x,"rmult")
 
+is.ccomp <- function(x) inherits(x,"ccomp")
 
 perturbe <- function( x,y ) {
   acomp(gsi.mul(x,y))
@@ -2203,7 +2293,8 @@ iitInv <- function(z,...) {
 idt         <- function(x,...) UseMethod("idt",x)
 idt.default <- function(x,...) x
 idt.acomp   <- function(x,...) ilr(x,...) 
-idt.rcomp   <- function(x,...) ipt(x,...) 
+idt.rcomp   <- function(x,...) ipt(x,...)
+idt.ccomp   <- iit
 idt.aplus   <- ilt 
 idt.rplus   <- iit 
 idt.rmult   <- function(x,...) x
@@ -2213,7 +2304,8 @@ idt.factor  <- function(x,...) rmult(clr2ilr(cdt(x)))
 cdt         <- function(x,...) UseMethod("cdt",x)
 cdt.default <- function(x,...) x
 cdt.acomp   <- clr 
-cdt.rcomp   <- cpt 
+cdt.rcomp   <- cpt
+cdt.ccomp   <- iit
 cdt.aplus   <- ilt 
 cdt.rplus   <- iit 
 cdt.rmult   <- function(x,...) x
@@ -2228,6 +2320,7 @@ cdtInv <- function(x,orig,...) UseMethod("cdtInv",orig)
 cdtInv.default <- function(x,orig,...) x
 cdtInv.acomp   <- function(x,orig,...) clrInv(x,...,orig=orig)
 cdtInv.rcomp   <- function(x,orig,...) cptInv(x,...,orig=orig)
+cdtInv.ccomp   <- function(x,orig,...) iitInv(x,...,orig=orig)
 cdtInv.aplus   <- function(x,orig,...) iltInv(x,...,orig=orig)
 cdtInv.rplus   <- function(x,orig,...) iitInv(x,...,orig=orig)
 cdtInv.rmult   <- function(x,orig,...) x
@@ -2236,6 +2329,7 @@ idtInv <- function(x,orig,...) UseMethod("idtInv",orig)
 idtInv.default <- function(x,orig,...) x
 idtInv.acomp   <- function(x,orig,...) ilrInv(x,...,orig=orig)
 idtInv.rcomp   <- function(x,orig,...) iptInv(x,...,orig=orig)
+idtInv.ccomp   <- function(x,orig,...) iitInv(x,...,orig=orig)
 idtInv.aplus   <- function(x,orig,...) iltInv(x,...,orig=orig)
 idtInv.rplus   <- function(x,orig,...) iitInv(x,...,orig=orig)
 idtInv.rmult   <- function(x,orig,...) x
@@ -3208,6 +3302,13 @@ plot.acomp <- function(x,...,labels=names(x),aspanel=FALSE,id=FALSE,idlabs=NULL,
      replot(plot=match.call(),add=add)
    return(invisible(replot(plot=FALSE)))
 }
+
+plot.ccomp <- function(x,...) {
+  x<-unclass(x)
+  x<-rcomp(structure(abs(x+runif(length(x),-0.3,0.3)),dim=dim(x)))
+  plot(x,...)
+}
+
 
 # modified by Raimon in May 2008
 # more modifications by Gerald
@@ -4858,7 +4959,38 @@ rDirichlet.rcomp <- function(n,alpha) {
   rcomp(sapply(alpha,rgamma,n=n))
 }
 
+rpois.ccomp <- function(n,p,lambda) {
+  if( missing(p) ) {
+    L <- lambda
+    if( missing(n) )
+      n <- nrow(rplus(lambda))
+  } else {
+    L <- rplus(rcomp(p))*lambda
+    if( missing(n) )
+      n <- max(nrow(p),length(lambda))
+  }
+  if( length(dim(L)) == 2 ) 
+    L <- L[ ((1:n)-1) %% nrow(L) +1,]
+  else
+    L <- t(structure(rep(L,n),dim=c(length(L),n)))
+  ccomp(structure(rpois(length(L),c(L)),dim=dim(L)))
+}
 
+rmultinom.ccomp <- function(n,p,N) {
+  if( missing(n) )
+    n <- max(nrow(p),length(N))
+  erg <- matrix(0,ncol=gsi.getD(p),nrow=n)
+  if( length(dim(p))> 1) {
+    for(i in 1:n) {
+      erg[i,]<-rmultinom(1,N[(i-1)%%length(N)+1],p[i,])
+    }
+  } else {
+    for(i in 1:n) {
+      erg[i,]<-rmultinom(1,N[(i-1)%%length(N)+1],p)
+    }
+  }
+  ccomp(erg)
+}
 
 runif.acomp <- function(n,D) rDirichlet.acomp(n,rep(1,D))
 runif.rcomp <- function(n,D) rDirichlet.rcomp(n,rep(1,D))
@@ -4891,6 +5023,9 @@ dnorm.rmult <- function(x,mean,var) {
   exp(-u/2)/sqrt(2^D*pi^D*det(var))
 }
 
+
+
+
 #rnorm.acomp <- function(n,mean,var) {
 #  D <- NCOL(oneOrDataset(mean))
 #  perturbe(ilrInv(matrix(rnorm(n*(D-1)),ncol=D-1) %*%
@@ -4906,6 +5041,8 @@ rnorm.acomp <-function (n, mean, var){
 }
 
 
+
+
 dnorm.acomp <- function(x,mean,var) {
   x <- acomp(x)
   mean <- acomp(mean)
@@ -4919,6 +5056,10 @@ dnorm.acomp <- function(x,mean,var) {
 }
 
 
+rnorm.ccomp <- function(n,mean,var,lambda) {
+  rpois.ccomp(n,rnorm.acomp(n,mean=mean,var=var),lambda)
+
+}
 
 rlnorm.rplus <- function(n,meanlog,varlog) {
   D <- NCOL(oneOrDataset(meanlog))
@@ -5192,6 +5333,7 @@ barplot.acomp <- function(height,...,legend.text=TRUE,beside=FALSE,total=1,plotM
   invisible(erg)
 }
 barplot.rcomp <- barplot.acomp
+barplot.ccomp <- barplot.acomp
 #barplot.rcomp <- function(height,...,legend.text=TRUE,beside=FALSE,total=1) {
 #  X <- height
 #  if( gsi.isSingleRow(X) )
@@ -5232,6 +5374,7 @@ split.rcomp <- split.acomp
 split.aplus <- split.acomp
 split.rplus <- split.acomp
 split.rmult <- split.acomp
+split.ccomp <- split.acomp
 
 as.data.frame.acomp <- function(x,...) as.data.frame.matrix(unclass(x))
 as.data.frame.rcomp <- function(x,...) as.data.frame.matrix(unclass(x))
@@ -6001,3 +6144,183 @@ print.rplus<- print.rcomp
 #     return(acomp(oneOrDataset(x)[...]))
 #  acomp(oneOrDataset(x)[...])
 #}
+
+AitchisonDistributionIntegrals <- function(
+         theta=alpha+sigma %*% clr(mu),
+         beta=-1/2*gsi.svdinverse(sigma),
+         alpha=mean(theta),
+         mu=clrInv(sigma%*%(theta-alpha)),
+         sigma=-1/2*gsi.svdinverse(beta),
+         grid=30,
+         mode=3) {
+if( !xor( missing(theta) , (missing(mu) || missing(alpha)) ) )
+  stop("Specify either theta or mu and alpha")
+if( !xor( missing(beta) , missing(sigma) ) )
+  stop("Specify either beta or sigma")
+D <- length(theta)
+if( nrow(beta) == D-1 )
+  beta <- ilrvar2clr(beta)
+if( any(abs(beta-t(beta))>1E-10) ) {
+  warning("rAitchison: beta was not symmetric 1")
+  print(beta)
+}
+gsiInt(dim(beta),2)
+stopifnot( length(dim(beta))==2,ncol(beta)==D,nrow(beta)==D)
+erg <- .C(gsiAitchisonDistributionIntegral,
+          D   =gsiInt(D,1),
+          grid=gsiInt(grid,1),
+          mode=gsiInt(mode,1),
+          theta=gsiDouble(theta,D),
+          beta =gsiDouble(beta,D*D),
+          expKappa =numeric(1),
+          loggxMean=numeric(1),
+          clrMean  =numeric(D),
+          clrVar   =numeric(D*D)
+          )
+erg$beta <- matrix(erg$beta,nr=D)
+erg$SqIntegral <- matrix(erg$clrVar,nr=D,nc=D)
+erg$alpha=alpha
+erg$mu=mu
+erg$sigma=sigma
+erg$clrSqExpectation <- erg$clrVar
+  return(erg[c("theta","beta","alpha","mu","sigma",if( mode>=0 ) c("expKappa","loggxMean") else c(),if(mode >= 1) "clrMean" else c(),if(mode==2) "clrSqExpectation" else if(mode>=3) "clrVar" else c())])
+}
+
+
+
+dAitchison <- function(x,theta=alpha+sigma %*% clr(mu),beta=-1/2*gsi.svdinverse(sigma),alpha=mean(theta),mu=clrInv(sigma%*%(theta-alpha)),sigma=-1/2*gsi.svdinverse(beta),grid=30,
+realdensity=FALSE,expKappa=AitchisonDistributionIntegrals(theta,beta,grid=grid,mode=1)$expKappa) {
+if( !xor( missing(theta) , (missing(mu) || missing(alpha)) ) )
+  stop("Specify either theta or mu and alpha")
+if( !xor( missing(beta) , missing(sigma) ) )
+  stop("Specify either beta or sigma")
+D <- length(theta)
+if( any(abs(beta-t(beta))>1E-10) ) {
+  warning("rAitchison: beta was not symmetric 1")
+  print(beta)
+}
+if( nrow(beta) == D-1 )
+  beta <- ilrvar2clr(beta)
+if( any(abs(beta-t(beta))>1E-10) ) {
+  warning("rAtichison: beta was not symmetric 2")
+  print(beta)
+}
+stopifnot(gsi.getD(x)==D)
+clrx <- clr(x)
+cf <- if(realdensity) 1 else 0
+exp((clrx%*%beta)%*%clrx+ult(x)%*%rmult(theta-cf))/expKappa
+}
+
+
+rAitchison <- function(n,theta=alpha+sigma %*% clr(mu),beta=-1/2*gsi.svdinverse(sigma),alpha=mean(theta),mu=clrInv(sigma%*%(theta-alpha)),sigma=-1/2*gsi.svdinverse(beta)) {
+if( !xor(missing(theta),missing(mu) || missing(alpha)) )
+  stop("Specify either theta or mu and alpha")
+if( !xor(missing(beta),missing(sigma)) )
+  stop("Specify either beta or sigma")
+if( !missing(theta) ) nam <- names(theta) else if( !missing(mu) ) nam<- names(mu)
+D <- length(theta)
+if( nrow(sigma) == D-1 )
+  sigma <- ilrvar2clr(sigma)
+# Prepare Sigma
+if( any(abs(sigma-t(sigma))>1E-10) )
+  warning("rAtichison: sigma was not symmetric")
+SVD <- svd(sigma)
+if( any(SVD$d < -1E-8 ) )
+  warning("rAitchison currently only works correctly with positive semidefinit sigmas. Results wrong!!!")
+sqrtSigma <- with(SVD,u%*% gsi.diagGenerate(sqrt(d)) %*% t(v))
+# Find the best fitting normal
+bestfit <- gsiFindSolutionWithDerivative(
+                           function(alpha) exp(alpha)+sigma%*%alpha-theta,
+                           function(alpha) diag(exp(alpha))+sigma,
+                           c(theta),
+                           iter=20)
+if( attr(bestfit,"status")!="ok" ) {
+  warning("Problems in finding optimal simulation algorith, using fallback")
+}
+# Compute best fitter
+mu <- bestfit - sum(bestfit)
+SimTheta <- exp(bestfit)
+stopifnot(abs(sum(SimTheta)-sum(theta))<1E-6)
+# Compute with rejection sampling
+erg <- .C(gsirandomClr1Aitchison,
+   D=gsiInt(D,1),
+   n=gsiInt(n,1),
+   erg=numeric(D*n),
+   theta=gsiDouble(theta,D),
+   mu=gsiDouble(mu,D),
+   sqrtSigma=gsiDouble(sqrtSigma,D*D)
+   )
+# Format result from CLR
+res <- clrInv(matrix(erg$erg,nr=n))
+names(res) <- nam
+res
+}
+
+
+gsiFindSolutionWithDerivative <- function(f,Der,start,iter=30) {
+  nstart <- start
+  try({
+    it <- 0
+    for( i in 1:iter) {
+      y  <- f(c(nstart))
+      ny = norm(c(y))
+      if( i == 1) firstnorm = ny
+      Div  <- Der(c(nstart))
+      nstart <- nstart-solve(Div,y)
+      it <- i
+      if( ny <1E-14 && ny/firstnorm<1E-6 )
+        break
+    }
+    return(structure(nstart,value=y,status=if(ny/firstnorm<1E-6 || ny <1E-15) "ok" else "not converged",iterations=it))
+  },silent=FALSE)
+  return(structure(start,value=f(c(start)),status="failed",iterations=it))
+}
+
+R2 <- function(object,...) UseMethod("R2",object)
+R2.lm <- function(object,...,adjust=TRUE,ref=0) {
+  if( !is.numeric(ref))
+    ref<-Recall(ref,...,adjust=adjust)
+  pr <- predict(object)
+  re <- resid(object)
+  n  <- nrow(re)
+  y  <- pr+re
+  erg <- if( adjust ) {
+    dfres<-object$df.residual
+    1-(mvar(re)*(n-1)/dfres)/mvar(y)
+  } else
+    1-mvar(re)/mvar(y)
+  (erg-ref)/(1-ref)
+}
+R2.default <- function(object,...,ref=0) {
+  if( !is.numeric(ref))
+    ref<-Recall(ref,...)
+  pr <- predict(object)
+  re <- resid(object)
+  n  <- nrow(re)
+  y  <- pr+re
+  erg <- 1-mvar(re)/mvar(y)
+  (erg-ref)/(1-ref)
+}
+var.mlm <- function(x,...) {r<-unclass(resid(x));(t(r)%*%r)/x$df.residual} 
+var.lm <- function(x,...) {r<-unclass(resid(x));sum(r^2)/x$df.residual} 
+
+
+vcovAcomp <- function(object,...){
+  co <- coef(object)
+  aperm(structure(vcov(object,...),
+        dim=c(dim(co),dim(co)),
+        dimnames=c(dimnames(co),dimnames(co))),
+        c(2,4,1,3))
+}
+qHotellingsTsq <- function(p,n,m){
+  qf(p,n,m-n+1)*(n*m)/(m-n+1)
+}
+pHotellingsTsq <- function(q,n,m){
+  qf(q/((n*m)/(m-n+1)),n,m-n+1)
+}
+
+
+ConfRadius <- function(model,prob=1-alpha,alpha) {
+  sqrt(qHotellingsTsq(prob,ncol(coef(model)),model$df.residual))
+}
+

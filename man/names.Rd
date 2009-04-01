@@ -4,7 +4,9 @@
 \alias{names.rcomp}
 \alias{names.rplus}
 \alias{names.rmult}
+\alias{names.ccomp}
 \alias{names<-.acomp}
+\alias{names<-.ccomp}
 \alias{names<-.aplus}
 \alias{names<-.rcomp}
 \alias{names<-.rplus}
@@ -20,11 +22,13 @@
 \method{names}{aplus}(x)
 \method{names}{rplus}(x)
 \method{names}{rmult}(x)
+\method{names}{ccomp}(x)
 \method{names}{acomp}(x) <- value
 \method{names}{rcomp}(x) <- value
 \method{names}{aplus}(x) <- value
 \method{names}{rplus}(x) <- value
 \method{names}{rmult}(x) <- value
+\method{names}{ccomp}(x) <- value
 
           }
 \arguments{
