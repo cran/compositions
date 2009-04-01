@@ -6,8 +6,8 @@
   Computes the unbiased estimate for the variance of the residuals of a model.
 }
 \usage{
-var.mlm(x,...) 
-var.lm(x,...) 
+\method{var}{mlm}(x,...) 
+\method{var}{lm}(x,...) 
           }
 \arguments{
   \item{x}{a linear model object}

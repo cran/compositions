@@ -212,6 +212,8 @@ gsi.varwithlosts <- function(x,giveCenter=FALSE){
 
 
 gsi.recodeM2C <- function(x,y=x,BDL,SZ,MAR,MNAR,NMV) {
+  if( !is.numeric(x) )x<-gsi.plain(x)
+  if( !is.numeric(y) ) y<- gsi.plain(y)
   if( !missing(BDL) ) y[is.BDL(x)]<-BDL
   if( !missing(SZ)  ) y[is.SZ(x)] <-SZ
   if( !missing(MAR) ) y[is.MAR(x)]<-MAR
@@ -232,6 +234,8 @@ gsi.recodeM2C <- function(x,y=x,BDL,SZ,MAR,MNAR,NMV) {
 
 
 gsi.recodeC2M <- function(x,y=x,na,nan,ninf,inf,neg,zero,pos) {
+  if( !is.numeric(x) ) x<-gsi.plain(x)
+  if( !is.numeric(y) ) y<- gsi.plain(y)
   if( !missing(na)  ) y[is.na(x)&!is.nan(x)]<-na
   if( !missing(nan) ) y[is.nan(x)]          <-nan
   if( !missing(ninf)) y[is.infinite(x)&x<0] <-ninf
