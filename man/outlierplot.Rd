@@ -8,7 +8,7 @@
 \usage{
 outlierplot(X,...)
 \method{outlierplot}{acomp}(X,colcode=colorsForOutliers1,pchcode=pchForOutliers1,
-  type=c("scatter","biplot","dendrogram","ecdf","portion","nout"),
+  type=c("scatter","biplot","dendrogram","ecdf","portion","nout","distdist"),
   legend.position,pch=19,...,clusterMethod="ward",
   myCls=classifier(X,alpha=alpha,type=class.type,corrected=corrected),
   classifier=OutlierClassifier1,
@@ -159,6 +159,13 @@ into the outlier
       \cr
       ??? MORE DOCUMENTATION NEEDED ???
     }
+    \item{\code{type="distdist"}}{
+      Plots a scatterplot of the the classical and robust Mahalanobis
+      distance with the given classification for colors and plot
+      symbols. Furthermore it plots a horizontal line giving the 0.95-Quantil
+      of the distribution of the maximum robust Mahalanobis distance of
+      normally distributed dataset.
+    }
   }
 }
 \note{
@@ -202,7 +209,10 @@ for( i in 1:length(datas) )
 par(mfrow=c(2,3),pch=19,mar=c(3,2,2,1))  
 for( i in 1:length(datas) ) 
   outlierplot(datas[[i]],type="nout",main=names(datas)[i])
+for( i in 1:length(datas) ) 
+  outlierplot(datas[[i]],type="distdist",main=names(datas)[i])
 par(opar)
+
 }
 }
 \keyword{multivariate}

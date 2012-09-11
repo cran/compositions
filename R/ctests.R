@@ -210,7 +210,7 @@ acompGOF.test.formula <- function(formula, data,...,method="etest") {
     response <- attr(attr(mf, "terms"), "response")
     g <- factor(mf[[-response]])
     DATA <- split(mf[[response]], g)
-    names(DATA) <- codes(g)
+    names(DATA) <- levels(g)
     y <- do.call("acompGOF.test", c(DATA, list(...,method=method)))
     y$data.name <- DNAME
     y

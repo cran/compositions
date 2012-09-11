@@ -836,7 +836,7 @@ outlierplot <- function(X,...) UseMethod("outlierplot",X)
 ## several diagnostic plots and their auxiliary functions
 ## general function to obtain exploratory plots on the outlier character of the sample
 outlierplot.acomp <- function(X,colcode=colorsForOutliers1,pchcode=pchForOutliers1,
-  type=c("scatter","biplot","dendrogram","ecdf","portion","nout"),
+  type=c("scatter","biplot","dendrogram","ecdf","portion","nout","distdist"),
   legend.position,pch=19,...,clusterMethod="ward",
   myCls=classifier(X,alpha=alpha,type=class.type,corrected=corrected),
   classifier=OutlierClassifier1,
@@ -989,6 +989,22 @@ outlierplot.acomp <- function(X,colcode=colorsForOutliers1,pchcode=pchForOutlier
     points(bnd$x,rep(0,length(bnd$x)),pch="|",col="red")
     #lines(bnd$x,bnd$por*max(bnd$nmin),col="gray40",type="s")
     erg <- bnd
+  }
+  if(what == "distdist" ) {
+    if( is.function(colcode) )
+      colcode <- colcode(myCls)
+    if( is.function(pchcode) ) {
+      pchcode <- pchcode(myCls)
+    }
+    if( length(pchcode) > 1 )
+      pch <- pchcode[as.integer(myCls)]
+   NormalMahalanobisDist <- MahalanobisDist(X,robust=FALSE)
+   RobustMahalanobisDist <- MahalanobisDist(X,robust=TRUE)
+   plot(NormalMahalanobisDist,RobustMahalanobisDist,
+        col=colcode[as.numeric(myCls)],pch=pch,...,main=main)
+   crit1<-qMaxMahalanobis(0.95,nrow(X),ncol(idt(X)),...,replicates=1000,robust=TRUE)
+   if(is.finite(crit1)) abline(h=crit1,lty=3)
+   erg<-invisible(list(call=cl,colcode=colcode,pchcode=pchcode,classes=myCls,NormalMahalanobisDist=NormalMahalanobisDist,RobustMahalanobisDist=RobustMahalanobisDist,crit=crit1))
   }
   if( !missing(Legend) ) {
     es <- substitute(Legend)

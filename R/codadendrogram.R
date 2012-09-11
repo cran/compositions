@@ -100,7 +100,7 @@ CoDaDendrogram = function (X, V = NULL, expr=NULL, mergetree = NULL, signary = N
         plot.window(xlim = xlim, ylim = ylim)
         plot(x = xlim, y = ylim, ann = FALSE, bty = "n", xaxt = "n",
             yaxt = yaxt, col = "white")
-        axis(side = 1, at = 1:ncol(X), lab = colnames(X)[Vo$order],
+        axis(side = 1, at = 1:ncol(X), labels = colnames(X)[Vo$order],
             las = 2, lty = 0)
 #        segments(x0 = nodes[ncol(V), 1], y0 = 0, x1 = nodes[ncol(V),
 #            2], y1 = 0, col = col.tree, lty = lty.tree, lwd = lwd.tree)

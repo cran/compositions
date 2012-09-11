@@ -254,14 +254,14 @@ vgram.nugget <- function( h, nugget = 1 ,...,tol=1E-8) {
   
 parametricPosdefMat <- function(p) {
   D = 0.5*(-1+sqrt(1+8*length(p))) # p=(D^2-D)/2+D 0=D^2+D-2p
-  mat <- matrix(0,nr=D,nc=D)
+  mat <- matrix(0,nrow=D,ncol=D)
   mat[row(mat)<=col(mat)]<-p
   t(mat) %*% mat
 }
 
 parametricPosdefClrMat <- function(p) {
   D = 0.5*(-1+sqrt(1+8*length(p))) # p=(D^2-D)/2+D 0=D^2+D-2p
-  mat <- matrix(0,nr=D,nc=D)
+  mat <- matrix(0,nrow=D,ncol=D)
   mat[row(mat)<=col(mat)]<-p
   ilrvar2clr(t(mat) %*% mat)
 }
@@ -468,8 +468,8 @@ compOKriging <- function(comp,X,Xnew,vg,err=FALSE) {
   n <- nrow(Y)
   nnew <- nrow(Xnew)
   D <- ncol(Y)
-  F <- matrix(1,nr=n)
-  f <- matrix(1,nr=nnew)
+  F <- matrix(1,nrow=n)
+  f <- matrix(1,nrow=nnew)
   hxx <- X[rep(1:n,n),,drop=FALSE]-X[rep(1:n,each=n),,drop=FALSE]
   hxy <- X[rep(1:n,nnew),,drop=FALSE]-Xnew[rep(1:nnew,each=n),,drop=FALSE]
   Gamma <- vg(hxx)
@@ -527,7 +527,7 @@ tryDebugger <- function (dump = last.dump)
         cat(paste(1:n, ": ", calls, sep = ""), sep = "\n")
         cat(gettext("\nEnter an environment number, or 0 to exit  "))
         repeat {
-            ind <- .Internal(menu(as.character(calls)))
+            ind <- menu(as.character(calls))
             if (ind <= n) 
                 break
         }

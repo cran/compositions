@@ -688,8 +688,7 @@ ilrvar2clr <- function( varz , V=ilrBase(D=ncol(varz)+1),x=NULL ) {
 
 
 var         <- function(x,...) UseMethod("var",x)
-var.default <- stats::var
-formals(var.default) <- c(formals(var.default),alist(...= ))
+var.default <- function (x, y = NULL, na.rm = FALSE, use,...) stats::var(x,y,na.rm,use)
 
 var.acomp <- function(x,y=NULL,...,
                       robust=getOption("robust"), use="all.obs",
@@ -816,8 +815,9 @@ var.rplus <- var.aplus
 var.rmult <- var.aplus
 
 cov         <- function(x,y=x,...) UseMethod("cov",x)
-cov.default <- stats::cov
-formals(cov.default) <- c(formals(cov.default),alist(...= ))
+cov.default <- function (x, y = NULL, use = "everything", method = c("pearson", 
+    "kendall", "spearman"),...) stats::cov(x,y,use,method)
+
 cov.acomp   <- var.acomp
 cov.rcomp <- var.rcomp
 cov.aplus <- var.aplus
@@ -825,8 +825,9 @@ cov.rplus <- var.rplus
 cov.rmult <- var.rmult
 
 cor <- function(x,y=NULL,...) UseMethod("cor",x)
-cor.default <- stats::cor
-formals(cor.default) <- c(formals(cor.default),alist(...= ))
+cor.default <- function (x, y = NULL, use = "everything", method = c("pearson", 
+    "kendall", "spearman"),...) stats::cor(x,y,use,method)
+
 
 
 
@@ -6177,8 +6178,8 @@ erg <- .C(gsiAitchisonDistributionIntegral,
           clrMean  =numeric(D),
           clrVar   =numeric(D*D)
           )
-erg$beta <- matrix(erg$beta,nr=D)
-erg$SqIntegral <- matrix(erg$clrVar,nr=D,nc=D)
+erg$beta <- matrix(erg$beta,nrow=D)
+erg$SqIntegral <- matrix(erg$clrVar,nrow=D,ncol=D)
 erg$alpha=alpha
 erg$mu=mu
 erg$sigma=sigma
@@ -6251,7 +6252,7 @@ erg <- .C(gsirandomClr1Aitchison,
    sqrtSigma=gsiDouble(sqrtSigma,D*D)
    )
 # Format result from CLR
-res <- clrInv(matrix(erg$erg,nr=n))
+res <- clrInv(matrix(erg$erg,nrow=n))
 names(res) <- nam
 res
 }
