@@ -8,7 +8,8 @@
 }
 \usage{
    missingSummary(x,..., vlabs = colnames(x), 
-                 mc=attr(x,"missingClassifier"), values=eval(formals(missingType)$values))
+                 mc=attr(x,"missingClassifier"), 
+                 values=eval(formals(missingType)$values))
    missingType(x,..., mc=attr(x,"missingClassifier"),
                  values=c("NMV", "BDT", "MAR", "MNAR", "SZ", "Err"))
 }
@@ -42,7 +43,7 @@
 \examples{
 data(SimulatedAmounts)
 x <- acomp(sa.lognormals)
-xnew <- simulateMissings(x,detectionlimit=0.05,MAR=0.05,MNAR=0.05,SZ=0.05)
+xnew <- simulateMissings(x,dl=0.05,MAR=0.05,MNAR=0.05,SZ=0.05)
 xnew
 missingSummary(xnew)
 }

@@ -1,6 +1,6 @@
 \name{gsigetBalStruct}
 \alias{gsi.getBalStruct}
-\title{An Auxiliary functions to compute user-defined ilr and ipt transforms.}
+\title{An auxiliary functions to compute user-defined ilr and ipt transforms.}
 \description{
   Parses the expressions for the balance functions.
 }
@@ -9,9 +9,9 @@ gsi.getBalStruct(descr,names,allowMinus=FALSE,allowOne=FALSE)
 }
 \arguments{
   \item{descr}{the expression}
-  \item{names}{character: the in the dataset}
-  \item{allowMinus}{ Wether to allow for \code{-} as a synonym for \code{/}}
-  \item{allowOne}{Wether to allow \code{1} as a variable name resembling
+  \item{names}{character: the variables in the dataset}
+  \item{allowMinus}{whether to allow for \code{-} as a synonym for \code{/}}
+  \item{allowOne}{whether to allow \code{1} as a variable name playing the role of a
   a constant.}
 }
 \value{

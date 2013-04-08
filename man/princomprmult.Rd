@@ -6,7 +6,9 @@
 }
 \usage{
 \method{princomp}{rmult}(x,cor=FALSE,scores=TRUE,
-                           covmat=var(rmult(x[subset,]),robust=robust,giveCenter=TRUE),center=attr(covmat,"center"),  subset = rep(TRUE, nrow(x)),...,robust=getOption("robust"))
+                   covmat=var(rmult(x[subset,]),robust=robust,giveCenter=TRUE),
+                   center=attr(covmat,"center"),  subset = rep(TRUE, nrow(x)),
+                   ..., robust=getOption("robust"))
 }
 \arguments{
   \item{x}{a rmult-dataset}

@@ -60,12 +60,17 @@ Tolosana-Delgado}
 }
 
 \references{
-  Boogaart, K.G. v.d., R. Tolosana-Delgado, M. Bren (2006) Concepts for handling of zeros and missing values in compositional data, in E. Pirard (ed.) (2006)Proceedings of the IAMG'2006 Annual Conference on "Quantitative Geology from multiple sources", September 2006, Liege, Belgium,, S07-01, 4pages, ISBN 978-2-9600644-0-7
+  Boogaart, K.G. v.d., R. Tolosana-Delgado, M. Bren (2006) Concepts for 
+  handling of zeros and missing values in compositional data, in: 
+  E. Pirard (ed.) (2006)Proceedings of the IAMG'2006 Annual Conference on 
+  "Quantitative Geology from multiple sources", September 2006, Liege, 
+  Belgium,, S07-01, 4pages, ISBN 978-2-9600644-0-7
 
 }
 \examples{
 data(SimulatedAmounts)
-mydata <- simulateMissings(sa.groups5,detectionlimit=0.01,knownlimit=TRUE,MAR=0.05,MNARprob=0.05,SZprob=0.05)
+mydata <- simulateMissings(sa.groups5,dl=0.01,knownlimit=TRUE,
+                     MAR=0.05,MNARprob=0.05,SZprob=0.05)
 mydata[1,1]<-BDLvalue
 print(aplus(mydata))
 print(aplus(mydata),digits=3)

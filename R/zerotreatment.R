@@ -92,7 +92,8 @@ plot.missingSummary <-function(x,...,main="Missings",legend.text=TRUE,
           col=col)
 }
 
-simulateMissings <- function(x,detectionlimit=NULL,knownlimit=FALSE,MARprob=0.0,MNARprob=0.0,mnarity=0.5,SZprob=0.0) {
+simulateMissings <- function(x, dl=NULL, knownlimit=FALSE, 
+                             MARprob=0.0, MNARprob=0.0, mnarity=0.5, SZprob=0.0) {
   if( is.data.frame(x) )
     x <- data.matrix(x)
   at <- attributes(x)
@@ -107,7 +108,7 @@ simulateMissings <- function(x,detectionlimit=NULL,knownlimit=FALSE,MARprob=0.0,
   w1 <- sqrt(1-mnarity)
   w2 <- sqrt(mnarity)
   MNAR <- pnorm(rnorm(n)*w1+normal(x)*w2) < MNARprob
-  x <- clo(x,detectionlimit=detectionlimit,total=NA)
+  x <- clo(x,detectionlimit=dl,total=NA)
   if( !knownlimit )
     x[is.BDL(x)]<-BDLvalue
   n <- length(x)
@@ -236,13 +237,13 @@ gsi.recodeM2C <- function(x,y=x,BDL,SZ,MAR,MNAR,NMV) {
 gsi.recodeC2M <- function(x,y=x,na,nan,ninf,inf,neg,zero,pos) {
   if( !is.numeric(x) ) x<-gsi.plain(x)
   if( !is.numeric(y) ) y<- gsi.plain(y)
-  if( !missing(na)  ) y[is.na(x)&!is.nan(x)]<-na
-  if( !missing(nan) ) y[is.nan(x)]          <-nan
-  if( !missing(ninf)) y[is.infinite(x)&x<0] <-ninf
-  if( !missing(inf) ) y[is.infinite(x)&x>0] <-inf
-  if( !missing(neg) ) y[is.finite(x)&x<0]   <-neg
-  if( !missing(zero)) y[is.finite(x)&x==0]  <-zero
-  if( !missing(pos))  y[is.finite(x)&x>0]   <-pos
+  if( !missing(na) && !is.null(na) ) y[is.na(x)&!is.nan(x)]<-na
+  if( !missing(nan)&& !is.null(nan) ) y[is.nan(x)]          <-nan
+  if( !missing(ninf)&& !is.null(ninf)) y[is.infinite(x)&x<0] <-ninf
+  if( !missing(inf)&& !is.null(inf) ) y[is.infinite(x)&x>0] <-inf
+  if( !missing(neg)&& !is.null(neg) ) y[is.finite(x)&x<0]   <-neg
+  if( !missing(zero)&& !is.null(zero)) y[is.finite(x)&x==0]  <-zero
+  if( !missing(pos)&& !is.null(pos))  y[is.finite(x)&x>0]   <-pos
   y
 }
 
@@ -392,5 +393,46 @@ sumMissingProjector.rmult <- function(x,has=is.finite(x),...) {
   canz <- rep(1,n) %*% has 
   erg <- diag(canz)
   erg
+}
+
+observeWithAdditiveError <- function(x, sigma=dl/dlf, dl=sigma*dlf, dlf=3,
+                                      keepObs=FALSE, digits=NA, obsScale=1,
+                                      class="acomp") {
+  if( missing(sigma) && missing(dl) )
+    stop("You must specify at least the error standard deviation sigma or the detection limit dl")
+  Yo <- x 
+  Y <- gsi.recodeM2C(oneOrDataset(x),BDL=0.0,SZ=0.0,MAR=0,MNAR=0)
+  if( !isTRUE(all.equal(dim(sigma),dim(Y))) ) {
+    sigma <- rep(1,nrow(Y)) %o% rep(sigma,length.out=ncol(Y)) 
+    stopifnot(all.equal(dim(sigma),dim(Y)))
+  }
+  if( !isTRUE(all.equal(dim(dl),dim(Y))) ) {
+    dl <- rep(1,nrow(Y)) %o% rep(dl,length.out=ncol(Y)) 
+    stopifnot(all.equal(dim(dl),dim(Y)))
+  }
+  if( !all(is.na(digits)) ) {
+    if( !isTRUE(all.equal(dim(digits),dim(Y)))) {
+      digits <- rep(1,nrow(Y)) %o% rep(digits,length.out=ncol(Y)) 
+      stopifnot(all.equal(dim(digits),dim(Y)))
+    }
+    if( !isTRUE(all.equal(dim(obsScale),dim(Y)))) {
+      obsScale <- rep(1,nrow(Y)) %o% rep(obsScale,length.out=ncol(Y)) 
+      stopifnot(all.equal(dim(obsScale),dim(Y)))
+    }
+  }
+  Z <- unclass(Y)+structure(rnorm(length(sigma),0,sigma),dim=dim(sigma))
+  if( ! all(is.na(digits)) ) {
+    Z <- round(Z/obsScale,digits)*obsScale
+  }
+  Zc <- ifelse(Z<dl,0,Z)
+  to <- totals(rplus(Zc))
+  Zc <- gsi.recodeM2C(Zc,
+                      Yo,BDL=BDLvalue,MAR=MARvalue,MNAR=MNARvalue,SZ=SZvalue)
+  switch(match.arg(class,c("acomp","aplus","rcomp","rplus")),
+         "acomp"=structure(Zc/to,class="acomp",detectionlimit=dl/to,sigma=sigma/to,obs=if(keepObs) Z/to),
+         "aplus"=structure(Zc,class="acomp",detectionlimit=dl,sigma=sigma,obs=if(keepObs) Z),
+         "rcomp"=structure(Zc/to,class="rcomp",detectionlimit=dl/to,sigma=sigma/to,obs=if(keepObs) Z/to),
+         "rplus"=structure(Zc,class="rplus",detectionlimit=dl,sigma=sigma,obs=if(keepObs) Z)
+         )
 }
 

@@ -5,9 +5,9 @@
   Displaying compositions in ternary diagrams
 }
 \usage{
-simpleMissingSubplot(loc,
-                            portions,labels=NULL,
-                            col=c("white","yellow","red","green","blue"),...,border="gray60",vertical=NULL,xpd=NA)
+simpleMissingSubplot(loc, portions, labels=NULL,
+          col=c("white","yellow","red","green","blue"), 
+          ..., border="gray60", vertical=NULL, xpd=NA)
 }
 \arguments{
   \item{loc}{a vector of the form c(x1,x2,y1,y2) giving the drawing
@@ -51,12 +51,13 @@ labels a further investigation using missingSummary should be used.
 \examples{
 data(SimulatedAmounts)
 plot(acomp(sa.missings))
-plot(acomp(sa.missings),mp=~simpleMissingSubplot(c(0,0.1,0.2,1),missingInfo[c(1,3:5,2)],
-c("Not Missing",paste("Missing Only:",cn),"Totally Missing"),
-col=c("gray","red","green","blue","darkgray"))
+plot(acomp(sa.missings),mp=~simpleMissingSubplot(c(0,0.1,0.2,1),
+   missingInfo[c(1,3:5,2)], 
+   c("Not Missing",paste("Missing Only:",cn),"Totally Missing"),
+   col=c("gray","red","green","blue","darkgray"))
 )
 ms <- missingSummary(sa.missings)
 for( i in 1:3 )
-  simpleMissingSubplot(c(0.9+0.03*(i-1),0.9+0.03*i,0.2,1),ms[i,])
+  simpleMissingSubplot(c(0.9+0.03*(i-1),0.9+0.03*i,0.2,1), ms[i,])
 }
 \keyword{hplot}

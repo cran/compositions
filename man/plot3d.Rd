@@ -7,7 +7,8 @@
 }
 \usage{
 plot3D(x,...)
-\method{plot3D}{default}(x,\dots,add=FALSE,bbox=TRUE,axes=FALSE,cex=1,size=cex,col=1)
+\method{plot3D}{default}(x,\dots,add=FALSE,bbox=TRUE,axes=FALSE,
+           cex=1,size=cex,col=1)
 }
 \arguments{
   \item{x}{an object to be plotted, e.g. a data frame or a data matrix}

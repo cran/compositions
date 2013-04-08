@@ -1,7 +1,7 @@
 plot3D <- function(x,...) UseMethod("plot3D")
 
 plot3D.rmult <- function(x,parts=1:3,...,center=FALSE,scale=FALSE,add=FALSE,axes=!add,cex=2,vlabs=colnames(x),size=cex,bbox=FALSE,col=1) {
-  #require("rgl")
+  require("rgl")
   X<-x
   if( ! add ) 
       gsi.reset3D()
@@ -28,7 +28,7 @@ plot3D.rmult <- function(x,parts=1:3,...,center=FALSE,scale=FALSE,add=FALSE,axes
   }
 
 gsi.reset3D <- function(userMatrix=diag(rep(1,4))) {
-  #require("rgl")
+  require("rgl")
   rgl::clear3d()
   rgl::par3d(userMatrix=userMatrix)
 }
@@ -37,7 +37,7 @@ gsi.reset3D <- function(userMatrix=diag(rep(1,4))) {
 gsi.filtercall <- function(fkt,...,overwrite=NULL,transmit=character(0),default=list(...),prefix=if(is.character(fkt)) fkt else NULL) {
   #oo <- function(x) {cat(deparse(substitute(x)),"=\n");print(x)}
   #oo <- function(x) {}
-  #require("rgl")
+  require("rgl")
   prefix
   if(is.character(fkt)) fkt <- get(fkt,mode="function")
   #oo(fkt)
@@ -80,7 +80,7 @@ gsi.filtercall <- function(fkt,...,overwrite=NULL,transmit=character(0),default=
 }
 
 plot3D.default <- function(x,...,add=FALSE,bbox=TRUE,axes=FALSE,cex=1,size=cex,col=1) {
-  #require("rgl")
+  require("rgl")
   X<-x
   if( ! add )
     gsi.reset3D()
@@ -94,7 +94,7 @@ plot3D.default <- function(x,...,add=FALSE,bbox=TRUE,axes=FALSE,cex=1,size=cex,c
 
 
 plot3D.acomp <- function(x,parts=1:min(ncol(X),4),...,lwd=2,axis.col="gray",add=FALSE,cex=2,vlabs=colnames(x),vlabs.col=axis.col,center=FALSE,scale=FALSE,log=FALSE,bbox=FALSE,axes=TRUE,size=cex,col=1) {
-  #require("rgl")
+  require("rgl")
   X<-x
   if( length(parts) == 3 ) {
    if( log ) {
@@ -171,7 +171,7 @@ axis3D <- function(axis.origin=c(0,0,0),axis.scale=1,axis.col="gray",vlabs=c("x"
 }
 
 plot3D.rplus <- function(x,parts=1:3,...,vlabs=NULL,add=FALSE,bbox=FALSE,cex=1,size=cex,axes=TRUE,col=1) {
-  #require("rgl")
+  require("rgl")
   X<-x
   if(! add )
     gsi.reset3D()
@@ -184,7 +184,7 @@ plot3D.rplus <- function(x,parts=1:3,...,vlabs=NULL,add=FALSE,bbox=FALSE,cex=1,s
 }
 
 plot3D.aplus <- function(x,parts=1:3,...,vlabs=NULL,add=FALSE,log=TRUE,bbox=FALSE,axes=TRUE,col=1) {
-  #require("rgl")
+  require("rgl")
   X<-x
   if( ! log ) {
     plot3D(rplus(X),parts=parts,...,col=col,vlabs=vlabs,add=add,bbox=bbox)
@@ -254,7 +254,7 @@ biplot3D.default <- function(x,y,var.axes=TRUE,
 #            xlim  = NULL, ylim  = NULL, 
 #            main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
                              ...,add=FALSE){
-  #require("rgl")
+  require("rgl")
   if( !add ) {
     gsi.reset3D();
   }
@@ -282,7 +282,7 @@ biplot3D.default <- function(x,y,var.axes=TRUE,
 }
 
 biplot3D.princomp <- function(x,choices=1:3,scale=1,...,comp.col=1,comp.labs=paste("Comp.",1:3),scale.scores=lambda[choices]^(1-scale),scale.var=scale.comp,scale.comp=sqrt(lambda[choices]),scale.disp=1/scale.comp) {
-  #require("rgl")
+  require("rgl")
   lambda <- x$sdev^2
   if( length(scale.var) == 1 ) scale.var <- rep(scale.var,3)
   if( length(scale.scores) == 1 ) scale.scores <-  rep(scale.scores,3)

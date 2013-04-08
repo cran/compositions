@@ -1,9 +1,9 @@
 \name{gsiinternal}
 \alias{gsi}
-\title{Environment containing the the old gsi functions}
+\title{Environment containing the old gsi functions}
 \description{
-  If you need some of the old depricated gsi.functions you can attach
-  this environment, which contains them all.
+  If you need some of the old deprecated gsi.functions you can attach
+  this environment, which contains them all. Use at your own risk.
 }
 \usage{
 gsi
@@ -27,6 +27,6 @@ unkown
 attach(gsi)
 objects("gsi")
 detach(gsi)
-"Hallo dont call these functions, they will be removed in the next version"
+"Hello don't call these functions, they will be removed in the next version"
 }
 \keyword{internal}

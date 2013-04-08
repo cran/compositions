@@ -308,13 +308,46 @@ clo <- function(X,parts=1:NCOL(oneOrDataset(X)),total=1,
 
 
 
-
 acomp <- function(X,parts=1:NCOL(oneOrDataset(X)),total=1,warn.na=FALSE,detectionlimit=NULL,BDL=NULL,MAR=NULL,MNAR=NULL,SZ=NULL) {
+  eq <- function(x,y) identical(as.numeric(x),as.numeric(y),single.NA=FALSE)
+  if( is.list(X) )
+    X<-data.matrix(X)
   if( is.ccomp(X) )
     X <- unclass(X)+0.5
+  if( !is.null(BDL) ) {
+    if( is.finite(BDL) )
+      bdl <- X==BDL
+    else
+      bdl <- sapply(X,eq,BDL)
+  } else bdl <- FALSE
+  if( !is.null(MAR) ) {
+    if( is.finite(MAR) )
+      mar <- X==MAR
+    else
+      mar <- sapply(X,eq,MAR)
+  } else mar <- FALSE
+  if( !is.null(MNAR) ) {
+    if( is.finite(MNAR) )
+      mnar <- X==MNAR
+    else
+      mnar <- sapply(X,eq,MNAR)
+  } else mnar <- FALSE
+  if( !is.null(SZ) ) {
+    if( is.finite(SZ) )
+      sz <- X==SZ
+    else
+      sz <- sapply(X,eq,SZ)
+  } else sz <- FALSE
+  if( any( is.finite(X) & X < 0 & !(mar|mnar|bdl|sz)))
+    warning("Negative values in composition are used as detection limits")
+  if( !is.null(MAR) && any(mar) ) X[mar]<-BDLvalue
+  if( !is.null(MNAR)&& any(mnar) ) X[mnar]<-BDLvalue
+  if( !is.null(bdl) && any(bdl)) X[bdl]<-MARvalue
+  if( !is.null(SZ)&&any(sz) ) X[sz]<-SZvalue
   X <-  structure(clo(X,parts,total),class="acomp")
-  if( any(is.NMV(X)&X<0)) 
-    warning("Composition has negative values")
+  if( !is.null(detectionlimit) && any(X==BDLvalue) ) {
+    X[sapply(X,eq,BDLvalue)]<- -detectionlimit
+  }
   if( warn.na ) {
     if( any(is.SZ(X))) 
       warning("Composition has structural zeros")
@@ -648,6 +681,7 @@ mean.rmult <- function( x,...,na.action=NULL,robust=getOption("robust")) {
       rmult(switch(robust,
              pearson=do.call(meanCol,c(list(x=unclass(x)),control,...)),
              mcd={
+               #require("robustbase")
                if(!is.null(control)) covMcd(unclass(x),...,control=control)$center else covMcd(unclass(x),...)$center},
                    
              stop("mean.rmult: Unkown robustness type:",robust)
@@ -724,6 +758,7 @@ var.acomp <- function(x,y=NULL,...,
              erg
              },
            mcd={
+             #require("robustbase")
              if(is.null(y)) {
                erg <- ilrvar2clr(if( is.null(control)) covMcd(idt(x),...)$cov else covMcd(idt(x),...,control=control)$cov,x=x)
                if(giveCenter)
@@ -784,6 +819,7 @@ var.aplus  <- function(x,y=NULL,...,robust=getOption("robust"), use="all.obs",
            }
              ,
            mcd={
+             #require("robustbase")
              if(is.null(y)) {
                erg <- if( is.null(control)) covMcd(idt(x),...)$cov else covMcd(idt(x),...,control=control)$cov
                if(giveCenter)
@@ -2121,6 +2157,12 @@ ilrBase <- function(x=NULL, z=NULL, D=NULL, method="basic"){
 
   }
  } #end if optimal
+ if(length(grep(pattern="PB",x=method))!=0){
+   if(length(dim(x))<2){
+     stop("all 'Principal Balances' methods require a data set")
+   }
+   gsi.PrinBal(x, method)
+ } # end methods of principal balances (all having string "PB" in their name)
  return(V)
 }
 
@@ -2200,10 +2242,11 @@ ilrInv <- function( z, V=ilrBase(z=z),...,orig=NULL) {
   erg
 }
 
-alr <- function( x ,...) {
+alr <- function( x ,ivar=ncol(x),...) {
+xo <- x
 W <- unclass(clo(oneOrDataset(x)))
-V <- gsi.recodeM2C(W,log(W),BDL=-Inf,SZ=NaN,MAR=NaN,MNAR=NA)
-rmult(gsi.simshape( V[,-NCOL(V),drop=FALSE] - c(V[,NCOL(V)]), x))
+x <- gsi.recodeM2C(W,log(W),BDL=-Inf,SZ=NaN,MAR=NaN,MNAR=NA)
+rmult(gsi.simshape( x[,-ivar,drop=FALSE] - c(x[,ivar]), xo))
 }
 
 alrInv <- function( z ,...,orig=NULL) {
@@ -6322,7 +6365,7 @@ qHotellingsTsq <- function(p,n,m){
   qf(p,n,m-n+1)*(n*m)/(m-n+1)
 }
 pHotellingsTsq <- function(q,n,m){
-  qf(q/((n*m)/(m-n+1)),n,m-n+1)
+  pf(q/((n*m)/(m-n+1)),n,m-n+1)
 }
 
 

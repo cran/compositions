@@ -12,7 +12,8 @@
 }
 \usage{
  \method{princomp}{acomp}(x,\dots,scores=TRUE,center=attr(covmat,"center"),
-                           covmat=var(x,robust=robust,giveCenter=TRUE),robust=getOption("robust"))
+                           covmat=var(x,robust=robust,giveCenter=TRUE),
+                           robust=getOption("robust"))
  \method{print}{princomp.acomp}(x,\dots)
  \method{plot}{princomp.acomp}(x,y=NULL,\dots, npcs=min(10,length(x$sdev)),
         type=c("screeplot","variance","biplot","loadings","relative"),

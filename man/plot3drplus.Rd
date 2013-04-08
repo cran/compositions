@@ -5,7 +5,8 @@
   3-dimensional plots, which can be rotated and zoomed in/out
 }
 \usage{
-\method{plot3D}{rplus}(x,parts=1:3,...,vlabs=NULL,add=FALSE,bbox=FALSE,cex=1,size=cex,axes=TRUE,col=1)
+\method{plot3D}{rplus}(x,parts=1:3,...,vlabs=NULL,add=FALSE,bbox=FALSE,
+                           cex=1,size=cex,axes=TRUE,col=1)
 }
 \arguments{
   \item{x}{an rplus object to be plotted}

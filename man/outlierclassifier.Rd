@@ -8,7 +8,9 @@
 }
 \usage{
 OutlierClassifier1(X,...)
-\method{OutlierClassifier1}{acomp}(X,...,alpha=0.05,type=c("best","all","type","outlier","grade"),goodOnly=NULL,corrected=TRUE,RedCorrected=FALSE,robust=TRUE) 
+\method{OutlierClassifier1}{acomp}(X,...,alpha=0.05,
+           type=c("best","all","type","outlier","grade"),goodOnly=NULL,
+           corrected=TRUE,RedCorrected=FALSE,robust=TRUE) 
 }
 \arguments{
   \item{X}{the dataset as an \code{acomp} object}

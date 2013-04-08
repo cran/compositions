@@ -37,7 +37,7 @@
 \examples{
 data(SimulatedAmounts)
 x <- acomp(sa.lognormals)
-xnew <- simulateMissings(x,detectionlimit=0.05,MAR=0.05,MNAR=0.05,SZ=0.05)
+xnew <- simulateMissings(x,dl=0.05,MAR=0.05,MNAR=0.05,SZ=0.05)
 xnew
 plot(missingSummary(xnew))
 }

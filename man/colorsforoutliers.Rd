@@ -8,7 +8,8 @@
   factors representing different types of outliers.
 }
 \usage{
-colorsForOutliers1(outfac, family=rainbow,extreme="cyan",outlier="red",ok="gray40",unknown="blue")
+colorsForOutliers1(outfac, family=rainbow,
+                          extreme="cyan",outlier="red",ok="gray40",unknown="blue")
 colorsForOutliers2(outfac,use=whichBits(gsi.orSum(levels(outfac))),
                         codes=c(2^outer(c(24,16,8),1:7,"-")),ok="yellow")
 pchForOutliers1(outfac,ok='.',outlier='\004',extreme='\003',unknown='\004',...,

@@ -9,7 +9,8 @@
 \usage{
 pairwisePlot(X,Y,...)
 \method{pairwisePlot}{default}(X,Y=X,...,
-                xlab=deparse(substitute(X)),ylab=deparse(substitute(Y)),nm=c(length(Y),length(X)),panel=plot,
+                xlab=deparse(substitute(X)),ylab=deparse(substitute(Y)),
+                nm=c(length(Y),length(X)),panel=plot,
                 add.line=FALSE, line.col=2,add.robust=FALSE,rob.col=4)}
 \arguments{
   \item{X}{a list, a data.frame, or a matrix representing the first set
@@ -84,9 +85,11 @@ X <- rnorm(100)
 Y <- rnorm.acomp(100,acomp(c(A=1,B=1,C=1)),0.1*diag(3))+acomp(t(outer(c(0.2,0.3,0.4),X,"^")))
 
 pairs(cbind(ilr(Y),X),panel=function(x,y,...) {points(x,y,...);abline(lm(y~x))})
-pairs(cbind(balance(Y,~A/B/C),X),panel=function(x,y,...) {points(x,y,...);abline(lm(y~x))})
+pairs(cbind(balance(Y,~A/B/C),X),
+         panel=function(x,y,...) {points(x,y,...);abline(lm(y~x))})
 pairwisePlot(balance(Y,~A/B/C),X)
-pairwisePlot(X,balance(Y,~A/B/C),panel=function(x,y,...) {plot(x,y,...);abline(lm(y~x))})
+pairwisePlot(X,balance(Y,~A/B/C),
+         panel=function(x,y,...) {plot(x,y,...);abline(lm(y~x))})
 pairwisePlot(X,balance01(Y,~A/B/C))
 
 # A function to extract a portion representation of subcompsitions
@@ -94,7 +97,12 @@ pairwisePlot(X,balance01(Y,~A/B/C))
 subComps <- function(X,...,all=list(...)) {
   X <- oneOrDataset(X)
   nams <- sapply(all,function(x) paste(x[[2]],x[[3]],sep=","))
-  val  <- sapply(all,function(x) X[,match(as.character(x[[2]]),colnames(X)) ]/(X[,match(as.character(x[[2]]),colnames(X)) ]+X[,match(as.character(x[[3]]),colnames(X)) ]))
+  val  <- sapply(all,function(x){ 
+             a = X[,match(as.character(x[[2]]),colnames(X)) ]
+             b = X[,match(as.character(x[[2]]),colnames(X)) ]
+             c = X[,match(as.character(x[[3]]),colnames(X)) ]
+             return(a/(b+c))
+           })
   colnames(val)<-nams
   val
 }

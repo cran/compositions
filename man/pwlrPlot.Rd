@@ -35,7 +35,7 @@ covariable can be a factor or a numeric vector, or a column of a matrix or data.
 Covariable and composition can both be represented in X or Y axis:
 a factor on X axis generates a \code{\link{boxplot}}; a factor on Y axis generates a
 \code{\link{spineplot}}; if the covariable is numeric, a default scatterplot is generated.
-Extra arguments are passed to these plotting functions. In any of these cases, the diagram 
+All dot arguments are passed to these plotting functions. In any of these cases, the diagram 
 shows the logratio of the component in the row divided by the component in
 the column. In the case of a numeric covariable, both classical and
 robust regression lines can be added.

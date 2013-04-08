@@ -100,7 +100,12 @@ colnames(Y) <- c("A","B","C")
 subComps <- function(X,...,all=list(...)) {
   X <- oneOrDataset(X)
   nams <- sapply(all,function(x) paste(x[[2]],x[[3]],sep=","))
-  val  <- sapply(all,function(x) X[,match(as.character(x[[2]]),colnames(X)) ]/(X[,match(as.character(x[[2]]),colnames(X)) ]+X[,match(as.character(x[[3]]),colnames(X)) ]))
+  val  <- sapply(all,function(x){
+              a = X[,match(as.character(x[[2]]),colnames(X)) ]
+              b = X[,match(as.character(x[[2]]),colnames(X)) ]
+              c = X[,match(as.character(x[[3]]),colnames(X)) ] 
+              return(a/(b+c))
+             }) 
   colnames(val)<-nams
   val
 }

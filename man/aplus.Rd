@@ -5,7 +5,8 @@
   A class to analyse positive amounts in a logistic framework.
 }
 \usage{
-          aplus(X,parts=1:NCOL(oneOrDataset(X)),total=NA,warn.na=FALSE,detectionlimit=NULL,BDL=NULL,MAR=NULL,MNAR=NULL,SZ=NULL)
+  aplus(X,parts=1:NCOL(oneOrDataset(X)),total=NA,warn.na=FALSE,
+          detectionlimit=NULL,BDL=NULL,MAR=NULL,MNAR=NULL,SZ=NULL)
           }
 \arguments{
   \item{X}{vector or dataset of positive numbers}

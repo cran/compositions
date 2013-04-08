@@ -1653,6 +1653,8 @@ static int myIntLog2(int n) {
     for(i=0;i<64;i++)
 	if( ! (n>>=1) )
 	    return(i);
+    error("Internal Error myIntLog2");
+    return(0);
 }
 
 

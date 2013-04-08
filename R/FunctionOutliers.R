@@ -311,6 +311,7 @@ rMaxMahalanobis <- function(n,N,d,...,pow=1,robust=TRUE) {
 # resample = Do a new simulation rather than using the old one.
 # ...=further arguments to the covMcd-routine
 pEmpiricalMahalanobis <- function(q,N,d,...,pow=1,replicates=100,resample=FALSE,robust=TRUE) {
+  #require(robustbase)
   id <- paste(deparse(list(N=N,d=d,...,replicates=replicates,robust=robust,type="EmpiricalMahalanobis")),collapse="\n")
   if( resample || is.null(s<-mget(id,gsi.pStore,ifnotfound=list(NULL))[[1]])   ) {
     s <- rEmpiricalMahalanobis(replicates,N,d,...,pow=1,robust=robust)
@@ -329,6 +330,7 @@ pEmpiricalMahalanobis <- function(q,N,d,...,pow=1,replicates=100,resample=FALSE,
 # ...=further arguments to the covMcd-routine
 
 qEmpiricalMahalanobis <- function(p,N,d,...,pow=1,replicates=100,resample=FALSE,robust=TRUE) {
+  #require(robustbase)
   id <- paste(deparse(list(N=N,d=d,...,replicates=replicates,robust=robust,type="EmpiricalMahalanobis")),collapse="\n")
   if( resample || is.null(s<-mget(id,gsi.pStore,ifnotfound=list(NULL))[[1]])   ) {
     s <- rEmpiricalMahalanobis(replicates,N,d,...,pow=1,robust=robust) 
@@ -376,6 +378,7 @@ rEmpiricalMahalanobis <- function(n,N,d,...,sorted=FALSE,pow=1,robust=TRUE) {
                 }
               },
               mcd={
+                #require("robustbase")
                 if( d > 1 )
                   replicate(n,sorted(sqrt(do.call("covMcd",c(list(structure(rnorm(N*d),dim=c(N,d))),params))$mah))^pow)
                 else {
@@ -401,6 +404,7 @@ rEmpiricalMahalanobis <- function(n,N,d,...,sorted=FALSE,pow=1,robust=TRUE) {
 # resample = Do a new simulation rather than using the old one.
 # ...=further arguments to the covMcd-routine
 pPortionMahalanobis <- function(q,N,d,cut,...,replicates=1000,resample=FALSE,pow=1,robust=TRUE) {
+  #require(robustbase)
   id <- paste(deparse(list(N=N,d=d,...,replicates=replicates,robust=robust,type="PortionMahalanobis")),collapse="\n")
   if( resample || is.null(s<-mget(id,gsi.pStore,ifnotfound=list(NULL))[[1]])   ) {
     s <- rEmpiricalMahalanobis(replicates,N,d,...,sorted=TRUE,robust=robust)
@@ -425,6 +429,7 @@ rPortionMahalanobis <- function(n,N,d,cut,...,pow=1,robust=TRUE) {
 # resample = Do a new simulation rather than using the old one.
 # ...=further arguments to the covMcd-routine
 qPortionMahalanobis <- function(p,N,d,cut,...,replicates=1000,resample=FALSE,pow=1,robust=TRUE) {
+  #require(robustbase)
   id <- paste(deparse(list(N=N,d=d,...,replicates=replicates,type="PortionMahalanobis")),collapse="\n")
   if( resample || is.null(s<-mget(id,gsi.pStore,ifnotfound=list(NULL))[[1]])   ) {
     s <- rEmpiricalMahalanobis(replicates,N,d,...,sorted=TRUE,robust=robust) 
@@ -479,6 +484,7 @@ qPortionMahalanobis <- function(p,N,d,cut,...,replicates=1000,resample=FALSE,pow
 # ...=further arguments to the covMcd-routine
 
 pQuantileMahalanobis <- function(q,N,d,p,...,replicates=1000,resample=FALSE,ulimit=TRUE,pow=1,robust=TRUE) {
+  #require(robustbase)
   id <- paste(deparse(list(N=N,d=d,...,pow=pow,robust=robust,replicates=replicates,type="pQuantileMahalanobis")),collapse="\n")
   if( resample || is.null(PreSort<-mget(id,gsi.pStore,ifnotfound=list(NULL))[[1]])   ) {
     s <- rEmpiricalMahalanobis(replicates,N,d,...,pow=pow,robust=robust,sorted=TRUE)
@@ -699,7 +705,7 @@ coloredBiplot <- function(xrf, scale=1, choice=c(1,2), pc.biplot=FALSE,
         xarrows=FALSE, yarrows=!xarrows, xnames=NULL, ynames=NULL,...){
  # X : cases (points)
  # Y : variables (arrows)
-   if(class(xrf)=="princomp"){
+   if("princomp" %in% class(xrf)){
       X = xrf$scores
       Y = xrf$loadings
       if(is.null(xnames)){xnames=rownames(X)}
@@ -707,7 +713,7 @@ coloredBiplot <- function(xrf, scale=1, choice=c(1,2), pc.biplot=FALSE,
       l = xrf$sdev
       fac = ifelse(pc.biplot,sqrt(nrow(X)),1)
    }
-   if(class(xrf)=="prcomp"){
+   if("prcomp" %in% class(xrf)){
       X = xrf$x
       Y = xrf$rotation
       if(is.null(xnames)){xnames=rownames(X)}
@@ -715,7 +721,8 @@ coloredBiplot <- function(xrf, scale=1, choice=c(1,2), pc.biplot=FALSE,
       l = xrf$sdev
       fac = ifelse(pc.biplot,sqrt(nrow(X)),1)
    }
-   if(class(xrf)=="list"){
+   if("list" %in% class(xrf)){
+     warning("Attention: biplot tries to interpret xrf as result of an svd")
      if(pc.biplot){
       X = as.matrix(xrf$u)*sqrt(nrow(X))
       Y = xrf$v/sqrt(nrow(X))

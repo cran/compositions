@@ -71,7 +71,8 @@ Xnew <- cbind(rep(x,length(y)),rep(y,each=length(x)))
 erg <- compOKriging(comp,X,Xnew,fit$vg,err=FALSE)
 par(mar=c(0,0,1,0))
 pairwisePlot(erg$Z,panel=function(a,b,xlab,ylab) {image(x,y,
-                     structure(log(a/b),dim=c(length(x),length(y))),main=paste("log(",xlab,"/",ylab,")",sep=""));points(X,pch=".")})
+                     structure(log(a/b),dim=c(length(x),length(y))),
+                     main=paste("log(",xlab,"/",ylab,")",sep=""));points(X,pch=".")})
 
 
 # Check interpolation properties 

@@ -28,7 +28,12 @@ ConfRadius(model,prob=1-alpha,alpha)
 \examples{
 data(SimulatedAmounts)
 model <- lm(ilr(sa.groups)~sa.groups.area)
-vcovAcomp(model)[,,1,1]
-
+cf = coef(model)
+plot(ilrInv(cf, x=sa.groups))
+for(i in 1:nrow(cf)){
+  vr = vcovAcomp(model)[,,i,i]
+  vr = ilrvar2clr(vr)
+  ellipses(ilrInv(cf[i,]), vr, r=ConfRadius(model, alpha=0.05) )
+ }
 }
 \keyword{multivariate}

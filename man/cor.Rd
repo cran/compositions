@@ -13,7 +13,8 @@
 }
 \usage{
           cor(x,y=NULL,\dots)
-          \method{cor}{default}(x, y=NULL, use="everything", method=c("pearson", "kendall", "spearman"),\dots)
+          \method{cor}{default}(x, y=NULL, use="everything", 
+                       method=c("pearson", "kendall", "spearman"),\dots)
           \method{cor}{acomp}(x,y=NULL,\dots,robust=getOption("robust"))
           \method{cor}{rcomp}(x,y=NULL,\dots,robust=getOption("robust"))
           \method{cor}{aplus}(x,y=NULL,\dots,robust=getOption("robust"))

@@ -5,7 +5,8 @@
   Detect outliers with respect to a normal distribution model.
 }
 \usage{
-IsMahalanobisOutlier(X,...,alpha=0.05,goodOnly=NULL,replicates=1000,corrected=TRUE,robust=TRUE,crit=NULL)
+IsMahalanobisOutlier(X,...,alpha=0.05,goodOnly=NULL,
+                 replicates=1000,corrected=TRUE,robust=TRUE,crit=NULL)
 }
 \arguments{
   \item{X}{a dataset (e.g. given as acomp, rcomp, aplus, rplus or rmult) object
@@ -62,7 +63,8 @@ test for beeing an outlier. TRUE corresponds to a significant result.
 \dontrun{
 data(SimulatedAmounts)
 
-datas <- list(data1=sa.outliers1,data2=sa.outliers2,data3=sa.outliers3,data4=sa.outliers4,data5=sa.outliers5,data6=sa.outliers6)
+datas <- list(data1=sa.outliers1,data2=sa.outliers2,data3=sa.outliers3,
+              data4=sa.outliers4,data5=sa.outliers5,data6=sa.outliers6)
 
 opar<-par(mfrow=c(2,3),pch=19,mar=c(3,2,2,1))
 tmp<-mapply(function(x,y){

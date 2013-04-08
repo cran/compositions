@@ -1,20 +1,17 @@
 \name{NormalTests}
 \alias{acompNormalLocation.test}
-\alias{acompNormalSpread.test}
 \title{Compositional Goodness of fit test}
 \description{
   Tests for several groups of additive lognormally distributed compositions.
 }
 \usage{
-acompNormalLocation.test(x,g=NULL,var.equal=FALSE,paired=FALSE,R=0)
-acompNormalSpread.test(x,g=NULL,mean.equal=FALSE)
+  acompNormalLocation.test(x, g=NULL, var.equal=FALSE, paired=FALSE, 
+                                R=ifelse(var.equal,999,0))
           }
 \arguments{
   \item{x}{a dataset of compositions (acomp) or a list of such}
   \item{g}{a factor grouping the data, not used if x is a list already }
   \item{var.equal}{a boolean telling wether the variance of the groups
-    should be considered equal}
-  \item{mean.equal}{a boolean telling wether the mean of the groups
     should be considered equal}
   \item{paired}{true if a paired test should be performed}
   \item{R}{number of replicates that should be used to compute
@@ -35,12 +32,11 @@ acompNormalSpread.test(x,g=NULL,mean.equal=FALSE)
   The tests are based on likelihood ratio statistics. 
 }
 \note{
-  Do not trust theses Functions. Crosschecks don't show p-values to be
-  always to be uniformly distributed under the hypothesis. We don't know
-  why. Help is appreciated. 
+  Do not trust the p-values obtained forcing \code{var.equal=TRUE} and \code{R=0}.
+  This will include soon equivalent spread tests.
 }
 \section{Missing Policy}{
-  Up to now the tests can not handle missings. 
+  Up to now the tests cannot handle missings. 
   }
 
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
@@ -59,6 +55,5 @@ Aitchison, J. (1986) \emph{The Statistical Analysis of Compositional
 x <- runif.acomp(100,4)
 y <- runif.acomp(100,4)
 acompNormalLocation.test(list(x,y))
-acompNormalSpread.test(list(x,y))
 }
 \keyword{htest}

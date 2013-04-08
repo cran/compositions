@@ -19,19 +19,28 @@ simulations}
 }
 \usage{
 rEmpiricalMahalanobis(n,N,d,...,sorted=FALSE,pow=1,robust=TRUE)
-pEmpiricalMahalanobis(q,N,d,...,pow=1,replicates=100,resample=FALSE,robust=TRUE)
-qEmpiricalMahalanobis(p,N,d,...,pow=1,replicates=100,resample=FALSE,robust=TRUE)
+pEmpiricalMahalanobis(q,N,d,...,pow=1,replicates=100,resample=FALSE,
+                        robust=TRUE)
+qEmpiricalMahalanobis(p,N,d,...,pow=1,replicates=100,resample=FALSE,
+                        robust=TRUE)
 rMaxMahalanobis(n,N,d,...,pow=1,robust=TRUE)
-pMaxMahalanobis(q,N,d,...,pow=1,replicates=998,resample=FALSE,robust=TRUE)
-qMaxMahalanobis(p,N,d,...,pow=1,replicates=998,resample=FALSE,robust=TRUE)
+pMaxMahalanobis(q,N,d,...,pow=1,replicates=998,resample=FALSE,
+                        robust=TRUE)
+qMaxMahalanobis(p,N,d,...,pow=1,replicates=998,resample=FALSE,
+                        robust=TRUE)
 rPortionMahalanobis(n,N,d,cut,...,pow=1,robust=TRUE)
-pPortionMahalanobis(q,N,d,cut,...,replicates=1000,resample=FALSE,pow=1,robust=TRUE)
-qPortionMahalanobis(p,N,d,cut,...,replicates=1000,resample=FALSE,pow=1,robust=TRUE)
-pQuantileMahalanobis(q,N,d,p,...,replicates=1000,resample=FALSE,ulimit=TRUE,pow=1,robust=TRUE)}
+pPortionMahalanobis(q,N,d,cut,...,replicates=1000,resample=FALSE,pow=1,
+                        robust=TRUE)
+qPortionMahalanobis(p,N,d,cut,...,replicates=1000,resample=FALSE,pow=1,
+                        robust=TRUE)
+pQuantileMahalanobis(q,N,d,p,...,replicates=1000,resample=FALSE,
+                        ulimit=TRUE,pow=1,robust=TRUE)
+}
 \arguments{
   \item{n}{Number of simulations to do.}
   \item{q}{A vector giving quantiles of the distribution}
-  \item{p}{A vector giving probabilities. (only a single probility for \code{pQuantileMahalanobis})}
+  \item{p}{A vector giving probabilities. (only a single probility for 
+             \code{pQuantileMahalanobis})}
   \item{N}{Number of cases in the dataset.}
   \item{d}{degrees of freedom (i.e. dimension) of the dataset.}
   \item{cut}{A cutting limit. The random variable is the portion of

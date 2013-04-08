@@ -7,7 +7,8 @@
 }
 \usage{
 outlierplot(X,...)
-\method{outlierplot}{acomp}(X,colcode=colorsForOutliers1,pchcode=pchForOutliers1,
+\method{outlierplot}{acomp}(X,colcode=colorsForOutliers1,
+  pchcode=pchForOutliers1,
   type=c("scatter","biplot","dendrogram","ecdf","portion","nout","distdist"),
   legend.position,pch=19,...,clusterMethod="ward",
   myCls=classifier(X,alpha=alpha,type=class.type,corrected=corrected),
@@ -177,11 +178,12 @@ into the outlier
 }
 
 \examples{
+\dontrun{
 data(SimulatedAmounts)
 outlierplot(acomp(sa.outliers5))
-\dontrun{
 
-datas <- list(data1=sa.outliers1,data2=sa.outliers2,data3=sa.outliers3,data4=sa.outliers4,data5=sa.outliers5,data6=sa.outliers6)
+datas <- list(data1=sa.outliers1,data2=sa.outliers2,data3=sa.outliers3,
+                data4=sa.outliers4,data5=sa.outliers5,data6=sa.outliers6)
 
 opar<-par(mfrow=c(2,3),pch=19,mar=c(3,2,2,1))  
 tmp<-mapply(function(x,y) {

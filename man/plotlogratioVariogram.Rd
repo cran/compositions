@@ -5,7 +5,8 @@
   Plots a logratioVariogram.
 }
 \usage{
-\method{plot}{logratioVariogram}(x,...,type="l",lrvg=NULL,fcols=2:length(lrvg),oma=c(4, 4, 4, 4),gap=0,ylim=NULL)
+\method{plot}{logratioVariogram}(x,...,type="l",lrvg=NULL,
+                fcols=2:length(lrvg),oma=c(4, 4, 4, 4),gap=0,ylim=NULL)
           }
 \arguments{
   \item{x}{The logratioVariogram created by

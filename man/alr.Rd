@@ -7,7 +7,7 @@
   composition(s), and its inverse.
 }
 \usage{
-          alr( x , ... )
+          alr( x ,ivar=ncol(x), ... )
           alrInv( z, ...,orig=NULL)
           }
 \arguments{
@@ -18,7 +18,8 @@
   \item{orig}{a compositional object which should be mimicked 
              by the inverse transformation. It is especially used to
 	     reconstruct the names of the parts.}
-
+  \item{ivar}{The column to be used as denominator variable. Unfortunately
+    not yet supported in alrInv. The default works even if x is a vector.}
 }
 \value{
   \code{alr} gives the additive log ratio transform; accepts a compositional dataset

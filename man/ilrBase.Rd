@@ -15,7 +15,8 @@
   \item{x}{ optional dataset or vector of compositions}
   \item{z}{ optional dataset or vector containing ilr or ipt coordinates}
   \item{D}{ number of parts of the simplex}
-  \item{method}{ method to build the basis, one of "basic", "balanced" and "optimal"}
+  \item{method}{ method to build the basis, one of "basic", "balanced", "optimal"
+           "PBhclust", "PBmaxvar" or "PBangprox"}
 }
 \value{
   All methods give a matrix containing by columns the basis elements for the
@@ -34,10 +35,19 @@
   splitting the parts in groups as equal as possible. Transforms \code{ilr} and \code{ipt} computed
   with this basis are less affected by any component (as happens with "basic").
 
+  The following methods are all data-driven and will fail if \code{x} is not given. 
+  Some of these methods are extended to non-acomp datasets via the \code{cpt}
+  general functionality. Use with care with non-acomp objects!
+
   Method "optimal" is a wrapper to \code{gsi.optimalilrBase}, providing the ilr basis
   with less influence of missing values. It is computed as a hierarchical
   cluster of variables, with parts previously transformed to
   1 (if the value is lost) or 0 (if it is recorded).
+  
+  Methods "PBhclust", "PBmaxvar" and "PBangprox" are principal balance methods (i.e.
+  balances approximating principal components in different ways). These are all
+  resolved by calls to \code{gsi.PrinBal}. Principal balances functionality should be
+  considered beta!
 }
 \seealso{
   \code{\link{clr}},\code{\link{ilr}},\code{\link{ipt}}

@@ -6,7 +6,8 @@
   philosophical framework of the Aitchison Simplex.
 }
 \usage{
-          acomp(X,parts=1:NCOL(oneOrDataset(X)),total=1,warn.na=FALSE,detectionlimit=NULL,BDL=NULL,MAR=NULL,MNAR=NULL,SZ=NULL)
+  acomp(X,parts=1:NCOL(oneOrDataset(X)),total=1,warn.na=FALSE,
+          detectionlimit=NULL,BDL=NULL,MAR=NULL,MNAR=NULL,SZ=NULL)
           }
 \arguments{
   \item{X}{composition or dataset of compositions}

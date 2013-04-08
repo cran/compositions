@@ -9,7 +9,8 @@
 }
 \usage{
 ClusterFinder1(X,...)
-\method{ClusterFinder1}{acomp}(X,...,sigma=0.3,radius=1,asig=1,minGrp=3,robust=TRUE)
+\method{ClusterFinder1}{acomp}(X,...,sigma=0.3,radius=1,asig=1,minGrp=3,
+                                 robust=TRUE)
           }
 \arguments{
   \item{X}{the dataset to be clustered}
@@ -88,7 +89,8 @@ estimator to find
 data(SimulatedAmounts)
   cl <- ClusterFinder1(sa.outliers5,sigma=0.4,radius=1) 
   plot(sa.outliers5,col=as.numeric(cl$types),pch=as.numeric(cl$types))
-  legend(1,1,legend=levels(cl$types),xjust=1,col=1:length(levels(cl$types)),pch=1:length(levels(cl$types)))
+  legend(1,1,legend=levels(cl$types),xjust=1,col=1:length(levels(cl$types)),
+                     pch=1:length(levels(cl$types)))
 
 }
 \keyword{cluster}

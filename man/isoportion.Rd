@@ -11,11 +11,15 @@
 }
 \usage{
 isoPortionLines(...)
-\method{isoPortionLines}{acomp}(by=0.2,at=seq(0,1,by=by),...,parts=1:3,total=1,labs=TRUE,lines=TRUE,unit="")
-\method{isoPortionLines}{rcomp}(by=0.2,at=seq(0,1,by=by),...,parts=1:3,total=1,labs=TRUE,lines=TRUE,unit="")
+\method{isoPortionLines}{acomp}(by=0.2,at=seq(0,1,by=by),...,
+                      parts=1:3,total=1,labs=TRUE,lines=TRUE,unit="")
+\method{isoPortionLines}{rcomp}(by=0.2,at=seq(0,1,by=by),...,
+                      parts=1:3,total=1,labs=TRUE,lines=TRUE,unit="")
 isoProportionLines(...)
-\method{isoProportionLines}{acomp}(by=0.2,at=seq(0,1,by=by),...,parts=1:3,labs=TRUE,lines=TRUE) 
-\method{isoProportionLines}{rcomp}(by=0.2,at=seq(0,1,by=by),...,parts=1:3,labs=TRUE,lines=TRUE) 
+\method{isoProportionLines}{acomp}(by=0.2,at=seq(0,1,by=by),...,
+                      parts=1:3,labs=TRUE,lines=TRUE) 
+\method{isoProportionLines}{rcomp}(by=0.2,at=seq(0,1,by=by),...,
+                      parts=1:3,labs=TRUE,lines=TRUE) 
           }
 \arguments{
   \item{\dots}{graphical arguments}

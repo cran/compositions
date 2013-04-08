@@ -21,11 +21,16 @@
 }
 \usage{
 relativeLoadings(x,...)
-\method{relativeLoadings}{princomp.acomp}(x,\dots,log=FALSE,scale.sdev=NA,cutoff=0.1)
-\method{relativeLoadings}{princomp.aplus}(x,\dots,log=FALSE,scale.sdev=NA,cutoff=0.1)
-\method{relativeLoadings}{princomp.rcomp}(x,\dots,scale.sdev=NA,cutoff=0.1)
-\method{relativeLoadings}{princomp.rplus}(x,\dots,scale.sdev=NA,cutoff=0.1)
-\method{print}{relativeLoadings.princomp.acomp}(x,\dots,cutoff=attr(x,"cutoff"),digits=2)
+\method{relativeLoadings}{princomp.acomp}(x,\dots,log=FALSE,scale.sdev=NA,
+                                                  cutoff=0.1)
+\method{relativeLoadings}{princomp.aplus}(x,\dots,log=FALSE,scale.sdev=NA,
+                                                  cutoff=0.1)
+\method{relativeLoadings}{princomp.rcomp}(x,\dots,scale.sdev=NA,
+                                                  cutoff=0.1)
+\method{relativeLoadings}{princomp.rplus}(x,\dots,scale.sdev=NA,
+                                                  cutoff=0.1)
+\method{print}{relativeLoadings.princomp.acomp}(x,\dots,cutoff=attr(x,"cutoff"),
+                                                  digits=2)
 \method{print}{relativeLoadings.princomp.aplus}(x,\dots,cutoff=attr(x,"cutoff"),
                                                  digits=2)
 \method{print}{relativeLoadings.princomp.rcomp}(x,\dots,cutoff=attr(x,"cutoff"),

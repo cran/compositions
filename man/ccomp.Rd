@@ -7,7 +7,8 @@
   an unkown Aitchison compositions.
 }
 \usage{
-          ccomp(X,parts=1:NCOL(oneOrDataset(X)),total=NA,warn.na=FALSE,detectionlimit=NULL,BDL=NULL,MAR=NULL,MNAR=NULL,SZ=NULL)
+    ccomp(X,parts=1:NCOL(oneOrDataset(X)),total=NA,warn.na=FALSE,
+            detectionlimit=NULL,BDL=NULL,MAR=NULL,MNAR=NULL,SZ=NULL)
           }
 \arguments{
   \item{X}{composition or dataset of compositions}

@@ -13,13 +13,19 @@ gsi.varwithlosts(x,giveCenter=FALSE)
     an attribute "center" to the result.}
 }
 \value{
-  A variance matrix using all the observed information, where some of its components have been downweighted to account for the missing values. ATTENTION: function quite slow. It will be called directly by \code{\link{var.acomp}} and similar generic functions only if \code{\link{na.action}} is set to \code{\link{na.pass}}.
+  A variance matrix using all the observed information, where some of its 
+  components have been downweighted to account for the missing values. 
+  ATTENTION: function quite slow. It will be called directly by \code{\link{var.acomp}} 
+  and similar generic functions only if \code{\link{na.action}} is set to \code{\link{na.pass}}.
 }
 \note{Do not use gsi.* functions directly since they are internal
   functions of the package.}
 \author{R. Tolosana-Delgado, K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \references{
-  van den Boogaart, K. G., R. Tolosana-Delgado, and M. Bren (2006) Concepts for handling of zeros and missing values in compositional data, In: \emph{2006 Annual Conference of the International Association for Mathematical Geology (IAMG)}, Universit\'e de Li\`ege, Belgium.
+  van den Boogaart, K. G., R. Tolosana-Delgado, and M. Bren (2006) Concepts 
+  for handling of zeros and missing values in compositional data, In: 
+  \emph{2006 Annual Conference of the International Association for Mathematical 
+  Geology (IAMG)}, Universit\'e de Li\`ege, Belgium.
 
   Bren, M., R. Tolosana-Delgado, and K.G. van den Boogaart (2008) News
   from compositions, the R package. In:  Daunis-i-Estadella, J. and

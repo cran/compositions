@@ -21,19 +21,29 @@
 \usage{
   var(x,\dots)
     \method{var}{default}(x, y=NULL, na.rm=FALSE, use, \dots)
-    \method{var}{acomp}(x,y=NULL,\dots,robust=getOption("robust"), use="all.obs",giveCenter=FALSE)
-    \method{var}{rcomp}(x,y=NULL,\dots,robust=getOption("robust"), use="all.obs",giveCenter=FALSE)
-    \method{var}{aplus}(x,y=NULL,\dots,robust=getOption("robust"), use="all.obs",giveCenter=FALSE)
-    \method{var}{rplus}(x,y=NULL,\dots,robust=getOption("robust"), use="all.obs",giveCenter=FALSE)
-    \method{var}{rmult}(x,y=NULL,\dots,robust=getOption("robust"), use="all.obs",giveCenter=FALSE)
+    \method{var}{acomp}(x,y=NULL,\dots,robust=getOption("robust"), 
+       use="all.obs",giveCenter=FALSE)
+    \method{var}{rcomp}(x,y=NULL,\dots,robust=getOption("robust"), 
+       use="all.obs",giveCenter=FALSE)
+    \method{var}{aplus}(x,y=NULL,\dots,robust=getOption("robust"), 
+       use="all.obs",giveCenter=FALSE)
+    \method{var}{rplus}(x,y=NULL,\dots,robust=getOption("robust"), 
+       use="all.obs",giveCenter=FALSE)
+    \method{var}{rmult}(x,y=NULL,\dots,robust=getOption("robust"), 
+       use="all.obs",giveCenter=FALSE)
   cov(x,y=x,\dots)
     \method{cov}{default}(x, y=NULL, use="everything", 
        method=c("pearson", "kendall", "spearman"), \dots)
-    \method{cov}{acomp}(x,y=NULL,\dots,robust=getOption("robust"), use="all.obs",giveCenter=FALSE)
-    \method{cov}{rcomp}(x,y=NULL,\dots,robust=getOption("robust"), use="all.obs",giveCenter=FALSE)
-    \method{cov}{aplus}(x,y=NULL,\dots,robust=getOption("robust"), use="all.obs",giveCenter=FALSE)
-    \method{cov}{rplus}(x,y=NULL,\dots,robust=getOption("robust"), use="all.obs",giveCenter=FALSE)
-    \method{cov}{rmult}(x,y=NULL,\dots,robust=getOption("robust"), use="all.obs",giveCenter=FALSE)
+    \method{cov}{acomp}(x,y=NULL,\dots,robust=getOption("robust"), 
+       use="all.obs",giveCenter=FALSE)
+    \method{cov}{rcomp}(x,y=NULL,\dots,robust=getOption("robust"), 
+       use="all.obs",giveCenter=FALSE)
+    \method{cov}{aplus}(x,y=NULL,\dots,robust=getOption("robust"), 
+       use="all.obs",giveCenter=FALSE)
+    \method{cov}{rplus}(x,y=NULL,\dots,robust=getOption("robust"), 
+       use="all.obs",giveCenter=FALSE)
+    \method{cov}{rmult}(x,y=NULL,\dots,robust=getOption("robust"), 
+    use="all.obs",giveCenter=FALSE)
           }
 \arguments{
   \item{x}{a dataset, eventually of amounts or compositions}

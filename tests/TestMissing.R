@@ -1,7 +1,7 @@
 library("compositions")
 data(SimulatedAmounts)
 par(pch=20)
-mydata <- simulateMissings(sa.groups5,detectionlimit=0.01,knownlimit=TRUE,MAR=0.05,MNARprob=0.05,SZprob=0.05)
+mydata <- simulateMissings(sa.groups5,dl=0.01,knownlimit=TRUE,MAR=0.05,MNARprob=0.05,SZprob=0.05)
 
 
 cdata <- acomp(mydata)

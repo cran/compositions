@@ -12,9 +12,11 @@
 }
 \usage{
 MahalanobisDist(x,center=NULL,cov=NULL,inverted=FALSE,...)
-\method{MahalanobisDist}{rmult}(x,center=NULL,cov=NULL,inverted=FALSE,...,goodOnly=NULL,pairwise=FALSE,pow=1,
+\method{MahalanobisDist}{rmult}(x,center=NULL,cov=NULL,inverted=FALSE,...,
+           goodOnly=NULL,pairwise=FALSE,pow=1,
 robust=FALSE,giveGeometry=FALSE)
-\method{MahalanobisDist}{acomp}(x,center=NULL,cov=NULL,inverted=FALSE,...,goodOnly=NULL, pairwise=FALSE,pow=1,robust=FALSE,giveGeometry=FALSE)
+\method{MahalanobisDist}{acomp}(x,center=NULL,cov=NULL,inverted=FALSE,...,
+           goodOnly=NULL, pairwise=FALSE,pow=1,robust=FALSE,giveGeometry=FALSE)
           }
 \arguments{
   \item{x}{the dataset}
@@ -75,7 +77,8 @@ data5 <- acomp(sa.outliers5)
 
   cl <- ClusterFinder1(data5,sigma=0.4,radius=1) 
   plot(data5,col=as.numeric(cl$types),pch=as.numeric(cl$types))
-  legend(1,1,legend=levels(cl$types),xjust=1,col=1:length(levels(cl$types)),pch=1:length(levels(cl$types)))
+  legend(1,1,legend=levels(cl$types),xjust=1,col=1:length(levels(cl$types)),
+             pch=1:length(levels(cl$types)))
 
 }
 \keyword{multivariate}

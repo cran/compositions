@@ -95,7 +95,7 @@ CoDaDendrogram(X=aux,add=TRUE,col=color,type="points",pch=4)
 CoDaDendrogram(X=acomp(x),mergetree=mergetree,col="black",range=c(-8,8),type="l")
 xsplit = split(x,gr)
 for(i in 1:4){
-  CoDaDendrogram(X=acomp(xsplit[[i]]),col=color[i],type="box",box.pos=i-2.5,box.space=0.5,add=TRUE)
+ CoDaDendrogram(X=acomp(xsplit[[i]]),col=color[i],type="box",box.pos=i-2.5,box.space=0.5,add=TRUE)
 }
 
 # third example: fewer parts, partition defined by a signary, and empty box-plots

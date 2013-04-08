@@ -40,7 +40,8 @@
       only defined with respect to a specific implementation of the robust
       estimation algorithm. See 
       \code{\link{OutlierClassifier1}(...,type="outlier")},
-      \code{\link{outlierplot}(...,type=c("scatter","biplot"),class.type="outlier")}, \code{\link{qMaxMahalanobis}(...)}.
+      \code{\link{outlierplot}(...,type=c("scatter","biplot"),class.type="outlier")}, 
+      \code{\link{qMaxMahalanobis}(...)}.
       
     }
     \item{Extrem Values / Possible outliers}{
@@ -52,7 +53,8 @@
       proposed. However we consider these only as extrem values, but
       however provide tools to detect and plot them. See 
       \code{\link{OutlierClassifier1}(...,type="grade")},
-      \code{\link{outlierplot}(...,type=c("scatter","biplot"),class.type="grade")}, \code{\link{qEmpiricalMahalanobis}(...)} 
+      \code{\link{outlierplot}(...,type=c("scatter","biplot"),class.type="grade")}, 
+      \code{\link{qEmpiricalMahalanobis}(...)} 
     }
     \item{Single Component Outliers}{
       Some Outliers can be explained by a single component, e.g. because
@@ -66,7 +68,8 @@
       all subcomposition with one component removed. Thus these have to be
       as multicomponent outliers, that can not be explained by a single
       measurment error. For remaining single component outliers, we can
-      ask which component is able to explain the outlying character. See \code{\link{OutlierClassifier1}(...,type=c("best","type","all"))}.  
+      ask which component is able to explain the outlying character. See 
+      \code{\link{OutlierClassifier1}(...,type=c("best","type","all"))}.  
     }
     \item{Counting hidden outliers}{
       If outliers are not outlying far enough to be detected by the test

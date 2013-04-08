@@ -106,7 +106,11 @@ pwlrPlot = function(x, y, ..., add.line=FALSE, line.col=2, add.robust=FALSE, rob
   dim(aux) = NULL
   X[tk][[1]] = rep(aux, times=D*D)
   dim(X[tk][[1]]) = dim(X[!tk][[1]])
+  # set graphical parameters now, store prior back as default
+  opar <- par()
+  on.exit(par(opar))
   par(mfrow=c(D,D), mar=c(1,1,0,0),oma=c(3,3,2,2))
+  # plot!
   for(i in 1:D){
     for(j in 1:D){
       k = (i-1)*D+j

@@ -17,18 +17,19 @@
   to explain \code{X} as good as possible.
 }
 \usage{
-
-          endmemberCoordinates(X,\dots)
-          endmemberCoordinatesInv(K,endmembers,...)
-          \method{endmemberCoordinates}{default}(X,endmembers=diag(gsi.getD(X)), \dots)
-          \method{endmemberCoordinates}{acomp}(X,endmembers=clrInv(diag(gsi.getD(X))),...)
-          \method{endmemberCoordinates}{aplus}(X,endmembers,...)
-          \method{endmemberCoordinates}{rplus}(X,endmembers,...)
-          \method{endmemberCoordinatesInv}{rmult}(K,endmembers,...)
-          \method{endmemberCoordinatesInv}{acomp}(K,endmembers,...)
-          \method{endmemberCoordinatesInv}{rcomp}(K,endmembers,...)
-          \method{endmemberCoordinatesInv}{aplus}(K,endmembers,...)
-          \method{endmemberCoordinatesInv}{rplus}(K,endmembers,...)
+    endmemberCoordinates(X,\dots)
+    endmemberCoordinatesInv(K,endmembers,\dots)
+    \method{endmemberCoordinates}{default}(X,
+                         endmembers=diag(gsi.getD(X)), \dots)
+    \method{endmemberCoordinates}{acomp}(X,
+                    endmembers=clrInv(diag(gsi.getD(X))),\dots)
+    \method{endmemberCoordinates}{aplus}(X,endmembers,\dots)
+    \method{endmemberCoordinates}{rplus}(X,endmembers,\dots)
+    \method{endmemberCoordinatesInv}{rmult}(K,endmembers,\dots)
+    \method{endmemberCoordinatesInv}{acomp}(K,endmembers,\dots)
+    \method{endmemberCoordinatesInv}{rcomp}(K,endmembers,\dots)
+    \method{endmemberCoordinatesInv}{aplus}(K,endmembers,\dots)
+    \method{endmemberCoordinatesInv}{rplus}(K,endmembers,\dots)
           }
 \arguments{
   \item{X}{a data set of amounts or compositions, to be represented in

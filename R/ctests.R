@@ -1,4 +1,9 @@
-
+gsi.betterPvalue <- function(pval,digits) {
+  pval <- round(pval,digits)
+  if( pval == 0 )
+    pval <- 10^-digits
+  structure(pval,digits=digits)
+}
 
 Gauss.test <- function(x,y=NULL,mean=0,sd=1,alternative = c("two.sided", "less", "greater")) {
   parameter <-c(mean=mean,sd=sd)
@@ -13,11 +18,11 @@ Gauss.test <- function(x,y=NULL,mean=0,sd=1,alternative = c("two.sided", "less",
   p1 <- 1-pnorm(statistic,mean=parameter["mean"],sd=isd)
   p2 <- pnorm(statistic,mean=parameter["mean"],sd=isd)
   alternative = match.arg(alternative)
-  p.value <- switch(alternative,
+  p.value <- gsi.betterPvalue(switch(alternative,
                     "two.sided"=2*min(p1,p2),
                     "less"=p2,
                     "greater"=p1
-                    )
+                    ),6)
   structure(list(
                  data.name=deparse(substitute(x)),
                  method="Ein Stichproben Gauss-Test",
@@ -112,7 +117,7 @@ ccompPoissonGOF.test<-function(x,
                  parameter=c(shape1=1,shape2=2),
                  sample=sample,
                  statistic=statistic,
-                 p.value=p.value,
+                 p.value=gsi.betterPvalue(p.value,4),
                  erg1=erg1,
                  erg2=erg2
                  ),
@@ -162,7 +167,7 @@ PoissonGOF.test <- function(x,lambda=mean(x),R=999,estimated=missing(lambda)) {
            statistics=numeric(R)
            )$statistics
     }
-    p.value <- (sum( statistic <= c(ksample) )+1)/(R+1)
+    p.value <- gsi.betterPvalue((sum( statistic <= c(ksample) )+1)/(R+1),floor(log(R,10)))
     structure(list(
                    data.name=deparse(substitute(x)),
                    method=if(estimated) "Poisson KS-GOF-Test (with unknown lambda)" else "Poisson KS-GOF-Test (with known lambda)",
@@ -175,18 +180,6 @@ PoissonGOF.test <- function(x,lambda=mean(x),R=999,estimated=missing(lambda)) {
               class="htest")
 }
  
-acompDirichletGOF.test<- function(x,
-                               samplesize=nrow(x)*20,
-                               R=999
-                               ) {
-  df<- fitDirichlet(x)
-  n <- length(nrow(x))
-  Y <-rDirichlet.acomp(samplesize,df$alpha)
-  erg <- acompTwoSampleGOF.test(x,Y,R=R)
-  erg$data.name<-deparse(substitute(x))
-  erg$method="Compositional test for Dirichlet distribution"
-  erg
-}
 
 
 acompTwoSampleGOF.test <- function(x,y,...,method="etest",data=NULL) {
@@ -265,7 +258,7 @@ fitSameMeanDifferentVarianceModel <- function(x) {
 }
 
 
-acompNormalLocation.test <- function(x,g=NULL,var.equal=FALSE,paired=FALSE,R=0) {
+acompNormalLocation.test <- function(x,g=NULL,var.equal=FALSE,paired=FALSE,R=ifelse(var.equal,999,0) ) {
   if( paired ) {
     erg <- acompNormalLocation.test(acomp(x)-acomp(g))
     erg$method<-"Compositional paired normal location test"
@@ -305,9 +298,9 @@ acompNormalLocation.test <- function(x,g=NULL,var.equal=FALSE,paired=FALSE,R=0) 
         n*(log(det(tss/n))-log(det(rss/n)))
       }
       sample <- replicate(R,lS1(structure(rnorm(n*m),dim=c(n,m))))
-      p.value <- mean(logLik<=c(sample,logLik))
+      p.value <- gsi.betterPvalue(mean(logLik<=c(sample,logLik)),floor(log(R,10)))
     } else {
-      p.value <- pchisq(logLik,df,lower.tail=FALSE)
+      p.value <- gsi.betterPvalue(pchisq(logLik,df,lower.tail=FALSE),3)
       sample<-NULL
     } 
     return(
@@ -351,9 +344,9 @@ acompNormalLocation.test <- function(x,g=NULL,var.equal=FALSE,paired=FALSE,R=0) 
         n*(log(det(TSS/n))-log(det(tRSS/n)))
       }
       sample <- replicate(R,lS2())
-      p.value <- mean(logLik<=c(sample,logLik))
+      p.value <- gsi.betterPvalue(mean(logLik<=c(sample,logLik)),floor(log(R,10)))
     } else {
-      p.value <- pchisq(logLik,df,lower.tail=FALSE)
+      p.value <- gsi.betterPvalue(pchisq(logLik,df,lower.tail=FALSE),3)
       sample  <- NULL
     }
     structure(list(
@@ -381,9 +374,9 @@ acompNormalLocation.test <- function(x,g=NULL,var.equal=FALSE,paired=FALSE,R=0) 
         sum(mapply(a0,N,smdvm,dmdvm))
       }
       sample <- replicate(R,lS3())
-      p.value <- mean(logLik<=c(sample,logLik))
+      p.value <- gsi.betterPvalue(mean(logLik<=c(sample,logLik)),floor(log(R,10)))
     } else {
-      p.value <- pchisq(logLik,df,lower.tail=FALSE)
+      p.value <- gsi.betterPvalue(pchisq(logLik,df,lower.tail=FALSE),3)
       sample  <- NULL
     }
     structure(list(
@@ -399,59 +392,6 @@ acompNormalLocation.test <- function(x,g=NULL,var.equal=FALSE,paired=FALSE,R=0) 
   }
 }
 
-acompNormalSpread.test <- function(x,g=NULL,mean.equal=FALSE) {
-  if( !is.null(g) || !is.list(x) )
-    Splitted <- split(x,g)
-  else
-    Splitted<-x
-  Splitted <- lapply(Splitted,ilr)
-  N <- sapply(Splitted,nrow)
-  n <- sum(N)
-  G <- length(Splitted)
-  m <- ncol(Splitted[[1]])
-  css <- function(x) {
-    x <- rmult(x)
-    x <- unclass(x-mean(x))
-    t(x) %*% x
-  }
-  if( mean.equal ) {
-    SS <- css(do.call("rbind",Splitted))/n
-    dmdvm <- lapply(Splitted,function(x) css(x)/nrow(x))
-    logdetSS<-log(det(SS))
-    a0 <- function(n,V2) n*(logdetSS-log(det(V2)))
-    logLik <- sum(mapply(a0,N,dmdvm))
-    dfPerVariance <- m*(m+1)/2
-    df <- (G-1)*dfPerVariance
-    p.value <- pchisq(logLik,df,lower.tail=FALSE)
-    structure(list(
-                   data.name=deparse(substitute(x)),
-                   method="Compositional Normal Spread test with equal means",
-                   alternative="locations of groups are not equal",
-                   parameter=c(df=df),
-                   statistic=c(logLik=logLik),
-                   p.value=p.value
-                   ),
-              class="htest")
-  } else {
-    SS <- lapply(Splitted,css)
-    MTSS<- gsi.AddMatrices(SS)/n
-    logdetMTSS <- log(det(MTSS))
-    a0 <- function(n,V2) n*(logdetMTSS-log(det(V2)))
-    logLik <- sum(mapply(a0,n,SS))
-    dfPerVariance <- m*(m+1)/2
-    df <- (G-1)*dfPerVariance
-    p.value <- pchisq(logLik,df,lower.tail=FALSE)
-    structure(list(
-                   data.name=deparse(substitute(x)),
-                   method="Compositional Normal Spread test with different means",
-                   alternative="locations of groups are not equal",
-                   parameter=c(df=df),
-                   statistic=c(logLik=logLik),
-                   p.value=p.value
-                   ),
-              class="htest")
-  }
-}
 
 
 

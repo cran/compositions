@@ -16,7 +16,8 @@ dAitchison(x,
            sigma=-1/2*gsi.svdinverse(beta),
            grid=30,
            realdensity=FALSE,
-           expKappa=AitchisonDistributionIntegrals(theta,beta,grid=grid,mode=1)$expKappa)
+           expKappa=AitchisonDistributionIntegrals(theta,beta,
+                        grid=grid,mode=1)$expKappa)
 rAitchison(n,
            theta=alpha+sigma \%*\% clr(mu),
            beta=-1/2*gsi.svdinverse(sigma),

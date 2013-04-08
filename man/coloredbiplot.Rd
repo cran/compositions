@@ -48,6 +48,8 @@ or a seperate package.
 }
 \examples{
 data(SimulatedAmounts)
-coloredBiplot(xrf=svd(var(sa.outliers5)),pc.biplot=FALSE,xpch=c(1,2,3),xcol=1:3,ycol=c("blue","cyan","magenta"))
+coloredBiplot(xrf=svd(var(sa.outliers5)),pc.biplot=FALSE,
+          xpch=c(1,2,3), xcol=1:3,
+          ycol=c("blue","cyan","magenta"))
 }
 \keyword{multivariate}

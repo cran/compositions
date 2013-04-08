@@ -17,7 +17,8 @@
                           notch=FALSE,
                           plotMissings=TRUE,
                           mp=~simpleMissingSubplot(missingPlotRect,
-                                                missingInfo,c("NM","TM",cn)))
+                                                missingInfo,c("NM","TM",cn))
+                          )
 \method{boxplot}{rcomp}(x,fak=NULL,\dots,
                          xlim=NULL,ylim=NULL,log=FALSE,
                          panel=vp.boxplot,dots=!boxes,boxes=TRUE,
@@ -35,14 +36,16 @@
                           mp=~simpleMissingSubplot(missingPlotRect,
                                                    missingInfo,
                                                    names(missingInfo)))
-vp.boxplot(x,y,...,dots=FALSE,boxes=TRUE,xlim=NULL,ylim=NULL,log=FALSE,notch=FALSE,plotMissings=TRUE,mp=~simpleMissingSubplot(missingPlotRect,
-                                                                                         missingInfo,c("NM","TM",cn)),
-         missingness=attr(y,"missingness")                                                                                ) 
+vp.boxplot(x,y,...,dots=FALSE,boxes=TRUE,xlim=NULL,ylim=NULL,log=FALSE,
+                          notch=FALSE,plotMissings=TRUE,
+                          mp=~simpleMissingSubplot(missingPlotRect,
+                                                   missingInfo,c("NM","TM",cn)),
+                          missingness=attr(y,"missingness") ) 
 vp.logboxplot(x,y,...,dots=FALSE,boxes=TRUE,xlim,ylim,log=TRUE,notch=FALSE,
-             plotMissings=TRUE,
-             mp=~simpleMissingSubplot(missingPlotRect,
-          missingInfo,c("NM","TM",cn)),
-             missingness=attr(y,"missingness")) 
+                          plotMissings=TRUE, 
+                          mp=~simpleMissingSubplot(missingPlotRect,
+                                                   missingInfo,c("NM","TM",cn)),
+                          missingness=attr(y,"missingness")) 
 }
 \arguments{
   \item{x}{a data set}

@@ -3,7 +3,6 @@
 \alias{acompGOF.test.list}
 \alias{acompGOF.test.formula}
 \alias{gsi.acompUniformityGOF.test}
-\alias{acompDirichletGOF.test}
 \alias{acompNormalGOF.test}
 \alias{acompTwoSampleGOF.test}
 \title{Compositional Goodness of fit test}
@@ -12,7 +11,6 @@
 }
 \usage{
 acompGOF.test(x,...)
-acompDirichletGOF.test(x,samplesize=nrow(x)*20,R=999)
 acompNormalGOF.test(x,...,method="etest")
 \S3method{acompGOF.test}{formula}(formula, data,...,method="etest")
 \S3method{acompGOF.test}{list}(x,...,method="etest")
@@ -63,6 +61,9 @@ acompTwoSampleGOF.test(x,y,...,method="etest",data=NULL)
   based on estimating the parameters of the distribution, simulating a
   large dataset of that distribution and apply the two sample goodness
   of fit test. 
+  
+  For the moment, this function covers: two-sample tests, uniformity tests and additive
+  logistic normality tests. Dirichlet distribution tests will be included soon.
 }
 \section{Missing Policy}{
   Up to now the tests can not handle missings. 
@@ -85,7 +86,7 @@ Aitchison, J. (1986) \emph{The Statistical Analysis of Compositional
 x <- runif.acomp(100,4)
 y <- runif.acomp(100,4)
 
-erg <- acompGOF.test(x,y)
+erg <- acompTwoSampleGOF.test(x,y)
 #continue
 erg
 unclass(erg)
@@ -112,13 +113,15 @@ dd <- replicate(1000,acompGOF.test(runif.acomp(20,4),runif.acomp(100,4)+acomp(c(
 
 hist(dd)
 
+# test uniformity
 
+attach("gsi") # the uniformity test is only available as an internal function
 x <- runif.acomp(100,4)
-acompUniformityGOF.test(x)
+gsi.acompUniformityGOF.test.test(x)
 
-dd <- replicate(1000,acompUniformityGOF.test(runif.acomp(10,4))$p.value)
-
+dd <- replicate(1000,gsi.acompUniformityGOF.test.test(runif.acomp(10,4))$p.value)
 hist(dd)
+detach("gsi")
 
 }
 }

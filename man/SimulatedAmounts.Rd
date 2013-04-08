@@ -355,8 +355,8 @@ sa.outliers3 <- acomp(rbind(typicalData,acomp(c(0.5,1.5,2))))
 colnames(sa.outliers3)<-colnames(typicalData)
 tmp<-set.seed(30)
 rcauchy.acomp <- function (n, mean, var){
-    D <- gsi.getD(mean)-1
-    perturbe(ilrInv(matrix(rnorm(n*D)/rep(rnorm(n),D), ncol = D) \%*\% chol(clrvar2ilr(var))), mean)
+  D <- gsi.getD(mean)-1
+  perturbe(ilrInv(matrix(rnorm(n*D)/rep(rnorm(n),D), ncol = D) \%*\% chol(clrvar2ilr(var))), mean)
 }
 # A dataset with a Cauchy type distribution
 sa.outliers4 <- acomp(rcauchy.acomp(100,acomp(c(1,2,1)),Mvar/4))
@@ -367,10 +367,10 @@ sa.outliers5 <- acomp(rbind(unclass(typicalData)+outer(rbinom(100,1,p=0.1)*runif
 sa.outliers6 <- acomp(rbind(typicalData,rnorm.acomp(20,acomp(c(4,4,1)),Mvar)))
 
 # Missings
-sa.missings <- simulateMissings(sa.lognormals,detectionlimit=0.05,MAR=0.05,MNAR=0.05,SZ=0.05)
+sa.missings <- simulateMissings(sa.lognormals,dl=0.05,MAR=0.05,MNAR=0.05,SZ=0.05)
 sa.missings[5,2]<-BDLvalue
 
-sa.missings5 <- simulateMissings(sa.lognormals5,detectionlimit=0.05,MAR=0.05,MNAR=0.05,SZ=0.05)
+sa.missings5 <- simulateMissings(sa.lognormals5,dl=0.05,MAR=0.05,MNAR=0.05,SZ=0.05)
 sa.missings5[5,2]<-BDLvalue
 
 

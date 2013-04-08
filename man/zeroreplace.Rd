@@ -52,7 +52,7 @@
 \examples{
 data(SimulatedAmounts)
 x <- acomp(sa.lognormals)
-xnew <- simulateMissings(x,detectionlimit=0.05,knownlimit=FALSE)
+xnew <- simulateMissings(x,dl=0.05,knownlimit=FALSE)
 xnew
 xrep <- zeroreplace(xnew,0.05)
 xrep

@@ -7,9 +7,10 @@
   Summary of a vector of amounts, according to its underlying geometry.
 }
 \usage{
-          \method{summary}{aplus}( object, \dots ,digits=max(3, getOption("digits")-3),robust=NULL)
-          \method{summary}{rplus}( object, \dots ,robust=NULL)
-          \method{summary}{rmult}( object, \dots ,robust=NULL)
+          \method{summary}{aplus}( object, \dots, 
+            digits=max(3, getOption("digits")-3), robust=NULL)
+          \method{summary}{rplus}( object, \dots, robust=NULL)
+          \method{summary}{rmult}( object, \dots, robust=NULL)
           }
 \arguments{
   \item{object}{an \code{\link{aplus}}/\code{\link{rplus}} set of

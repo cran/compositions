@@ -8,7 +8,9 @@
   directions of the three axes.
 }
 \usage{
-axis3D(axis.origin=c(0,0,0),axis.scale=1,axis.col="gray",vlabs=c("x","y","z"),vlabs.col=axis.col,bbox=FALSE,axis.lwd=2,axis.len=mean(axis.scale)/10,axis.angle=30,orth=c(1,0.0001,0.000001),axes=TRUE,...)
+axis3D(axis.origin=c(0,0,0),axis.scale=1,axis.col="gray",vlabs=c("x","y","z"),
+       vlabs.col=axis.col,bbox=FALSE,axis.lwd=2,axis.len=mean(axis.scale)/10,
+       axis.angle=30,orth=c(1,0.0001,0.000001),axes=TRUE,...)
 }
 \arguments{
   \item{axis.origin}{The location where to put the origin of the
