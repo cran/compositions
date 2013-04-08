@@ -648,7 +648,6 @@ mean.rmult <- function( x,...,na.action=NULL,robust=getOption("robust")) {
       rmult(switch(robust,
              pearson=do.call(meanCol,c(list(x=unclass(x)),control,...)),
              mcd={
-               require("robustbase")
                if(!is.null(control)) covMcd(unclass(x),...,control=control)$center else covMcd(unclass(x),...)$center},
                    
              stop("mean.rmult: Unkown robustness type:",robust)
@@ -725,7 +724,6 @@ var.acomp <- function(x,y=NULL,...,
              erg
              },
            mcd={
-             require("robustbase")
              if(is.null(y)) {
                erg <- ilrvar2clr(if( is.null(control)) covMcd(idt(x),...)$cov else covMcd(idt(x),...,control=control)$cov,x=x)
                if(giveCenter)
@@ -786,7 +784,6 @@ var.aplus  <- function(x,y=NULL,...,robust=getOption("robust"), use="all.obs",
            }
              ,
            mcd={
-             require("robustbase")
              if(is.null(y)) {
                erg <- if( is.null(control)) covMcd(idt(x),...)$cov else covMcd(idt(x),...,control=control)$cov
                if(giveCenter)

@@ -1,4 +1,5 @@
-import(tensorA,robustbase,rgl,graphics,stats)
+import(tensorA,energy,rgl,graphics,stats)
+importFrom(robustbase, covMcd, lmrob)
 exportPattern("^[^g[][a-zA-Z0-9\\.]*")
 exportPattern("^g[^s].*")
 export("gsi")
