@@ -13,7 +13,7 @@ biplot3D(x,...)
             xlabs = NULL, ylabs = NULL, expand = 1,arrow.len = 0.1,
             ...,add=FALSE)
  \method{biplot3D}{princomp}(x,choices=1:3,scale=1,...,
-            comp.col=par("fg"),comp.labs=paste("Comp.",1:3),
+            comp.col=1,comp.labs=paste("Comp.",1:3),
             scale.scores=lambda[choices]^(1-scale),
             scale.var=scale.comp, scale.comp=sqrt(lambda[choices]), 
             scale.disp=1/scale.comp)
@@ -29,7 +29,7 @@ biplot3D(x,...)
     of each component}
   \item{scale.disp}{a vector giving the scaling of the display in the
     directions of the components}
-  \item{comp.col}{color to draw the axes of the components}
+  \item{comp.col}{color to draw the axes of the components, defaults to black}
   \item{comp.labs}{labels for the components}
   \item{\dots}{further plotting parameters as defined in \code{\link[rgl]{rgl.material}}}
   \item{y}{matrix of  second point/arrow-head locations (typically, variables)}

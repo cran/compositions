@@ -2,7 +2,7 @@
 \alias{ConfRadius}
 \title{Helper to compute confidence ellipsoids}
 \description{
-  Computes the quantil of the Mahalanobis distance needed to draw
+  Computes the quantile of the Mahalanobis distance needed to draw
   confidence ellipsoids.
 }
 \usage{

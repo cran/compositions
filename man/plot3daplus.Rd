@@ -7,7 +7,7 @@
 }
 \usage{
 \method{plot3D}{aplus}(x,parts=1:3,...,
-                vlabs=NULL,add=FALSE,log=TRUE,bbox=FALSE,axes=TRUE,col=par("col"))
+                vlabs=NULL,add=FALSE,log=TRUE,bbox=FALSE,axes=TRUE,col=1)
 }
 \arguments{
   \item{x}{an aplus object to be plotted}
@@ -21,7 +21,7 @@
   \item{log}{logical, indicating wether to plot in log scale}
   \item{bbox}{logical, whether to add a bounding box}
   \item{axes}{logical, plot a coordinate system}
-  \item{col}{the color}
+  \item{col}{the color used for dots, defaults to black.}
 }
 \value{
   Called for its side effect of a 3D plot of an aplus object in an rgl plot.

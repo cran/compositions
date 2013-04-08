@@ -10,20 +10,13 @@ multiplication with a matrix is a matrix multiplication, where the
 vectors are either considered as row or as column vector.
 
 }
-\synopsis{
+\usage{
 \method{\%*\%}{acomp}(x,y)
 \method{\%*\%}{aplus}(x,y)
 }
 \arguments{
-\code{x \%*\% y}\cr
-\code{  x \%*\% A}\cr
-\code{  A \%*\% x}\cr
-\code{  x \%*\% y}\cr
-\code{  x \%*\% A}\cr
-\code{  A \%*\% x}\cr
-  \item{x}{a acomp or aplus object }
-  \item{y}{a acomp or aplus object}
-  \item{A}{a matrix interpreted in clr, ilr or ilt coordinates}
+  \item{x}{a acomp or aplus object or a matrix interpreted in clr, ilr or ilt coordinates}
+  \item{y}{a acomp or aplus object or a matrix interpreted in clr, ilr or ilt coordinates}
 }
 \value{
   Either a numeric vector containing the scalar products, or an object of

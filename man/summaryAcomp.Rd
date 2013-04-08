@@ -24,8 +24,10 @@
   \item{variation}{the variation matrix of the dataset (\code{{\link{variation.acomp}}})}
   \item{expsd}{a matrix containing the  one-sigma factor for
     each ratio, computed as \code{exp(sqrt(variation.acomp(W)))}. To
-    obtain a two-sigma-factor, one has to take its squared value. To obtain the
-    reverse bound we compute 1/expsd}
+    obtain a two-sigma-factor, one has to take its squared value (power 1.96, actually).}
+  \item{invexpsd}{the inverse of the preceding one, giving the reverse bound.
+    Additionally, it can be "almost" intepreted as a correlation coefficient, 
+    with values near one indicating high proportionality between the components.}
   \item{min}{a matrix containing the minimum of each of the pairwise ratios}
   \item{q1}{a matrix containing the 1-Quartile of each of the pairwise ratios}
   \item{median}{a matrix containing the median of each of the pairwise ratios}
@@ -35,9 +37,10 @@
 }
 \details{
   It is quite difficult to summarize a composition in a consistent and
-  interpretable way. We tried to provide such a summary here.
+  interpretable way. We tried to provide such a summary here, based on the
+  idea of the variation matrix.
 }
-\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
+\author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}, R. Tolosana-Delgado}
 \seealso{
   \code{\link{acomp}}
 }

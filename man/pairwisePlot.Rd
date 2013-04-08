@@ -8,8 +8,9 @@
 }
 \usage{
 pairwisePlot(X,Y,...)
-\method{pairwisePlot}{default}(X,Y=X,...,xlab=deparse(substitute(X)),ylab=deparse(substitute(Y)),nm=c(length(Y),length(X)),panel=plot)
-}
+\method{pairwisePlot}{default}(X,Y=X,...,
+                xlab=deparse(substitute(X)),ylab=deparse(substitute(Y)),nm=c(length(Y),length(X)),panel=plot,
+                add.line=FALSE, line.col=2,add.robust=FALSE,rob.col=4)}
 \arguments{
   \item{X}{a list, a data.frame, or a matrix representing the first set
           of things to be displayed.}
@@ -26,20 +27,42 @@ pairwisePlot(X,Y,...)
            \code{par(mfrow=nm)}. If NULL no parameter is setted and a
        sequence of plots can be generated. }
   \item{panel}{The panel function to plot the individual panels.
-    it is called as \code{panel(x,y,xlab=xlab,ylab=ylab,...)}. Thus the
-    panel function must be capable of of taking these arguments. It must
-     also set up its own plot. There is no negotiation on coordinate
-     system. 
+    If the panel function admits a formula interface, it is called
+    as \code{panel(y~x, xlab=xlab,ylab=ylab,...)}, otherwise
+    as \code{panel(x, y,xlab=xlab,ylab=ylab,...)}. Thus the
+    panel function must be capable of taking these arguments. It must
+    also set up its own plot. There is no negotiation on coordinate
+    system.     
    }
+  \item{add.line}{logical, to control the addition of a regression line
+         in each panel}
+  \item{line.col}{in case the regression line is added, which color should be
+        used? defaults to red. }
+  \item{add.robust}{logical, to control the addition of a robust regression line
+         in each panel. Ignored if covariable is a factor. This is nowadays 
+         based on \code{\link{lmrob}}, but this can change in the future.}
+  \item{rob.col}{in case the robust regression line is added, which color should be
+        used? Defaults to blue. }   
   }
-\details{ This is a light weight conveniance function to several
+\details{ This is a light-weight convenience function to plot several
 aspects of one dataset against several aspects of another dataset.  It
-is far more straight forward than e.g. the \code{pairs} function and
+is far more straight-forward than e.g. the \code{pairs} function and
 does not do any internal computation rather than organizing the names.
+Of course, the rows of the two data sets must be the same.
+
+The current implementation may display a warning about the function
+\code{panel} dispatching methods for generic \code{plot}. It can be
+ignored without harm.
+
+Optionally, classical and/or robust regression lines can be drawn, though
+only for non-factor covariables.
+
+It may be convenient to use \code{\link{par}} capabilities to fit the device
+characteristics to the plot, in particular arguments \code{mar} and \code{oma}.
 }
 \references{
   Boogaart, K.G. v.d. , R. Tolosana (2008) Mixing Compositions and Other
-  scales, Proceedings of CodaWork 08, to appear
+  scales, Proceedings of CodaWork 08.
 
   
   \url{http://ima.udg.es/Activitats/CoDaWork03}\cr
@@ -53,7 +76,7 @@ does not do any internal computation rather than organizing the names.
 Tolosana-Delgado}
 
 \seealso{
-  \code{\link{plot.aplus}}, \code{\link{balance}}
+  \code{\link{plot.aplus}}, \code{\link{balance}}, \code{\link{pwlrPlot}}
 }
 \examples{
 
@@ -77,6 +100,18 @@ subComps <- function(X,...,all=list(...)) {
 }
 
 pairwisePlot(X,subComps(Y,A~B,A~C,B~C))
+
+## using Hydrochemical data set as illustration of mixed possibilities
+data(Hydrochem)
+xc = acomp(Hydrochem[,c("Ca","Mg","Na","K")])
+fk = Hydrochem$River
+pH = -log10(Hydrochem$H)
+covars = data.frame(pH, River=fk)
+pairwisePlot(clr(xc), pH)
+pairwisePlot(clr(xc), pH, col=fk)
+pairwisePlot(pH, ilr(xc), add.line=TRUE)
+pairwisePlot(covars, ilr(xc), add.line=TRUE, line.col="magenta")
+pairwisePlot(clr(xc), covars, add.robust=TRUE)
 
 }
 \keyword{hplot}

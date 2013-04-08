@@ -1,6 +1,6 @@
 plot3D <- function(x,...) UseMethod("plot3D")
 
-plot3D.rmult <- function(x,parts=1:3,...,center=FALSE,scale=FALSE,add=FALSE,axes=!add,cex=2,vlabs=colnames(x),size=cex,bbox=FALSE,col=par("col")) {
+plot3D.rmult <- function(x,parts=1:3,...,center=FALSE,scale=FALSE,add=FALSE,axes=!add,cex=2,vlabs=colnames(x),size=cex,bbox=FALSE,col=1) {
   #require("rgl")
   X<-x
   if( ! add ) 
@@ -79,7 +79,7 @@ gsi.filtercall <- function(fkt,...,overwrite=NULL,transmit=character(0),default=
   do.call(fkt,args[nn],envir=parent.frame(2)) # this line is the source of error!!!
 }
 
-plot3D.default <- function(x,...,add=FALSE,bbox=TRUE,axes=FALSE,cex=1,size=cex,col=par("col")) {
+plot3D.default <- function(x,...,add=FALSE,bbox=TRUE,axes=FALSE,cex=1,size=cex,col=1) {
   #require("rgl")
   X<-x
   if( ! add )
@@ -93,7 +93,7 @@ plot3D.default <- function(x,...,add=FALSE,bbox=TRUE,axes=FALSE,cex=1,size=cex,c
 
 
 
-plot3D.acomp <- function(x,parts=1:min(ncol(X),4),...,lwd=2,axis.col="gray",add=FALSE,cex=2,vlabs=colnames(x),vlabs.col=axis.col,center=FALSE,scale=FALSE,log=FALSE,bbox=FALSE,axes=TRUE,size=cex,col=par("col")) {
+plot3D.acomp <- function(x,parts=1:min(ncol(X),4),...,lwd=2,axis.col="gray",add=FALSE,cex=2,vlabs=colnames(x),vlabs.col=axis.col,center=FALSE,scale=FALSE,log=FALSE,bbox=FALSE,axes=TRUE,size=cex,col=1) {
   #require("rgl")
   X<-x
   if( length(parts) == 3 ) {
@@ -170,7 +170,7 @@ axis3D <- function(axis.origin=c(0,0,0),axis.scale=1,axis.col="gray",vlabs=c("x"
   }
 }
 
-plot3D.rplus <- function(x,parts=1:3,...,vlabs=NULL,add=FALSE,bbox=FALSE,cex=1,size=cex,axes=TRUE,col=par("col")) {
+plot3D.rplus <- function(x,parts=1:3,...,vlabs=NULL,add=FALSE,bbox=FALSE,cex=1,size=cex,axes=TRUE,col=1) {
   #require("rgl")
   X<-x
   if(! add )
@@ -183,7 +183,7 @@ plot3D.rplus <- function(x,parts=1:3,...,vlabs=NULL,add=FALSE,bbox=FALSE,cex=1,s
   invisible(NULL)
 }
 
-plot3D.aplus <- function(x,parts=1:3,...,vlabs=NULL,add=FALSE,log=TRUE,bbox=FALSE,axes=TRUE,col=par("col")) {
+plot3D.aplus <- function(x,parts=1:3,...,vlabs=NULL,add=FALSE,log=TRUE,bbox=FALSE,axes=TRUE,col=1) {
   #require("rgl")
   X<-x
   if( ! log ) {
@@ -206,7 +206,7 @@ plot3D.aplus <- function(x,parts=1:3,...,vlabs=NULL,add=FALSE,log=TRUE,bbox=FALS
 
 arrows3D <- function(...) UseMethod("arrows3D")
 
-#par("fg") # when the plotting functions put their reference arrows, the call to par() generates a blank plot
+#par("fg") and par("col") # when the plotting functions put their reference arrows, the call to par() generates a blank plot, replaced by col=1
 arrows3D.default <- function(x0,x1,...,length=0.25,
                      angle=30,code=2,col="black",lty=NULL,lwd=2,orth=c(1,0.0001,0.0000001),labs=NULL,size=lwd) {
   X <- oneOrDataset(x0,x1)
@@ -281,7 +281,7 @@ biplot3D.default <- function(x,y,var.axes=TRUE,
   invisible(NULL)
 }
 
-biplot3D.princomp <- function(x,choices=1:3,scale=1,...,comp.col=par("fg"),comp.labs=paste("Comp.",1:3),scale.scores=lambda[choices]^(1-scale),scale.var=scale.comp,scale.comp=sqrt(lambda[choices]),scale.disp=1/scale.comp) {
+biplot3D.princomp <- function(x,choices=1:3,scale=1,...,comp.col=1,comp.labs=paste("Comp.",1:3),scale.scores=lambda[choices]^(1-scale),scale.var=scale.comp,scale.comp=sqrt(lambda[choices]),scale.disp=1/scale.comp) {
   #require("rgl")
   lambda <- x$sdev^2
   if( length(scale.var) == 1 ) scale.var <- rep(scale.var,3)

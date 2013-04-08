@@ -7,7 +7,7 @@
 \usage{
 \method{plot3D}{rmult}(x,parts=1:3,...,
                  center=FALSE,scale=FALSE,add=FALSE,axes=!add,
-                 cex=2,vlabs=colnames(x),size=cex,bbox=FALSE,col=par("col"))
+                 cex=2,vlabs=colnames(x),size=cex,bbox=FALSE,col=1)
 }
 \arguments{
   \item{x}{an object to be plotted, e.g. a data frame or a data matrix}
@@ -24,7 +24,7 @@
   \item{cex}{size of the plotting symbol (as expanding factor)}
   \item{vlabs}{labels for the variables}
   \item{size}{size of the plotting symbol, only size or cex should be used}
-  \item{col}{the plotting color}
+  \item{col}{the color used for dots, defaults to black.}
 }
 \value{
   Nothing
@@ -40,7 +40,7 @@
   \code{\link[rgl]{points3d}},
   \code{\link[graphics]{plot}}, \code{\link{plot3D.rmult}},
   
-  \code{\link{plot3D.acomp}},\code{\link{plot3D.rcomp}},,
+  \code{\link{plot3D.acomp}},\code{\link{plot3D.rcomp}},
   \code{\link{plot3D.aplus}},\code{\link{plot3D.rplus}}
 }
 \examples{

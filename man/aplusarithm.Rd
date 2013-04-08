@@ -13,16 +13,12 @@
  space. These vector space operations are defined here in a similar way
  to \code{\link{+.rmult}}.
 }
-\synopsis{
+\usage{
 perturbe.aplus(x,y)
 \method{+}{aplus}(x,y)
 \method{-}{aplus}(x,y)
 \method{*}{aplus}(x,y)
 \method{/}{aplus}(x,y)
-power.aplus(x,r)
-}
-\usage{
-perturbe.aplus(x,y)
 ##  Methods for aplus
 ##   x+y
 ##   x-y

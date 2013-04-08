@@ -8,24 +8,14 @@ another vector is the scalar product. an inner multiplication with
 a matrix is a matrix multiplication, where the rmult-vectors are either
 considered as row or as column vector.  
 }
-\synopsis{
+\usage{
 \method{\%*\%}{rmult}(x,y)
 }
 \arguments{
-\code{  x \%*\% y }\cr
-\code{   x \%*\% v}\cr
-\code{   v \%*\% x}\cr
-\code{   x \%*\% A}\cr
-\code{   A \%*\% x}\cr
-\code{   w \%*\% A}\cr
-\code{   A \%*\% w}\cr
-\code{   w \%*\% x}\cr
-\code{   x \%*\% w}\cr
-  \item{x}{an rmult vector or dataset of vectors }
-  \item{y}{an rmult vector or dataset of vectors }
-  \item{v}{a numeric vector of length \code{gsi.getD(x)}}
-  \item{w}{a numeric vector of length \code{gsi.getD(x)}}
-  \item{A}{a matrix}
+  \item{x}{an rmult vector or dataset of vectors, a numeric vector of
+    length (\code{gsi.getD(y)}), or a matrix}
+  \item{y}{an rmult vector or dataset of vectors , a numeric vector of
+    length (\code{gsi.getD(x)}), or a matrix}
 }
 \value{
   an object of class \code{"rmult"} or a numeric vector containing the

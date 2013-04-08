@@ -905,6 +905,7 @@ summary.acomp <- function( object,...,robust=getOption("robust") ) {
        mean.ratio=apply(Wq,1:2,function(x) exp(mean(log(x[is.finite(x)])))),
        variation=vari,
        expsd=if( is.null(vari) ) NULL else exp(sqrt(vari)),
+       invexpsd=if( is.null(vari) ) NULL else exp(-sqrt(vari)),
        min=apply(Wq,1:2,function(x) min(narm(x))),
        q1 =apply(Wq,1:2,function(x,...) quantile(narm(x),...),probs=0.25),
        med=apply(Wq,1:2,function(x,...) median(narm(x),...)),
@@ -3558,20 +3559,22 @@ isoPortionLines.acomp <- function(by=0.2,at=seq(0,1,by=by),...,parts=1:3,total=1
     dir   <- rep(0,3)
     dir[k]<- 0
     dir[-k]<-c(1,-1)
-    dir = rmult(rcomp(dir*unclass(coor$mean))) # directions must be also perturbed!
+    dirt = rmult(rcomp(dir/unclass(coor$mean))) # directions must be also perturbed!
+    diru = rmult(rcomp(dir)) # directions must be also per
     for(p in at) {
       start <- rep((1-p)/2,3)
       start[k] <- p
-      tx <- rep(0,3)    # to place the text, it is easy to...
+      tx <- rep(0,3)    # to p,center=TRUElace the text, it is easy to...
       tx[k] <- p         # ... take points on the sides of the diagram
       tx[c(3,1,2)[k]] <- 1-p
       if( p>0 && p<1 ) {
-        kw <- clo(start*unclass(coor$mean)) # perturbation must be positive
-        tx <- clo(tx*unclass(coor$mean))
-        if(lines) noreplot(straight.rcomp(kw,dir,...))
-        kw <- isoCollaps(tx,k)
+        #kwt <- clo(start/unclass(coor$mean)) # perturbation must be positive
+        kwu <- clo(start)#/unclass(coor$mean)) # perturbation must be positive
+        tx <- clo(tx/unclass(coor$mean))
+        if(lines) noreplot(straight.rcomp(kwu,diru,...))
+        kwt <- isoCollaps(tx,k)
         if( labs ){
-            text(kw[2]+cos(60*pi/180)*kw[3],kw[3]*sin(60*pi/180),
+            text(kwt[2]+cos(60*pi/180)*kwt[3],kwt[3]*sin(60*pi/180),
             paste(p*total,unit[(k-1)%%length(unit)+1]),pos=c(2,1,4)[k],...,xpd=TRUE)
            }
       }
@@ -4398,6 +4401,7 @@ segments.rcomp <- function(x0,y,...,steps=30,aspanel=FALSE) {
 
 
 
+
 segments.aplus <- function(x0,y,...,steps=30,aspanel=FALSE) {
   X <- oneOrDataset(x0,y)
   Y <- oneOrDataset(y,x0)
@@ -4568,7 +4572,7 @@ gsi.DrawCompEllipses = function(mean,var,r,steps=72,...) {
   for(k in 1:nrow(meFull) ) {
     # me   <- structure(meFull[k,],class="rmult")
     me   <- meFull[k,]
-    X <- ilrInv(cbind(me[1]+rs[1]*ei$vectors[1,1]*sw+rs[2]*ei$vectors[1,2]*cw,
+    X <- idtInv(cbind(me[1]+rs[1]*ei$vectors[1,1]*sw+rs[2]*ei$vectors[1,2]*cw,
                       me[2]+rs[1]*ei$vectors[2,1]*sw+rs[2]*ei$vectors[2,2]*cw
                       ), orig=mean)
     noreplot(lines(structure(X,trafoed=TRUE),...,aspanel=TRUE))
@@ -4857,6 +4861,10 @@ straight.rcomp <- function(x,d,...,steps=30,aspanel=FALSE) {
 ### 7) return(invisible(replot(plot=FALSE))) 
   return(invisible(replot(plot=FALSE)))
 }
+
+
+
+
 #straight.rplus <- function(x,d,...,steps=30) {
 #  x <- oneOrDataset(x,d)
 #  d <- oneOrDataset(d,x)

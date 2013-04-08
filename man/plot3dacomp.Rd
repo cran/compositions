@@ -10,11 +10,11 @@
  \method{plot3D}{acomp}(x, parts=1:min(ncol(X),4),..., 
              lwd=2, axis.col="gray", add=FALSE, cex=2, 
              vlabs=colnames(x), vlabs.col=axis.col, center=FALSE, 
-             scale=FALSE, log=FALSE, bbox=FALSE, axes=TRUE, size=cex,col=par("col"))
+             scale=FALSE, log=FALSE, bbox=FALSE, axes=TRUE, size=cex,col=1)
 \method{plot3D}{rcomp}(x,parts=1:min(ncol(X),4),...,
              lwd=2,axis.col="gray",add=FALSE,cex=2,
              vlabs=colnames(x),vlabs.col=axis.col,center=FALSE,
-             scale=FALSE,log=FALSE,bbox=FALSE,axes=TRUE,size=cex,col=par("col"))
+             scale=FALSE,log=FALSE,bbox=FALSE,axes=TRUE,size=cex,col=1)
 }
 \arguments{
   \item{x}{an aplus object to be plotted}
@@ -35,7 +35,7 @@
   \item{bbox}{logical, whether to add a bounding box}
   \item{axes}{logical, whether plot a coordinate cross}
   \item{size}{size of the plotting symbols}
-  \item{col}{the color}
+  \item{col}{the color used for dots, defaults to black.}
 
 }
 \value{
