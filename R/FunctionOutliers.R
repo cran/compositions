@@ -700,76 +700,184 @@ ClusterFinder1.acomp <- function(X,...,sigma=0.3,radius=1,asig=1,minGrp=3,robust
 
 
 ## function to provide a coloured biplot (admits SVD, princomp and prcomp)
-coloredBiplot <- function(xrf, scale=1, choice=c(1,2), pc.biplot=FALSE, 
-        xcol="black", ycol="red", xpch=4, ypch=1, cex=1, 
-        xarrows=FALSE, yarrows=!xarrows, xnames=NULL, ynames=NULL,...){
- # X : cases (points)
- # Y : variables (arrows)
-   if("princomp" %in% class(xrf)){
-      X = xrf$scores
-      Y = xrf$loadings
-      if(is.null(xnames)){xnames=rownames(X)}
-      if(is.null(ynames)){ynames=rownames(Y)}
-      l = xrf$sdev
-      fac = ifelse(pc.biplot,sqrt(nrow(X)),1)
-   }
-   if("prcomp" %in% class(xrf)){
-      X = xrf$x
-      Y = xrf$rotation
-      if(is.null(xnames)){xnames=rownames(X)}
-      if(is.null(ynames)){ynames=rownames(Y)}
-      l = xrf$sdev
-      fac = ifelse(pc.biplot,sqrt(nrow(X)),1)
-   }
-   if("list" %in% class(xrf)){
-     warning("Attention: biplot tries to interpret xrf as result of an svd")
-     if(pc.biplot){
-      X = as.matrix(xrf$u)*sqrt(nrow(X))
-      Y = xrf$v/sqrt(nrow(X))
-      l = xrf$d
-     }
-     if(!pc.biplot){
-      X = as.matrix(xrf$u)  %*% diag(xrf$d)
-      Y = xrf$v
-      l = xrf$d /sqrt(nrow(X))
-     }
-      warning("recall that singular value decomposition does not center the data set")
-      fac = 1
-   }
-   Xx = X[,choice[1]]*(l[choice[1]]^(1-scale))*fac
-   Xy = X[,choice[2]]*(l[choice[2]]^(1-scale))*fac
-   Yx = Y[,choice[1]]*(l[choice[1]]^(scale))/fac
-   Yy = Y[,choice[2]]*(l[choice[2]]^(scale))/fac
-# abandoned attempts to scale X and Y in the same way as R does:
-#      span = function(x){ c(range(x)%*%c(-1,1)) }
-#      escala = 0.8*max(span(Xx)/span(Yx),span(Xy)/span(Yy))
-#      Yx = Yx #* span(Xx)/span(Yx) # escala
-#      Yy = Yy #* span(Xy)/span(Yy) # escala
-# more abandoned attempts to scale X and Y in the same way as R does:
-#    escala =0.8*as.double(xlm%*%c(-1,1)/(xlml%*%c(-1,1)))
-#    xlm=c(min(xlml*escala,xlm),max(xlml*escala,xlm))
-#      xlm = c(-1,1)*max(abs(xlm))
-#      ylm = xlm
-#    ylm=c(min(ylml*escala,ylm),max(ylml*escala,ylm))
-#      ylm = c(-1,1)*max(abs(ylm))
-#    ratio=as.double(xlm%*%c(-1,1))/(ylm%*%c(-1,1))
-#    ylm=ratio*ylm
-#      print(c(xlm,ylm))
+#coloredBiplot <- function(xrf, scale=1, choice=c(1,2), pc.biplot=FALSE, 
+#        xcol="black", ycol="red", xpch=4, ypch=1, cex=1, 
+#        xarrows=FALSE, yarrows=!xarrows, xnames=NULL, ynames=NULL,...){
+# # X : cases (points)
+# # Y : variables (arrows)
+#   if("princomp" %in% class(xrf)){
+#      X = xrf$scores
+#      Y = xrf$loadings
+#      if(is.null(xnames)){xnames=rownames(X)}
+#      if(is.null(ynames)){ynames=rownames(Y)}
+#      l = xrf$sdev
+#      fac = ifelse(pc.biplot,sqrt(nrow(X)),1)
+#   }
+#   if("prcomp" %in% class(xrf)){
+#      X = xrf$x
+#      Y = xrf$rotation
+#      if(is.null(xnames)){xnames=rownames(X)}
+#      if(is.null(ynames)){ynames=rownames(Y)}
+#      l = xrf$sdev
+#      fac = ifelse(pc.biplot,sqrt(nrow(X)),1)
+#   }
+#   if("list" %in% class(xrf)){
+#     warning("Attention: biplot tries to interpret xrf as result of an svd")
+#     if(pc.biplot){
+#      X = as.matrix(xrf$u)*sqrt(nrow(X))
+#      Y = xrf$v/sqrt(nrow(X))
+#      l = xrf$d
+#     }
+#     if(!pc.biplot){
+#      X = as.matrix(xrf$u)  %*% diag(xrf$d)
+#      Y = xrf$v
+#      l = xrf$d /sqrt(nrow(X))
+#     }
+#      warning("recall that singular value decomposition does not center the data set")
+#      fac = 1
+#   }
+#   Xx = X[,choice[1]]*(l[choice[1]]^(1-scale))*fac
+#   Xy = X[,choice[2]]*(l[choice[2]]^(1-scale))*fac
+#   Yx = Y[,choice[1]]*(l[choice[1]]^(scale))/fac
+#   Yy = Y[,choice[2]]*(l[choice[2]]^(scale))/fac
+## abandoned attempts to scale X and Y in the same way as R does:
+##      span = function(x){ c(range(x)%*%c(-1,1)) }
+##      escala = 0.8*max(span(Xx)/span(Yx),span(Xy)/span(Yy))
+##      Yx = Yx #* span(Xx)/span(Yx) # escala
+##      Yy = Yy #* span(Xy)/span(Yy) # escala
+## more abandoned attempts to scale X and Y in the same way as R does:
+##    escala =0.8*as.double(xlm%*%c(-1,1)/(xlml%*%c(-1,1)))
+##    xlm=c(min(xlml*escala,xlm),max(xlml*escala,xlm))
+##      xlm = c(-1,1)*max(abs(xlm))
+##      ylm = xlm
+##    ylm=c(min(ylml*escala,ylm),max(ylml*escala,ylm))
+##      ylm = c(-1,1)*max(abs(ylm))
+##    ratio=as.double(xlm%*%c(-1,1))/(ylm%*%c(-1,1))
+##    ylm=ratio*ylm
+##      print(c(xlm,ylm))
 
-   par(pty="s")
-   plot(c(Xx,Yx)*1.05,c(Xy,Yy)*1.05,type="n",col=xcol,ann=FALSE,pch=xpch,cex=cex,...)
-   if( xarrows ) 
-     arrows(x0=0,y0=0, x1=Xx, y1=Xy,length=0.1,col=xcol)
-   else
-     points(x=Xx, y=Xy,col=xcol,pch=xpch)
-   if( yarrows ){
-     arrows(x0=0,y0=0, x1=Yx, y1=Yy,length=0.1,col=ycol)
-   }else{
-     points(x=Yx, y=Yy,col=ycol,pch=ypch)
-   }
-   text(x=Xx*1.05,y=Xy*1.05,labels=xnames,...)
-   text(x=Yx*1.05,y=Yy*1.05,labels=ynames,...)
+#   par(pty="s")
+#   plot(c(Xx,Yx)*1.05,c(Xy,Yy)*1.05,type="n",col=xcol,ann=FALSE,pch=xpch,cex=cex,...)
+#   if( xarrows ) 
+#     arrows(x0=0,y0=0, x1=Xx, y1=Xy,length=0.1,col=xcol)
+#   else
+#     points(x=Xx, y=Xy,col=xcol,pch=xpch)
+#   if( yarrows ){
+#     arrows(x0=0,y0=0, x1=Yx, y1=Yy,length=0.1,col=ycol)
+#   }else{
+#     points(x=Yx, y=Yy,col=ycol,pch=ypch)
+#   }
+#   text(x=Xx*1.05,y=Xy*1.05,labels=xnames,...)
+#   text(x=Yx*1.05,y=Yy*1.05,labels=ynames,...)
+#}
+coloredBiplot <- function(x, ...) UseMethod("coloredBiplot")
+
+coloredBiplot.default <-
+    function(x, y, var.axes = TRUE, col, cex = rep(par("cex"), 2),
+	     xlabs = NULL, ylabs = NULL, expand=1, xlim = NULL, ylim = NULL,
+	     arrow.len = 0.1,
+             main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
+             xlabs.col = NULL, xlabs.pc=NULL, ...)
+{
+    n <- nrow(x)
+    p <- nrow(y)
+    if(missing(xlabs)) {
+	xlabs <- dimnames(x)[[1]]
+	if(is.null(xlabs)) xlabs <- 1:n
+    }
+    xlabs <- as.character(xlabs)
+    dimnames(x) <- list(xlabs, dimnames(x)[[2]])
+    if(missing(ylabs)) {
+	ylabs <- dimnames(y)[[1]]
+	if(is.null(ylabs)) ylabs <- paste("Var", 1:p)
+    }
+    ylabs <- as.character(ylabs)
+    dimnames(y) <- list(ylabs, dimnames(y)[[2]])
+
+    if(length(cex) == 1) cex <- c(cex, cex)
+    if(missing(col)) {
+	col <- par("col")
+	if (!is.numeric(col)) col <- match(col, palette(), nomatch=1)
+	col <- c(col, col + 1)
+    }
+    else if(length(col) == 1) col <- c(col, col)
+
+    unsigned.range <- function(x)
+        c(-abs(min(x, na.rm=TRUE)), abs(max(x, na.rm=TRUE)))
+    rangx1 <- unsigned.range(x[, 1])
+    rangx2 <- unsigned.range(x[, 2])
+    rangy1 <- unsigned.range(y[, 1])
+    rangy2 <- unsigned.range(y[, 2])
+
+    if(missing(xlim) && missing(ylim))
+	xlim <- ylim <- rangx1 <- rangx2 <- range(rangx1, rangx2)
+    else if(missing(xlim)) xlim <- rangx1
+    else if(missing(ylim)) ylim <- rangx2
+    ratio <- max(rangy1/rangx1, rangy2/rangx2)/expand
+    on.exit(par(op))
+    op <- par(pty = "s")
+    if(!is.null(main))
+        op <- c(op, par(mar = par("mar")+c(0,0,1,0)))
+    if(missing(xlabs.col)){
+     col1 = col[1]
+    }else{
+     col1 = xlabs.col
+    }
+    plot(x, type = "n", xlim = xlim, ylim = ylim, col = col1,
+         xlab = xlab, ylab = ylab, sub = sub, main = main, ...)
+    if(missing(xlabs.pc)){ 
+       text(x, xlabs, cex = cex[1], col = col1, ...)
+    }else{
+       points(x, cex = cex[1], col = col1, pch=xlabs.pc, ...)
+    }
+    par(new = TRUE)
+    plot(y, axes = FALSE, type = "n", xlim = xlim*ratio, ylim = ylim*ratio,
+	 xlab = "", ylab = "", col = col[1], ...)
+    axis(3, col = col[2], ...)
+    axis(4, col = col[2], ...)
+    box(col = col[1])
+    text(y, labels=ylabs, cex = cex[2], col = col[2], ...)
+    if(var.axes)
+	arrows(0, 0, y[,1] * 0.8, y[,2] * 0.8, col = col[2], length=arrow.len)
+    invisible()
 }
+
+coloredBiplot.princomp <- function(x, choices = 1:2, scale = 1, pc.biplot=FALSE, ...)
+{
+    if(length(choices) != 2) stop("length of choices must be 2")
+    if(!length(scores <- x$scores))
+	stop(gettextf("object '%s' has no scores", deparse(substitute(x))),
+             domain = NA)
+    lam <- x$sdev[choices]
+    if(is.null(n <- x$n.obs)) n <- 1
+    lam <- lam * sqrt(n)
+    if(scale < 0 || scale > 1) warning("'scale' is outside [0, 1]")
+    if(scale != 0) lam <- lam^scale else lam <- 1
+    if(pc.biplot) lam <- lam / sqrt(n)
+    coloredBiplot.default(t(t(scores[, choices]) / lam),
+		   t(t(x$loadings[, choices]) * lam), ...)
+    invisible()
+}
+
+coloredBiplot.prcomp <- function(x, choices = 1:2, scale = 1, pc.biplot=FALSE, ...)
+{
+    if(length(choices) != 2) stop("length of choices must be 2")
+    if(!length(scores <- x$x))
+	stop(gettextf("object '%s' has no scores", deparse(substitute(x))),
+             domain = NA)
+    if(is.complex(scores))
+        stop("biplots are not defined for complex PCA")
+    lam <- x$sdev[choices]
+    n <- NROW(scores)
+    lam <- lam * sqrt(n)
+    if(scale < 0 || scale > 1) warning("'scale' is outside [0, 1]")
+    if(scale != 0) lam <- lam^scale else lam <- 1
+    if(pc.biplot) lam <- lam / sqrt(n)
+    coloredBiplot.default(t(t(scores[, choices]) / lam),
+		   t(t(x$rotation[, choices]) * lam), ...)
+    invisible()
+}
+
 
 
 ## a colour code generator for outlierfactors
@@ -867,7 +975,7 @@ outlierplot.acomp <- function(X,colcode=colorsForOutliers1,pchcode=pchForOutlier
       pr <- princomp(cdt(X),robust=princomp.robust)
     else
       pr <- princomp.robust
-    coloredBiplot(xrf=pr,xcol=colcode[as.integer(myCls)],pc.biplot=FALSE,xpch=pch,...)
+    coloredBiplot(x=pr,xlabs.col=colcode[as.integer(myCls)],pc.biplot=FALSE,xlabs.pc=pch,...)
     title(main=main)
     if(!missing(legend.position))
       legend(legend.position,legend=levels(myCls),col=colcode,pch=pch)

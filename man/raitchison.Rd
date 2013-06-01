@@ -12,7 +12,7 @@ dAitchison(x,
            theta=alpha+sigma \%*\% clr(mu),
            beta=-1/2*gsi.svdinverse(sigma),
            alpha=mean(theta),
-           mu=clrInv(sigma\%*\%(theta-alpha)),
+           mu=clrInv(c(sigma\%*\%(theta-alpha))),
            sigma=-1/2*gsi.svdinverse(beta),
            grid=30,
            realdensity=FALSE,
@@ -22,13 +22,13 @@ rAitchison(n,
            theta=alpha+sigma \%*\% clr(mu),
            beta=-1/2*gsi.svdinverse(sigma),
            alpha=mean(theta),
-           mu=clrInv(sigma\%*\%(theta-alpha)),
-           sigma=-1/2*gsi.svdinverse(beta))
+           mu=clrInv(c(sigma\%*\%(theta-alpha))),
+           sigma=-1/2*gsi.svdinverse(beta), withfit=FALSE)
 AitchisonDistributionIntegrals(
            theta=alpha+sigma \%*\% clr(mu),
            beta=-1/2*gsi.svdinverse(sigma),
            alpha=mean(theta),
-           mu=clrInv(sigma\%*\%(theta-alpha)),
+           mu=clrInv(c(sigma\%*\%(theta-alpha))),
            sigma=-1/2*gsi.svdinverse(beta),
            grid=30,
            mode=3)
@@ -53,6 +53,8 @@ AitchisonDistributionIntegrals(
     3: same as 2, but compute clrVar instead of clrSqExpectation\cr
   }
   \item{expKappa}{The closing divisor of the density}
+  \item{withfit}{Should a pre-spliting of the Aitchison density be used for 
+    simulation?}
 }
 \value{
   \item{dAitchison}{Returns the density of the Aitchison distribution

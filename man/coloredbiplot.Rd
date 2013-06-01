@@ -1,5 +1,8 @@
 \name{coloredBiplot}
 \alias{coloredBiplot}
+\alias{coloredBiplot.default}
+\alias{coloredBiplot.princomp}
+\alias{coloredBiplot.prcomp}
 \title{A biplot providing somewhat easier access to details of the plot.}
 \description{
   This function generates a simple biplot out of various source and
@@ -8,39 +11,57 @@
   changed in next edition)
 }
 \usage{
-coloredBiplot(xrf, scale=1, choice=c(1,2), pc.biplot=FALSE, 
-        xcol="black", ycol="red", xpch=4, ypch=1, cex=1, 
-        xarrows=FALSE, yarrows=!xarrows, xnames=NULL, ynames=NULL,...)
+
+\method{coloredBiplot}{default}(x, y, var.axes = TRUE, col, 
+         cex = rep(par("cex"), 2), xlabs = NULL, ylabs = NULL, expand=1, 
+         xlim = NULL, ylim = NULL, arrow.len = 0.1, main = NULL, sub = NULL, 
+         xlab = NULL, ylab = NULL, xlabs.col = NULL, xlabs.pc=NULL, ...)
+\method{coloredBiplot}{princomp}(x, choices = 1:2, scale = 1, 
+         pc.biplot=FALSE, ...)
+\method{coloredBiplot}{prcomp}(x, choices = 1:2, scale = 1, 
+         pc.biplot=FALSE, ...)
+         
 }
 \arguments{
-  \item{xrf}{a representation of the the co-information to be
-    plotted, given by a result of princomp, prcomp or svd}
+  \item{x}{a representation of the the co-information to be
+    plotted, given by a result of princomp or prcomp; or the first set of
+    coordinates to be plotted}
+  \item{y}{optional, the second set of coordinates to be potted}
+  \item{var.axes}{If 'TRUE# the second set of points have arrows representing
+    them as (unscaled) axes.}
+  \item{col}{One color (to be used for the y set) or a vector of two colors 
+    (to be used for x and y sets respectively, if xlabs.col is NULL)}
+  \item{cex}{the usual cex parameter for plotting; can be a length-2 vector to
+    format differently x and y labels/symbols.}
+  \item{xlabs}{The names to write for the points of the first set}
+  \item{ylabs}{The names to write for the points of the second set}
+  \item{expand}{An expansion factor to apply when plotting the second set of 
+    points relative to the first. This can be used to tweak the scaling of the 
+    two sets to a physically comparable scale.}
+  \item{xlim}{horizontal axis limits}  
+  \item{ylim}{vertical axis limits}  
+  \item{arrow.len}{The length of the arrow heads on the axes plotted in 
+  'var.axes' is true. The arrow head can be suppressed by 'arrow.len=0'.}
+  \item{main}{main title}  
+  \item{sub}{subtitle}  
+  \item{xlab}{horizontal axis title}  
+  \item{ylab}{vertical axis title}  
+  \item{xlabs.col}{The color(s) to draw the points of the first set}
+  \item{xlabs.pc}{the plotting character(s) for the first set} 
   \item{scale}{the way to distribute the singular values on the 
-    right or left singular vectors (see \code{\link{biplot}})}
-  \item{choice}{the components to be plotted (see \code{\link{biplot}})}
+    right or left singular vectors for princomp and prcomp objects 
+    (see \code{\link{biplot}})}
+  \item{choices}{the components to be plotted (see \code{\link{biplot}})}
   \item{pc.biplot}{should be scaled by \code{sqrt(nrow(X))}? 
     (see \code{\link{biplot}}) }
-  \item{xcol}{The color(s) to draw the points (or arrows) of the first set}
-  \item{ycol}{The color(s) to draw the points (or arrows) of the second set}
-  \item{xpch}{the plot character for the first set} 
-  \item{ypch}{the plot character for the second set}
-  \item{cex}{the usual cex parameter for plotting}
-  \item{xarrows}{wether or not to plot the arrows for the first dataset}  
-  \item{yarrows}{wether or not to plot the arrows for the second dataset}  
-  \item{xnames}{The names to write for the points of the first set}
-  \item{ynames}{The names to write for the points of the second set}
   \item{\dots}{further parameters for plot}
 }
 \value{
-The function is called only for the sideeffect of plotting. 
+The function is called only for the side effect of plotting. It is a modification 
+of the standard R routine 'biplot'.
 }
 \details{
-  The functions is provided for conveniance and is to be considered
-experimental. 
-}
-\note{This function is experimental a more elaborated incorporating
-generics and more detailed controls will be provided in the next version
-or a seperate package.
+  The functions is provided for convenience. 
 }
 \author{Raimon Tolosana-Delgado, K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
@@ -48,8 +69,7 @@ or a seperate package.
 }
 \examples{
 data(SimulatedAmounts)
-coloredBiplot(xrf=svd(var(sa.outliers5)),pc.biplot=FALSE,
-          xpch=c(1,2,3), xcol=1:3,
-          ycol=c("blue","cyan","magenta"))
+coloredBiplot(x=princomp(acomp(sa.outliers5)),pc.biplot=FALSE,
+          xlabs.pc=c(1,2,3), xlabs.col=2:4, col="black")
 }
 \keyword{multivariate}

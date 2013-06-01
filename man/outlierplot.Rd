@@ -65,7 +65,7 @@ outlierplot(X,...)
   \item{robust}{A robustness description as define in
     \code{\link{robustnessInCompositions}}}
   \item{princomp.robust}{Either a logical determining wether or not the
-    principal component analysis should be done robustly or a principle
+    principal component analysis should be done robustly or a principal
     component object for the dataset.}
   \item{mahRange}{The range of Mahalanobis distances displayed. This is
     fixed to make views comparable among datasets. However if the preset
@@ -95,12 +95,12 @@ into the outlier
       This shows the actual values of the identified outliers.
     }
     \item{\code{type="biplot"}}{
-      Creates a biplot based on a nonrobust Principle component analysis
+      Creates a biplot based on a nonrobust principal component analysis
       showing the outliers classified through outliers in the given color
-      scheme. We use the nonrobust Principle component analyis since it
-      rotates according to a good visibility of the extrem values.
+      scheme. We use the nonrobust principal component analyis since it
+      rotates according to a good visibility of the extreme values.
       \cr
-      This shows the position of the outliers in the usual principle
+      This shows the position of the outliers in the usual principal
       components analysis. However note that a \code{\link{coloredBiplot}}
       is used rather than the usual one. 
     }

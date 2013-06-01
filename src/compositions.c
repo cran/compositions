@@ -2013,8 +2013,10 @@ extern void gsiCAcompFitAndImpute(
 /* Aitchison Distribution integrals */ 
 
 static double gridValue(int gc,int grid) {
-    return log((gc+(double)1)/grid);
+   return log((gc+(double)1)/grid);
+   // return log((double)(gc+1)/grid);
 }
+
 
 extern void gsiAitchisonDistributionIntegral(
     int *Dp,               // 1
@@ -2034,100 +2036,101 @@ extern void gsiAitchisonDistributionIntegral(
     int *gc=(int*)R_alloc(D,sizeof(int));
     double *gv=(double*)R_alloc(D,sizeof(double));
     int i,j,k;
-    int p,u;
+    int p=0;
     int steped=0;
-    int carry;
-    double logMean;
-    double tmp;
-    double phi;
+    int carry=0;
+    double logMean=0.0;
+    double tmp=0.0;
+    double phi=0.0;
     long gridSize=0;
-    double density;
+    double density=0.0;
     /*zero*/
     *OneIntegral   = 0.0;
     *kappaIntegral = 0.0;
     if( mode < 0 )
-	return;
+	  return;
     if( mode >= 1) 
-	for(i=0;i<D;i++)
+	  for(i=0;i<D;i++)
 	    clrIntegral[i] = 0.0;
     if( mode >= 2) 
-	for(i=0;i<D;i++)
+   	  for(i=0;i<D;i++)
 	    for(j=0;j<D;j++)
-		SqIntegral[i+D*j] = 0.0;
+		  SqIntegral[i+D*j] = 0.0;
     /* Init Grid */
     for(p=0;p<D;p++)
-	gc[p]=0;
+	  gc[p]=0.0;
     gc[0]=grid;
     for(p=0;p<D;p++)
-	gv[p]=gridValue(gv[p],gridPlus);
+	  gv[p]=gridValue(gc[p],gridPlus);
     /* Check Matrices */
     for(i=0;i<D;i++) {
-	tmp=0;
-	for(j=0;j<D;j++) {
+	  tmp=0.0;
+	  for(j=0;j<D;j++) {
 	    if( fabs(beta[i+j*D]-beta[j+i*D])>1E-6 )
-		error("gsiAitchisonDistributionIntegral: beta not symmetric");
+		  error("gsiAitchisonDistributionIntegral: beta not symmetric");
 	    tmp+=beta[i+j*D];
-	}
-	if(fabs(tmp)>1E-10) {
+	  } // end for j
+	  if(fabs(tmp)>1E-10) {
 		error("gsiAitchisonDistributionIntegral: beta not clr matrix");
-	}
-    } 
+	  }
+    } // end for i
     /* Loop over grid */
     p = 0;
     for(;;) {
 	/* Generate Grid */
-	steped=0;
-	for(p=0;p<D-1;p++) {
+  	  steped=0;
+	  for(p=0;p<D-1;p++) {
 	    if( gc[p] > 0 ) {
-		carry=gc[p]-1;
-		gc[p+1]++;
-		gc[p]=0;
-		gc[0]=carry;
-		gv[p+1]=gridValue(gc[p+1],gridPlus);
-		gv[p]=gridValue(gc[p],gridPlus);
-		gv[0]=gridValue(gc[0],gridPlus);
-		steped=1;
-		break;
-	    }
-	}
-	//Rprintf("%lf %lf %lf\n",gv[0],gv[1],gv[2]);
-	if( ! steped )
+		  carry=gc[p]-1;
+		  gc[p+1]++;
+		  gc[p]=0;
+		  gc[0]=carry;
+		  // Rprintf("%d", gc[0]);
+		  gv[p+1]=gridValue(gc[p+1],gridPlus);
+		  gv[p]=gridValue(gc[p],gridPlus);
+		  gv[0]=gridValue(gc[0],gridPlus);
+		  steped=1;
+		  break;
+	    } // end if
+	  } // end for p
+	      //Rprintf("%lf %lf %lf\n",gv[0],gv[1],gv[2]);
+	  if( ! steped )
 	    break;
-	/* Compute CLR const */
-	logMean=0;
-	phi = 0.0;
-	for(i=0;i<D;i++) {
+	  /* Compute CLR const */
+	  logMean=0.0;
+	  phi = 0.0;
+	  for(i=0;i<D;i++) {
 	    logMean+=gv[i];
 	    phi += gv[i]*(theta[i]-1);
 	    for(j=0;j<D;j++) {
-		phi+= gv[j]*gv[i]*beta[i+j*D];
-	    }
-	}
-	logMean/=D;
-	/* Cummulate*/
-	gridSize++;
-	density=exp(phi);
-	*OneIntegral   += density;
-	*kappaIntegral += density*logMean;
-	if(mode>=1)
+		  phi+= gv[j]*gv[i]*beta[i+j*D];
+	    } // end for j
+	  } // end for i
+	  logMean/=D;
+	  /* Cummulate*/
+	  gridSize++;
+	  density=exp(phi);
+	  *OneIntegral   += density;
+	  *kappaIntegral += density*logMean;
+	  if(mode>=1)
 	    for(i=0;i<D;i++) 
-		clrIntegral[i]+=density*(gv[i]-logMean);
-	if(mode>=2)
+		  clrIntegral[i]+=density*(gv[i]-logMean);
+	  if(mode>=2)
 	    for(i=0;i<D;i++) 
-		for(j=0;j<D;j++)
+		  for(j=0;j<D;j++)
 		    SqIntegral[i+D*j]+=density*(gv[i]-logMean)*(gv[j]-logMean);
-    }
+    } // end for (empty)
     /* Rescale*/
     if(mode>=1)
-	for(i=0;i<D;i++) 
+  	  for(i=0;i<D;i++) 
 	    clrIntegral[i]/=*OneIntegral;
     if(mode>=2)
-	for(i=0;i<D;i++) 
+	  for(i=0;i<D;i++) 
 	    for(j=0;j<D;j++) {
-		SqIntegral[i+D*j]/=*OneIntegral;
-		if( mode >=3 )
+		  SqIntegral[i+D*j]/=*OneIntegral;
+		  if( mode >=3 )
 		    SqIntegral[i+D*j]-=clrIntegral[i]*clrIntegral[j];
-	    }
+	    } // end for j
     *kappaIntegral/=*OneIntegral;
     *OneIntegral /= gridSize;
 }
@@ -2186,48 +2189,56 @@ extern void gsirandomClr1Aitchison(
     int D=*Dp;
     int n=*np;
     int i,j,k;
-    double z;
-    double logD;
-    double alphaD=0;
-    double kappa;
-    double Dir,MaxDir;
+    double z=0.0;
+    double logD,kappa;
+    double alphaD=0.0;
     // Sum over theta
     for(i=0;i<D;i++)
-	alphaD+=theta[i];
-    // Find Maximum Density of Dirichlet
-    logD = 0.0;
+	  alphaD+=theta[i];  // alphaD = sum of thetas = alpha * D
+      // Find Maximum Density of Dirichlet
+    if( alphaD<0 )
+      error("gsirandomClr1Aitchison: theta must have a positive sum");
+    if( alphaD<1E-5)
+      alphaD=1;
+    logD=0.0;
     for(j=0;j<D;j++) 
-	logD+=theta[j]*log(theta[j]/alphaD);
-    MaxDir  = exp(logD);
+      logD+=theta[j]*(log(theta[j])-log(alphaD));
+    double MaxDir  = exp(logD);  // maximal value of Ait/Normal-equivalence class
     // Do Simulation 
     GetRNGstate();
     // Loop over cases
     for(k=0;k<n;) {
-	// zero erg
-	for(j=0;j<D;j++)
-	    erg[n*j]=0.0;
-	// Simulate the random clr
-	for(i=0;i<D;i++) {
+	  // zero erg
+	  for(j=0;j<D;j++)
+	    erg[n*j]=mu[j];  // for the moment, that mean is zero; possibly generalizable in the future to an arbitrary splitting of Ait = Dirichlet x Normal
+	  // Simulate the random clr
+	  for(i=0;i<D;i++) {
 	    z = norm_rand();
-	    for(j=0;j<D;j++)
-		erg[n*j]+=sqrtSigma[j+i*D]*z;
-	}
-	// compute Dirichlet density
-	logD = 0.0;
-	for(j=0;j<D;j++) {
-	    kappa+=exp(erg[n*j]);
-	    logD += theta[j]*erg[n*j];
-	}
-	logD -= alphaD*kappa;
-	Dir  = exp(logD);
-	if( Dir > MaxDir )
+	    for(j=0;j<D;j++){
+		  erg[n*j]+=sqrtSigma[j+i*D]*z;  // given that sqrtSigma is a (clr-variance)^(1/2) it adds up to zero by rows and columns, and the result of this matrix product is thus a clr-vector
+          // Rprintf("%f\n", erg[n*j]);
+	    }
+	  } // end for i
+  	  // compute Dirichlet density
+	  logD = 0.0;  
+	  kappa = 0.0;  
+	  for(j=0;j<D;j++) {
+	    kappa += exp(erg[n*j]);  // accumulate exp(clr(x_i))
+	    logD += theta[j]*erg[n*j]; // accumulate theta_i*clr_i(x)
+	  } // end for j
+	  kappa = log(kappa);  
+	  logD -= alphaD*kappa;  // logD += (alphaD-D)*kappa;
+	  double Dir  = exp(logD);
+	  if( Dir > MaxDir )
 	    error("randomClrAitchison: Internal Error Density exceeds Maximum, please report to package authors");
-	// 
-	if( Dir/MaxDir <= unif_rand() ) {
+	  // 
+      // Rprintf("(%f, %f, %f) \n", erg[n*0],erg[n*1],erg[n*2]);
+	  // Rprintf("%f %f \n", Dir, MaxDir);
+	  if( Dir/MaxDir >= unif_rand() ) {
 	    k++;
 	    erg++;
-	}
-    }
+	  } // end if 
+    } // end for k
     PutRNGstate();
 }
 

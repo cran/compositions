@@ -1,6 +1,6 @@
 Package: compositions
-Version: 1.40-0
-Date: 2013-04-08
+Version: 1.40-1
+Date: 2013-06-01
 Title: Compositional Data Analysis
 Author: K. Gerald van den Boogaart <boogaart@hzdr.de>, 
 	Raimon Tolosana, Matevz Bren  
@@ -12,7 +12,7 @@ Description: The package provides functions for the consistent analysis of
   (e.g. concentrations) in the way proposed by Aitchison and Pawlowsky-Glahn.
 License: GPL (>= 2)
 URL: http://www.stat.boogaart.de/compositions
-Packaged: 2014-04-12 09:04:49 UTC; boogaart
+Packaged: 2014-06-06 15:58:33 UTC; tolosa53
 NeedsCompilation: yes
 Repository: CRAN
-Date/Publication: 2014-04-14 18:36:22
+Date/Publication: 2014-06-07 21:11:09

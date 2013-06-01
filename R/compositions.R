@@ -6198,7 +6198,7 @@ AitchisonDistributionIntegrals <- function(
          theta=alpha+sigma %*% clr(mu),
          beta=-1/2*gsi.svdinverse(sigma),
          alpha=mean(theta),
-         mu=clrInv(sigma%*%(theta-alpha)),
+         mu=clrInv(c(sigma%*%(theta-alpha))),
          sigma=-1/2*gsi.svdinverse(beta),
          grid=30,
          mode=3) {
@@ -6210,7 +6210,7 @@ D <- length(theta)
 if( nrow(beta) == D-1 )
   beta <- ilrvar2clr(beta)
 if( any(abs(beta-t(beta))>1E-10) ) {
-  warning("rAitchison: beta was not symmetric 1")
+  warning("AitchisonDistributionIntegrals: beta was not symmetric 1")
   print(beta)
 }
 gsiInt(dim(beta),2)
@@ -6231,13 +6231,14 @@ erg$SqIntegral <- matrix(erg$clrVar,nrow=D,ncol=D)
 erg$alpha=alpha
 erg$mu=mu
 erg$sigma=sigma
-erg$clrSqExpectation <- erg$clrVar
+erg$clrSqExpectation <- matrix(erg$clrVar,nrow=D,ncol=D)
+dim(erg$clrVar) <- c(D,D)
   return(erg[c("theta","beta","alpha","mu","sigma",if( mode>=0 ) c("expKappa","loggxMean") else c(),if(mode >= 1) "clrMean" else c(),if(mode==2) "clrSqExpectation" else if(mode>=3) "clrVar" else c())])
 }
 
 
 
-dAitchison <- function(x,theta=alpha+sigma %*% clr(mu),beta=-1/2*gsi.svdinverse(sigma),alpha=mean(theta),mu=clrInv(sigma%*%(theta-alpha)),sigma=-1/2*gsi.svdinverse(beta),grid=30,
+dAitchison <- function(x,theta=alpha+sigma %*% clr(mu),beta=-1/2*gsi.svdinverse(sigma),alpha=mean(theta),mu=clrInv(c(sigma%*%(theta-alpha))),sigma=-1/2*gsi.svdinverse(beta),grid=30,
 realdensity=FALSE,expKappa=AitchisonDistributionIntegrals(theta,beta,grid=grid,mode=1)$expKappa) {
 if( !xor( missing(theta) , (missing(mu) || missing(alpha)) ) )
   stop("Specify either theta or mu and alpha")
@@ -6245,13 +6246,13 @@ if( !xor( missing(beta) , missing(sigma) ) )
   stop("Specify either beta or sigma")
 D <- length(theta)
 if( any(abs(beta-t(beta))>1E-10) ) {
-  warning("rAitchison: beta was not symmetric 1")
+  warning("dAitchison: beta was not symmetric 1")
   print(beta)
 }
 if( nrow(beta) == D-1 )
   beta <- ilrvar2clr(beta)
 if( any(abs(beta-t(beta))>1E-10) ) {
-  warning("rAtichison: beta was not symmetric 2")
+  warning("dAtichison: beta was not symmetric 2")
   print(beta)
 }
 stopifnot(gsi.getD(x)==D)
@@ -6261,7 +6262,8 @@ exp((clrx%*%beta)%*%clrx+ult(x)%*%rmult(theta-cf))/expKappa
 }
 
 
-rAitchison <- function(n,theta=alpha+sigma %*% clr(mu),beta=-1/2*gsi.svdinverse(sigma),alpha=mean(theta),mu=clrInv(sigma%*%(theta-alpha)),sigma=-1/2*gsi.svdinverse(beta)) {
+rAitchison <- function(n,theta=alpha+sigma %*% clr(mu),beta=-1/2*gsi.svdinverse(sigma),alpha=mean(theta),mu=clrInv(c(sigma%*%(theta-alpha))),sigma=-1/2*gsi.svdinverse(beta),withfit=FALSE) {
+#withfit=FALSE # in the future, this should allow to simulate more efficiently by playing with the decomposition Ait = Normal x Dirichlet
 if( !xor(missing(theta),missing(mu) || missing(alpha)) )
   stop("Specify either theta or mu and alpha")
 if( !xor(missing(beta),missing(sigma)) )
@@ -6270,6 +6272,8 @@ if( !missing(theta) ) nam <- names(theta) else if( !missing(mu) ) nam<- names(mu
 D <- length(theta)
 if( nrow(sigma) == D-1 )
   sigma <- ilrvar2clr(sigma)
+  else
+  sigma <- ilrvar2clr(clrvar2ilr(sigma))
 # Prepare Sigma
 if( any(abs(sigma-t(sigma))>1E-10) )
   warning("rAtichison: sigma was not symmetric")
@@ -6277,25 +6281,42 @@ SVD <- svd(sigma)
 if( any(SVD$d < -1E-8 ) )
   warning("rAitchison currently only works correctly with positive semidefinit sigmas. Results wrong!!!")
 sqrtSigma <- with(SVD,u%*% gsi.diagGenerate(sqrt(d)) %*% t(v))
-# Find the best fitting normal
-bestfit <- gsiFindSolutionWithDerivative(
+if( withfit ) {
+     # find the best decomposition Ait = Normal x Dirichlet; where both have the same mode
+	bestfit <- gsiFindSolutionWithDerivative(
                            function(alpha) exp(alpha)+sigma%*%alpha-theta,
                            function(alpha) diag(exp(alpha))+sigma,
                            c(theta),
                            iter=20)
-if( attr(bestfit,"status")!="ok" ) {
-  warning("Problems in finding optimal simulation algorith, using fallback")
+	if( attr(bestfit,"status")!="ok" ) {
+	warning("Problems in finding optimal simulation algorith, using fallback")
+	}
+	# Compute best fitter
+	mu <- bestfit - sum(bestfit)
+	SimTheta <- exp(bestfit)
+	stopifnot(abs(sum(SimTheta)-sum(theta))<1E-6)
+} else {
+    # use as normal(0,sigma) and as dirichlet(theta)
+	SimTheta <- theta
+	mu <- theta*0
+	# SimTheta <- rep(alpha, length(theta))
+	# mu <- mu
 }
-# Compute best fitter
-mu <- bestfit - sum(bestfit)
-SimTheta <- exp(bestfit)
-stopifnot(abs(sum(SimTheta)-sum(theta))<1E-6)
+if( ! all(SimTheta>0) ) {
+  if( all(theta>0) ) {
+	SimTheta <- theta
+	mu <- theta*0
+        warning("rAitchison: withfit ignored");
+      } else {
+        stop("rAitchison: This implementation only works with positive theta")
+      }
+}
 # Compute with rejection sampling
 erg <- .C(gsirandomClr1Aitchison,
    D=gsiInt(D,1),
    n=gsiInt(n,1),
    erg=numeric(D*n),
-   theta=gsiDouble(theta,D),
+   theta=gsiDouble(SimTheta,D),
    mu=gsiDouble(mu,D),
    sqrtSigma=gsiDouble(sqrtSigma,D*D)
    )
@@ -6332,6 +6353,7 @@ R2.lm <- function(object,...,adjust=TRUE,ref=0) {
   pr <- predict(object)
   re <- resid(object)
   n  <- nrow(re)
+    if (is.null(n)) n <- length(re) # consider the case of one-dimensional response
   y  <- pr+re
   erg <- if( adjust ) {
     dfres<-object$df.residual
@@ -6346,6 +6368,7 @@ R2.default <- function(object,...,ref=0) {
   pr <- predict(object)
   re <- resid(object)
   n  <- nrow(re)
+    if (is.null(n)) n <- length(re)  # consider the case of one-dimensional response
   y  <- pr+re
   erg <- 1-mvar(re)/mvar(y)
   (erg-ref)/(1-ref)
