@@ -5,17 +5,16 @@
 \alias{coloredBiplot.prcomp}
 \title{A biplot providing somewhat easier access to details of the plot.}
 \description{
-  This function generates a simple biplot out of various source and
-  allows to color the objects individually. (Warning: This preliminary
-  version is likely to be
-  changed in next edition)
+  This function generates a simple biplot out of various sources and
+  allows to give color and symbol to the x-objects individually. 
 }
 \usage{
 
 \method{coloredBiplot}{default}(x, y, var.axes = TRUE, col, 
          cex = rep(par("cex"), 2), xlabs = NULL, ylabs = NULL, expand=1, 
          xlim = NULL, ylim = NULL, arrow.len = 0.1, main = NULL, sub = NULL, 
-         xlab = NULL, ylab = NULL, xlabs.col = NULL, xlabs.pc=NULL, ...)
+         xlab = NULL, ylab = NULL, xlabs.col = NULL, xlabs.bg = NULL, 
+         xlabs.pc=NULL, ...)
 \method{coloredBiplot}{princomp}(x, choices = 1:2, scale = 1, 
          pc.biplot=FALSE, ...)
 \method{coloredBiplot}{prcomp}(x, choices = 1:2, scale = 1, 
@@ -27,27 +26,31 @@
     plotted, given by a result of princomp or prcomp; or the first set of
     coordinates to be plotted}
   \item{y}{optional, the second set of coordinates to be potted}
-  \item{var.axes}{If 'TRUE# the second set of points have arrows representing
-    them as (unscaled) axes.}
-  \item{col}{One color (to be used for the y set) or a vector of two colors 
-    (to be used for x and y sets respectively, if xlabs.col is NULL)}
+  \item{var.axes}{if 'TRUE' the second set of points have arrows representing
+    them as (unscaled) axes}
+  \item{col}{one color (to be used for the y set) or a vector of two colors 
+    (to be used for x and y sets respectively, if \code{xlabs.col} is NULL)}
   \item{cex}{the usual cex parameter for plotting; can be a length-2 vector to
-    format differently x and y labels/symbols.}
-  \item{xlabs}{The names to write for the points of the first set}
-  \item{ylabs}{The names to write for the points of the second set}
-  \item{expand}{An expansion factor to apply when plotting the second set of 
+    format differently x and y labels/symbols}
+  \item{xlabs}{names to write for the points of the first set}
+  \item{ylabs}{names to write for the points of the second set}
+  \item{expand}{expansion factor to apply when plotting the second set of 
     points relative to the first. This can be used to tweak the scaling of the 
-    two sets to a physically comparable scale.}
+    two sets to a physically comparable scale}
   \item{xlim}{horizontal axis limits}  
   \item{ylim}{vertical axis limits}  
-  \item{arrow.len}{The length of the arrow heads on the axes plotted in 
-  'var.axes' is true. The arrow head can be suppressed by 'arrow.len=0'.}
+  \item{arrow.len}{length of the arrow heads on the axes plotted if 
+  'var.axes' is true. The arrow head can be suppressed by 'arrow.len=0'}
   \item{main}{main title}  
   \item{sub}{subtitle}  
   \item{xlab}{horizontal axis title}  
   \item{ylab}{vertical axis title}  
-  \item{xlabs.col}{The color(s) to draw the points of the first set}
-  \item{xlabs.pc}{the plotting character(s) for the first set} 
+  \item{xlabs.col}{the color(s) to draw the points of the first set, if
+  \code{xlabs} is null}
+  \item{xlabs.bg}{the filling color(s) to draw the points of the first set, if
+  \code{xlabs} is null and \code{xlabs.pc} is between 21 and 25.}
+  \item{xlabs.pc}{the plotting character(s) for the first set, if
+  \code{xlabs} is null}
   \item{scale}{the way to distribute the singular values on the 
     right or left singular vectors for princomp and prcomp objects 
     (see \code{\link{biplot}})}

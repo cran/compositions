@@ -33,17 +33,17 @@ logratioVariogram <- function(comp,
             NAOK=TRUE
             )
   with(erg,
-       structure(
+       gsi.mystructure(
                  list(
-                      vg=structure(vg,
+                      vg=gsi.mystructure(vg,
                         dim=c(nbins,D,D),
                         dimnames=list(NULL,labs,labs)
                         ),
-                      h =structure(h,
+                      h =gsi.mystructure(h,
                         dim=c(nbins,D,D),
                         dimnames=list(NULL,labs,labs)
                         ),
-                      n =structure(h,
+                      n =gsi.mystructure(n,  ## bug corrected, it was "h"
                         dim=c(nbins,D,D),
                         dimnames=list(NULL,labs,labs)
                         )
@@ -63,7 +63,7 @@ cgram2vgram <- function(cgram) {
 vgram2lrvgram <- function(vgram) {
   function(h,...) {
     vg <- vgram(h,...)
-    lr <- .C("gsiCGSvg2lrvg",
+    lr <- .C(gsiCGSvg2lrvg,
        dimVg=gsiInt(dim(vg),3),
        vg   =gsiDouble(vg),
        lr   =numeric(prod(dim(vg)))
@@ -125,7 +125,7 @@ vgmGetParameters <- function(vg,envir=environment(vg)) {
       paste(myName,nam,sep=".")
   }
                  )
-  structure(unlist(form,recursive = FALSE),names=unlist(nams,recursive = FALSE))
+  gsi.mystructure(unlist(form,recursive = FALSE),names=unlist(nams,recursive = FALSE))
 }
 
 vgmSetParameters <- function(vg,p) {
@@ -219,6 +219,15 @@ vgram.exp <- function( h , nugget = 0, sill = 1, range= 1,... ) {
   r <- -range/log(0.1)
   h <- gsih2Dist(h)
   ifelse(h>range*1E-8,nugget+s*(1-exp(-h/r)),0)
+}
+
+# The cardinal sine variogram
+vgram.cardsin <- function( h , nugget = 0, sill = 1, range= 1,... ) {
+  "Cardinal Sine Variogramm"
+  s <- sill-nugget
+  r <- -range/log(0.1)
+  h <- gsih2Dist(h)
+  ifelse(h>range*1E-8,nugget+s*(1-r/h*sin(h/r)),0)
 }
 
 # The isotropic gaussian variogram
@@ -332,12 +341,12 @@ gsiLMCRas1vg <-function(form,nr="",D,envir=globalenv()) {
   if( is.call(form) ) {
     tag <- as.character(form[[1]])
     name <- paste(tag,nr,sep="")
-    if( tag %in% c("sph","exp","gauss","lin","pow")) {
+    if( tag %in% c("sph","exp","gauss","lin","pow","cardsin")) {
       func <- paste("vgram",tag,sep=".")
       stopifnot(length(form)<=2)
       range = if( length(form)>=2 ) form[[2]] else 1
       rangeVar = paste("r",name,sep="")
-      params<-structure(list(range),names=rangeVar)
+      params<-gsi.mystructure(list(range),names=rangeVar)
       .call <- as.call(list(as.name(func),h=as.name("h"),range=as.name(rangeVar)))
       list(name,params=params,call=.call,full=FALSE)
     } else if(tag %in% c("nugget")) {
@@ -365,18 +374,18 @@ gsiLMCRasMatTerm <- function(form,nr,D,envir=globalenv()) {
     } else if(tag == "PSD") { # call -> a matrix parameter is given
       sillVar <- paste("sPSD",nr,sep="")
       sill <- parameterPosdefClrMat(eval(form[[2]],envir=envir))
-      params  <- structure(list(sill),names=sillVar)
+      params  <- gsi.mystructure(list(sill),names=sillVar)
       .call <- as.call(list(as.name("parametricPosdefClrMat"),as.name(sillVar)))
     } else if(tag == "R1") { # rank 1 call-> a matrix parameter is given
       sillVar <- paste("sR",nr,sep="")
       sill <- parameterPosdefClrMat(eval(form[[2]],envir=envir))
-      params  <- structure(list(sill),names=sillVar)
+      params  <- gsi.mystructure(list(sill),names=sillVar)
       .call <- as.call(list(as.name("parametricRank1ClrMat"),as.name(sillVar)))
     } else if(tag == "S"){ # scalar sill factor
       sillVar <- paste("sS",nr,sep="")
       mat <- deparse(eval(form,envir=envir))
       sill = 1
-      params  <- structure(list(sill),names=sillVar)
+      params  <- gsi.mystructure(list(sill),names=sillVar)
       .call <- as.call(list(as.name("("),as.call(list(as.name("*"),as.name(sillVar),mat))))
     } else { # Anything else, is used verbatim
       params <- list()
@@ -389,12 +398,12 @@ gsiLMCRasMatTerm <- function(form,nr,D,envir=globalenv()) {
       if( tag=="PSD") { # keyword: allow as positive semidefinit parameter
         sillVar <- paste("sPSD",nr,sep="")
         sill    <- parameterPosdefClrMat(diag(D))
-        params  <- structure(list(sill),names=sillVar)
+        params  <- gsi.mystructure(list(sill),names=sillVar)
         .call <- as.call(list(as.name("parametricPosdefClrMat"),as.name(sillVar)))
       } else if( tag=="R1" ) { # keyword allow a rank 1 parameter
         sillVar <- paste("sR",nr,sep="")
         sill    <- rep(1,D-1)
-        params  <- structure(list(sill),names=sillVar)
+        params  <- gsi.mystructure(list(sill),names=sillVar)
         .call <- as.call(list(as.name("parametricRank1ClrMat"),as.name(sillVar)))
       } else { # anything else verbatim
         params <- list()
@@ -417,7 +426,7 @@ gsiLMCRasterm <- function(form,nr,D,envir=globalenv()) {
       return(erg)
     sillVar <- paste("sPSD",nr,sep="")
     sill    <- parameterPosdefClrMat(diag(D))
-    params  <- c(erg$params,structure(list(sill),names=sillVar))
+    params  <- c(erg$params,gsi.mystructure(list(sill),names=sillVar))
     .call   <- as.call(list(as.name("%o%"),erg$call,as.call(list(as.name("parametricPosdefClrMat"),as.name(sillVar)))))
     list(name=erg$name,params=params,call=.call,full=TRUE)
   } else if(lpr == 2 ) {
@@ -495,7 +504,7 @@ compOKriging <- function(comp,X,Xnew,vg,err=FALSE) {
  colnames(pred)<-colnames(comp)
  list(X=Xnew,
       Z=acomp(pred),
-      err=if(err) aperm(structure(erg$err,dim=c(D,D,nnew)),c(3,1,2)) else NULL
+      err=if(err) aperm(gsi.mystructure(erg$err,dim=c(D,D,nnew)),c(3,1,2)) else NULL
       )
 
 }

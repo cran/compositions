@@ -68,6 +68,6 @@ mix.Read <- function(file, eps=1e-6){
        colClasses = NA, nrows = -1, skip = 0, check.names = TRUE,
        strip.white = FALSE, blank.lines.skip = TRUE, comment.char = "#"))
   close(con)
-  mix.Check(structure(list(tit=t,sum=NA,sta=NA,mat=m),class=c("mixture")),eps)
+  mix.Check(gsi.mystructure(list(tit=t,sum=NA,sta=NA,mat=m),class=c("mixture")),eps)
 }
 

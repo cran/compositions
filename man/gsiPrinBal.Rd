@@ -51,7 +51,7 @@
    Proceedings of CoDaWork'2011, the 4th International Workshop on Compositional
    Data Analysis. CIMNE, Barcelona (E)
 
-   \url{http://congress.cimne.com/codawork11/frontal/ProgIntro.asp}
+   %\url{http://congress.cimne.com/codawork11/frontal/ProgIntro.asp}
  }
 \examples{
 data("Hydrochem")

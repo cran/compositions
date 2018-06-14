@@ -39,7 +39,9 @@
 
 }
 \value{
-  Called for its side effect of a 3D plot of an acomp object in an rgl plot.
+  Called for its side effect of a 3D plot of an acomp object in an rgl plot. 
+  It invisibly returns the 3D plotting coordinates of the objects displayed
+
 }
 \details{
   The routine behaves different when 3 or four components should be

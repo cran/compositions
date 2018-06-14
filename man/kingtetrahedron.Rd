@@ -34,8 +34,7 @@
   The  routine transforms a 4 parts mixture m quadrays into 3-dimensional
   XYZ coordinates and writes them as file.kin. For this transformation we
   apply K. Urner: Quadrays and XYZ at
-  \url{http://www.grunch.net/synergetics/quadxyz.html} and
-  T. Ace: Quadray formulas at \url{http://www.qnet.com/~crux/quadray.html}. 
+  \url{http://www.grunch.net/synergetics/quadxyz.html}. 
   The kin file we display as 3-D animation with KiNG viewer  a free software available
   at \url{http://kinemage.biochem.duke.edu}.  A kinemage is a dynamic, 3-D illustration. 
   The best way to take advantage of that is by rotating it and twisting it around 
@@ -69,8 +68,7 @@
   \url{http://vlado.fmf.uni-lj.si/pub/MixeR/}
   
   \url{http://www.grunch.net/synergetics/quadxyz.html}\cr
-  
-  \url{http://www.qnet.com/~crux/quadray.html}
+
 
 }
 \examples{

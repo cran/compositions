@@ -2,12 +2,17 @@
 \alias{compositions-package}
 \alias{compositions}
 \docType{package}
-\title{library(compositions)}
+\title{
+\packageTitle{compositions}
+}
 \description{
 "compositions" is a package for the analysis of compositional and
 multivariate positive data (generally called "amounts"), based on several alternative approaches.
 }
 \details{
+  The DESCRIPTION file:
+\packageDESCRIPTION{compositions}
+\packageIndices{compositions}
    To get detailed "getting started" introduction use
    \code{help.start()} or \code{help.start(browser="myfavouritebrowser")}
    Go to "Packages" then "compositions" and then "overview"
@@ -66,6 +71,11 @@ multivariate positive data (generally called "amounts"), based on several altern
    consistent analysis in all of these approaches and to make the
    results obtained with different geometries as easy to compare as possible. 
  }
+ \author{
+\packageAuthor{compositions}
+
+Maintainer: \packageMaintainer{compositions}
+}
  \references{
 
 Aitchison, J. (1986) \emph{The Statistical Analysis of Compositional
@@ -129,6 +139,4 @@ straight(mean(x),pr$Loadings)
   support@boogaart.de.
 
 }
-\author{K.Gerald v.d. Boogaart
-\url{http://www.stat.boogaart.de}, Raimon Tolosana Delgado, and Matevz Bren}
 \keyword{package}

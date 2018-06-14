@@ -288,10 +288,10 @@ rMaxMahalanobis <- function(n,N,d,...,pow=1,robust=TRUE) {
 #            },
 #            mcd={
 #              if( d > 1 )
-#                replicate(n,sqrt(max(covMcd(structure(rnorm(N*d,mean=rnorm(1)),dim=c(N,d)),control=control)$mah)))
+#                replicate(n,sqrt(max(covMcd(gsi.mystructure(rnorm(N*d,mean=rnorm(1)),dim=c(N,d)),control=control)$mah)))
 #              else {
 #                replicate(n,{
-#                  x   <- structure(rnorm(N*d),dim=c(N,d))
+#                  x   <- gsi.mystructure(rnorm(N*d),dim=c(N,d))
 #                  erg <- covMcd(x,control=control)
 #                  max( (x-erg$center)^2/c(erg$cov) )
 #                })
@@ -368,7 +368,7 @@ rEmpiricalMahalanobis <- function(n,N,d,...,sorted=FALSE,pow=1,robust=TRUE) {
                     xc <- t(x)-meanCol(x)
                     sorted(sqrt(rep(1,ncol(v)) %*% solve(v,xc,...) * xc)^pow)
                   }
-                  replicate(n,quickMah(structure(rnorm(N*d),dim=c(N,d))))
+                  replicate(n,quickMah(gsi.mystructure(rnorm(N*d),dim=c(N,d))))
                 } else {
                   replicate(n,{
                     x <- rnorm(n,mean=rnorm(1))
@@ -380,10 +380,10 @@ rEmpiricalMahalanobis <- function(n,N,d,...,sorted=FALSE,pow=1,robust=TRUE) {
               mcd={
                 #require("robustbase")
                 if( d > 1 )
-                  replicate(n,sorted(sqrt(do.call("covMcd",c(list(structure(rnorm(N*d),dim=c(N,d))),params))$mah))^pow)
+                  replicate(n,sorted(sqrt(do.call("covMcd",c(list(gsi.mystructure(rnorm(N*d),dim=c(N,d))),params))$mah))^pow)
                 else {
                   replicate(n,{
-                    x   <- structure(rnorm(N*d),dim=c(N,d))
+                    x   <- gsi.mystructure(rnorm(N*d),dim=c(N,d))
                     erg <- do.call("covMcd",c(list(x),params))
                     sorted(sqrt( (x-erg$center)^2/c(erg$cov) )^pow)
                   })
@@ -453,10 +453,10 @@ qPortionMahalanobis <- function(p,N,d,cut,...,replicates=1000,resample=FALSE,pow
 #  require(robustbase)
 #  params <- list(...)
 #  if( d > 1 )
-#    s <- replicate(n,sqrt(sort(do.call("covMcd",c(list(structure(rnorm(N*d),dim=c(N,d))),params))$mah)))
+#    s <- replicate(n,sqrt(sort(do.call("covMcd",c(list(gsi.mystructure(rnorm(N*d),dim=c(N,d))),params))$mah)))
 #  else {
 #    s <- replicate(n,sort({
-#      x   <- structure(rnorm(N*d),dim=c(N,d))
+#      x   <- gsi.mystructure(rnorm(N*d),dim=c(N,d))
 #      erg <- do.call("covMcd",c(list(x),params))
 #      c( (x-erg$center)^2/c(erg$cov))
 #    }))
@@ -581,7 +581,7 @@ OutlierClassifier1 <- function(X,...) UseMethod("OutlierClassifier1",X)
 OutlierClassifier1.acomp <- function(X,...,alpha=0.05,type=c("best","all","type","outlier","grade"),goodOnly=NULL,corrected=TRUE,RedCorrected=FALSE,robust=TRUE) {
   type<-match.arg(type)
   cls <- class(X)
-  reclass <- function(x) structure(x,class=cls)
+  reclass <- function(x) gsi.mystructure(x,class=cls)
   isOutlier <- IsMahalanobisOutlier(X,...,alpha=alpha,goodOnly=goodOnly,corrected=corrected,robust=robust)
   if( type=="grade" )
     isOutlier2 <- IsMahalanobisOutlier(X,...,alpha=alpha,goodOnly=goodOnly,corrected=FALSE,robust=robust)
@@ -777,7 +777,7 @@ coloredBiplot.default <-
 	     xlabs = NULL, ylabs = NULL, expand=1, xlim = NULL, ylim = NULL,
 	     arrow.len = 0.1,
              main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
-             xlabs.col = NULL, xlabs.pc=NULL, ...)
+             xlabs.col = NULL, xlabs.bg = NULL, xlabs.pc=NULL, ...)
 {
     n <- nrow(x)
     p <- nrow(y)
@@ -828,7 +828,7 @@ coloredBiplot.default <-
     if(missing(xlabs.pc)){ 
        text(x, xlabs, cex = cex[1], col = col1, ...)
     }else{
-       points(x, cex = cex[1], col = col1, pch=xlabs.pc, ...)
+       points(x, cex = cex[1], col = col1, pch=xlabs.pc, bg=xlabs.bg, ...)
     }
     par(new = TRUE)
     plot(y, axes = FALSE, type = "n", xlim = xlim*ratio, ylim = ylim*ratio,
@@ -934,7 +934,7 @@ pchForOutliers1 = function(outfac,ok='.',outlier='\004',extreme='\003',unknown='
   lev <- levels(outfac)
   nrm <- ! (lev %in% names(tbl))
   if( any(nrm) ) 
-    tbl <- c(tbl,structure(other[1:sum(nrm)],names=lev[nrm]))
+    tbl <- c(tbl,gsi.mystructure(other[1:sum(nrm)],names=lev[nrm]))
   return(tbl[as.character(lev)])
 }
 
@@ -1344,7 +1344,7 @@ outlierplot.acomp <- function(X,colcode=colorsForOutliers1,pchcode=pchForOutlier
 
 #dendroSimp <- function(dendro,labels) {
 #  
-#  erg <- structure(lapply(dendro,dendroSimp,labels=labels))
+#  erg <- gsi.mystructure(lapply(dendro,dendroSimp,labels=labels))
 #  leaves <- sapply(erg,function(x) attr(x,"leaf"))
 #  if( all(leaves) ) {
 #    labs <- sapply(erg,function(x) label

@@ -27,7 +27,7 @@
   \item{col}{the color used for dots, defaults to black.}
 }
 \value{
-  Nothing
+  the 3D plotting coordinates of the objects displayed, returned invisibly
 }
 \details{
   The function provides a generic interface for 3-dimensional plotting

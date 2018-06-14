@@ -5,6 +5,7 @@
 \date{Version 0.91, 10. Mai 2008\\
 (C) by Gerald van den Boogaart, Greifswald, 2005, 2008}
 \newcommand{\code}[1]{{\tt #1}}
+% \VignetteIndexEntry{Using Animal}
 \begin{document}
 \maketitle
 \begin{abstract}

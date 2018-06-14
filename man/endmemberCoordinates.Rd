@@ -14,7 +14,7 @@
 \title{Recast amounts as mixtures of end-members}
 \description{
   Computes the convex combination of amounts as mixtures of \code{endmembers}
-  to explain \code{X} as good as possible.
+  to explain \code{X} as well as possible.
 }
 \usage{
     endmemberCoordinates(X,\dots)

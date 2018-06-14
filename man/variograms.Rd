@@ -2,6 +2,7 @@
 \alias{vgram.sph}
 \alias{vgram.exp}
 \alias{vgram.gauss}
+\alias{vgram.cardsin}
 \alias{vgram.lin}
 \alias{vgram.pow}
 \alias{vgram.nugget}
@@ -13,6 +14,7 @@
 vgram.sph( h , nugget = 0, sill = 1, range= 1,... )
 vgram.exp( h , nugget = 0, sill = 1, range= 1,... )
 vgram.gauss( h , nugget = 0, sill = 1, range= 1,... )
+vgram.cardsin( h , nugget = 0, sill = 1, range= 1,... )
 vgram.lin( h , nugget = 0, sill = 1, range= 1,... )
 vgram.pow( h , nugget = 0, sill = 1, range= 1,... )
 vgram.nugget( h , nugget = 1,...,tol=1E-8 )
@@ -39,6 +41,7 @@ vgram.nugget( h , nugget = 1,...,tol=1E-8 )
     \item{sph}{Spherical variogram}
     \item{exp}{Exponential variogram}
     \item{gauss}{The Gaussian variogram.}
+    \item{gauss}{The cardinal sine variogram.}
     \item{lin}{Linear Variogram. Increases over the sill, which is
       reached at \code{range}.}
     \item{pow}{The power variogram. Increases over the sill, which is

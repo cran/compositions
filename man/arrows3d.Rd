@@ -32,7 +32,8 @@ arrows3D(\dots)
   \item{size}{size of the plotting symbol}
 }
 \value{
-  Nothing
+    the 3D plotting coordinates of the tips of the arrows displayed, 
+    returned invisibly
 }
 \details{
   The function is called to plot arrows into an rgl plot. The size of

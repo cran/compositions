@@ -24,7 +24,8 @@
   \item{col}{the color used for dots, defaults to black.}
 }
 \value{
-  Called for its side effect of a 3D plot of an aplus object in an rgl plot.
+  Called for its side effect of a 3D plot of an aplus object in an rgl plot. 
+  It invisibly returns the 3D plotting coordinates of the objects displayed
 }
 \details{
   If log is TRUE the data is plotted in \code{\link{ilt}}

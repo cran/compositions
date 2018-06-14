@@ -48,7 +48,8 @@ biplot3D(x,...)
   \item{add}{logical, adding to existing plot or making a new one?}
 }
 \value{
-  nothing
+  the 3D plotting coordinates of the tips of the arrows of the variables 
+  displayed, returned invisibly
 }
 \details{
   This "biplot" is a triplot, relating data, variables and principal

@@ -16,6 +16,7 @@
 \alias{cdtInv.rplus}
 \alias{cdtInv.rmult}
 \alias{cdtInv.ccomp}
+\alias{cdtInv.factor}
 \title{Centered default transform}
 \description{
   Compute the centered default transform of a (data set of)
@@ -39,6 +40,7 @@
           \method{cdtInv}{rplus}( x ,orig,...)
           \method{cdtInv}{rmult}( x ,orig,...)
           \method{cdtInv}{ccomp}( x ,orig,...)
+          \method{cdtInv}{factor}( x ,orig,...)
           }
 \arguments{
   \item{x}{a classed (matrix of) amount or composition, to be transformed with its

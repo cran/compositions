@@ -186,7 +186,7 @@ handling of zeros and missing
   values in compositional data, in E. Pirard (ed.) (2006)Proccedings of
   the IAMG'2006 Annual Conference on "Quantitative Geology from multiple
   sources", September 2006, Liege, Belgium, S07-01, 4pages,
-  \url{http://www.math-inf.uni-greifswald.de/~boogaart/Publications/iamg06_s07_01.pdf}, ISBN: 978-2-9600644-0-7
+  \url{http://stat.boogaart.de/Publications/iamg06_s07_01.pdf}, ISBN: 978-2-9600644-0-7
   
 
 

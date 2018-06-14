@@ -1,11 +1,13 @@
-#include<string.h>
-#include<R.h>
-#include<Rdefines.h>
-#include<Rinternals.h>
+#include <string.h>
+#include <R.h>
+#include <Rdefines.h>
+#include <Rinternals.h>
+#include <limits.h>     
 #include <R_ext/Utils.h>
 #include <R_ext/BLAS.h>
 #include <R_ext/Lapack.h>
-#include <limits.h>     
+#include <R_ext/Rdynload.h>
+
 #define isNil(x) ((x)==NULL || (SEXP) (x) == R_NilValue )
 
 
@@ -16,6 +18,13 @@ static double sq(double x) {return x*x;}
 #define Th(s,i,j) h[(s)+nbins*((i)+D*(j))]
 #define MX(i,k) X[(i)+N*(k)]
 #define MZ(i,k) Z[(i)+N*(k)]
+
+
+// variogram
+static R_NativePrimitiveArgType gsiCGSvariogram_t[] = {
+  INTSXP,REALSXP,INTSXP,REALSXP,INTSXP,REALSXP,REALSXP,REALSXP,REALSXP,REALSXP,INTSXP
+};
+
 extern void gsiCGSvariogram(
     int *dimZ,  
     double *Z,
@@ -98,6 +107,13 @@ extern void gsiCGSvariogram(
 
 #define Tvg(k,i,j) vg[(k)+N*((i)+D*(j))]
 #define Tlr(k,i,j) lr[(k)+N*((i)+D*(j))]
+
+// vg2lrvg
+static R_NativePrimitiveArgType gsiCGSvg2lrvg_t[] = {
+  INTSXP,REALSXP,REALSXP
+};
+
+
 
 extern void gsiCGSvg2lrvg(
     int *dimVg,
@@ -508,6 +524,13 @@ extern void gsiCGSkrigingPredict(
 	    pred[j+np*q]/=tmp;
     }    
 }
+
+
+// Kriging
+static R_NativePrimitiveArgType gsiCGSkriging_t[] = {
+  INTSXP,REALSXP,INTSXP,REALSXP,INTSXP,REALSXP,INTSXP,REALSXP,INTSXP,REALSXP,INTSXP,REALSXP,REALSXP,INTSXP
+};
+
 
 
 extern void gsiCGSkriging(
@@ -2017,6 +2040,11 @@ static double gridValue(int gc,int grid) {
    // return log((double)(gc+1)/grid);
 }
 
+// AitchisonDistributionIntegral
+static R_NativePrimitiveArgType gsiAitchisonDistributionIntegral_t[] = {
+  INTSXP,INTSXP,INTSXP,REALSXP,REALSXP,REALSXP,REALSXP,REALSXP,REALSXP
+};
+
 
 extern void gsiAitchisonDistributionIntegral(
     int *Dp,               // 1
@@ -2177,6 +2205,12 @@ extern void gsiMCAitchisonDistributionIntegral(
 }
 
 */
+
+// AitchisonDistributionIntegral
+static R_NativePrimitiveArgType gsirandomClr1Aitchison_t[] = {
+  INTSXP,INTSXP,REALSXP,REALSXP,REALSXP,REALSXP
+};
+
 
 extern void gsirandomClr1Aitchison(
     int *Dp, // 1
@@ -2410,6 +2444,11 @@ void gsiSelectN(const int *l,const int *n, int *s) {
 
 #define D(i,j) DD[(ik=(i),jk=(j),((ik)<=(jk)?((ik-1)+((jk)*((jk)+1))/2) : ((jk-1)+(((ik)*((ik)+1))/2))))]
 
+static R_NativePrimitiveArgType gsiDensityCheck_t[] = {
+  INTSXP,REALSXP,INTSXP,REALSXP,REALSXP,REALSXP,INTSXP,REALSXP
+};
+
+
 extern void gsiDensityCheck(
     int *dimX,
     double *X,
@@ -2536,6 +2575,12 @@ extern void gsiMLClogLik(
 
 }
 
+// KS Poisson
+static R_NativePrimitiveArgType gsiKSPoisson_t[] = {
+  INTSXP,INTSXP,INTSXP,REALSXP,INTSXP,REALSXP
+};
+
+
 
 extern void gsiKSPoisson(
     int *nd,    // Number Datapoints,number datasets
@@ -2572,6 +2617,12 @@ extern void gsiKSPoisson(
     }
 }
 
+// KS Sorted Uniforms
+static R_NativePrimitiveArgType gsiKSsortedUniforms_t[] = {
+  INTSXP,REALSXP,INTSXP
+};
+
+
 extern void gsiKSsortedUniforms(
     const int *n,
     double *data,
@@ -2592,6 +2643,12 @@ extern void gsiKSsortedUniforms(
 	PutRNGstate();
     }
 }
+
+
+// KS Poisson Sample
+static R_NativePrimitiveArgType gsiKSPoissonSample_t[] = {
+  INTSXP,REALSXP,INTSXP,REALSXP,INTSXP,REALSXP
+};
 
 extern void gsiKSPoissonSample(
     const int *n,          // number of data values 
@@ -2628,6 +2685,30 @@ extern void gsiKSPoissonSample(
     }
     PutRNGstate();
 }
+
+
+
+static R_CMethodDef cMethods[] = {
+  {"gsiDensityCheck", (DL_FUNC) &gsiDensityCheck, 8, gsiDensityCheck_t},
+  {"gsiCGSvariogram", (DL_FUNC) &gsiCGSvariogram, 11, gsiCGSvariogram_t},
+  {"gsiCGSvg2lrvg", (DL_FUNC) &gsiCGSvg2lrvg, 3, gsiCGSvg2lrvg_t},
+  {"gsiCGSkriging", (DL_FUNC) &gsiCGSkriging, 14, gsiCGSkriging_t},
+  {"gsiAitchisonDistributionIntegral", (DL_FUNC) &gsiAitchisonDistributionIntegral, 9, gsiAitchisonDistributionIntegral_t},
+  {"gsirandomClr1Aitchison", (DL_FUNC) &gsirandomClr1Aitchison, 6, gsirandomClr1Aitchison_t},
+  {"gsiKSPoisson", (DL_FUNC) &gsiKSPoisson, 6, gsiKSPoisson_t},
+  {"gsiKSsortedUniforms", (DL_FUNC) &gsiKSPoissonSample, 3, gsiKSsortedUniforms_t},
+  {"gsiKSPoissonSample", (DL_FUNC) &gsiKSPoissonSample, 6, gsiKSPoissonSample_t},
+  {NULL, NULL, 0}
+};
+
+
+void R_init_compositions(DllInfo *info)
+  {
+    R_registerRoutines(info, cMethods, NULL, NULL, NULL);
+    R_useDynamicSymbols(info, FALSE);
+    R_forceSymbols(info, TRUE);
+  }
+
 
 
 

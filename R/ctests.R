@@ -2,7 +2,7 @@ gsi.betterPvalue <- function(pval,digits) {
   pval <- round(pval,digits)
   if( pval == 0 )
     pval <- 10^-digits
-  structure(pval,digits=digits)
+  gsi.mystructure(pval,digits=digits)
 }
 
 Gauss.test <- function(x,y=NULL,mean=0,sd=1,alternative = c("two.sided", "less", "greater")) {
@@ -23,9 +23,9 @@ Gauss.test <- function(x,y=NULL,mean=0,sd=1,alternative = c("two.sided", "less",
                     "less"=p2,
                     "greater"=p1
                     ),6)
-  structure(list(
+  gsi.mystructure(list(
                  data.name=deparse(substitute(x)),
-                 method="Ein Stichproben Gauss-Test",
+                 method="one sample Gauss-test",
                  alternative=alternative,
                  parameter=parameter,
                  statistic=statistic,
@@ -110,10 +110,10 @@ ccompPoissonGOF.test<-function(x,
   erg2 <-PoissonGOF.test(N,R=R)
   statistic <- min(erg1$p.value , erg2$p.value)
   p.value <- pbeta(statistic,1,2)
-  structure(list(
+  gsi.mystructure(list(
                  data.name=deparse(substitute(x)),
-                 method="Count Composition Poission Goodness of fit test",
-                 alternative="Count Composition is not a Multi Poission distribution with constant mean",
+                 method="Count composition Poission goodness of fit test",
+                 alternative="Count composition is not a multi-Poission distribution with constant mean",
                  parameter=c(shape1=1,shape2=2),
                  sample=sample,
                  statistic=statistic,
@@ -168,7 +168,7 @@ PoissonGOF.test <- function(x,lambda=mean(x),R=999,estimated=missing(lambda)) {
            )$statistics
     }
     p.value <- gsi.betterPvalue((sum( statistic <= c(ksample) )+1)/(R+1),floor(log(R,10)))
-    structure(list(
+    gsi.mystructure(list(
                    data.name=deparse(substitute(x)),
                    method=if(estimated) "Poisson KS-GOF-Test (with unknown lambda)" else "Poisson KS-GOF-Test (with known lambda)",
                    alternative="Random variable is not Poisson distributed with the given parameter",
@@ -230,7 +230,7 @@ acompGOF.test.list <- function(x,...,method="etest") {
 
 
 gsi.AddMatrices <- function(M) 
-  structure(structure(unlist(M),dim=c(length(M[[1]]),length(M))) %*% rep(1,length(M)),dim=dim(M[[1]]))
+  gsi.mystructure(gsi.mystructure(unlist(M),dim=c(length(M[[1]]),length(M))) %*% rep(1,length(M)),dim=dim(M[[1]]))
 
 
 fitSameMeanDifferentVarianceModel <- function(x) {
@@ -297,14 +297,14 @@ acompNormalLocation.test <- function(x,g=NULL,var.equal=FALSE,paired=FALSE,R=ife
         rss <- t(v)%*%v
         n*(log(det(tss/n))-log(det(rss/n)))
       }
-      sample <- replicate(R,lS1(structure(rnorm(n*m),dim=c(n,m))))
+      sample <- replicate(R,lS1(gsi.mystructure(rnorm(n*m),dim=c(n,m))))
       p.value <- gsi.betterPvalue(mean(logLik<=c(sample,logLik)),floor(log(R,10)))
     } else {
       p.value <- gsi.betterPvalue(pchisq(logLik,df,lower.tail=FALSE),3)
       sample<-NULL
     } 
     return(
-    structure(list(
+    gsi.mystructure(list(
                    data.name=data.name,
                    method="Compositional one sample normal location test",
                    alternative="location is neutral composition",
@@ -337,7 +337,7 @@ acompNormalLocation.test <- function(x,g=NULL,var.equal=FALSE,paired=FALSE,R=ife
     df <- (G-1)*m
     if( R>0 ) {
       lS2 <- function(u) {
-        Splitted <- lapply(Splitted,function(x) structure(rnorm(length(x)),dim=dim(x)))
+        Splitted <- lapply(Splitted,function(x) gsi.mystructure(rnorm(length(x)),dim=dim(x)))
         TSS <- css(do.call("rbind",Splitted))
         iRSS <- lapply(Splitted,css)
         tRSS <- gsi.AddMatrices(iRSS)
@@ -349,7 +349,7 @@ acompNormalLocation.test <- function(x,g=NULL,var.equal=FALSE,paired=FALSE,R=ife
       p.value <- gsi.betterPvalue(pchisq(logLik,df,lower.tail=FALSE),3)
       sample  <- NULL
     }
-    structure(list(
+    gsi.mystructure(list(
                    data.name=data.name,
                    method="Compositional normal location test with equal variances",
                    alternative="locations of groups are not equal",
@@ -367,7 +367,7 @@ acompNormalLocation.test <- function(x,g=NULL,var.equal=FALSE,paired=FALSE,R=ife
     df <- (G-1)*m
     if( R>0 ) {
       lS3 <- function(u) {
-        Splitted <- lapply(Splitted,function(x) structure(rnorm(length(x)),dim=dim(x)))
+        Splitted <- lapply(Splitted,function(x) gsi.mystructure(rnorm(length(x)),dim=dim(x)))
         smdvm <- fitSameMeanDifferentVarianceModel(Splitted)$vars
         dmdvm <- lapply(Splitted,function(x) css(x)/nrow(x))
         a0 <- function(n,V1,V2) n*(log(det(V1))-log(det(V2)))
@@ -379,7 +379,7 @@ acompNormalLocation.test <- function(x,g=NULL,var.equal=FALSE,paired=FALSE,R=ife
       p.value <- gsi.betterPvalue(pchisq(logLik,df,lower.tail=FALSE),3)
       sample  <- NULL
     }
-    structure(list(
+    gsi.mystructure(list(
                    data.name=data.name,
                    method="Compositional Normal Location test with different variances",
                    alternative="locations of groups are not equal",

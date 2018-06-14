@@ -33,6 +33,8 @@ CompLinModCoReg(formula,comp,D=ncol(comp),envir=environment(formula))
       \code{range}}
     \item{\code{gauss(range)}}{ for a Gaussian variogram with range
     \code{range}}
+    \item{\code{gauss(range)}}{ for a cardinal sine variogram with (non-effective) range
+    \code{range}}
     \item{\code{pow(range)}}{ for an power variogram with range
       \code{range}}
     \item{\code{lin(unit)}}{ linear variogram 1 at \code{unit}.}

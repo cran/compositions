@@ -16,7 +16,7 @@ gsi.simshape <- function(x,oldx) {
   if(length(dim(oldx))>=2 )
     oneOrDataset(x)
   else if( length(dim(oldx)) == 1 )
-    structure(c(x),dim=length(x))
+    gsi.mystructure(c(x),dim=length(x))
   else 
     c(drop(x))
 }
@@ -344,7 +344,7 @@ acomp <- function(X,parts=1:NCOL(oneOrDataset(X)),total=1,warn.na=FALSE,detectio
   if( !is.null(MNAR)&& any(mnar) ) X[mnar]<-BDLvalue
   if( !is.null(bdl) && any(bdl)) X[bdl]<-MARvalue
   if( !is.null(SZ)&&any(sz) ) X[sz]<-SZvalue
-  X <-  structure(clo(X,parts,total),class="acomp")
+  X <-  gsi.mystructure(clo(X,parts,total),class="acomp")
   if( !is.null(detectionlimit) && any(X==BDLvalue) ) {
     X[sapply(X,eq,BDLvalue)]<- -detectionlimit
   }
@@ -362,7 +362,7 @@ acomp <- function(X,parts=1:NCOL(oneOrDataset(X)),total=1,warn.na=FALSE,detectio
 
 
 rcomp <- function(X,parts=1:NCOL(oneOrDataset(X)),total=1,warn.na=FALSE,detectionlimit=NULL,BDL=NULL,MAR=NULL,MNAR=NULL,SZ=NULL) {
-  X <-  structure(clo(X,parts,total,detectionlimit=detectionlimit,BDL=BDL,MAR=MAR,MNAR=MNAR,SZ=SZ),class="rcomp")
+  X <-  gsi.mystructure(clo(X,parts,total,detectionlimit=detectionlimit,BDL=BDL,MAR=MAR,MNAR=MNAR,SZ=SZ),class="rcomp")
   if( warn.na ) {
     if( any(is.SZ(X))) 
       warning("Composition has structural zeros")
@@ -869,7 +869,7 @@ cor.acomp <- function(x,y=NULL,...,robust=getOption("robust")) {
     if( nrow(x) < 2 )
       return(x/x)
     sf<-diag(1/sqrt(diag(x)))
-    structure( sf %*% x %*% sf ,dimnames=dimnames(x))
+    gsi.mystructure( sf %*% x %*% sf ,dimnames=dimnames(x))
   }
   if( is.null(y) ) {
     mat2cor(var(x,y,...,robust=robust))
@@ -879,7 +879,7 @@ cor.acomp <- function(x,y=NULL,...,robust=getOption("robust")) {
     covXY<- var(x,y,...,robust=robust)
     sfX<-diag(1/sqrt(diag(varX)))
     sfY<-diag(1/sqrt(diag(varY)))
-    structure( sfX %*% covXY %*% sfY, dimnames=list(colnames(x),colnames(y)))
+    gsi.mystructure( sfX %*% covXY %*% sfY, dimnames=list(colnames(x),colnames(y)))
   }
 }
 
@@ -934,7 +934,7 @@ summary.acomp <- function( object,...,robust=getOption("robust") ) {
   dimnames(Wq) <- list(colnames(W),colnames(W),NULL)
   vari <- if(is.null(robust) ) NULL else variation.acomp(acomp(W),robust=robust)
   narm <- function(x) x[is.finite(x)]
-  structure(list(mean=if(is.null(robust)) NULL else mean(acomp(W),robust=robust),
+  gsi.mystructure(list(mean=if(is.null(robust)) NULL else mean(acomp(W),robust=robust),
        mean.ratio=apply(Wq,1:2,function(x) exp(mean(log(x[is.finite(x)])))),
        variation=vari,
        expsd=if( is.null(vari) ) NULL else exp(sqrt(vari)),
@@ -1599,7 +1599,8 @@ gsi.sub <- function( x,y ) {
     else
       unclass(x)-rep(c(y),rep(NROW(x),length(y)))
   else if( length(dim(y)) == 2 )
-      unclass(y)-rep(c(x),rep(NROW(y),length(x)))
+      # unclass(y)-rep(c(x),rep(NROW(y),length(x))) ## BUG!!!
+      rep(c(x),rep(NROW(y),length(x)))-unclass(y)
   else
     unclass(x)-unclass(y)
 }
@@ -1623,7 +1624,8 @@ gsi.div <- function( x,y ) {
     else
       unclass(x)/rep(c(y),rep(NROW(x),length(y)))
   else if( length(dim(y)) == 2 )
-      unclass(y)/rep(c(x),rep(NROW(y),length(x)))
+      # unclass(y)/rep(c(x),rep(NROW(y),length(x))) ## BUG!!
+      rep(c(x),rep(NROW(y),length(x)))/unclass(y)
   else
     unclass(x)/unclass(y)
 }
@@ -1800,7 +1802,7 @@ power.acomp <- function(x,s) {
     rmult(unclass(x)/unclass(y))
 }
 
-"%*%" <- function(x,y) UseMethod("%*%",structure(c(),class=c(class(x),class(y))))
+"%*%" <- function(x,y) UseMethod("%*%",structure(c(unclass(x), unclass(y)),class=c(class(x),class(y))))
 
 
 #gsi.internaltmp <- get("%*%",pos="package:base")
@@ -2353,9 +2355,11 @@ cdt.rplus   <- iit
 cdt.rmult   <- function(x,...) x
 cdt.factor  <- function(x,...) {
   #x <- matrix(0,nrow=length(x),ncol=nlevels(x),dimnames=list(names(x),levels(x)))
-  x[1:ncol(x)+unclass(x)] <- model.matrix(~-1+x)
-  
-  rmult(matrix(x,nrow=nrow(x),dimnames=dimnames(x)))
+  #x[1:ncol(x)+unclass(x)] <- model.matrix(~-1+x)
+  #rmult(matrix(x,nrow=nrow(x),dimnames=dimnames(x)))
+  y = diag(length(levels(x)))
+  colnames(y) <- rownames(y)<- levels(x)
+  y[as.character(x),]
 }
 
 cdtInv <- function(x,orig,...) UseMethod("cdtInv",orig)
@@ -2366,6 +2370,11 @@ cdtInv.ccomp   <- function(x,orig,...) iitInv(x,...,orig=orig)
 cdtInv.aplus   <- function(x,orig,...) iltInv(x,...,orig=orig)
 cdtInv.rplus   <- function(x,orig,...) iitInv(x,...,orig=orig)
 cdtInv.rmult   <- function(x,orig,...) x
+cdtInv.factor   <- function(x,orig,...){
+  cn = colnames(x)
+  if(length(levels(orig))>length(cn))cn=levels(orig)
+  factor(cn[x %*% c(1:ncol(x))])
+}
 
 idtInv <- function(x,orig,...) UseMethod("idtInv",orig)
 idtInv.default <- function(x,orig,...) x
@@ -3175,7 +3184,7 @@ plot.acomp <- function(x,...,labels=names(x),aspanel=FALSE,id=FALSE,idlabs=NULL,
    ## Setting up the coordinate system
    if( newPlot ) {
      D  <- gsi.getD(x)
-     ce <- acomp(structure(rep(1,D),names=names(x)))
+     ce <- acomp(gsi.mystructure(rep(1,D),names=names(x)))
      ms <- 1
      va <- NULL
      if( is.logical(center) && is.logical(scale) ) {
@@ -3296,7 +3305,7 @@ plot.acomp <- function(x,...,labels=names(x),aspanel=FALSE,id=FALSE,idlabs=NULL,
      bdl <- is.BDL(Y)
      nMis <- apply(if( plotMissings ) !nmv else !(nmv | bdl),1,sum)
      nonmissing   <- nMis == 0
-     Y<-oneOrDataset(clo(structure(c(ifelse(nmv,Y,0)),dim=dim(Y))))
+     Y<-oneOrDataset(clo(gsi.mystructure(c(ifelse(nmv,Y,0)),dim=dim(Y))))
      ## plot  Nonmissings
      x1 <- Y[,2]+Y[,3]*c60
      y1 <- Y[,3]*s60
@@ -3347,7 +3356,7 @@ plot.acomp <- function(x,...,labels=names(x),aspanel=FALSE,id=FALSE,idlabs=NULL,
 
 plot.ccomp <- function(x,...) {
   x<-unclass(x)
-  x<-rcomp(structure(abs(x+runif(length(x),-0.3,0.3)),dim=dim(x)))
+  x<-rcomp(gsi.mystructure(abs(x+runif(length(x),-0.3,0.3)),dim=dim(x)))
   plot(x,...)
 }
 
@@ -3376,7 +3385,7 @@ plot.rcomp <- function(x,...,labels=names(x),aspanel=FALSE,id=FALSE,idlabs=NULL,
    ## Setting up the coordinate system
    if( newPlot ) {
      D  <- gsi.getD(x)
-     ce <- rcomp(structure(rep(1,D),names=names(x)))
+     ce <- rcomp(gsi.mystructure(rep(1,D),names=names(x)))
      ms <- 1
      #va <- NULL
      #if( is.logical(center) && is.logical(scale) ) {
@@ -3508,7 +3517,7 @@ plot.rcomp <- function(x,...,labels=names(x),aspanel=FALSE,id=FALSE,idlabs=NULL,
     bdl <- is.BDL(Y)
     nMis <- apply(if( plotMissings ) !nmv else !(nmv | is.BDL(Y)),1,sum)
     nonmissing   <- nMis == 0
-    Y<-oneOrDataset(clo(structure(c(ifelse(nmv,Y,0)),dim=dim(Y))))
+    Y<-oneOrDataset(clo(gsi.mystructure(c(ifelse(nmv,Y,0)),dim=dim(Y))))
   #  names(Y) <- cn
 ### 3b.7) Plot Nonmissings
     x1 <- Y[,2]+Y[,3]*c60
@@ -3804,7 +3813,7 @@ plot.aplus <- function (x, ..., labels = colnames(X), cn = colnames(X), aspanel 
             cn <- c("x", "y")
         }
         if (!add && !aspanel) {
-            plot(x = c(1), y = c(1), xlim = xlim[, 1], ylim = ylim[,
+            plot(x = c(1), y = c(1), ..., xlim = xlim[, 1], ylim = ylim[,
                 2], type = "n", log = ifelse(logscale, "xy",
                 ""), xlab = cn[1], ylab = cn[2])
             gsi.setPlot(NULL)
@@ -3814,7 +3823,7 @@ plot.aplus <- function (x, ..., labels = colnames(X), cn = colnames(X), aspanel 
             !nmv
         else !(nmv | is.BDL(x)), 1, sum)
         nonmissing <- nMis == 0
-        Y <- oneOrDataset(structure(c(ifelse(nmv, X, 0)), dim = dim(x)))
+        Y <- oneOrDataset(gsi.mystructure(c(ifelse(nmv, X, 0)), dim = dim(x)))
         x1 <- ifelse(nmv[, 1], Y[, 1], if (par("xlog"))
             10^par("usr")[1]
         else par("usr")[1])
@@ -3934,7 +3943,7 @@ plot.rplus <- function (x, ..., labels = colnames(X), cn = colnames(X), aspanel 
             cn <- c("x", "y")
         }
         if (!add && !aspanel) {
-            plot(x = c(1), y = c(1), xlim = xlim[, 1], ylim = ylim[,
+            plot(x = c(1), y = c(1), ..., xlim = xlim[, 1], ylim = ylim[,
                 2], type = "n", log = ifelse(logscale, "xy",
                 ""), xlab = cn[1], ylab = cn[2])
             gsi.setPlot(NULL)
@@ -4035,7 +4044,7 @@ if( NCOL(X) > 2 ) {
                                         #axis(2)
     } else {
       if( !add ) {
-        plot(x=c(1),y=c(1),
+        plot(x=c(1),y=c(1),...,
              xlim=range(x),ylim=range(y),type="n",
              log=ifelse(logscale,"xy",""),xlab=cn[1],ylab=cn[2])
         #gsi.plots[[dev.cur()]]<<-NULL
@@ -4109,7 +4118,7 @@ lines.acomp <- function(x,...,steps=30,aspanel=FALSE) {
 ### 3b) Plot directly
 ### 3b.1) --
 ### 3b.2) Transform data
-    Xt <- oneOrDataset(gsi.pltTrafo(structure(acomp(x),trafoed=attr(x,"trafoed")),"data"))
+    Xt <- oneOrDataset(gsi.pltTrafo(gsi.mystructure(acomp(x),trafoed=attr(x,"trafoed")),"data"))
 ### 3b.3) prepare plotting
     s60 <- sin(pi/3)
     c60 <- cos(pi/3)
@@ -4181,7 +4190,7 @@ lines.rcomp <- function(x,...,steps=30,aspanel=FALSE) {
     # Problem: Not LNK and NOT PAD would require extra pad
     gp <- rbind(c(TRUE,!Redundant),TRUE,
                 c(!LNK & apply(is.finite(Xb[-nrow(Xb),])&is.finite(Xb[-nrow(Xb),]),1,all) ,FALSE))
-    X<-t(structure(structure(t(cbind(Xa,Xb,Xb*NA)),dimnames=NULL),dim=c(ncol(Xb),3*nrow(Xb))))[c(gp),,drop=FALSE]
+    X<-t(gsi.mystructure(gsi.mystructure(t(cbind(Xa,Xb,Xb*NA)),dimnames=NULL),dim=c(ncol(Xb),3*nrow(Xb))))[c(gp),,drop=FALSE]
   }
 ### 2) -
 ### 3) if( !aspanel && ncol>3 ) Set up gsi.pairs else plot directly
@@ -4200,9 +4209,9 @@ lines.rcomp <- function(x,...,steps=30,aspanel=FALSE) {
 ### 3b) Plot directly
 ### 3b.1) --
 ### 3b.2) Transform data
-#    Xt <- oneOrDataset(gsi.pltTrafo(structure(rcomp(X),trafoed=attr(X,"trafoed")),"data"))
-    Xt <- oneOrDataset(gsi.pltTrafo(structure(rcomp(X),trafoed=trafoed),"data"))
-#    Xt <- gsi.pltTrafo(structure(rcomp(X),trafoed=trafoed),"data")
+#    Xt <- oneOrDataset(gsi.pltTrafo(gsi.mystructure(rcomp(X),trafoed=attr(X,"trafoed")),"data"))
+    Xt <- oneOrDataset(gsi.pltTrafo(gsi.mystructure(rcomp(X),trafoed=trafoed),"data"))
+#    Xt <- gsi.pltTrafo(gsi.mystructure(rcomp(X),trafoed=trafoed),"data")
 ### 3b.3) prepare plotting
     s60 <- sin(pi/3)
     c60 <- cos(pi/3)
@@ -4282,7 +4291,7 @@ lines.rplus <- function(x,...,steps=30,aspanel=FALSE) {
     # Problem: Not LNK and NOT PAD would require extra pad
     gp <- rbind(c(TRUE,!Redundant),TRUE,
                 c(!LNK & apply(is.finite(Xb[-nrow(Xb),])&is.finite(Xb[-nrow(Xb),]),1,all) ,FALSE))
-    X<-t(structure(t(cbind(Xa,Xb,Xb*NA)),dim=c(ncol(Xb),3*nrow(Xb))))[c(gp),,drop=FALSE]
+    X<-t(gsi.mystructure(t(cbind(Xa,Xb,Xb*NA)),dim=c(ncol(Xb),3*nrow(Xb))))[c(gp),,drop=FALSE]
   }
   if( ncol(X) > 2 ) {
     infkt <- function(x,y,...) {
@@ -4610,12 +4619,12 @@ gsi.DrawCompEllipses = function(mean,var,r,steps=72,...) {
  # Loop over ellipse centers
   meFull <- oneOrDataset(idt(mean))
   for(k in 1:nrow(meFull) ) {
-    # me   <- structure(meFull[k,],class="rmult")
+    # me   <- gsi.mystructure(meFull[k,],class="rmult")
     me   <- meFull[k,]
     X <- idtInv(cbind(me[1]+rs[1]*ei$vectors[1,1]*sw+rs[2]*ei$vectors[1,2]*cw,
                       me[2]+rs[1]*ei$vectors[2,1]*sw+rs[2]*ei$vectors[2,2]*cw
                       ), orig=mean)
-    noreplot(lines(structure(X,trafoed=TRUE),...,aspanel=TRUE))
+    noreplot(lines(gsi.mystructure(X,trafoed=TRUE),...,aspanel=TRUE))
   }
 }
 
@@ -4625,7 +4634,7 @@ gsi.DrawCompEllipses = function(mean,var,r,steps=72,...) {
 gsi.ellipsesCompPanel <- function(i,j,margin,mean,var,r=1,...,steps=72) {
   va <- gsi.pltTrafo(var, what="var", geo=class(mean))
   me <- gsi.pltTrafo(mean, what="data", geo=class(mean))
-  gsi.DrawCompEllipses(structure(me,class=class(mean)),va,r,steps=steps,...)
+  gsi.DrawCompEllipses(gsi.mystructure(me,class=class(mean)),va,r,steps=steps,...)
 }
 
 
@@ -4711,7 +4720,7 @@ gsi.ellipsesRealPanel <- function(i,j,mean,var,r=1,...,steps=72) {
                       me[2]+rs[1]*ei$vectors[2,1]*sin(w)+rs[2]*ei$vectors[2,2]*cos(w)
                       ),mean)
     if( class(mean) == "rplus" ) {
-      noreplot(lines(structure(X,class="rplus"),...))
+      noreplot(lines(gsi.mystructure(X,class="rplus"),...))
     } else noreplot(lines(X,...))
   }
 }
@@ -5021,8 +5030,8 @@ rpois.ccomp <- function(n,p,lambda) {
   if( length(dim(L)) == 2 ) 
     L <- L[ ((1:n)-1) %% nrow(L) +1,]
   else
-    L <- t(structure(rep(L,n),dim=c(length(L),n)))
-  ccomp(structure(rpois(length(L),c(L)),dim=dim(L)))
+    L <- t(gsi.mystructure(rep(L,n),dim=c(length(L),n)))
+  ccomp(gsi.mystructure(rpois(length(L),c(L)),dim=dim(L)))
 }
 
 rmultinom.ccomp <- function(n,p,N) {
@@ -5119,17 +5128,21 @@ rlnorm.rplus <- function(n,meanlog,varlog) {
 }
 
 dlnorm.rplus <- function(x,meanlog,varlog) {
+  # 20161024: Bug in density (2*pi) -> (2*pi)^p corrected; 
+  #  warning issued by Florian Pechon, florian.pechon@uclouvain.be
   xx <- oneOrDataset(x)
   w <- ilt(x)-meanlog
   if( length(dim(w)) == 2 ) {
     u <- c(rep(1,ncol(w))%*%t((solve(varlog,t(w)))*t(w)))
     v <- c(exp(log(xx) %*% rep(1,ncol(xx)))) 
+    p <- ncol(w)
   }
   else {
     u <- solve(varlog,w)%*%w
     v <- prod(x)
+    p <- length(w)
   }
-  exp(-u/2)/sqrt(2*pi*det(varlog))/v
+  exp(-u/2)/sqrt((2*pi)^p*det(varlog))/v
 }
 
 
@@ -5148,8 +5161,10 @@ rnorm.rmult <- function(n,mean,var) {
 }
 
 rnorm.rcomp <- function(n,mean,var) {
-  D <- ncol(var)
-  erg<-rcomp(pmax(ilr2clr(matrix(rnorm(n*D),ncol=D-1) %*% chol(clrvar2ilr(var)))+rplus(rcomp(mean)),0))
+  # 20161024: Bug in the dimensions of matrix(rnorm...), both must be ncol(var)-1
+  #  warning issued by John Szumiloski <John.Szumiloski@bms.com>
+  D <- ncol(var)-1
+  erg<-rcomp(pmax(ilr2clr(matrix(rnorm(n*D),ncol=D) %*% chol(clrvar2ilr(var)))+rplus(rcomp(mean)),0))
   colnames(erg) <- colnames(oneOrDataset(mean))
   erg
 }
@@ -5301,7 +5316,7 @@ gsi.pltTrafo <- function(X,what="data",coorinfo=gsi.getCoorInfo(),geo="acomp",..
       margin <- match(margin,names(mean))
     if( what == "data" ) {
       Xn <- oneOrDataset(Xn)
-      return( structure(clo(cbind(Xn[,-margin,drop=FALSE][,d,drop=FALSE],
+      return( gsi.mystructure(clo(cbind(Xn[,-margin,drop=FALSE][,d,drop=FALSE],
                                   Xn[,margin])),class=class(X)))
     } else if(what=="direction") {
 #      Xn <- oneOrDataset(Xn)
@@ -5417,7 +5432,7 @@ barplot.rplus <- barplot.aplus
 
 split.acomp <- function(x,f,drop=FALSE,...) {
   cls <- class(x)
-  lapply(split(1:NROW(x),f,drop=drop,...),function(i) structure(x[i,],class=cls))
+  lapply(split(1:NROW(x),f,drop=drop,...),function(i) gsi.mystructure(x[i,],class=cls))
 }
 split.rcomp <- split.acomp
 split.aplus <- split.acomp
@@ -5448,7 +5463,7 @@ princomp.acomp <- function(x,...,scores=TRUE,center=attr(covmat,"center"),
   D <- gsi.getD(x)
   tmp <- princomp(clr(x),...,center=clr(center),covmat=covmat,scores=scores)
   tmp$sdev        <- tmp$sdev[-D]
-  tmp$loadings    <- structure(tmp$loadings[,-D],class="loadings")
+  tmp$loadings    <- gsi.mystructure(tmp$loadings[,-D],class="loadings")
   tmp$Center      <- clrInv(tmp$center)
   tmp$Loadings  <- acomp(clrInv(t(tmp$loadings)),total=D)
   tmp$DownLoadings<- acomp(clrInv(t(-tmp$loadings)),total=D)
@@ -5511,7 +5526,7 @@ princomp.rcomp <- function(x,...,scores=TRUE,center=attr(covmat,"center"),
   D <- gsi.getD(x)
   tmp <- princomp(cpt(x),...,scores=scores,covmat=covmat,center=cpt(center))
   tmp$sdev        <- tmp$sdev[-D]
-  tmp$loadings    <- structure(tmp$loadings[,-D],class="loadings")
+  tmp$loadings    <- gsi.mystructure(tmp$loadings[,-D],class="loadings")
   tmp$Center      <- cptInv(tmp$center,x)
   tmp$Loadings    <- cptInv(t(tmp$loadings),x)
   tmp$call <- cl
@@ -5712,7 +5727,7 @@ Nprincomp <-
     #  scale(z, center = cen, scale = sc) %*% edc$vectors
     if (is.null(cen)) cen <- rep(NA_real_, nrow(cv))
     edc <- list(sdev = sdev,
-                loadings = structure(edc$vectors, class="loadings"),
+                loadings = gsi.mystructure(edc$vectors, class="loadings"),
                 center = c(unclass(cen)), scale = sc, n.obs = n.obs,
                 scores = scr, call = cl)
     class(edc) <- "princomp"
@@ -5748,7 +5763,7 @@ relativeLoadings.princomp.acomp <- function(x,...,log=FALSE,scale.sdev=NA,cutoff
   colnames(bl) <- colnames(x$loadings)
   if( !log )
     bl <- exp(bl)
-  structure(bl,class="relativeLoadings.princomp.acomp",cutoff=cutoff,scale=scale,log=log)
+  gsi.mystructure(bl,class="relativeLoadings.princomp.acomp",cutoff=cutoff,scale=scale,log=log)
 }
 
 relativeLoadings.princomp.aplus <- function(x,...,log=FALSE,scale.sdev=NA,cutoff=0.1) {
@@ -5760,7 +5775,7 @@ relativeLoadings.princomp.aplus <- function(x,...,log=FALSE,scale.sdev=NA,cutoff
   colnames(bl) <- colnames(x$loadings)
   if( !log )
     bl <- exp(bl)
-  structure(bl,class="relativeLoadings.princomp.aplus",cutoff=cutoff,scale=scale,log=log)
+  gsi.mystructure(bl,class="relativeLoadings.princomp.aplus",cutoff=cutoff,scale=scale,log=log)
 }
 
 relativeLoadings.princomp.rcomp <- function(x,...,scale.sdev=NA,cutoff=0.1) {
@@ -5770,7 +5785,7 @@ relativeLoadings.princomp.rcomp <- function(x,...,scale.sdev=NA,cutoff=0.1) {
     scale <- scale.sdev*x$sdev
   bl <- gsi.pairrelativeMatrix(row.names(x$loadings)) %*% (unclass(x$loadings) %*% diag(scale))
   colnames(bl) <- colnames(x$loadings)
-  structure(bl,class="relativeLoadings.princomp.rcomp",cutoff=cutoff,scale=scale)
+  gsi.mystructure(bl,class="relativeLoadings.princomp.rcomp",cutoff=cutoff,scale=scale)
 }
 
 relativeLoadings.princomp.rplus <- function(x,...,scale.sdev=NA,cutoff=0.1) {
@@ -5780,7 +5795,7 @@ relativeLoadings.princomp.rplus <- function(x,...,scale.sdev=NA,cutoff=0.1) {
     scale <- scale.sdev*x$sdev
   bl <- gsi.pairrelativeMatrix(row.names(x$loadings)) %*% (unclass(x$loadings) %*% diag(scale))
   colnames(bl) <- colnames(x$loadings)
-  structure(bl,class="relativeLoadings.princomp.rplus",cutoff=cutoff,scale=scale)
+  gsi.mystructure(bl,class="relativeLoadings.princomp.rplus",cutoff=cutoff,scale=scale)
 }
 
 
@@ -5981,7 +5996,7 @@ P 0.500, 0.500, 0.500
 
 gsi.getBalStruct <- function(descr,names,allowMinus=FALSE,allowOne=FALSE) {
     if( !is.call(descr))
-      return(structure(list(),all=list(as.character(descr))))
+      return(gsi.mystructure(list(),all=list(as.character(descr))))
     command <- as.character(descr[[1]])
                                         # next two lines added!
     if( command == "~" )
@@ -5989,7 +6004,7 @@ gsi.getBalStruct <- function(descr,names,allowMinus=FALSE,allowOne=FALSE) {
     if( command == "(" )
       return( Recall(descr[[2]]) )
     if( allowOne && command == "1" )
-      return( structure(list(),all=list(as.character(descr))) )
+      return( gsi.mystructure(list(),all=list(as.character(descr))) )
     else if( (allowMinus && command == "-") || command == "/" || command =="*" || command =="+" || command==":") {
       a <- Recall(descr[[2]])
       b <- Recall(descr[[3]])
@@ -6005,7 +6020,7 @@ gsi.getBalStruct <- function(descr,names,allowMinus=FALSE,allowOne=FALSE) {
       attr(erg,"all") <- aall
       erg
     } else {
-      structure(list(),all=list(as.character(command)))
+      gsi.mystructure(list(),all=list(as.character(command)))
     }
   }
 
@@ -6341,9 +6356,9 @@ gsiFindSolutionWithDerivative <- function(f,Der,start,iter=30) {
       if( ny <1E-14 && ny/firstnorm<1E-6 )
         break
     }
-    return(structure(nstart,value=y,status=if(ny/firstnorm<1E-6 || ny <1E-15) "ok" else "not converged",iterations=it))
+    return(gsi.mystructure(nstart,value=y,status=if(ny/firstnorm<1E-6 || ny <1E-15) "ok" else "not converged",iterations=it))
   },silent=FALSE)
-  return(structure(start,value=f(c(start)),status="failed",iterations=it))
+  return(gsi.mystructure(start,value=f(c(start)),status="failed",iterations=it))
 }
 
 R2 <- function(object,...) UseMethod("R2",object)
@@ -6379,7 +6394,7 @@ var.lm <- function(x,...) {r<-unclass(resid(x));sum(r^2)/x$df.residual}
 
 vcovAcomp <- function(object,...){
   co <- coef(object)
-  aperm(structure(vcov(object,...),
+  aperm(gsi.mystructure(vcov(object,...),
         dim=c(dim(co),dim(co)),
         dimnames=c(dimnames(co),dimnames(co))),
         c(2,4,1,3))

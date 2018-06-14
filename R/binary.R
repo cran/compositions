@@ -27,13 +27,13 @@ unbinary <- function(x,g=2) {
 bit <- function(x,b,g=2) UseMethod("bit")                       
 bit.numeric   <- function(x,b=0:maxBit(x,g),g=2)  {
   erg <- sapply(b,function(b) (x%/% (g^b) %% g ))
-  structure((if(g==2) as.logical else as.integer)(erg),dim=dim(erg))
+  gsi.mystructure((if(g==2) as.logical else as.integer)(erg),dim=dim(erg))
 }
 bit.character <- function(x,b=0:maxBit(x,g),g=2)  {
   nc = nchar(x)
   asDigit <- (if(g==2) function(x) as.logical((match(x,c("0","1","F","T"))-1)%%2) else function(x) as.integer((match(x,as.character(c(0:9,LETTERS,10:19,letters)[c(1:g,37:(36+g))]))-1)%%g))
   erg <- sapply(b,function(b) ifelse(b<nc,substring(x,nc-b,nc-b),"0"))
-  structure(asDigit(erg),dim=dim(erg))
+  gsi.mystructure(asDigit(erg),dim=dim(erg))
 }
 "bit<-" <- function(x,b,g=2,value) UseMethod("bit<-",x)                       
 "bit<-.character" <- function(x,b=0:maxBit(x,g),g=2,value)  {

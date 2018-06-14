@@ -23,7 +23,7 @@
 
 }
 \value{
-  Nothing
+  the 3D plotting coordinates of the objects displayed, returned invisibly
 }
 \details{
   The function plots rplus objects in a 3D coordinate system, in an rgl plot. 

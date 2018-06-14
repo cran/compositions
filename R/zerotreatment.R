@@ -54,7 +54,7 @@ missingType <- function(x,...,mc=attr(x,"missingClassifier"),values=c("NMV","BDT
   if( is.null(mc) || identical(mc,missingType)) {
     na <- is.na(x)
     values <- values[c(1,2,3,4,6,5)]
-    structure(values[2+is.infinite(x)*4+na*2-((!na&x>0)|is.nan(x))],dim=dim(x),dimnames=dimnames(x))
+    gsi.mystructure(values[2+is.infinite(x)*4+na*2-((!na&x>0)|is.nan(x))],dim=dim(x),dimnames=dimnames(x))
   }
   else
     do.call(mc,list(x,...))
@@ -65,14 +65,14 @@ missingType <- function(x,...,mc=attr(x,"missingClassifier"),values=c("NMV","BDT
 missingSummary <- function(x,...,vlabs=colnames(x),mc=attr(x,"missingClassifier"),values=eval(formals(missingType)$values)) {
   if( is.data.frame(x) )
      x <- data.matrix(x)
-  missingType <- structure(c(missingType(x,...,values=1:6)),levels=as.character(values),
+  missingType <- gsi.mystructure(c(missingType(x,...,values=1:6)),levels=as.character(values),
             class=c("ordered","factor"))
   # meaning, only faster:
   # missingType <- factor(missingType(x,values=values),levels=values)
   if( length(dim(x)==2 )) {
     if(length(vlabs)!=ncol(x))
       vlabs <- paste("V",1:ncol(x),sep="")
-    variable <- structure(rep(1:ncol(x),each=nrow(x)),
+    variable <- gsi.mystructure(rep(1:ncol(x),each=nrow(x)),
                           levels=as.character(vlabs),class="factor")
 
     as.missingSummary(table(variable,missingType))
@@ -135,7 +135,7 @@ zeroreplace <- function(x,d=NULL,a=2/3){
   d = a*d
   # ... and replace
   W[Losts]=d[Losts]
-  return(structure(W,Losts=Losts,class=class(x)))
+  return(gsi.mystructure(W,Losts=Losts,class=class(x)))
 }
 
 #zeroreplace <- function(x,d,a=2/3){
@@ -193,7 +193,7 @@ gsi.varwithlosts <- function(x,giveCenter=FALSE){
      prodVal[is.infinite(prodVal)|is.nan(prodVal)] = 0
      prodVal[prodId,] = 0
      dimnames(prodVal) = list(s=NULL,i=NULL)
-  # compute the X·X^t for each row (containing log-ratios):
+  # compute the X*X^t for each row (containing log-ratios):
  prodVal = t( sapply(1:nrow(prodVal), 
             function(i){ c(outer(prodVal[i,],prodVal[i,],"*"))  } ) )
 
@@ -420,7 +420,7 @@ observeWithAdditiveError <- function(x, sigma=dl/dlf, dl=sigma*dlf, dlf=3,
       stopifnot(all.equal(dim(obsScale),dim(Y)))
     }
   }
-  Z <- unclass(Y)+structure(rnorm(length(sigma),0,sigma),dim=dim(sigma))
+  Z <- unclass(Y)+gsi.mystructure(rnorm(length(sigma),0,sigma),dim=dim(sigma))
   if( ! all(is.na(digits)) ) {
     Z <- round(Z/obsScale,digits)*obsScale
   }
@@ -429,10 +429,10 @@ observeWithAdditiveError <- function(x, sigma=dl/dlf, dl=sigma*dlf, dlf=3,
   Zc <- gsi.recodeM2C(Zc,
                       Yo,BDL=BDLvalue,MAR=MARvalue,MNAR=MNARvalue,SZ=SZvalue)
   switch(match.arg(class,c("acomp","aplus","rcomp","rplus")),
-         "acomp"=structure(Zc/to,class="acomp",detectionlimit=dl/to,sigma=sigma/to,obs=if(keepObs) Z/to),
-         "aplus"=structure(Zc,class="acomp",detectionlimit=dl,sigma=sigma,obs=if(keepObs) Z),
-         "rcomp"=structure(Zc/to,class="rcomp",detectionlimit=dl/to,sigma=sigma/to,obs=if(keepObs) Z/to),
-         "rplus"=structure(Zc,class="rplus",detectionlimit=dl,sigma=sigma,obs=if(keepObs) Z)
+         "acomp"=gsi.mystructure(Zc/to,class="acomp",detectionlimit=dl/to,sigma=sigma/to,obs=if(keepObs) Z/to),
+         "aplus"=gsi.mystructure(Zc,class="acomp",detectionlimit=dl,sigma=sigma,obs=if(keepObs) Z),
+         "rcomp"=gsi.mystructure(Zc/to,class="rcomp",detectionlimit=dl/to,sigma=sigma/to,obs=if(keepObs) Z/to),
+         "rplus"=gsi.mystructure(Zc,class="rplus",detectionlimit=dl,sigma=sigma,obs=if(keepObs) Z)
          )
 }
 
