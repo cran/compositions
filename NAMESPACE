@@ -1,4 +1,4 @@
-import(tensorA,graphics,stats,bayesm,energy)
+import(tensorA,graphics,stats,bayesm)
 importFrom(robustbase,covMcd,lmrob)
 importFrom("grDevices", "as.graphicsAnnot", "dev.cur", "palette","rainbow", "rgb")
 importFrom("utils", "combn", "menu", "methods", "read.table","write.table")

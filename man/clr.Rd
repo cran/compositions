@@ -36,10 +36,10 @@
   \cr  
   The centered logratio transform is given by
   \deqn{ clr(x) := \left(\ln x_i - \frac1D \sum_{j=1}^D \ln x_j\right)_i }{
-    clr(x) := (\emph{ln} \bold{x} - mean(\emph{ln} \bold{x]) ) }
+    clr(x) := (\emph{ln} \bold{x} - mean(\emph{ln} \bold{x}) ) }
   The image of the \code{clr} is a vector with entries
   summing to 0. This hyperplane is also called the clr-plane.
-}}
+}
 \author{K.Gerald v.d. Boogaart
   \url{http://www.stat.boogaart.de}
   }

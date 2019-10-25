@@ -5059,7 +5059,7 @@ rnorm.aplus <- function(n,mean,var) {
                 mean)
 }
 
-dnorm.aplus <- function(x,mean,var) {
+dnorm.aplus <- function(x,mean,var,withJacobian=FALSE) {
   x <- aplus(x)
   mean <- aplus(mean)
   w <- ilt(x-mean)
@@ -5068,7 +5068,12 @@ dnorm.aplus <- function(x,mean,var) {
     u <- c(rep(1,ncol(w))%*%t((solve(var,t(w)))*t(w)))
   else
     u <- sum(solve(var,w)*w)
-  exp(-u/2)/sqrt(2^D*pi^D*det(var))
+  k = 1
+  if(withJacobian){
+    warning("dnorm.aplus should be used for the multivariate normal in R+, that is without jacobian. For clarity, use better dlnorm.rplus if you are interested in the density of the lognormal model.")
+    k = exp(-log(unclass(x)) %*% rep(1, D) ) 
+  }
+  k*exp(-u/2)/sqrt(2^D*pi^D*det(var))
 }
 
 dnorm.rmult <- function(x,mean,var) {
@@ -5101,7 +5106,7 @@ rnorm.acomp <-function (n, mean, var){
 
 
 
-dnorm.acomp <- function(x,mean,var) {
+dnorm.acomp <- function(x,mean,var,withJacobian=FALSE) {
   x <- acomp(x)
   mean <- acomp(mean)
   w <- ilr(x-mean)
@@ -5110,7 +5115,11 @@ dnorm.acomp <- function(x,mean,var) {
     u <- c(rep(1,D-1)%*%t((solve(clrvar2ilr(var),t(w)))*t(w)))
   else
     u <- sum(solve(clrvar2ilr(var),w)*w)
-  exp(-u/2)/sqrt(2*pi*det(clrvar2ilr(var)))
+  k = 1
+  if(withJacobian){
+    k = c(exp(-log(unclass(x)) %*% rep(1, D) ) )
+  }
+  k*exp(-u/2)/sqrt(2*pi*det(clrvar2ilr(var)))
 }
 
 

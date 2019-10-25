@@ -22,8 +22,9 @@ gsi.PrinBal = function(x, method="PBhclust"){
     # apply recursion
     lsn = gsi.APrecursiu(colnames(x), x, PC, vc)
     sgn = t(read.table(".APtable", header=TRUE))
-    write.table("This file can be removed without harm",quote=FALSE,
-                file = ".APtable", row.names=FALSE, col.names=FALSE, append=TRUE)
+    #write.table("This file can be removed without harm",quote=FALSE,
+    #           file = ".APtable", row.names=FALSE, col.names=FALSE, append=TRUE)
+    file.remove(".APtable")
   }
   if(method=="PBmaxvar"){
     if(class(x)!="acomp") warning("gsi.PrinBal: data given in x is not acomp! Do not trust results")

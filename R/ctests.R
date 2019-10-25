@@ -72,7 +72,7 @@ acompNormalGOF.test <- function(x,...,method="etest") {
   method <- match.arg(method)
   switch(method,
          "etest"={
-           mvnorm.etest(ilr(x),...)
+           energy::mvnorm.etest(ilr(x),...)
          }
          )
 }
@@ -213,7 +213,7 @@ gsi.AcompGOFEtest <- function(x,distance=FALSE,R=999,...,dname="data") {
   X <- lapply(x,ilr)
   N <- sapply(x,nrow)
   D <- as.data.frame(do.call("rbind",x))
-  erg <- eqdist.etest(D,N,R=R)
+  erg <- energy::eqdist.etest(D,N,R=R)
   erg$data.name <- dname
   erg
 }
