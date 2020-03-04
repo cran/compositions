@@ -34,7 +34,7 @@
 \arguments{
   \item{x}{an amount/amount dataset}
   \item{value}{the new names of the parts}
-  \item{\dots}{not used, only here for generics}
+  %\item{\dots}{not used, only here for generics}
 }
 \value{
   a character vector giving the names of the parts

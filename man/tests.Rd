@@ -10,7 +10,8 @@
           }
 \arguments{
   \item{x}{a dataset of compositions (acomp) or a list of such}
-  \item{g}{a factor grouping the data, not used if x is a list already }
+  \item{g}{a factor grouping the data, not used if x is a list already. 
+  Alternatively, \code{g} can be a second compositional data set. }
   \item{var.equal}{a boolean telling wether the variance of the groups
     should be considered equal}
   \item{paired}{true if a paired test should be performed}

@@ -1,10 +1,10 @@
 8ca43cbc842c2336e835926c2166c28b *COPYING
 197930bf509a5a83afc51a5ff31617c4 *ChangeLog
-c32fec34d4a9d7416b66b21c5beb24a5 *DESCRIPTION
+5dc1b5c05ef84ff22795d4c6951183cb *DESCRIPTION
 23f19d37949c44bb1082f9c712347576 *NAMESPACE
 9bb23925b505248d9b1f4fd7ad75ac6a *R/3d.R
 86d990764404bfeceed287b30e4a0398 *R/FunctionOutliers.R
-016a66fc16f354e4849716adcf6d8730 *R/Geostat.R
+7bdbee28c8373a4ff1dd86d166d95862 *R/Geostat.R
 0cc6aeefc6e2ce7c67c3c1c050057f39 *R/OldStuff.R
 81eeede4507d5d0627fad31b3136eb1d *R/PrincipalBalances.R
 7c221167f86e619927a876a6d337daa7 *R/and.R
@@ -12,13 +12,13 @@ c32fec34d4a9d7416b66b21c5beb24a5 *DESCRIPTION
 5d2fb8ab43572c1cf7ab64b6c5019285 *R/codadendrogram.R
 78db17656115df51cfd4907c877d751a *R/compositions.R
 0c42000479efce53aa1dd1900397e447 *R/compreg.R
-4fafada65b1d7b082d840a8abfea6844 *R/ctests.R
+649084fddc84fabc5919ec80587c43b3 *R/ctests.R
 0fc56ca2bc1f1ec417ed0ea3d39827eb *R/mix2comp.R
 8934bd2f50f400a85df265d99dc36e7c *R/robust.R
 1a9c6238130667621a7370f02461827d *R/tricks.R
 f3591a3ab57fc4cefa1618361906a116 *R/zerotreatment.R
 e035e23d01dc6f88b2da5e65cf2f9a83 *R/zzz.R
-7ef080c62da4ea63a26ac7ccbc5aea92 *build/partial.rdb
+ac069468a6db465d74562f24d5ad5f1b *build/partial.rdb
 6b92a13dc457c810a1c019bc4e27f4fc *build/vignette.rds
 e51080c7a4bb30a997571c606c197b8c *data/Aar.rda
 e8b69434d23cc7c8ec3ed1d7ee176dfb *data/Activity10.rda
@@ -53,7 +53,7 @@ ff0ff1821bb146e5089915db52932255 *data/SerumProtein.rda
 1b9d0973d5107fd604c0ba8dabcafbe1 *data/juraset.rda
 a509a2c9b9c0daf94518034cb71ad5f6 *demo/00Index
 18c2d7905a60975bf4a37b377dda913e *demo/compplots.R
-b984afaf5bc5acbd85781194dcc153a3 *inst/doc/UsingCompositions.pdf
+23f56d5e3687ac3cfe4363284b130bdf *inst/doc/UsingCompositions.pdf
 6f593cbf46c82f04c8b3162af97c327f *inst/doc/UsingCompositions.rnw
 ef9dcd8f405a64381ba518a90dedf4cf *inst/doc/UsingCompositions.tex.flc
 30630ccb9abef016f19d27f663da1fd0 *inst/doc/index.html
@@ -186,7 +186,7 @@ c0b69cebeed95ddb7fb856d831f4ccb7 *man/matmultacomp.Rd
 f20b3624331afab3eda6313f4bea684e *man/mix2compositions.Rd
 777d8f1a370b4c556f3701b43dd8be5e *man/mixRead.Rd
 1092dddada27bcf024a49e9308d78211 *man/mvar.Rd
-50c7d8dd375a8970bf568c6be72cda35 *man/names.Rd
+babee5bbeaaeebfa9e21ad86be6a1c06 *man/names.Rd
 fa44af82419b7b79778775f680441c63 *man/norm.Rd
 797208ac426e533ffc9558b194b0be21 *man/normalize.Rd
 a2a52fcf7969fae6878c30b0a833b233 *man/oneOrDataset.Rd
@@ -245,7 +245,7 @@ cdec53196721201d590fe717f6ae107f *man/summaryAplus.Rd
 e7321acc4717afb98bcc1a4df621e92e *man/summaryRcomp.Rd
 5ce4b5d8433732a58dc903e9aec5b2ab *man/sumprojector.Rd
 a02d7c70742268f7e64fb10defe3e44f *man/ternaryAxis.Rd
-e31061bb0d7b59e32ca311fa88b8ffa5 *man/tests.Rd
+08af48b1e7b3029484c35f31a799f4fd *man/tests.Rd
 6ddf801211bcc2c83ff5a4c3f46eb281 *man/totals.Rd
 b38aab8784835e5f8724dd1e90446569 *man/tryDebugger.Rd
 2771222adcb6785c52bc98ccebd139de *man/ult.Rd

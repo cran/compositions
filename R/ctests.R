@@ -260,7 +260,14 @@ fitSameMeanDifferentVarianceModel <- function(x) {
 
 acompNormalLocation.test <- function(x,g=NULL,var.equal=FALSE,paired=FALSE,R=ifelse(var.equal,999,0) ) {
   if( paired ) {
-    erg <- acompNormalLocation.test(acomp(x)-acomp(g))
+    if(is.null(g) & is.list(x) ){
+      erg <- acompNormalLocation.test(acomp(x[[1]])-acomp(x[[2]]))
+    } else if(is.acomp(g)){
+      erg <- acompNormalLocation.test(acomp(x)-acomp(g))
+    } else if(is.factor(g) & is.acomp(x)){
+      aux = split(x, g)
+      erg <- acompNormalLocation.test(acomp(aux[[1]])-acomp(aux[[2]]))
+    }else stop()
     erg$method<-"Compositional paired normal location test"
     return(erg)
   }

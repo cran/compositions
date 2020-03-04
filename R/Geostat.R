@@ -97,7 +97,7 @@ plot.logratioVariogram <- function(x,...,type="l",lrvg=NULL,fcols=2:length(lrvg)
       if( i != j ) {
         h <- x$h[,i,j]
         vg<- x$vg[,i,j]
-        plot(h,vg,type="l",...,ylim=ylim,
+        plot(h,vg,type=type,...,ylim=ylim,
              yaxt=if(j==1) "s" else "n",
              xaxt=if(i==D) "s" else "n")
         if( length(lrvgH) > 0 )
