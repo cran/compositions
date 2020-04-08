@@ -1,5 +1,5 @@
 Package: compositions
-Version: 1.40-4
+Version: 1.40-5
 Date: 2020-03-24
 Title: Compositional Data Analysis
 Author: K. Gerald van den Boogaart <boogaart@hzdr.de>, 
@@ -13,6 +13,6 @@ Description: Provides functions for the consistent analysis of compositional
 License: GPL (>= 2)
 URL: http://www.stat.boogaart.de/compositions
 NeedsCompilation: yes
-Packaged: 2020-03-04 14:28:05 UTC; tolosa53
+Packaged: 2020-04-08 17:03:13 UTC; tolosa53
 Repository: CRAN
-Date/Publication: 2020-03-04 15:40:02 UTC
+Date/Publication: 2020-04-08 18:00:03 UTC

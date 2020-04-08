@@ -6,6 +6,7 @@
 \alias{variation.aplus}
 \alias{variation.rplus}
 \alias{variation.rmult}
+\alias{is.variation}
 \title{Variation matrices of amounts and compositions}
 \description{
   Compute the variation  matrix in the various approaches of compositional
@@ -19,6 +20,7 @@
           \method{variation}{aplus}(x, \dots,robust=getOption("robust"))
           \method{variation}{rplus}(x, \dots,robust=getOption("robust"))
           \method{variation}{rmult}(x, \dots,robust=getOption("robust"))
+          is.variation(M, tol=1e-10)
           }
 \arguments{
   \item{x}{a dataset, eventually of amounts or compositions}
@@ -28,9 +30,13 @@
     estimators. See \link{robustnessInCompositions} for
     further details.
   }
+  \item{M}{a matrix, to check if it is a valid variation}
+  \item{tol}{tolerance for the check}
 }
 \value{
   The variation matrix of x.
+  
+  For \code{is.variation}, a boolean saying if the matrix satisfies the conditions to be a variation matrix.
 }
 \details{
    The variation matrix was defined in the \code{\link{acomp}} context of

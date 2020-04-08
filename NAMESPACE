@@ -1,6 +1,6 @@
 import(tensorA,graphics,stats,bayesm)
 importFrom(robustbase,covMcd,lmrob)
-importFrom("grDevices", "as.graphicsAnnot", "dev.cur", "palette","rainbow", "rgb")
+importFrom("grDevices", "as.graphicsAnnot", "dev.flush", "dev.hold", "dev.cur", "palette","rainbow", "rgb")
 importFrom("utils", "combn", "menu", "methods", "read.table","write.table")
 exportPattern("^[^g[][a-zA-Z0-9\\.]*")
 exportPattern("^g[^s].*")
@@ -303,6 +303,8 @@ S3method(R2,default)
 S3method(R2,lm)
 S3method(acompGOF.test,formula)
 S3method(acompGOF.test,list)
+S3method(pairs,acomp)
+S3method(pairs,rcomp)
 useDynLib(compositions,
           gsiAitchisonDistributionIntegral,
           gsirandomClr1Aitchison,

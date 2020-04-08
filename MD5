@@ -1,16 +1,16 @@
 8ca43cbc842c2336e835926c2166c28b *COPYING
 197930bf509a5a83afc51a5ff31617c4 *ChangeLog
-5dc1b5c05ef84ff22795d4c6951183cb *DESCRIPTION
-23f19d37949c44bb1082f9c712347576 *NAMESPACE
+a6e189cbadbc37f020d983a1c1c82ad2 *DESCRIPTION
+a3ab678f989c882c6202a0141041c2b6 *NAMESPACE
 9bb23925b505248d9b1f4fd7ad75ac6a *R/3d.R
 86d990764404bfeceed287b30e4a0398 *R/FunctionOutliers.R
 7bdbee28c8373a4ff1dd86d166d95862 *R/Geostat.R
 0cc6aeefc6e2ce7c67c3c1c050057f39 *R/OldStuff.R
 81eeede4507d5d0627fad31b3136eb1d *R/PrincipalBalances.R
-7c221167f86e619927a876a6d337daa7 *R/and.R
+21bcba566fe136e44e276d0b8ba01d78 *R/and.R
 56e8e4cca9121b841d3090309f012ea3 *R/binary.R
 5d2fb8ab43572c1cf7ab64b6c5019285 *R/codadendrogram.R
-78db17656115df51cfd4907c877d751a *R/compositions.R
+096c40352246c134645406ee26b5d4cb *R/compositions.R
 0c42000479efce53aa1dd1900397e447 *R/compreg.R
 649084fddc84fabc5919ec80587c43b3 *R/ctests.R
 0fc56ca2bc1f1ec417ed0ea3d39827eb *R/mix2comp.R
@@ -18,7 +18,7 @@
 1a9c6238130667621a7370f02461827d *R/tricks.R
 f3591a3ab57fc4cefa1618361906a116 *R/zerotreatment.R
 e035e23d01dc6f88b2da5e65cf2f9a83 *R/zzz.R
-ac069468a6db465d74562f24d5ad5f1b *build/partial.rdb
+441eb728ff4e13f21fada5b4387d3215 *build/partial.rdb
 6b92a13dc457c810a1c019bc4e27f4fc *build/vignette.rds
 e51080c7a4bb30a997571c606c197b8c *data/Aar.rda
 e8b69434d23cc7c8ec3ed1d7ee176dfb *data/Activity10.rda
@@ -53,7 +53,7 @@ ff0ff1821bb146e5089915db52932255 *data/SerumProtein.rda
 1b9d0973d5107fd604c0ba8dabcafbe1 *data/juraset.rda
 a509a2c9b9c0daf94518034cb71ad5f6 *demo/00Index
 18c2d7905a60975bf4a37b377dda913e *demo/compplots.R
-23f56d5e3687ac3cfe4363284b130bdf *inst/doc/UsingCompositions.pdf
+05272c63d3a6a910d0f0fa989ea24938 *inst/doc/UsingCompositions.pdf
 6f593cbf46c82f04c8b3162af97c327f *inst/doc/UsingCompositions.rnw
 ef9dcd8f405a64381ba518a90dedf4cf *inst/doc/UsingCompositions.tex.flc
 30630ccb9abef016f19d27f663da1fd0 *inst/doc/index.html
@@ -110,7 +110,7 @@ d784e833be60ddbcce3e21693b6e86b0 *man/boxplot.Rd
 57737e3cbded1b895380f457572c92c5 *man/cdt.Rd
 ff8029df21a09a8f1d8c0605c0042e1d *man/clo.Rd
 1ff2a616d4f07fba4a7afc751c886262 *man/clr.Rd
-9dd3a9d2395bc7f11f222f6026589f1c *man/clr2ilr.Rd
+4147aff6a869b688b43e615ca2f88a86 *man/clr2ilr.Rd
 16e4d10343637a8fe48376a78e029b27 *man/clusterfinder.Rd
 a7150d793b9c85d982a2ee783736404c *man/codadendrogram.Rd
 42e2487ab2798c3e944964c96a409c6c *man/coloredbiplot.Rd
@@ -194,6 +194,7 @@ a2a52fcf7969fae6878c30b0a833b233 *man/oneOrDataset.Rd
 9958eb9923d6425d76a7c20b7dba80ef *man/outlierplot.Rd
 2b4dc95334ef1bbabf878fdd78e301ce *man/outliers.Rd
 6b9836b77e87239f364cecb6cbcbf795 *man/pairwisePlot.Rd
+b91d850a7ef07d865e6aa6ba95fc6552 *man/panelAcomp.Rd
 dbe7bb1ecf6a3175b203cb871d85baea *man/parametricMat.Rd
 546d5900933360f3705b61ecbac051dc *man/perturbe.Rd
 ce2a620d709dda235725332bd8fe8702 *man/plot.Rd
@@ -212,6 +213,7 @@ d0ab8ac5002c602551bfce2dbdb97b36 *man/princomprcomp.Rd
 b3a23ac3b05d0cd6043feba6a428c0c7 *man/princomprmult.Rd
 c253ecefbbc39a2f4fb6f1688afbf035 *man/princomprplus.Rd
 6285ae4619df9fa32a9243384a08757f *man/print.Rd
+efe9e0f95af355aa6566161c14e80efd *man/pwlr.Rd
 39e4f20324aeea3d96c82f5e3919a9ab *man/pwlrPlot.Rd
 52d2453b4b580519e49bb74a33873496 *man/qqnorm.Rd
 3053ab30911ce3f72465bb418cc88b5f *man/rDirichlet.Rd
@@ -250,7 +252,7 @@ a02d7c70742268f7e64fb10defe3e44f *man/ternaryAxis.Rd
 b38aab8784835e5f8724dd1e90446569 *man/tryDebugger.Rd
 2771222adcb6785c52bc98ccebd139de *man/ult.Rd
 a6a764455f45de7905f765fba0ca4fbd *man/varAcomp.Rd
-7fb6f090fc877d574dedb03c1b4478e2 *man/variation.Rd
+3d62e8d797c98afd8b8bfb0fe0c36708 *man/variation.Rd
 aaa5f597d45ae431f2218d3801668253 *man/variograms.Rd
 d5ab58769146f24805a77e480ea9aae8 *man/varmlm.Rd
 ffe0b2827a2484052e39bdce428fb519 *man/vcovAcomp.Rd

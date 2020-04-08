@@ -720,6 +720,58 @@ ilrvar2clr <- function( varz , V=ilrBase(D=ncol(varz)+1),x=NULL ) {
 
 
 
+#################################################
+## utility function to convert one clr variance matrix into a variation matrix
+clrvar2variation = function(Sigma){
+  diagSigma = diag(Sigma)
+  one = rep(1, length(diagSigma))
+  erg = outer(one, diagSigma) + outer(diagSigma, one) - 2*Sigma
+  colnames(erg) = colnames(Sigma)
+  rownames(erg) = rownames(Sigma)
+  return(erg)
+}
+
+## utility function to convert one variation matrix into a clr variance matrix
+variation2clrvar = function(TT){
+  D = ncol(TT)
+  H = diag(D) - 1/D * matrix(1, ncol=D, nrow=D)
+  erg = -0.5 * H %*% TT %*% H
+  colnames(erg) = colnames(TT)
+  rownames(erg) = rownames(TT)
+  return(erg)
+}
+
+
+## functions to check if a given matrix M can be a variation matrix,
+#     or a clr or ilr/alr variance-covariance matrix
+is.variation = function(M, tol=1e-10){
+  egv = eigen(M)$values
+  diagnull = all(abs(diag(M))<tol)
+  rightsigns = sum(egv>tol)==1
+  return(diagnull & rightsigns)
+}
+
+is.ilrvar  = function(M, tol=1e-10){
+  egv = eigen(M)$values
+  rightsigns = all(egv>(-tol))
+  return(rightsigns)
+}
+
+is.clrvar  = function(M, tol=1e-10){
+  egv = eigen(M)$values
+  D = length(egv)
+  nullegvs = egv[egv<tol]
+  rightsigns = all(egv>(-tol)) & (length(nullegvs)>=1) 
+  return(rightsigns)
+}
+
+
+
+#################################################
+
+
+
+
 var         <- function(x,...) UseMethod("var",x)
 var.default <- function (x, y = NULL, na.rm = FALSE, use,...) stats::var(x,y,na.rm,use)
 
@@ -2265,6 +2317,51 @@ alrInv <- function( z ,...,orig=NULL) {
   erg
 }
 
+
+pwlr = function(x, as.rmult=FALSE, as.data.frame=!as.rmult, ...){
+  if(!as.rmult & !as.data.frame) as.rmult=TRUE 
+  # ensure input is taken as a matrix
+  X = unclass(compositions::oneOrDataset(x))
+  # extact column names or indices
+  cn = colnames(X)
+  if(is.null(cn)) cn = 1:ncol(X)
+  # produce all combinations of 2 elements
+  pw = combn(cn,2)
+  # compute ratios and set names
+  Y = log(X[,pw[2,], drop=F]/X[,pw[1,], drop=F])
+  colnames(Y) = paste(pw[2,], pw[1,], sep=".")
+  if(as.rmult){
+    Y = compositions::rmult(Y)
+  }else{
+    Y = as.data.frame(Y)
+  }
+  return(Y)
+}
+
+pwlrInv = function(z, orig=NULL){
+  y = oneOrDataset(z)
+  P = ncol(y)
+  DD = 0.5*(1+sqrt(1+8*P))
+  if(floor(DD)!=DD) stop("pwlrInv: z provided does not have a number of cols compatible with a pwlr") 
+  if(!is.null(orig)){
+    if(DD!=ncol(orig))
+      stop("pwlrInv: orig and z do not have compatible ncols")
+  }
+  pw = combn(1:DD,2)
+  W = apply(pw,2,function(i){
+    aa = rep(0,DD)
+    aa[i[1]]=-1
+    aa[i[2]]=+1
+    return(aa)
+  })
+  Winv = gsi.svdinverse(W)
+  erg = clrInv(y %*% Winv)
+  if(!is.null(orig))
+    colnames(erg) = colnames(orig)
+  return(erg)
+}
+  
+  
 
 apt <- function( x ,...) {
   W <- oneOrDataset(x)
