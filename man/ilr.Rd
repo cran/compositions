@@ -8,7 +8,7 @@
 }
 \usage{
           ilr( x , V = ilrBase(x) ,...)
-          ilrInv( z , V = ilrBase(z=z),..., orig=NULL)
+          ilrInv( z , V = ilrBase(z=z),..., orig=gsi.orig(z))
           }
 \arguments{
   \item{x}{a composition, not necessarily closed}

@@ -8,7 +8,7 @@
 }
 \usage{
           clr( x,... )
-          clrInv( z,... )
+          clrInv( z,..., orig=gsi.orig(z) )
           }
 \arguments{
   \item{x}{a composition or a data matrix of compositions, not necessarily closed}
@@ -16,6 +16,9 @@
     clr-transforms of compositions, not necessarily centered
     (i.e. summing up to zero)}
   \item{\dots}{for generic use only}
+  \item{orig}{a compositional object which should be mimicked 
+             by the inverse transformation. It is especially used to
+	     reconstruct the names of the parts.}
 }
 \value{
   \code{clr} gives the centered log ratio transform,

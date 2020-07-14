@@ -2,10 +2,11 @@ plot3D <- function(x,...) UseMethod("plot3D")
 
 plot3D.rmult <- function(x,parts=1:3,...,center=FALSE,scale=FALSE,add=FALSE,axes=!add,cex=2,vlabs=colnames(x),size=cex,bbox=FALSE,col=1) {
   requireNamespace("rgl")
+  ddd = TRUE
   X<-x
   if( ! add ) 
       gsi.reset3D()
-    x <- X[,parts]
+    x <- X[,parts, drop=ddd]
     if( length(scale) == 1 ) {
       if( is.logical(scale) )
         if( scale )
@@ -16,7 +17,7 @@ plot3D.rmult <- function(x,parts=1:3,...,center=FALSE,scale=FALSE,add=FALSE,axes
       scale <- diag(scale,1)
     }
     scale[4,4] <- max(diag(scale)[-4]) 
-    rgl::points3d(x[,1],x[,2],x[,3],size=size,...,col=col)
+    rgl::points3d(x[,1, drop=ddd],x[,2, drop=ddd],x[,3, drop=ddd],size=size,...,col=col)
     rgl::par3d(userMatrix=scale)
     gsi.filtercall("axis3D")
                                         #  axis3D(axis.origin=axis.origin,axis.scale=axis.scale,
@@ -81,20 +82,22 @@ gsi.filtercall <- function(fkt,...,overwrite=NULL,transmit=character(0),default=
 
 plot3D.default <- function(x,...,add=FALSE,bbox=TRUE,axes=FALSE,cex=1,size=cex,col=1) {
   requireNamespace("rgl")
+  ddd = TRUE
   X<-x
   if( ! add )
     gsi.reset3D()
-  radius <- max(max(X[,1])-min(X[,1]),max(X[,2])-min(X[,2]),max(X[,3])-min(X[,3]))/100*cex
-  rgl::spheres3d(X[,1],X[,2],X[,3],...,radius=radius,col=col)
+  radius <- max(max(X[,1, drop=ddd])-min(X[,1, drop=ddd]),max(X[,2, drop=ddd])-min(X[,2, drop=ddd]),max(X[,3, drop=ddd])-min(X[,3, drop=ddd]))/100*cex
+  rgl::spheres3d(X[,1, drop=ddd],X[,2, drop=ddd],X[,3, drop=ddd],...,radius=radius,col=col)
   if( bbox) rgl::rgl.bbox()
   if( any(axes) ) arrows3D(diag(c(0,0,0)),diag(c(1,1,1))) 
-  invisible(X[,1:3])
+  invisible(X[,1:3, drop=ddd])
 }
 
 
 
 plot3D.acomp <- function(x,parts=1:min(ncol(X),4),...,lwd=2,axis.col="gray",add=FALSE,cex=2,vlabs=colnames(x),vlabs.col=axis.col,center=FALSE,scale=FALSE,log=FALSE,bbox=FALSE,axes=TRUE,size=cex,col=1) {
   requireNamespace("rgl")
+  ddd = TRUE
   X<-x
   out = NULL
   if( length(parts) == 3 ) {
@@ -105,8 +108,8 @@ plot3D.acomp <- function(x,parts=1:min(ncol(X),4),...,lwd=2,axis.col="gray",add=
        if( axes )
          arrows3D(diag(c(0,0,0)),diag(c(1,1,1)),labs=vlabs,col=axis.col)
      }
-      rgl::points3d(x[,1],x[,2],x[,3],size=size,...,col=col)
-      out = rmult(x[,1:3])
+      rgl::points3d(x[,1, drop=ddd],x[,2, drop=ddd],x[,3, drop=ddd],size=size,...,col=col)
+      out = rmult(x[,1:3, drop=ddd])
     } else {
       x <- scale(acomp(X,parts=parts),center=center,scale=scale)
       if( ! add ) {
@@ -118,8 +121,8 @@ plot3D.acomp <- function(x,parts=1:min(ncol(X),4),...,lwd=2,axis.col="gray",add=
         if( !is.null(vlabs) )
           rgl::texts3d(corners[,1],corners[,2],corners[,3],c(vlabs,"0"),col=vlabs.col)
       }
-      rgl::points3d(x[,1],x[,2],x[,3],size=size,...,col=col)
-      out = rmult(x[,1:3])
+      rgl::points3d(x[,1, drop=ddd],x[,2, drop=ddd],x[,3, drop=ddd],size=size,...,col=col)
+      out = rmult(x[,1:3, drop=ddd])
     }
    rgl::rgl.viewpoint(45,35.4)
  } else if( length(parts)==4 ) {
@@ -132,8 +135,8 @@ plot3D.acomp <- function(x,parts=1:min(ncol(X),4),...,lwd=2,axis.col="gray",add=
          arrows3D(corners*0,corners,col=axis.col,size=lwd,labs=vlabs)
      }
      ilrx <- ilr(scale(acomp(x),center=center,scale=scale))
-     rgl::points3d(ilrx[,1],ilrx[,2],ilrx[,3],size=size,...,col=col)
-     out = rmult(ilrx[,1:3])
+     rgl::points3d(ilrx[,1, drop=ddd],ilrx[,2, drop=ddd],ilrx[,3, drop=ddd],size=size,...,col=col)
+     out = rmult(ilrx[,1:3, drop=ddd])
    } else {
      if( ! add ) {
        gsi.reset3D()
@@ -141,14 +144,14 @@ plot3D.acomp <- function(x,parts=1:min(ncol(X),4),...,lwd=2,axis.col="gray",add=
        cornerlines <- corners[c(1,2,3,4,1,3,2,4),]
        cl <- ipt(cornerlines)
        if( axes )
-         rgl::lines3d(cl[,1],cl[,2],cl[,3],col=axis.col,size=lwd)
+         rgl::lines3d(cl[,1, drop=ddd],cl[,2, drop=ddd],cl[,3, drop=ddd],col=axis.col,size=lwd)
      }
      iptx <- ipt(scale(acomp(x),center=center,scale=scale))
-     rgl::points3d(iptx[,1],iptx[,2],iptx[,3],size=size,...,col=col)
-     out = rmult(iptx[,1:3])
+     rgl::points3d(iptx[,1, drop=ddd],iptx[,2, drop=ddd],iptx[,3, drop=ddd],size=size,...,col=col)
+     out = rmult(iptx[,1:3, drop=ddd])
      if( !is.null(vlabs) ) {
        cc <- ipt(corners)
-       rgl::texts3d(cc[,1],cc[,2],cc[,3],c(vlabs),col=vlabs.col)
+       rgl::texts3d(cc[,1, drop=ddd],cc[,2, drop=ddd],cc[,3, drop=ddd],c(vlabs),col=vlabs.col)
      }
    }
  } else

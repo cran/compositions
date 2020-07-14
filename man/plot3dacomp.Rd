@@ -21,7 +21,9 @@
   \item{parts}{a numeric xor character vector of length 3 coding the
     columns to be plotted}
   \item{\dots}{additional plotting parameters as described in
-    \code{\link[rgl]{rgl.material}}}
+    %\code{\link[rgl]{rgl.material}}
+    \code{rgl::rgl.material}
+    }
   \item{add}{logical, adding  or new plot}
   \item{cex}{size of the plotting symbols}
   \item{lwd}{line width}
@@ -76,10 +78,14 @@ be downloaded separately.
 
 \seealso{
   \code{\link{kingTetrahedron}}
-  \code{\link[rgl]{points3d}},   \code{\link{plot3D}},
-  \code{\link[graphics]{plot}}, \code{\link{plot3D.rmult}},
+    %\code{\link[rgl]{points3d}},
+   %\code{\link[graphics]{plot}}, 
+  \code{rgl::points3d},
+  \code{graphics::plot},
+  \code{\link{plot3D}},
+  \code{\link{plot3D.rmult}},
  
-  \code{\link{plot3D.acomp}},\code{\link{plot3D.rcomp}},,
+  \code{\link{plot3D.rcomp}},
   \code{\link{plot3D.aplus}},\code{\link{plot3D.rplus}}
 }
 \examples{

@@ -54,9 +54,9 @@ CoDaDendrogram = function (X, V = NULL, expr=NULL, mergetree = NULL, signary = N
         }
         Vo = gsi.OrderIlr(V = V)
         idtx = idt(X, V = Vo$ilrBase)
-         if(is.null(range)){ range=range(idtx) }
+         if(is.null(range)){ range=range(unclass(idtx)) }
         varx = diag(var(idtx))
-        meanx = mean(idtx)
+        meanx = drop(unclass(mean(idtx)))
         signary = gsi.ilrBase2signary(Vo$ilrBase)
         binary = abs(signary)
         heights = varx * 0
@@ -133,7 +133,7 @@ CoDaDendrogram = function (X, V = NULL, expr=NULL, mergetree = NULL, signary = N
     what = methods[pmatch(type, methods)]
     if (what == "lines") {
         varx = diag(var(idtx))
-        meanx = mean(idtx)
+        meanx = drop(unclass(mean(idtx)))
         for (i in 1:length(varx)) {
             aux = approx(x = range, y = nodes[i, ], xout = meanx[i],
                 rule = 2)$y
@@ -143,13 +143,13 @@ CoDaDendrogram = function (X, V = NULL, expr=NULL, mergetree = NULL, signary = N
     }
     if (what == "boxplot") {
         varx = diag(var(idtx))
-        meanx = mean(idtx)
+        meanx = drop(unclass(mean(idtx)))
         minheight = min(varx)
         for (i in 1:ncol(idtx)) {
             aux = approxfun(x = range, y = nodes[i, ], rule = 2)
             segments(x0 = aux(meanx[i]), y0 = heights[i], x1 = aux(meanx[i]),
                 y1 = heights[i] + varx[i], ...)
-            qx = quantile(idtx[, i], probs = seq(0, 1, 0.25))
+            qx = quantile(unclass(idtx)[, i], probs = seq(0, 1, 0.25))
             mbx = box.space * minheight
             hx = heights[i] + mbx * (box.pos - 1)/2
             rect(xleft = aux(qx[2]), ybottom = hx, xright = aux(qx[3]),
@@ -166,7 +166,7 @@ CoDaDendrogram = function (X, V = NULL, expr=NULL, mergetree = NULL, signary = N
     if (what == "points") {
         for (i in 1:ncol(idtx)) {
             auxfun = approxfun(x = range, y = nodes[i, ], rule = 2)
-            aux = auxfun(idtx[, i])
+            aux = auxfun(unclass(idtx)[, i])
             points(x = aux, y = rep(heights[i], length(aux)),
                 ...)
         }

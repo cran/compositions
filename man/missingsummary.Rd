@@ -11,7 +11,7 @@
                  mc=attr(x,"missingClassifier"), 
                  values=eval(formals(missingType)$values))
    missingType(x,..., mc=attr(x,"missingClassifier"),
-                 values=c("NMV", "BDT", "MAR", "MNAR", "SZ", "Err"))
+                 values=c("NMV", "BDL", "MAR", "MNAR", "SZ", "Err"))
 }
 \arguments{
   \item{x}{a dataset which might contain missings}

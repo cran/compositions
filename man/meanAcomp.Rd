@@ -60,13 +60,13 @@ In all cases the mean is again an object of the same class.
 \code{\link{rcomp}}, \code{\link{aplus}}, \code{\link{rplus}}
 }
 \section{Missing Policy}{
-  For the additive scales (rcomp,rplus) the SZ and BDT are 
+  For the additive scales (rcomp,rplus) the SZ and BDL are 
   treated as zeros and MAR and MNAR as missing information. 
   This is not strictly correct for MNAR. 
   \cr
   For relative scales (acomp,aplus), all four types of missings 
   are treated as missing information. This corresponds to the 
-  idea that BDT are truncated values (and have the correspoding 
+  idea that BDL are truncated values (and have the correspoding 
   effect in taking means). For SZ and MAR, only the components in 
   the observed subcomposition are fully relevant. Finally, for MNAR 
   the problem is again that nothing could be done without knowing

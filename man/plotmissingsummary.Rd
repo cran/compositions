@@ -23,7 +23,7 @@
 }
 \details{
   The different types of missings are drawn in quasi-self-understandable 
-  colors: normal gray for NMV, and lightgray as for BDT (since they contain
+  colors: normal gray for NMV, and lightgray as for BDL (since they contain
   semi-numeric information), yellow (slight warning) for MAR, red (serious 
   warning) for MNAR, white (because they are non-existing) for SZ, and 
   magenta for the strange case of errors.

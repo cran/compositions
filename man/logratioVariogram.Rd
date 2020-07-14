@@ -5,18 +5,19 @@
   Computes the matrix of logratio variograms.
 }
 \usage{
-logratioVariogram(comp,
+logratioVariogram(data,
                           loc,
                           maxdist=max(dist(loc))/2,
                           nbins=20,
                           dists=seq(0,maxdist,length.out=nbins+1),
                           bins=cbind(dists[-length(dists)],dists[-1]),
                           azimuth=0,
-                          azimuth.tol=180  
+                          azimuth.tol=180,
+                          comp=data
                           )
           }
 \arguments{
-  \item{comp}{an acomp compositional dataset}
+  \item{data}{an acomp compositional dataset}
   \item{loc}{a matrix or dataframe providing the observation locations
     of the compositions. Any number of dimension >= 2 is supported.}
   \item{maxdist}{the maximum distance to compute the variogram for.}
@@ -32,6 +33,7 @@ logratioVariogram(comp,
     locations. The angle is clockwise from North in degree. }
   \item{azimuth.tol}{ The angular tolerance it should be below 90 if a
     directional variogram is intended. }
+  \item{comp}{do not use, only provided for backwards compatibility. Use \code{data} instead}
 }
 \value{
   A list of class \code{"logratioVariogram"}.

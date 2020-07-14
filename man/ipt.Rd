@@ -9,8 +9,8 @@
 }
 \usage{
           ipt( x , V = ilrBase(x),... )
-          iptInv( z , V = ilrBase(z=z),...,orig=NULL)
-          uciptInv( z , V = ilrBase(z=z),...,orig=NULL )
+          iptInv( z , V = ilrBase(z=z),...,orig=gsi.orig(z))
+          uciptInv( z , V = ilrBase(z=z),...,orig=gsi.orig(z) )
           }
 \arguments{
   \item{x}{a composition or a data matrix of compositions, not necessarily closed}

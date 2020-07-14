@@ -5,27 +5,66 @@ MNARvalue<- NA
 SZvalue  <- -Inf
 BDLvalue <- 0.0   # Use with care, negative values specifiy the detection limit
 
-is.BDL <- function(x,mc=attr(x,"missingClassifier")) {if( is.null(mc) ) is.finite(x)&x<=0.0  else do.call(mc,list(x))=="BDL"  }
-is.SZ  <- function(x,mc=attr(x,"missingClassifier")) {if( is.null(mc) ) is.infinite(x)&x<0  else do.call(mc,list(x))=="SZ" }
-is.MAR <- function(x,mc=attr(x,"missingClassifier")) {if( is.null(mc) ) is.nan(x)  else do.call(mc,list(x))=="MAR" }
-is.MNAR<- function(x,mc=attr(x,"missingClassifier")) {if( is.null(mc) )  is.na(x)&!is.nan(x)  else do.call(mc,list(x))=="MNAR" }
-is.NMV <- function(x,mc=attr(x,"missingClassifier")) {if( is.null(mc) )  is.finite(x)&x>0.0 else do.call(mc,list(x))=="NMV" }
+is.BDL <- function(x,mc=attr(x,"missingClassifier")) {
+  if(is.rmult(x)) warning("is.BDL called with an rmult object, unexpected results possible")
+  y = oneOrDataset(x)
+  res = if( is.null(mc) ) is.finite(y)&y<=0.0  else do.call(mc,list(y))=="BDL"  
+  if(length(dim(x))==0) res = drop(res)
+  return(res)
+}
+is.SZ  <- function(x,mc=attr(x,"missingClassifier")) {
+  if(is.rmult(x)) warning("is.SZ called with an rmult object, unexpected results possible")
+  y = oneOrDataset(x)
+  res = if( is.null(mc) ) is.infinite(y)&y<0  else do.call(mc,list(y))=="SZ" 
+  if(length(dim(x))==0) res = drop(res)
+  return(res)
+  }
+is.MAR <- function(x,mc=attr(x,"missingClassifier")) {
+  if(is.rmult(x)) warning("is.MAR called with an rmult object, unexpected results possible")
+  y = oneOrDataset(x)
+  res = if( is.null(mc) ) is.nan(y)  else do.call(mc,list(y))=="MAR" 
+  if(length(dim(x))==0) res = drop(res)
+  return(res)
+}
+is.MNAR<- function(x,mc=attr(x,"missingClassifier")) {
+  if(is.rmult(x)) warning("is.MNAR called with an rmult object, unexpected results possible")
+  y = oneOrDataset(x)
+  res = if( is.null(mc) )  is.na(y)&!is.nan(y)  else do.call(mc,list(y))=="MNAR" 
+  if(length(dim(x))==0) res = drop(res)
+  return(res)
+}
+is.NMV <- function (x, mc = attr(x, "missingClassifier")){
+  y = oneOrDataset(x)
+  if (is.null(mc)){
+    res = is.finite(y) 
+    if(!is.rmult(x)) res = res & y > 0
+  } else{
+    res = do.call(mc, list(y)) == "NMV"
+  } 
+  if(length(dim(x))==0) res = drop(res)
+  return(res)
+}
 is.WZERO <- function(x,mc=attr(x,"missingClassifier")) {is.BDL(x)|is.SZ(x) }
 is.WMNAR <- function(x,mc=attr(x,"missingClassifier")) {is.BDL(x)|is.MNAR(x) }
 
 has.missings <- function(x,...) UseMethod("has.missings")
 
-has.missings.default     <- function(x,mc=attr(x,"missingClassifier"),...) {
-  (!is.null(x))&&!all(is.NMV(x,mc))
+has.missings.default <- function (x, mc = attr(x, "missingClassifier"), ...){
+  if( is.null(x) )
+    return( FALSE )
+  x = as.matrix(x)
+  (!is.null(x)) && !all(is.NMV(x, mc))
 }
+
+
 
 has.missings.rmult     <- function(x,mc=attr(x,"missingClassifier"),...) {
   if( is.null(x) )
     return( FALSE )
   if( !is.null(attr(x,"missingProjector")) )
     return( TRUE )
-  if( !is.null(orig <- attr(x,"orig")) )
-    return( has.missings(orig) )
+  if( !is.null(.orig <- attr(x,"orig")) )
+    return( has.missings(.orig) )
   else
     !all(is.finite(x))
 }
@@ -35,7 +74,7 @@ getDetectionlimit <- function(x,dl=attr(x,"detectionlimit")) {
   ifelse(is.finite(x)&x<0,-x,dl)
 }
 
-missingType <- function(x,...,mc=attr(x,"missingClassifier"),values=c("NMV","BDT","MAR","MNAR","SZ","Err")) {
+missingType <- function(x,...,mc=attr(x,"missingClassifier"),values=c("NMV","BDL","MAR","MNAR","SZ","Err")) {
   #      finite, infinit, nan, na, x>0&!na  q=(x>0&!na)|nan
   # NA     -       -       -   +    -           -     
   # NaN    -       -       +   +    -           +
@@ -135,7 +174,9 @@ zeroreplace <- function(x,d=NULL,a=2/3){
   d = a*d
   # ... and replace
   W[Losts]=d[Losts]
-  return(gsi.mystructure(W,Losts=Losts,class=class(x)))
+  res = gsi.mystructure(W,Losts=Losts,class=class(x))
+  if(is.rmult(res)) res = rmult(res, orig=gsi.orig(x), V=gsi.getV(x))
+  return(res)
 }
 
 #zeroreplace <- function(x,d,a=2/3){
@@ -159,7 +200,7 @@ gsi.varwithlosts <- function(x,giveCenter=FALSE){
  # x contains the cpt-transformed data set
  # dat contains the original data set
  #require("tensorA")
- dat = attributes(x)$orig
+ dat = gsi.orig(x)
  # this index is used to remove the cases x_i=x_j from the computation
  prodId = c(outer(1:nrow(dat),1:nrow(dat),"=="))
 
@@ -335,8 +376,10 @@ missingProjector.rmult <- function(x,has=is.finite(x),...,by="s") {
  #require("tensorA")
   if( !is.null(attr(x,"missingProjector") ) )
      return(attr(x,"missingProjector"))
-  if( !is.null(attr(x,"orig") ) )
-     return(missingProjector(attr(x,"orig") ))
+  if( !is.null(.orig<- gsi.orig(x) ) ){
+      erg = missingProjector(.orig)
+      return(gsi.cdtvar2idt(erg, as=x))
+  }
   if( is.tensor(has) ) {
   } else if( is.matrix(has) ) {
     has <- as.tensor(has)
@@ -387,8 +430,10 @@ sumMissingProjector.rplus <- function(x,has=!(is.MAR(x)|is.MNAR(x)),...) {
 sumMissingProjector.rmult <- function(x,has=is.finite(x),...) {
   if( !is.null(mp<- attr(x,"missingProjector"))  )
     return( mp %e% one.tensor(c(s=dim(mp)["s"])))
-  if( !is.null(orig<-attr(x,"orig")))
-     return(sumMissingProjector(orig))
+  if( !is.null(.orig<-gsi.orig(x))){
+    erg = sumMissingProjector(.orig)
+    return(gsi.cdtvar2idt(erg, as=x))
+  } 
   n <- nrow(has)
   canz <- rep(1,n) %*% has 
   erg <- diag(canz)

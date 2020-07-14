@@ -48,12 +48,12 @@
 \arguments{
   \item{x}{a dataset, eventually of amounts or compositions}
   \item{y}{a second dataset, eventually of amounts or compositions}
-  \item{na.rm}{see \code{\link[stats]{var}}}
-  \item{use}{see \code{\link[stats]{var}}}
-  \item{method}{see \code{\link[stats]{cov}}}
-  \item{\dots}{further arguments to \code{\link[stats]{var}}
+  \item{na.rm}{see \code{stats::var}}%{see \code{\link[stats]{var}}}
+  \item{use}{see \code{stats::var}}%{see \code{\link[stats]{var}}}
+  \item{method}{see \code{stats::cov}}%{see \code{\link[stats]{cov}}}
+  \item{\dots}{further arguments to \code{stats::var} %\code{\link[stats]{var}}
     e.g. \code{use}}
-    \item{robust}{
+  \item{robust}{
     A description of a robust estimator. FALSE for the classical
     estimators. See \link{robustnessInCompositions} for
     further details.
@@ -68,8 +68,9 @@
   The variance matrix of x or the covariance matrix of x and
   y.}
 \details{
-  The basic functions of \code{\link[stats]{var}},
-  \code{\link[stats]{cov}} are turned to
+  The basic functions of %\code{\link[stats]{var}},\code{\link[stats]{cov}} 
+  \code{stats::var} and \code{stats::cov}
+  are turned to
   S3-generics. The original versions are copied to the default
   method. This allows us to introduce generic methods to handle
   variances and covariances of other data types, such as amounts or
@@ -86,8 +87,10 @@
   singular. They can be transformed to the correponding nonsingular
   variances of ilr or ipt-space by \code{\link{clrvar2ilr}}.
 
-  In R versions older than v2.0.0, \code{\link[stats]{var}} and
-  \code{\link[stats]{cov}} were defined in package ``base'' instead of in ``stats''.
+  In R versions older than v2.0.0, 
+  %\code{\link[stats]{var}} and \code{\link[stats]{cov}}
+  \code{stats::var} and \code{stats::cov}
+  were defined in package ``base'' instead of in ``stats''.
   This might produce some misfunction.
 }
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}

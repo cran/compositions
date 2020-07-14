@@ -8,12 +8,12 @@
 }
 \usage{
       pwlr( x, as.rmult=FALSE, as.data.frame=!as.rmult, \dots)
-      pwlrInv( z, orig=NULL)
+      pwlrInv( z, orig=gsi.orig(z))
   }
 \arguments{
   \item{x}{a composition, not necessarily closed}
-  \item{z}{the pwlr-transform of a composition, thus a (D-1)-dimensional
-    real vector}
+  \item{z}{the pwlr-transform of a composition, thus a [D(D-1)/2]-dimensional
+    real vector, or a matrix with such many columns}
   \item{as.rmult}{logical; should the output be produced as an rmult object?}
   \item{as.data.frame}{logical; should be as a data.frame? if both are false, rmult will be taken}
   \item{\dots}{currently unused}

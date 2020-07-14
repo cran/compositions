@@ -21,7 +21,9 @@ x \%*\% y
 }
 
 \details{ 
-  This is a copy of the \code{\link[base]{\%*\%}} function. The
+  This is a copy of the %\code{\link[base]{\%*\%}} 
+  \code{base::\%*\%}
+  function. The
   function is made generic to allow the definition of specific methods.
 }
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}

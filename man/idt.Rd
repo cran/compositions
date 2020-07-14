@@ -8,6 +8,7 @@
 \alias{idt.rplus}
 \alias{idt.rmult}
 \alias{idt.factor}
+\alias{idt.data.frame}
 \alias{idtInv}
 \alias{idtInv.default}
 \alias{idtInv.acomp}
@@ -16,6 +17,8 @@
 \alias{idtInv.aplus}
 \alias{idtInv.rplus}
 \alias{idtInv.rmult}
+\alias{idtInv.factor}
+\alias{idtInv.data.frame}
 \title{Isometric default transform}
 \description{
   Compute the isometric default transform of a vector (or dataset) of
@@ -31,30 +34,41 @@
           \method{idt}{rmult}( x ,...)
           \method{idt}{ccomp}( x ,...)
           \method{idt}{factor}( x ,...)
-          idtInv(x,orig,...)
-          \method{idtInv}{default}( x ,orig,...)
-          \method{idtInv}{acomp}( x ,orig,...)
-          \method{idtInv}{rcomp}( x ,orig,...)
-          \method{idtInv}{aplus}( x ,orig,...)
-          \method{idtInv}{rplus}( x ,orig,...)
-          \method{idtInv}{ccomp}( x ,orig,...)
-          \method{idtInv}{rmult}( x ,orig,...)
+          \method{idt}{data.frame}( x ,...)
+          idtInv(x,orig=gsi.orig(x),...)
+          \method{idtInv}{default}( x ,orig=gsi.orig(x),...)
+          \method{idtInv}{acomp}( x ,orig=gsi.orig(x), V=gsi.getV(x),...)
+          \method{idtInv}{rcomp}( x ,orig=gsi.orig(x), V=gsi.getV(x),...)
+          \method{idtInv}{aplus}( x ,orig=gsi.orig(x),...)
+          \method{idtInv}{rplus}( x ,orig=gsi.orig(x),...)
+          \method{idtInv}{ccomp}( x ,orig=gsi.orig(x),...)
+          \method{idtInv}{rmult}( x ,orig=gsi.orig(x),...)
+          \method{idtInv}{factor}( x ,orig=gsi.orig(x), V=gsi.getV(x),...)
+          \method{idtInv}{data.frame}( x , orig=gsi.orig(x), ...)
 
           }
 \arguments{
   \item{x}{a classed amount or composition, to be transformed with its
-    isometric default transform, or its inverse}
+    isometric default transform, or its inverse; in case of the method for \code{\link{data.frame}}
+    objects, the function attempts to track information about a previous class (in an attribute
+    \code{origClass}, and if found, a transformation is tried with it; for factors, idt expands
+    the factor according to the contrasts represented by \code{V}, or vice-versa.)}
   \item{\dots}{generic arguments past to underlying functions}
   \item{orig}{a compositional object which should be mimicked
-             by the inverse transformation. It is used to determine the
-	     backtransform to be used, and eventually to
-	     reconstruct the names of the parts. It is the generic
-	     argument. Typically the orig-argument is the dataset that
-	     has been transformed in the first place.}
-
+             by the inverse transformation. It is the generic
+	     argument. Typically the \code{orig} argument is stored as an attribute 
+	     in \code{x} and will be extracted automatically by this function; if this
+	     fails, \code{orig} can be set equal to the dataset that
+	     was transformed in the first place.}
+  \item{V}{matrix of (\emph{transposed, inverted}) logcontrasts; 
+  together with \code{orig}, it defines the back-transformation.
+   Typically the \code{V} argument is stored as an attribute 
+	     in \code{x} and will be extracted automatically by this function; if this
+	     fails, \code{V} must be manually set to the matrix V used in the idt/ilr/ipt
+	     calculations. Argument not used in amounts or counts geometries.}
 }
 \value{
-  A corresponding matrix of row-vectors containing the transforms.
+  A corresponding matrix of row-vectors containing the transforms. (Exception: idt.data.frame can return a data.frame if the input has no "origClass"-attribute)
 }
 \details{
   The general idea of this package is to analyse the same data with
@@ -79,7 +93,7 @@
 }
 \author{R. Tolosana-Delgado, K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
-  \code{\link{cdt}}, \code{\link{ilr}}, \code{\link{ipt}},
+  \code{\link{backtransform}}, \code{\link{cdt}}, \code{\link{ilr}}, \code{\link{ipt}},
   \code{\link{ilt}}, \code{\link{cdtInv}}, \code{\link{ilrInv}}, \code{\link{iptInv}}, 
             \code{\link{iltInv}}, \code{\link{iitInv}}
 }

@@ -8,7 +8,7 @@
 }
 \usage{
           apt( x ,...)
-          aptInv( z ,..., orig=NULL)
+          aptInv( z ,..., orig=gsi.orig(z))
           }
 \arguments{
   \item{x}{a composition or a matrix of compositions, not necessarily closed}

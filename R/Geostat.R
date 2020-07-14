@@ -1,15 +1,17 @@
 
 
 
-logratioVariogram <- function(comp,
+logratioVariogram <- function(data,
                           loc,
                           maxdist=max(dist(loc))/2,
                           nbins=20,
                           dists=seq(0,maxdist,length.out=nbins+1),
                           bins=cbind(dists[-length(dists)],dists[-1]),
                           azimuth=0,
-                          azimuth.tol=180  
+                          azimuth.tol=180,
+                          comp = data
                           ) {
+  if(all(comp!=data)) stop("compositions::logratioVariogram: 'comp' only provided for backwards compatibility")
   lcomp <- log(ifelse(is.NMV(comp),comp,NaN))
   if( !is.matrix(loc))
     loc <- as.matrix(loc)
@@ -152,7 +154,9 @@ vgmGof<- function (p = vgmGetParameters(vg), emp, vg, mode = "log")
     } else sum((emp$vg - vgv)^2 * sqrt(emp$n))
 }
 
-vgmFit2lrv <- function(emp,vg,...,mode="log",psgn=rep(-1,length(param)),print.level=1) {
+ 
+vgmFit2lrv <- function(emp,vg,..., mode="log",psgn=rep(-1,length(param)),print.level=1) {
+  .Deprecated("vgmFit2lrv")
   h <- apply(emp$h,c(1),mean)
   param <- vgmGetParameters(vg)
   pa <- ifelse(psgn>0,log(param),ifelse(psgn<0,param,sqrt(param)))
@@ -172,6 +176,37 @@ vgmFit2lrv <- function(emp,vg,...,mode="log",psgn=rep(-1,length(param)),print.le
   p <- erg$estimate
   list(nlm=erg,vg=vgmSetParameters(vg,ifelse(psgn>0,exp(p),ifelse(psgn<0,p,p^2))))
 }
+
+fit.lmc <- function(v, ...) UseMethod("fit.lmc", v)
+
+fit.lmc.logratioVariogram <- function(v, model, ..., mode="log",psgn=rep(-1,length(param)),print.level=1){
+  if(!exists("as.CompLinModCoReg")) as.CompLinModCoReg = function(x) x
+  emp = v
+  vg = as.CompLinModCoReg(model)
+  h <- apply(emp$h,c(1),mean)
+  param <- vgmGetParameters(vg)
+  pa <- ifelse(psgn>0,log(param),ifelse(psgn<0,param,sqrt(param)))
+  D <- dim(emp$vg)[2]
+  N <- dim(emp$vg)[1]
+  gof <- function(p) {
+    vg2 <- vgmSetParameters(vg,ifelse(psgn>0,exp(p),ifelse(psgn<0,p,p^2)))
+    vgv <- vgram2lrvgram(vg2)(h)
+    if( mode=="log" ) {
+      tk <- rep(diag(D),each=N)<0.5
+      ratio <- (emp$vg[tk]/vgv[tk])
+      sum(log(ratio)^2 * sqrt(emp$n[tk]))
+    } else
+      sum((emp$vg-vgv)^2*sqrt(emp$n))
+  }
+  erg <- nlm(gof,param,...,print.level=print.level)
+  p <- erg$estimate
+  rs = vgmSetParameters(vg,ifelse(psgn>0,exp(p),ifelse(psgn<0,p,p^2)))
+  attr(rs, "fit.quality") = erg
+  class(rs) = c("CompLinModCoReg","function")
+  return(rs)
+}
+
+
 vgmFit<-function(emp,vg,...,mode="log",psgn=rep(-1,length(param)),print.level=1) {
   .Deprecated("vgmFit2lrv")
   h <- apply(emp$h,c(1),mean)
@@ -216,7 +251,7 @@ vgram.sph <- function( h , nugget = 0, sill = 1, range= 1,... ) {
 vgram.exp <- function( h , nugget = 0, sill = 1, range= 1,... ) {
   "Exponentielles Variogramm"
   s <- sill-nugget
-  r <- -range/log(0.1)
+  r <- -range/log(0.05)
   h <- gsih2Dist(h)
   ifelse(h>range*1E-8,nugget+s*(1-exp(-h/r)),0)
 }
@@ -225,7 +260,7 @@ vgram.exp <- function( h , nugget = 0, sill = 1, range= 1,... ) {
 vgram.cardsin <- function( h , nugget = 0, sill = 1, range= 1,... ) {
   "Cardinal Sine Variogramm"
   s <- sill-nugget
-  r <- -range/log(0.1)
+  r <- -range/log(0.05)
   h <- gsih2Dist(h)
   ifelse(h>range*1E-8,nugget+s*(1-r/h*sin(h/r)),0)
 }
@@ -235,7 +270,7 @@ vgram.gauss <- function( h , nugget = 0, sill = 1, range= 1,... ) {
   "Gausssches Variogramm"
   h <- gsih2Dist(h)
   s <- sill-nugget
-  r <- range/sqrt(-log(0.1))
+  r <- range/sqrt(-log(0.05))
   ifelse(h>range*1E-8,nugget+s*(1-exp(-(h/r)^2)),0)
 }
 
@@ -465,6 +500,7 @@ CompLinModCoReg <- function(formula,comp,D=ncol(comp),envir=environment(formula)
   formals(vg)<- c(formals(vg),LMCRterms$param)
   body(vg)<-LMCRterms$call
   environment(vg)<-envir
+  class(vg) = c("CompLinModCoReg", "function")
   vg
 }
 
@@ -473,12 +509,17 @@ CompLinModCoReg <- function(formula,comp,D=ncol(comp),envir=environment(formula)
 
 compOKriging <- function(comp,X,Xnew,vg,err=FALSE) {
 
+  #BUG in err=TRUE
+  if(err){
+    message("compOKriging: kriging variance buggy; err=FALSE disabled. We are working to correct it")
+    err=TRUE
+  }
   Y <- comp
   n <- nrow(Y)
   nnew <- nrow(Xnew)
   D <- ncol(Y)
-  F <- matrix(1,nrow=n)
-  f <- matrix(1,nrow=nnew)
+  FF <- matrix(1,nrow=n)
+  f <- matrix(1, nrow=nnew)
   hxx <- X[rep(1:n,n),,drop=FALSE]-X[rep(1:n,each=n),,drop=FALSE]
   hxy <- X[rep(1:n,nnew),,drop=FALSE]-Xnew[rep(1:nnew,each=n),,drop=FALSE]
   Gamma <- vg(hxx)
@@ -488,8 +529,8 @@ compOKriging <- function(comp,X,Xnew,vg,err=FALSE) {
      gsiCGSkriging,
      zDim=gsiInt(dim(Y),2),
      z   =gsiDouble(Y),
-     FDim=gsiInt(dim(F)),
-     F   =gsiDouble(F),
+     FDim=gsiInt(dim(FF)),
+     F   =gsiDouble(FF),
      GammaDim=gsiInt(dim(Gamma),3),
      Gamma=gsiDouble(Gamma),
      fdim=gsiInt(dim(f),2),
@@ -498,13 +539,14 @@ compOKriging <- function(comp,X,Xnew,vg,err=FALSE) {
      gamma=gsiDouble(gamma),
      predDim=gsiInt(c(nnew,D),2),       
      pred =numeric(nnew*D),
-     err  =if( err==1 ) numeric(nnew*D*D) else numeric(1),
-     computeErrors=err)
+     krigVar  =if( err==1 ) numeric(nnew*D*D) else numeric(1),
+     computeErrors=err
+     )
  pred <- matrix(erg$pred,ncol=D)
  colnames(pred)<-colnames(comp)
  list(X=Xnew,
       Z=acomp(pred),
-      err=if(err) aperm(gsi.mystructure(erg$err,dim=c(D,D,nnew)),c(3,1,2)) else NULL
+      err=if(err) aperm(gsi.mystructure(erg$krigVar,dim=c(D,D,nnew)),c(3,1,2)) else NULL
       )
 
 }

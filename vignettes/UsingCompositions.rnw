@@ -7,6 +7,7 @@
 \newcommand{\code}[1]{{\tt #1}}
 % \VignetteIndexEntry{Using Animal}
 \begin{document}
+\SweaveOpts{concordance=TRUE}
 \maketitle
 \begin{abstract}
   ``compositions'' is a package for the the analysis of (e.g. chemical)

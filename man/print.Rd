@@ -31,7 +31,7 @@ An invisible version of x.
     \item{MNAR}{Missing NOT at random: The value is missing dependently of
       its true value, but without a known systematic. Maybe a better name
       would be: Value dependen missingness.}
-    \item{BDT}{below detection limit (with unspecified detection limit):
+    \item{BDL}{below detection limit (with unspecified detection limit):
       The value is missing because it was below an unkown detection limit.}
     \item{<Detectionlimit}{below detection limit (with specified detection limit):
       The value is below the displayed detection limit. }

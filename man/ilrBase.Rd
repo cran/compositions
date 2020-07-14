@@ -23,6 +23,10 @@
   canonical basis of the clr-plane used for the ilr and ipt transform. Only one of the
   arguments \code{x}, \code{z} or \code{D} is needed
   to determine the dimension of the simplex.
+  
+  If you provide transformed data \code{z}, the function attempts to extract the basis 
+  information from it with \code{\link{gsi.getV}}. Otherwise, the default compatible 
+  ilr base matrix is created.
 }
 \details{
   Method "basic" computes a triangular Helmert matrix (corresponding to

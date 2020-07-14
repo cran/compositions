@@ -12,7 +12,9 @@
   \item{x}{an rplus object to be plotted}
   \item{parts}{the variables in the rplus object to be plotted}
   \item{\dots}{additional plotting parameters as described in
-    \code{\link[rgl]{rgl.material}}}
+        %\code{\link[rgl]{rgl.material}}
+    \code{rgl::rgl.material}
+    }
   \item{vlabs}{the labels used for the variable axes}
   \item{add}{logical, adding  or new plot}
   \item{bbox}{logical, whether to add a bounding box}
@@ -32,10 +34,16 @@
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 
 \seealso{
-  \code{\link[rgl]{points3d}},
-  \code{\link[graphics]{plot}}, \code{\link{plot3D.rmult}},
+  \code{\link{kingTetrahedron}}
+    %\code{\link[rgl]{points3d}},
+   %\code{\link[graphics]{plot}}, 
+  \code{rgl::points3d},
+  \code{graphics::plot},
+  \code{\link{plot3D}},
+  \code{\link{plot3D.rmult}},
+
   
-  \code{\link{plot3D.acomp}},\code{\link{plot3D.rcomp}},,
+  \code{\link{plot3D.acomp}},\code{\link{plot3D.rcomp}},
   \code{\link{plot3D.aplus}},\code{\link{plot3D}}
 }
 \examples{

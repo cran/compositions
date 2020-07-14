@@ -16,8 +16,8 @@
   transform between variation-form from clr-form.
 }
 \usage{
-clr2ilr( x , V=ilrBase(x) )
-ilr2clr( z , V=ilrBase(z=z),x=NULL )
+clr2ilr( x , V=ilrBase(x=x) )
+ilr2clr( z , V=ilrBase(z=z), x=gsi.orig(z) )
 clrvar2ilr( varx , V=ilrBase(D=ncol(varx)) )
 ilrvar2clr( varz , V=ilrBase(D=ncol(varz)+1) ,x=NULL)
 clrvar2variation(Sigma)

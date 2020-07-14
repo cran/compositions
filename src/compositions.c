@@ -616,15 +616,15 @@ extern void gsiCGSkriging(
 		mt=3;
 	    }else if( ISNAN(v) ) { // MCAR (MAR)
 		mt=2;
-	    }
+	    } // end if (*5)
 	    type[i+n*p]=mt;
-	}
+	} // end loop (i,p)
     // Initialize 
     for(i=0;i<n;i++) {
 	for(p=0;p<D;p++) {
 	    tki[i+n*p]=0;
-	}
-    }
+	} // end loop p
+    }// end loop i 
     // Decide on alr
     for(i=0;i<n;i++) {
 	ref[i]=0;
@@ -633,9 +633,9 @@ extern void gsiCGSkriging(
 	    if( type[i+n*p] == 0 ) {
 		ref[i]=p;
 		tki[i+n*(nmv[i]++)]=p;
-	    } 
-	}
-    }
+	    }  // end if type[i+np]
+	} // end loop p: data variables 
+    } // end loop i: data locations
     // Framesize of Matrix
     lmax=(D-1)*FD;
     for(i=0;i<n;i++)
@@ -662,7 +662,7 @@ extern void gsiCGSkriging(
 		    if( i+n*(j+D*(iIdx+D*jIdx))>=lg ) {
 			Rprintf("%d %d %d %d %d %d %d %d\n",i,n,j,D,iIdx,D,jIdx,lg);
 			error("gsiCGSkriging: Out ouf bounds 2");
-		    }
+		    } //endif
 		    if(	i+n*(j+D*(iRef+D*jRef))>=lg ) 
 			error("gsiCGSkriging: Out ouf bounds 3");
 		    if( i+n*(j+D*(iRef+D*jIdx))>=lg )
@@ -682,8 +682,8 @@ extern void gsiCGSkriging(
 //			Gamma[i+n*(j+n*(iIdx+D*jRef))];
 		    if( ++l > lmax )
 			error("gsiCGSkriging: Error in framesize calculation l1.");
-		}
-	    }
+		} // end loop q: data2 variables non-missing
+	    } // end loop j: data2 locations
 	    // F 
 	    //Rprintf("%lf\n",tmp);
 	    for(j=0;j<FD;j++) {
@@ -699,13 +699,13 @@ extern void gsiCGSkriging(
 			(iRef==jIdx?1:0));
 		    if( ++l > lmax )
 			error("gsiCGSkriging: Error in framesize calculation l2.");
-		}
-	    }
+		} // end loop q (variables in predictions)
+	    } // end loop j (covariables) 
 	    // next line
 	    if( ++k > lmax )
 		error("gsiCGSkriging: Error in framesize calculation k1.");
-	}
-    }
+	} // end loop p: data variables (not missing)
+    } // end loop i data locations
      // F^t
     R_CheckUserInterrupt();
     for(i=0;i<FD;i++) {
@@ -724,8 +724,8 @@ extern void gsiCGSkriging(
 			(iRef==jIdx?1:0));
 		    if( ++l > lmax )
 			error("gsiCGSkriging: Error in framesize calculation l3.");
-		}
-	    }
+		} // end loop q (data2 non-missing observations)
+	    } // end loop j (data locations)
 	    // 0
 	    for(j=0;j<FD;j++) {
 		jRef = D-1;
@@ -734,12 +734,12 @@ extern void gsiCGSkriging(
 		    Nmat[k+ldN*l] = 0;
 		    if( ++l > lmax )
 			error("gsiCGSkriging: Error in framesize calculation l4.");
-		}
-	    }
+		} //end loop q (data variables)
+	    } // end loop j (covariables)
 	    if( ++k > lmax )
 		error("gsiCGSkriging: Error in framesize calculation k2.");
-	}
-    }
+	} // endloop p (variables in predictions)
+    } // end loop i (covariables)
     checkMatSymmetry(lmax,Nmat,ldN,1E-10);
     R_CheckUserInterrupt();
     // Copy a column 
@@ -767,8 +767,8 @@ extern void gsiCGSkriging(
 	for(p=0;p<nmv[i]-1;p++) {
 	    iIdx=tki[i+n*p];
 	    W[k++]=log(z[i+n*iIdx])-refLog;
-	}
-    }
+	} // end loop p (non-missing data locations)
+    } // end loop i (data locations)
     for(;k<lmax;)
 	W[k++]=0;
     //printMat("Wpre","%2.4lf",lmax,1,W,ldN);
@@ -897,7 +897,7 @@ extern void gsiCGSkriging(
 		for(q=0;q<D;q++)
 		    err[D2*j+p+D*q]+=tmp;
 	}
-    } // End j-loop
+    } // end j-loop (predicted locations)
     // End Kriging
 }
     

@@ -8,7 +8,7 @@
 }
 \usage{
           alr( x ,ivar=ncol(x), ... )
-          alrInv( z, ...,orig=NULL)
+          alrInv( z, ...,orig=gsi.orig(z))
           }
 \arguments{
   \item{x}{a composition, not necessarily closed}
@@ -42,7 +42,7 @@
 }
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
-  \code{\link{clr}},\code{\link{alr}},\code{\link{apt}},
+  \code{\link{clr}},\code{\link{ilr}},\code{\link{apt}},
   \url{http://ima.udg.es/Activitats/CoDaWork03}
 }
 \references{

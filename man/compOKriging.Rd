@@ -13,13 +13,13 @@ compOKriging(comp,X,Xnew,vg,err=FALSE)
   \item{Xnew}{The locations, where a geostatistical prediction should be
     computed.}
   \item{vg}{A compositional variogram function.}
-  \item{err}{boolean: If true kriging errors are computed additionally.}
+  \item{err}{boolean: If true kriging errors are computed additionally. A bug was found here; the argument is currently disabled.}
 }
 \value{
   A list of class \code{"logratioVariogram"}
   \item{X}{The new locations as given by Xnew}
   \item{Z}{The predicted values as acomp compositions.}
-  \item{err}{An ncol(Z)xDxD array with the clr kriging errors.}
+  \item{err}{A bug has been found here. This output is currently disabled (An ncol(Z)xDxD array with the clr kriging errors.)}
 }
 \details{
    
@@ -63,8 +63,8 @@ fit
 plot(lrv,lrvg=vgram2lrvgram(fit$vg))
 
 # Define A grid
-x <- (0:30/30)*6
-y <- (0:30/30)*6
+x <- (0:10/10)*6
+y <- (0:10/10)*6
 Xnew <- cbind(rep(x,length(y)),rep(y,each=length(x)))
 
 # Kriging

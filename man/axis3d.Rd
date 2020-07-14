@@ -25,10 +25,11 @@ axis3D(axis.origin=c(0,0,0),axis.scale=1,axis.col="gray",vlabs=c("x","y","z"),
   \item{axis.lwd}{line width of the axes}
   \item{axis.angle}{angle of the arrow heads}
   \item{axis.len}{length of the arrow heads}
-  \item{orth}{the orth argument of \code{\link{arrows3D}} }
+  \item{orth}{the orth argument of \code{\link{arrows3D}}  }
   \item{axes}{a boolean, wether to plot the axes}
   \item{\dots}{these arguments are passed to arrows3D as
-    \code{\link[rgl]{rgl.material}} arguments}
+    %\code{\link[rgl]{rgl.material}} 
+    \code{rgl::rgl.material} arguments}
 }
 \value{
   Nothing
@@ -41,8 +42,10 @@ axis3D(axis.origin=c(0,0,0),axis.scale=1,axis.col="gray",vlabs=c("x","y","z"),
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 
 \seealso{
-  \code{\link[rgl]{points3d}},
-  \code{\link[graphics]{plot}}, \code{\link{plot3D}},\code{\link{arrows3D}}
+  %\code{\link[rgl]{points3d}},
+  %\code{\link[graphics]{plot}}, 
+  \code{rgl::points3d}, \code{graphics::plot},
+  \code{\link{plot3D}},\code{\link{arrows3D}}
 }
 \examples{
 x <- cbind(rnorm(10),rnorm(10),rnorm(10))

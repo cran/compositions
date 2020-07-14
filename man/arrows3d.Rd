@@ -15,8 +15,9 @@ arrows3D(\dots)
 \arguments{
   \item{x0}{a matrix or vector giving the starting points of the arrows}
   \item{x1}{a matrix or vector giving the end points of the arrows}
-  \item{\dots}{additional plotting parameters as described in
-\code{\link[rgl]{rgl.material}}}
+  \item{\dots}{additional plotting parameters as described in rgl::rgl.material
+       %\code{\link[rgl]{rgl.material}}
+   }
   \item{length}{a number giving the length of the arrowhead}
   \item{angle}{numeric giving the angle of the arrowhead}
   \item{code}{0=no arrowhead,1=arrowhead at x0,2=arrowhead at
@@ -45,9 +46,10 @@ arrows3D(\dots)
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 
 \seealso{
-  \code{\link[rgl]{points3d}},
-  \code{\link[graphics]{plot}}, \code{\link{plot3D}},
-  
+  %\code{\link[rgl]{points3d}},
+  %\code{\link[graphics]{plot}}, 
+  \code{\link{plot3D}},
+  \code{rgl::points3d}, \code{graphics::plot}
 }
 \examples{
 x <- cbind(rnorm(10),rnorm(10),rnorm(10))

@@ -3,7 +3,9 @@
 \alias{pairs.rcomp}
 \alias{vp.lrdensityplot}
 \alias{vp.diffdensityplot}
+\alias{vp.lrdensityplot}
 \alias{vp.lrboxplot}
+\alias{vp.kde2dplot}
 \title{Pairs plot method for compositions}
 \description{
   Pairs plot function for compositions, allowing flexible representations.
@@ -26,7 +28,8 @@
   vp.lrdensityplot(x, y, col=2,..., alpha = NULL)
   vp.diffdensityplot(x, y, col=2,..., alpha = NULL)
   vp.lrboxplot(x, y, ...)
-          }
+  vp.kde2dplot(x, y, grid=TRUE, legpos="bottomright", colpalette=heat.colors,...)
+}
 \arguments{
   \item{x}{a dataset of a compositional class; 
   or for the panel functions, a vector of row components}
@@ -50,6 +53,9 @@
   \item{log}{a character string indicating if logarithmic axes are to be used: see plot.default. Should not be used and left to the panel function to handle}
   \item{col}{color for density and histogram components of the panel vp.*density} 
   \item{alpha}{alpha level for marking normality in the panels vp.*density; default to no mark} 
+  \item{grid}{should a unit-grid be added to each panel?}
+  \item{legpos}{where should the legend be placed? to be given as \code{x} in \code{graphics::legend}}
+  \item{colpalette}{which color palette is desired for the 2d density levels?}
 }
 \details{
   The data is displayed in a matrix of plots, after the indications of a panel function. 

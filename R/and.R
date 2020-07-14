@@ -465,3 +465,18 @@ vp.diffdensityplot <- function (x, y, col=2,..., alpha = NULL){
   lines(yd, main="", xlab="", ylab="", xaxt="n", yaxt="n", col=ifelse(reject,col,1), lwd=2)
 }
 
+
+
+vp.kde2dplot = 
+  function(x, y, grid=TRUE, legpos="bottomright", colpalette=heat.colors,...){
+    aux = MASS::kde2d(x, y, n=50)
+    aux$z = sqrt(aux$z)
+    bks = hist(aux$z, plot=F, breaks=20)$breaks
+    cols = c(NA,colpalette(length(bks)-2))
+    image(aux, breaks = bks, col=cols, xlab="", ylab="", add=TRUE, ...) #yaxt=ifelse(j==1,"s","n")
+    xgrid = seq(from=floor(min(x)), to = ceiling(max(x)), by=1)
+    ygrid = seq(from=floor(min(y)), to = ceiling(max(y)), by=1)
+    abline(lm(y~x), col=2, lwd=2)
+    if(grid)abline(v=xgrid, h=ygrid, col="#999999")
+    legend(legpos, legend=round(cor(x,y), digits=3), bg="#999999")
+  }

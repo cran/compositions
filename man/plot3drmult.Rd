@@ -13,7 +13,9 @@
   \item{x}{an object to be plotted, e.g. a data frame or a data matrix}
   \item{parts}{the variables in the rmult object to be plotted}
   \item{\dots}{additional plotting parameters as described in
-    \code{\link[rgl]{rgl.material}}}
+        %\code{\link[rgl]{rgl.material}}
+    \code{rgl::rgl.material}
+    }
   \item{center}{logical, center the data? This might be necessary to
     stay within the openGL-arithmetic used in rgl.}
   \item{scale}{logical, scale the data? This might be necessary to
@@ -37,8 +39,12 @@
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 
 \seealso{
-  \code{\link[rgl]{points3d}},
-  \code{\link[graphics]{plot}}, \code{\link{plot3D.rmult}},
+  \code{\link{kingTetrahedron}}
+    %\code{\link[rgl]{points3d}},
+   %\code{\link[graphics]{plot}}, 
+  \code{rgl::points3d},
+  \code{graphics::plot},
+  \code{\link{plot3D}},
   
   \code{\link{plot3D.acomp}},\code{\link{plot3D.rcomp}},
   \code{\link{plot3D.aplus}},\code{\link{plot3D.rplus}}

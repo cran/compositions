@@ -27,7 +27,7 @@ MahalanobisDist.rmult <- function(x,center=NULL,cov=NULL,inverted=FALSE,...,good
   if( is.null(goodOnly) ) 
     xx <- x
   else 
-    xx<-rmult(oneOrDataset(x)[goodOnly,,drop=FALSE])
+    xx<-rmult(oneOrDataset(x), orig=gsi.orig(x), V=gsi.getV(x))[goodOnly,,drop=FALSE]
   if( is.null(cov)) {
     cov <- var(xx,robust=robust,giveCenter=TRUE)
     inverted <- FALSE
@@ -37,6 +37,7 @@ MahalanobisDist.rmult <- function(x,center=NULL,cov=NULL,inverted=FALSE,...,good
       center <- mean(xx,robust=robust)
     else
       center <- attr(cov,"center")
+    center = rmult(center, orig=gsi.orig(xx), V=gsi.getV(xx))
   }
   if( pairwise ) {
     z    <- unclass(idt(x))

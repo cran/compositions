@@ -8,7 +8,7 @@
 }
 \usage{
           cpt( x,... )
-          cptInv( z,... )
+          cptInv( z,...,orig=gsi.orig(z) )
           }
 \arguments{
   \item{x}{a composition or a data.matrix of compositions, not necessarily closed}
@@ -16,6 +16,9 @@
     cpt-transforms of compositions. It is checked that the z sum up to
     0.}
   \item{\dots}{generic arguments. not used.}
+  \item{orig}{a compositional object which should be mimicked 
+             by the inverse transformation. It is especially used to
+	     reconstruct the names of the parts.}
 }
 \value{
   \code{cpt} gives the centered planar transform,

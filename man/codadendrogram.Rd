@@ -82,20 +82,21 @@ x = acomp(Hydrochem[,-c(1:5)])
 gr = Hydrochem[,4] # river groups (useful afterwards)
 # use an ilr basis coming from a clustering of parts
 dd = dist(t(clr(x)))
-hc1 = hclust(dd,method="ward")
+hc1 = hclust(dd,method="ward.D")
 plot(hc1)
 mergetree=hc1$merge
 CoDaDendrogram(X=acomp(x),mergetree=mergetree,col="red",range=c(-8,8),box.space=1)
 # add the mean of each river
 color=c("green3","red","blue","darkviolet")
-aux = clrInv(t(sapply(split(clr(x),gr),mean)))
-CoDaDendrogram(X=aux,add=TRUE,col=color,type="points",pch=4)
+aux = sapply(split(x,gr),mean)
+aux
+CoDaDendrogram(X=acomp(t(aux)),add=TRUE,col=color,type="points",pch=4)
 
 # second example: box-plots by rivers (filled)
 CoDaDendrogram(X=acomp(x),mergetree=mergetree,col="black",range=c(-8,8),type="l")
 xsplit = split(x,gr)
 for(i in 1:4){
- CoDaDendrogram(X=acomp(xsplit[[i]]),col=color[i],type="box",box.pos=i-2.5,box.space=0.5,add=TRUE)
+ CoDaDendrogram(X=xsplit[[i]],col=color[i],type="box",box.pos=i-2.5,box.space=0.5,add=TRUE)
 }
 
 # third example: fewer parts, partition defined by a signary, and empty box-plots

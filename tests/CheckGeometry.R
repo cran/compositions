@@ -28,7 +28,8 @@ geomSetA <- acomp(rbind( c(2,1,1),c(1,2,1),c(1,1,2),c(1,1,1)))
 delta <- acomp(c(0.4,0.9,3))
 plot(geomSetA+delta)
 straight(acomp(c(2,1,1))+delta,acomp(c(1,2,1))-acomp(c(2,1,1)))
-ellipses(acomp(c(1,1,2))+delta,var=diag(3),r=norm(acomp(c(1,1,2))-acomp(c(1,1,1))))
+rr = norm(acomp(c(1,1,2))-acomp(c(1,1,1)))
+ellipses(acomp(c(1,1,2))+delta,var=diag(3),r=rr)
 ellipses(mean(geomSetA+delta),var=var(geomSetA+delta),r=2)
 
 

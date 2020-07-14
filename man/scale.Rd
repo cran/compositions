@@ -50,8 +50,9 @@ scale(x, center = TRUE, scale = TRUE,\dots)
     geometry during scaling and are therefore reported as \code{"rmult"} objects.
     
     See the documentation in package base for details on
-   \code{\link[base]{scale}} and
-   \code{\link[base]{scale.default}}. These functions are only modified
+   %\code{\link[base]{scale}} and \code{\link[base]{scale.default}}. 
+   \code{base::scale} and \code{base::scale.default}
+   These functions are only modified
    to allow the additional robustness parameter. 
 
   }

@@ -4,6 +4,7 @@
 \alias{as.data.frame.aplus}
 \alias{as.data.frame.rplus}
 \alias{as.data.frame.rmult}
+\alias{as.data.frame.ccomp}
 \title{Convert "compositions" classes to data frames}
 \description{
   Convert a compositional object to a dataframe
@@ -14,6 +15,7 @@
 \method{as.data.frame}{aplus}(x,\dots)
 \method{as.data.frame}{rplus}(x,\dots)
 \method{as.data.frame}{rmult}(x,\dots)
+\method{as.data.frame}{ccomp}(x,\dots)
           }
 \arguments{
   \item{x}{an object to be converted to a dataframe}

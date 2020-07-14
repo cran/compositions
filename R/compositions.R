@@ -420,24 +420,56 @@ ccomp <- function(X,parts=1:NCOL(oneOrDataset(X)),total=NA,warn.na=FALSE,detecti
 }
 
 
-rmult <- function(X,parts=1:NCOL(oneOrDataset(X)),
-                  orig=attr(X,"orig"),missingProjector=attr(X,"missingProjector")) {
-  X <- gsi.simshape(oneOrDataset(X)[,parts,drop=FALSE],X)
+rmult <- function(X, parts=1:NCOL(oneOrDataset(X)),
+                  orig=gsi.orig(X),
+                  missingProjector=attr(X,"missingProjector"),
+                  V = gsi.getV(X)) {
+  .drop = gsi.ORsequentially(length(dim(X))==0, nrow(X)==1)
+  X <- gsi.simshape(oneOrDataset(X)[,parts,drop=.drop],X)
+  if(.drop) X = drop(X)
   attr(X,"orig") <- orig
+  attr(X,"V") <- V
   attr(X,"missingProjector")<-missingProjector
   class(X) <-"rmult"
   X
 }
 
-print.rmult <- function(x,...) {
-  Odata <- attr(x,"orig")
-  if( ! is.null(Odata) )
-    attr(x,"orig") <- missingSummary(Odata)
-  mp <- attr(x,"missingProjector")
-  if( ! is.null(mp) )
-    attr(x,"missingProjector") <- dim(mp)
-  NextMethod(x,...)
+gsi.orig <- function(x,y=NULL){
+  a = attr(x,"orig")
+  if(is.null(y)) return(a)
+  b = attr(y,"orig")
+  if(is.null(a)) return(b)
+  return(a)
 }
+
+gsi.getV <- function(x,y=NULL){
+  a = attr(x,"V")
+  if(is.null(y)) return(a)
+  b = attr(y,"V")
+  if(is.null(a)) return(b)
+  return(a)
+}
+
+print.rmult <- function (x, ..., verbose=FALSE) {
+  Odata <- attr(x, "orig")
+  if (!is.null(Odata) & verbose){
+    attr(x, "orig") <- missingSummary(Odata)
+  } else{
+    attr(x, "orig") <- NULL
+  }
+  mp <- attr(x, "missingProjector")
+  if (!is.null(mp) & verbose){
+    attr(x, "missingProjector") <- dim(mp)
+  } else{
+    attr(x, "missingProjector") <- NULL
+  } 
+  .V <- attr(x, "V")
+  if (!is.null(.V) & !verbose){
+    attr(x, "V") <- NULL
+  }else{} 
+  NextMethod(x, ...)
+}
+
 gsi2.invperm <- function(i,n){
   i <- unique(c(i,1:n))
   j <- numeric(length(i))
@@ -674,11 +706,11 @@ mean.rmult <- function( x,...,na.action=NULL,robust=getOption("robust")) {
   if( has.missings(x) ) {
     if( !(is.character(robust) && robust=="pearson" ))
       warning("mean.rmult: Robust estimation currently not supported with missings")
-    rmult(gsi.svdsolve(sumMissingProjector(x), gsi.csum(x,...)))
+    erg=gsi.svdsolve(sumMissingProjector(x), gsi.csum(x,...))  
   }
   else {
     if( is.character(robust) ) {
-      rmult(switch(robust,
+      erg= rmult(switch(robust,
              pearson=do.call(meanCol,c(list(x=unclass(x)),control,...)),
              mcd={
                #require("robustbase")
@@ -687,21 +719,36 @@ mean.rmult <- function( x,...,na.action=NULL,robust=getOption("robust")) {
              stop("mean.rmult: Unkown robustness type:",robust)
                ))
     } else if(is.function(robust)) {
-      rmult(robust("mean",unclass(x),...,robust=robust))
-    } else stop("mean.rmult: Unkown robustness type:",robust)      
+      erg=rmult(robust("mean",unclass(x),...,robust=robust))
+    } else stop("mean.rmult: Unkown robustness type:",robust)
+    .orig = gsi.orig(x)
+    .V = gsi.getV(x)
+    rmult(erg, orig=.orig, V=.V)
   }
+  
 }
 
 
-clr2ilr <- function( x , V=ilrBase(x) ) {
-  gsi.simshape(gsi.recodeC2M(oneOrDataset(x),ninf=0,nan=0,na=0,inf=0) %*% V , x)
+clr2ilr <- function( x , V=ilrBase(x=x) ) {
+  rmult(
+    gsi.simshape(
+      gsi.recodeC2M(
+        oneOrDataset(x), ninf=0,nan=0,na=0,inf=0
+        ) %*% V , x),
+    orig=gsi.orig(x), V=t(gsi.svdinverse(V))
+  )
 }
 
-ilr2clr <- function( z , V=ilrBase(z=z),x=NULL ) {
+ilr2clr <- function( z , V=ilrBase(z=z), x=gsi.orig(z) ) {
+  if(is.null(V)) V = ilrBase(D=1+ncol(oneOrDataset(z)))
+  if(ncol(V)-nrow(V)==1){
+    warning("ilr2clr: provided V apparently transposed. Check your calculations! avoid apt/alr! Attempting a patch")
+    V = t(V)
+  }
   erg <- oneOrDataset(z) %*% t(V)
   if( !is.null(x) )
     colnames(erg)<-colnames(x)
-  gsi.simshape( erg , z)
+  rmult(gsi.simshape( erg , z), orig=gsi.orig(z) )
 }
 
 
@@ -709,7 +756,7 @@ clrvar2ilr <- function( varx , V=ilrBase(D=ncol(varx)) ) {
   t(V) %*% varx %*% V
 }
 
-ilrvar2clr <- function( varz , V=ilrBase(D=ncol(varz)+1),x=NULL ) {
+ilrvar2clr <- function( varz , V=ilrBase(D=ncol(varz)+1), x=NULL ) {
   erg <- V %*% varz %*% t(V)
   if( !is.null(x)) {
     colnames(erg) <- colnames(x)
@@ -1630,52 +1677,55 @@ perturbe.aplus <- function(x,y) {
 }
 
 
-
-gsi.add <- function( x,y ) {
-  if( length(dim(x)) == 2 )
-    if( length(dim(y)) == 2 )
+gsi.add <- function(x, y) {
+  if( gsi.ANDsequentially(length(dim(x)) == 2, nrow(x)>1 )){
+    if( gsi.ANDsequentially(length(dim(y)) == 2, nrow(y)>1 )){
       unclass(x)+unclass(y)
-    else
+    }else{
       unclass(x)+rep(c(y),rep(NROW(x),length(y)))
-  else if( length(dim(y)) == 2 )
-      unclass(y)+rep(c(x),rep(NROW(y),length(x)))
-  else
+    }
+  }else if( gsi.ANDsequentially(length(dim(y)) == 2, nrow(y)>1)){
+     unclass(y)+rep(c(x),rep(NROW(y),length(x)))
+  }else{
     unclass(x)+unclass(y)
+    }
 }
 
-gsi.sub <- function( x,y ) {
- # drop <- length(dim(x)) < 2 && length(dim(y)) < 2
-  if( length(dim(x)) == 2 )
-    if( length(dim(y)) == 2 )
+
+gsi.sub <- function(x, y) {
+  if( gsi.ANDsequentially(length(dim(x)) == 2, nrow(x)>1 )){
+    if( gsi.ANDsequentially(length(dim(y)) == 2, nrow(y)>1 )){
       unclass(x)-unclass(y)
-    else
+    }else{
       unclass(x)-rep(c(y),rep(NROW(x),length(y)))
-  else if( length(dim(y)) == 2 )
-      # unclass(y)-rep(c(x),rep(NROW(y),length(x))) ## BUG!!!
-      rep(c(x),rep(NROW(y),length(x)))-unclass(y)
-  else
+    }
+  }else if( gsi.ANDsequentially(length(dim(y)) == 2, nrow(y)>1)){
+    unclass(y)-rep(c(x),rep(NROW(y),length(x)))
+  }else{
     unclass(x)-unclass(y)
+  }
 }
+
 
 gsi.mul <- function( x,y ) {
-  if( length(dim(x)) == 2 )
-    if( length(dim(y)) == 2 )
+  if( gsi.ANDsequentially(length(dim(x)) == 2 & nrow(x)>1 ))
+    if( gsi.ANDsequentially(length(dim(y)) == 2 & nrow(y)>1 ))
       unclass(x)*unclass(y)
     else
       unclass(x)*rep(c(y),rep(NROW(x),length(y)))
-  else if( length(dim(y)) == 2 )
+  else if( gsi.ANDsequentially(length(dim(y)) == 2 & nrow(y)>1 ))
       unclass(y)*rep(c(x),rep(NROW(y),length(x)))
   else
     unclass(x)*unclass(y)
 }
 
 gsi.div <- function( x,y ) {
-  if( length(dim(x)) == 2 )
-    if( length(dim(y)) == 2 )
+  if( gsi.ANDsequentially(length(dim(x)) == 2 & nrow(x)>1 ))
+    if( gsi.ANDsequentially(length(dim(y)) == 2 & nrow(y)>1 ))
       unclass(x)/unclass(y)
     else
       unclass(x)/rep(c(y),rep(NROW(x),length(y)))
-  else if( length(dim(y)) == 2 )
+  else if( gsi.ANDsequentially(length(dim(y)) == 2 & nrow(y)>1 ))
       # unclass(y)/rep(c(x),rep(NROW(y),length(x))) ## BUG!!
       rep(c(x),rep(NROW(y),length(x)))/unclass(y)
   else
@@ -1758,17 +1808,18 @@ power.acomp <- function(x,s) {
     if( is.rcomp(y) ) {
       stop("+ is meaningless for two rcomp objects")
    } else if( is.rcomp(x)) {
-      rmult(clo(x))+rmult(y)
+      erg=rmult(clo(x))+rmult(y)
     } else if( is.rcomp(y) ) {
-      rmult(x)+rmult(clo(y))
+      erg=rmult(x)+rmult(clo(y))
     } else
       stop("Why are we here in +.rcomp without rcomp?")
   #rcomp(gsi.add(x,y))
+  return(erg)
 }
 
 "-.rcomp" <- function(x,y) {
   if( missing(y) )
-    rmult(-unclass(x))
+    rmult(-unclass(x), orig=x)
   else
     rmult(gsi.sub(x,y))
 }
@@ -1829,29 +1880,29 @@ power.acomp <- function(x,s) {
 }
 
 "+.rmult" <- function(x,y) {
-  rmult(gsi.add(x,y))
+  rmult(gsi.add(x,y), orig=gsi.orig(x,y), V=gsi.getV(x,y))
 }
 
 "-.rmult" <- function(x,y) {
   if( missing(y) )
-    rmult(-unclass(x))
+    rmult(-unclass(x), orig=gsi.orig(x,y), V=gsi.getV(x,y))
   else
-    rmult(gsi.sub(x,y))
+    rmult(gsi.sub(x,y), orig=gsi.orig(x,y), V=gsi.getV(x,y))
 }
 
 
 "*.rmult" <- function(x,y) {
   if( is.rmult(x) && is.rmult(y) )
-    rmult(gsi.mul(x,y))
+    rmult(gsi.mul(x,y), orig=gsi.orig(x,y), V=gsi.getV(x,y))
   else
-    rmult(unclass(x)*unclass(y))
+    rmult(unclass(x)*unclass(y), orig=gsi.orig(x,y), V=gsi.getV(x,y))
 }
 
 "/.rmult" <- function(x,y) {
   if( is.rmult(x) && is.rmult(y) )
-    rmult(gsi.div(x,y))
+    rmult(gsi.div(x,y), orig=gsi.orig(x,y), V=gsi.getV(x,y))
   else 
-    rmult(unclass(x)/unclass(y))
+    rmult(unclass(x)/unclass(y), orig=gsi.orig(x,y), V=gsi.getV(x,y))
 }
 
 "%*%" <- function(x,y) UseMethod("%*%",structure(c(unclass(x), unclass(y)),class=c(class(x),class(y))))
@@ -1868,11 +1919,11 @@ power.acomp <- function(x,s) {
     if( is.rmult(x) ) 
       c(gsi.mul(x,y) %*% rep(1,gsi.getD(x)))
     else if( is.matrix(x) ) 
-      rmult(gsi.simshape(oneOrDataset(y) %*% t(x),y))
+      rmult(gsi.simshape(oneOrDataset(y) %*% t(x),y), orig=gsi.orig(x,y), V=gsi.getV(x,y))
     else
       c(oneOrDataset(y) %*% x) 
   else if( is.matrix(y) )
-      rmult(gsi.simshape(oneOrDataset(x) %*% y,x))
+      rmult(gsi.simshape(oneOrDataset(x) %*% y,x), orig=gsi.orig(x,y), V=gsi.getV(x,y))
   else
       c(oneOrDataset(x) %*% y) 
   }
@@ -2076,12 +2127,12 @@ scale.rcomp <- scale.rplus <- scale.rmult <- function( x,center=TRUE, scale=TRUE
       s <- gsi.diagGenerate(1/sqrt(gsi.diagExtract(var)))
       x <- s %*% x
     }
-  } else if( is.matrix(s) )
-     x <- s %*% x
-  else if( length(s)==1)
+  } else if( is.matrix(scale) )
+     x <- scale %*% x
+  else if( length(scale)==1)
      x <- s * x
   else
-     x <- gsi.diagGenerate(s) %*% x
+     x <- gsi.diagGenerate(scale) %*% x
   return(x)
    #rmult(scale(gsi.plain(x),center=center,scale=scale))
 }
@@ -2089,20 +2140,24 @@ scale.rcomp <- scale.rplus <- scale.rmult <- function( x,center=TRUE, scale=TRUE
 normalize <- function(x,...) UseMethod("normalize",x)
 normalize.default <- function(x,...) x/norm(x)
 
-#if( !exists("norm")) norm <- function(X,...) UseMethod("norm",X)
+norm <- function(x,...) UseMethod("norm",x)
 
-norm.default <- function(X,...) {
-  sqrt( sum(X^2) )
+norm.default <- function(x,...) {
+  sqrt( sum(x^2) )
 }
 
-norm.acomp <- function(X,...) {
-  norm.rmult(cdt(X),...)
+norm.matrix <- function(x,...){
+  base::norm(x=x, ...)
+}
+
+norm.acomp <- function(x,...) {
+  norm.rmult(cdt(x),...)
 }
 norm.rcomp <- norm.acomp
 norm.aplus <- norm.acomp
 norm.rplus <- norm.acomp
-norm.rmult <- function(X,...) {
-   sqrt(X %*% X)
+norm.rmult <- function(x,...) {
+   sqrt(x %*% x)
 }
 
 dist <- function(x,...) UseMethod("dist")
@@ -2128,8 +2183,15 @@ clr <- function( x ,... ) {
   rmult(gsi.simshape(erg,x),orig=x) 
 }
 
-clrInv <- function( z,... ) {
-  acomp( gsi.recodeC2M(exp(z),ninf=BDLvalue,nan=MARvalue,na=MNARvalue) )
+clrInv <- function( z,..., orig=gsi.orig(z) ) {
+  res = acomp( gsi.recodeC2M(exp(z),ninf=BDLvalue,nan=MARvalue,na=MNARvalue) )
+  if(!is.null(orig)){
+    if(length(dim(res))>0)
+      colnames(res) = colnames(oneOrDataset(orig))
+    else
+      names(res) = colnames(oneOrDataset(orig))
+  }
+  return(res)
 }
 
 ult <- function( x,... ) {
@@ -2161,7 +2223,9 @@ Kappa <- function( x, ...) {
 gsi.ilrBase <-function(D){
   if(D<=1)
     return(matrix(nrow=0,ncol=0))
-  else 
+  else if(D==2){
+    return(t(t(unclass(normalize(rmult(t(contr.helmert(n=D))))))))
+  } else
     t(unclass(normalize(rmult(t(contr.helmert(n=D))))))
 }
 
@@ -2183,6 +2247,7 @@ gsi.ilrBase <-function(D){
 
 
 ilrBase <- function(x=NULL, z=NULL, D=NULL, method="basic"){
+ if(!is.null(gsi.getV(z))) return(gsi.getV(z))
  if (method=="basic"){
     if (missing(D))
         D <- if (is.null(x))
@@ -2284,11 +2349,12 @@ return(t(V))
 
 
 
-ilr    <- function( x , V=ilrBase(x),... ) {
-  rmult(clr2ilr( clr(oneOrDataset(x)),V ))
+ilr    <- function( x , V=ilrBase(x),... ){
+  rmult(clr2ilr( clr(oneOrDataset(x)),V ), orig=acomp(x), V=t(gsi.svdinverse(V)))
 }
+  
 
-ilrInv <- function( z, V=ilrBase(z=z),...,orig=NULL) {
+ilrInv <- function( z, V=ilrBase(z=z),...,orig=gsi.orig(z)) {
   erg <- clrInv( ilr2clr(z,V) )
   if( ! is.null(orig) && gsi.getD(erg) == gsi.getD(orig) ) {
     names(erg)<-names(orig)
@@ -2297,14 +2363,37 @@ ilrInv <- function( z, V=ilrBase(z=z),...,orig=NULL) {
 }
 
 alr <- function( x ,ivar=ncol(x),...) {
-xo <- x
-W <- unclass(clo(oneOrDataset(x)))
-x <- gsi.recodeM2C(W,log(W),BDL=-Inf,SZ=NaN,MAR=NaN,MNAR=NA)
-rmult(gsi.simshape( x[,-ivar,drop=FALSE] - c(x[,ivar]), xo))
+  # control of ivar, recast to number
+  if(is.null(ivar)) ivar=length(x)
+  if(is.character(ivar)) ivar = colnames(x)==ivar
+  if(is.logical(ivar)) ivar = which(ivar)
+  if(length(ivar)!=1) stop("alr: 'ivar' must identify a single variable")
+  # store input, give colnames if necessary, close
+  xo <- x
+  x = oneOrDataset(x)
+  cn = paste("v", 1:ncol(x), sep="")
+    if(is.null(colnames(x))) colnames(x) = cn
+  colnames(x)[colnames(x)==""] = cn[colnames(x)==""]
+  W <- unclass(clo(x))
+  # construct contrast matrix
+  D <- ncol(W)
+  Phi = rbind(diag(D-1),-1)
+  rownames(Phi) = c(colnames(x)[-ivar], colnames(x)[ivar])
+  colnames(Phi) = colnames(x)[-ivar]
+  # recode missings and zeros
+  x <- gsi.recodeM2C(W,log(W),BDL=-Inf,SZ=NaN,MAR=NaN,MNAR=NA)
+  # produce output
+  rmult(gsi.simshape( x[,-ivar,drop=FALSE] - c(x[,ivar]), xo), orig=acomp(xo),
+        V = t(gsi.svdinverse(Phi[colnames(x),])))
 }
 
-alrInv <- function( z ,...,orig=NULL) {
-  Z <- cbind(oneOrDataset(z),0)
+alrInv <- function( z ,...,orig=gsi.orig(z)) {
+  .V = gsi.getV(z)
+  if(is.null(.V)){
+    Z <- cbind(oneOrDataset(z),0)
+  }else{
+    Z <- cbind(oneOrDataset(z) %*% t(.V))
+  }
   erg <- acomp(gsi.simshape( clo(gsi.recodeC2M(Z,exp(Z),
                                         ninf=BDLvalue,
                                         inf =MNARvalue,
@@ -2331,14 +2420,24 @@ pwlr = function(x, as.rmult=FALSE, as.data.frame=!as.rmult, ...){
   Y = log(X[,pw[2,], drop=F]/X[,pw[1,], drop=F])
   colnames(Y) = paste(pw[2,], pw[1,], sep=".")
   if(as.rmult){
-    Y = compositions::rmult(Y)
+    DD = length(cn)
+    pw = combn(1:DD,2)
+    W = apply(pw,2,function(i){
+      aa = rep(0,DD)
+      aa[i[1]]=-1
+      aa[i[2]]=+1
+      return(aa)
+    })
+    Winv = gsi.svdinverse(W) 
+    colnames(Winv) = cn
+    Y = rmult(Y, orig=acomp(x), V=t(Winv))
   }else{
     Y = as.data.frame(Y)
   }
   return(Y)
 }
 
-pwlrInv = function(z, orig=NULL){
+pwlrInv = function(z, orig = gsi.orig(z)){
   y = oneOrDataset(z)
   P = ncol(y)
   DD = 0.5*(1+sqrt(1+8*P))
@@ -2365,11 +2464,13 @@ pwlrInv = function(z, orig=NULL){
 
 apt <- function( x ,...) {
   W <- oneOrDataset(x)
+  Dd <- ncol(W)
   V <- gsi.recodeM2C(W,gsi.plain(clo( W )),BDL=0.0,SZ=0.0,MAR=NaN,MNAR=NA)
-  rmult(gsi.simshape(V[,-NCOL(W)],x))
+  rmult(gsi.simshape(V[,-NCOL(W)],x), orig=rcomp(x), 
+        V=t(gsi.svdinverse(rbind(diag(Dd-1),-1))))
 }
 
-aptInv <- function( z ,...,orig=NULL) {
+aptInv <- function( z ,...,orig=gsi.orig(z)) {
   Z <- oneOrDataset(z)
   Z <- cbind(Z, 1 - gsi.recodeC2M(Z,na=0.0,nan=0.0) %*% rep(1,NCOL(Z)))
   erg <- rcomp(gsi.simshape( Z ,z ))
@@ -2381,21 +2482,28 @@ aptInv <- function( z ,...,orig=NULL) {
 
 cpt <- function( x ,...) {
   X <- oneOrDataset(x)
-  rmult(clo(x) - 1/NCOL(X),orig=x)
+  rmult(clo(x) - 1/NCOL(X),orig=rcomp(x))
 }
 
-cptInv <- function( z ,...) {
+cptInv <- function( z ,..., orig=gsi.orig(z)) {
   if( abs(sum(z))>0.0001 )
     warning( "z not in cpt plane in cptInv")
-  rcomp(z + 1/NCOL(oneOrDataset(z)))
+  res = rcomp(z + 1/NCOL(oneOrDataset(z)))
+  if(!is.null(orig)){
+    if(length(dim(res))>1){
+      colnames(res) = colnames(oneOrDataset(orig))
+    }else{
+      names(res) = colnames(oneOrDataset(orig))
+    }
+  }
+  return(res)
 }
 
 ipt    <- function( x , V=ilrBase(x),...) {
-  rmult(clr2ilr(cpt(x),V),orig=x)
-  
+  rmult(clr2ilr(cpt(x),V), orig=rcomp(x), V=t(gsi.svdinverse(V)) )
 }
 
-iptInv <- function( z, V=ilrBase(z=z) ,...,orig=NULL) {
+iptInv <- function( z, V=ilrBase(z=z) ,...,orig=gsi.orig(z)) {
   erg<-cptInv( ilr2clr(z,V) )
   if( ! is.null(orig) && gsi.getD(erg) == gsi.getD(orig) ) {
     names(erg)<-names(orig)
@@ -2403,7 +2511,7 @@ iptInv <- function( z, V=ilrBase(z=z) ,...,orig=NULL) {
   erg
 }
 
-uciptInv <- function( z, V=ilrBase(z=z) ,...,orig=NULL) {
+uciptInv <- function( z, V=ilrBase(z=z) ,...,orig=gsi.orig(z)) {
   tmp <- ilr2clr(z,V) + 1/(gsi.getD(z)+1)
   tmp[tmp<0]<-MNARvalue
   erg<-rcomp(tmp)
@@ -2416,7 +2524,9 @@ uciptInv <- function( z, V=ilrBase(z=z) ,...,orig=NULL) {
 
 ilt <- function( x ,...) {
   W <- gsi.plain(x)
-  rmult(log(ifelse(is.NMV(W),W,1)),orig=x)
+  ww = ifelse(is.NMV(W),W,1)
+  res = rmult(log(ww),orig=aplus(x))
+  return(res)
 }
 
 iltInv <- function( z ,...) {
@@ -2424,7 +2534,7 @@ iltInv <- function( z ,...) {
 }
 
 iit <- function( x ,...) {
-  rmult( gsi.recodeM2C(x,BDL=0.0,SZ=0.0,MAR=0.0,MNAR=0.0 ) ,orig=x)
+  rmult( gsi.recodeM2C(x,BDL=0.0,SZ=0.0,MAR=0.0,MNAR=0.0 ) ,orig=rplus(x))
 }
 
 iitInv <- function(z,...) {
@@ -2435,20 +2545,27 @@ idt         <- function(x,...) UseMethod("idt",x)
 idt.default <- function(x,...) x
 idt.acomp   <- function(x,...) ilr(x,...) 
 idt.rcomp   <- function(x,...) ipt(x,...)
-idt.ccomp   <- iit
+idt.ccomp   <- function(x,...) 
+  rmult( gsi.recodeM2C(x,BDL=0.0,SZ=0.0,MAR=0.0,MNAR=0.0 ) ,orig=ccomp(x) )
 idt.aplus   <- ilt 
-idt.rplus   <- iit 
+idt.rplus   <- iit
 idt.rmult   <- function(x,...) x
-idt.factor  <- function(x,...) rmult(clr2ilr(cdt(x)))
+idt.factor  <- function(x,...){
+  Vx = contrasts(x)
+  rws = apply(Vx==0,1,all)
+  if(any(rws)) Vx[rws,]=-1
+  rmult(clr2ilr(cdt(x), V=Vx),orig=x, V=Vx)
+} 
 
 
 cdt         <- function(x,...) UseMethod("cdt",x)
 cdt.default <- function(x,...) x
 cdt.acomp   <- clr 
 cdt.rcomp   <- cpt
-cdt.ccomp   <- iit
+cdt.ccomp   <- function(x,...) 
+  rmult( gsi.recodeM2C(x,BDL=0.0,SZ=0.0,MAR=0.0,MNAR=0.0 ) ,orig=ccomp(x) )
 cdt.aplus   <- ilt 
-cdt.rplus   <- iit 
+cdt.rplus   <- iit
 cdt.rmult   <- function(x,...) x
 cdt.factor  <- function(x,...) {
   #x <- matrix(0,nrow=length(x),ncol=nlevels(x),dimnames=list(names(x),levels(x)))
@@ -2456,31 +2573,56 @@ cdt.factor  <- function(x,...) {
   #rmult(matrix(x,nrow=nrow(x),dimnames=dimnames(x)))
   y = diag(length(levels(x)))
   colnames(y) <- rownames(y)<- levels(x)
-  y[as.character(x),]
+  rmult(y[as.character(x),], orig=x)
 }
 
-cdtInv <- function(x,orig,...) UseMethod("cdtInv",orig)
-cdtInv.default <- function(x,orig,...) x
-cdtInv.acomp   <- function(x,orig,...) clrInv(x,...,orig=orig)
-cdtInv.rcomp   <- function(x,orig,...) cptInv(x,...,orig=orig)
-cdtInv.ccomp   <- function(x,orig,...) iitInv(x,...,orig=orig)
-cdtInv.aplus   <- function(x,orig,...) iltInv(x,...,orig=orig)
-cdtInv.rplus   <- function(x,orig,...) iitInv(x,...,orig=orig)
-cdtInv.rmult   <- function(x,orig,...) x
-cdtInv.factor   <- function(x,orig,...){
+cdtInv <- function(x,orig=gsi.orig(x),...) UseMethod("cdtInv",orig)
+cdtInv.default <- function(x,orig=gsi.orig(x),...) x
+cdtInv.acomp   <- function(x,orig=gsi.orig(x),...) clrInv(x,...,orig=orig)
+cdtInv.rcomp   <- function(x,orig=gsi.orig(x),...) cptInv(x,...,orig=orig)
+cdtInv.ccomp   <- function(x,orig=gsi.orig(x),...) iitInv(x,...,orig=orig)
+cdtInv.aplus   <- function(x,orig=gsi.orig(x),...) iltInv(x,...,orig=orig)
+cdtInv.rplus   <- function(x,orig=gsi.orig(x),...) iitInv(x,...,orig=orig)
+cdtInv.rmult   <- function(x,orig=gsi.orig(x),...) x
+cdtInv.factor   <- function(x,orig=gsi.orig(x),...){
   cn = colnames(x)
   if(length(levels(orig))>length(cn))cn=levels(orig)
   factor(cn[x %*% c(1:ncol(x))])
 }
 
-idtInv <- function(x,orig,...) UseMethod("idtInv",orig)
-idtInv.default <- function(x,orig,...) x
-idtInv.acomp   <- function(x,orig,...) ilrInv(x,...,orig=orig)
-idtInv.rcomp   <- function(x,orig,...) iptInv(x,...,orig=orig)
-idtInv.ccomp   <- function(x,orig,...) iitInv(x,...,orig=orig)
-idtInv.aplus   <- function(x,orig,...) iltInv(x,...,orig=orig)
-idtInv.rplus   <- function(x,orig,...) iitInv(x,...,orig=orig)
-idtInv.rmult   <- function(x,orig,...) x
+idtInv <- function(x,orig=gsi.orig(x), ...) UseMethod("idtInv",orig)
+idtInv.default <- function(x,orig=gsi.orig(x), ...) x
+idtInv.acomp   <- function(x,orig=gsi.orig(x), V=gsi.getV(x),...) ilrInv(x,...,orig=orig,V=V)
+idtInv.rcomp   <- function(x,orig=gsi.orig(x), V=gsi.getV(x),...) iptInv(x,...,orig=orig,V=V)
+idtInv.ccomp   <- function(x,orig=gsi.orig(x), ...) iitInv(x,...,orig=orig)
+idtInv.aplus   <- function(x,orig=gsi.orig(x), ...) iltInv(x,...,orig=orig)
+idtInv.rplus   <- function(x,orig=gsi.orig(x),...) iitInv(x,...,orig=orig)
+idtInv.rmult   <- function(x,orig=gsi.orig(x), ...) x
+idtInv.factor <- function(x,orig=gsi.orig(x),V=gsi.getV(x),...){
+  cdtInv.factor(ilr2clr(x, V=V), orig=orig)
+}
+
+backtransform <- backtransform.rmult <- function(x, as=x){
+  if(!is.rmult(x)) stop("backtransform only defined for rmult objects")
+  if(!is.null(gsi.getV(as))){
+    idtInv(x, orig=gsi.orig(as), V=gsi.getV(as))
+  }else{
+    cdtInv(x, orig=gsi.orig(as))
+  }
+}
+gsi.cdt2idt <- function(x, as){
+  .V = gsi.getV(as)
+  if(is.null(.V)) return(x)
+  W = gsi.svdinverse(.V)
+  clr2ilr(x, V=t(W))
+}
+gsi.cdtvar2idt <- function(x, as){
+  .V = gsi.getV(as)
+  if(is.null(.V)) return(x)
+  W = gsi.svdinverse(.V)
+  clrvar2ilr(x, V=t(W))
+}
+
 
 
 variation <- function( x, ... ) UseMethod("variation",x)
@@ -2492,7 +2634,6 @@ variation.acomp <- function( x,...,robust=getOption("robust") ) {
   co1 <- matrix(rep(va,each=d),ncol=d)
   co2 <- matrix(rep(va,d),ncol=d)
   -2*co+co1+co2
-  
 }
 
 variation.rcomp <- function( x ,...,robust=getOption("robust")) {
@@ -4715,12 +4856,15 @@ gsi.DrawCompEllipses = function(mean,var,r,steps=72,...) {
   rs <- sqrt(abs(ei$values))*r
  # Loop over ellipse centers
   meFull <- oneOrDataset(idt(mean))
+  if(length(dim(meFull))==0) dim(meFull) = c(1, length(meFull))
+  
   for(k in 1:nrow(meFull) ) {
     # me   <- gsi.mystructure(meFull[k,],class="rmult")
     me   <- meFull[k,]
-    X <- idtInv(cbind(me[1]+rs[1]*ei$vectors[1,1]*sw+rs[2]*ei$vectors[1,2]*cw,
-                      me[2]+rs[1]*ei$vectors[2,1]*sw+rs[2]*ei$vectors[2,2]*cw
-                      ), orig=mean)
+    aux = cbind(me[1]+rs[1]*ei$vectors[1,1]*sw+rs[2]*ei$vectors[1,2]*cw,
+                me[2]+rs[1]*ei$vectors[2,1]*sw+rs[2]*ei$vectors[2,2]*cw
+    )
+    X <- idtInv(aux, orig=mean, V=ilrBase(D=ncol(oneOrDataset(mean))))
     noreplot(lines(gsi.mystructure(X,trafoed=TRUE),...,aspanel=TRUE))
   }
 }
@@ -4769,6 +4913,8 @@ ellipses.rcomp <- ellipses.acomp <- function(mean,var,r=1,...,steps=72,thinRatio
 ### 4) Postprocessing: create dependent subplotting
   if( !is.null(thinRatio) ) {
     meFull <- oneOrDataset(idt(mean))
+    if(length(dim(meFull))==0) dim(meFull) = c(1, length(meFull))
+    
     sp <- var
     w  <- seq(0,2*pi,length.out=steps)
     for(i in 1:nrow(meFull)) {
@@ -4810,6 +4956,7 @@ gsi.ellipsesRealPanel <- function(i,j,mean,var,r=1,...,steps=72) {
   w <- seq(0,2*pi,length.out=steps+1)
   # Loop over ellipse centers
   meFull <- unclass(oneOrDataset(cdt(mean)))
+  if(length(dim(meFull))==0) dim(meFull) = c(1, length(meFull))
   for(k in 1:nrow(meFull) ) {
     me   <- meFull[k,c(i,j)]
     rs <- sqrt(ei$values)*r
@@ -4839,6 +4986,7 @@ ellipses.rmult<-ellipses.rplus<-ellipses.aplus <- function(mean,var,r=1,...,step
     } else {
       # Plot SmallEllipses directly
       meFull <- oneOrDataset(idt(mean))
+      if(length(dim(meFull))==0) dim(meFull) = c(1, length(meFull))
       sp <- var
       w  <- seq(0,2*pi,length.out=steps)
       for(i in 1:nrow(meFull)) {
@@ -5293,6 +5441,7 @@ gsi.plotmargin <- function(X,d,margin,what="data") {
 }
 
 
+
 gsi.pltTrafo <- function(X,what="data",coorinfo=gsi.getCoorInfo(),geo="acomp",...) {
   # Types: data, var, mfrow, names, mfrow, direction
   trafoed <- attr(X,"trafoed")
@@ -5537,23 +5686,29 @@ barplot.rplus <- barplot.aplus
 
 
 split.acomp <- function(x,f,drop=FALSE,...) {
-  cls <- class(x)
-  lapply(split(1:NROW(x),f,drop=drop,...),function(i) gsi.mystructure(x[i,],class=cls))
+  oo <- no <- options()$compositions
+  no$stickyClass = TRUE
+  options(compositions=no)
+  rs = lapply(split(1:NROW(x),f,...),function(i) x[i,rep(TRUE, ncol(x)),drop=drop])
+  options(compositions=oo)
+  return(rs)
 }
 split.rcomp <- split.acomp
 split.aplus <- split.acomp
 split.rplus <- split.acomp
-split.rmult <- split.acomp
 split.ccomp <- split.acomp
+split.rmult <- split.acomp
+
 
 as.data.frame.acomp <- function(x,...) as.data.frame.matrix(unclass(x))
 as.data.frame.rcomp <- function(x,...) as.data.frame.matrix(unclass(x))
+as.data.frame.ccomp <- function(x,...) as.data.frame.matrix(unclass(x))
 as.data.frame.aplus <- function(x,...) as.data.frame.matrix(unclass(x))
 as.data.frame.rplus <- function(x,...) as.data.frame.matrix(unclass(x))
 as.data.frame.rmult <- function(x,...) as.data.frame.matrix(unclass(x))
 
 gsi.addclass <- function(x,cls) {
-  class(x) <- c(cls,attr(x,"class"))
+  class(x) <- unique(c(cls,attr(x,"class")))
   x
 }
 

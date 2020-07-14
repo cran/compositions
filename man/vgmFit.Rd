@@ -4,20 +4,27 @@
 \alias{vgmGetParameters}
 \alias{vgmSetParameters}
 \alias{vgmGof}
+\alias{fit.lmc}
+\alias{fit.lmc.logratioVariogram}
 \title{Compositional variogram model fitting}
 \description{
   Fits a parametric variogram model to an empirical logratio-Variogram 
 }
 \usage{
 vgmFit2lrv(emp,vg,...,mode="log",psgn=rep(-1,length(param)),print.level=1)
+\method{fit.lmc}{logratioVariogram}(v,model,...,mode="log",psgn=rep(-1,length(param)),print.level=1)
 vgmFit(emp,vg,...,mode="log",psgn=rep(-1,length(param)),print.level=1)
 vgmGof(p = vgmGetParameters(vg), emp, vg, mode = "log")
 vgmGetParameters(vg,envir=environment(vg))
 vgmSetParameters(vg,p)
+fit.lmc(v,...)
           }
 \arguments{
   \item{emp}{An empirical logratio-Variogram as e.g. returned by \code{\link{logratioVariogram}}}
+  \item{v}{An empirical logratio-Variogram as e.g. returned by \code{\link{logratioVariogram}}}
   \item{vg}{A compositional clr-variogram (or ilt-vagriogram) model function.}
+  \item{model}{A compositional clr-variogram (or ilt-vagriogram) model function, output of a call to
+  .}
   \item{\dots}{further parameters to \code{\link{nlm}}}
   \item{mode}{either "ls" or "log"  for selection of either using either
     least squares or least squares on logarithmic values.}

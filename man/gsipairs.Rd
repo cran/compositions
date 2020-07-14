@@ -22,20 +22,20 @@ gsi.plots
   \item{x}{a multivariate dataset}
   \item{labels}{The names of the variables}
   \item{panel}{The function to performe the actual pairwise plots.}
-  \item{\dots}{see \code{\link[graphics]{pairs}}}
-  \item{main}{see \code{\link[graphics]{pairs}}}
-  \item{oma}{see \code{\link[graphics]{pairs}}}
-  \item{font.main}{see \code{\link[graphics]{pairs}}}
-  \item{cex.main}{see \code{\link[graphics]{pairs}}}
-  \item{lower.panel}{see \code{\link[graphics]{pairs}}}
-  \item{upper.panel}{see \code{\link[graphics]{pairs}}}
-  \item{diag.panel}{see \code{\link[graphics]{pairs}}}
-  \item{text.panel}{see \code{\link[graphics]{pairs}}}
-  \item{label.pos}{see \code{\link[graphics]{pairs}}}
-  \item{cex.labels}{see \code{\link[graphics]{pairs}}}
-  \item{font.labels}{see \code{\link[graphics]{pairs}}}
-  \item{row1attop}{see \code{\link[graphics]{pairs}}}
-  \item{gap}{see \code{\link[graphics]{pairs}}}
+  \item{\dots}{see \code{graphics::pairs}} %\code{\link[graphics]{pairs}}}
+  \item{main}{see \code{graphics::pairs}} %\code{\link[graphics]{pairs}}}
+  \item{oma}{see \code{graphics::pairs}} % \code{\link[graphics]{pairs}}}
+  \item{font.main}{see \code{graphics::pairs}} % \code{\link[graphics]{pairs}}}
+  \item{cex.main}{see \code{graphics::pairs}} % \code{\link[graphics]{pairs}}}
+  \item{lower.panel}{see \code{graphics::pairs}} % \code{\link[graphics]{pairs}}}
+  \item{upper.panel}{see \code{graphics::pairs}} % \code{\link[graphics]{pairs}}}
+  \item{diag.panel}{see \code{graphics::pairs}} % \code{\link[graphics]{pairs}}}
+  \item{text.panel}{see \code{graphics::pairs}} % \code{\link[graphics]{pairs}}}
+  \item{label.pos}{see \code{graphics::pairs}} % \code{\link[graphics]{pairs}}}
+  \item{cex.labels}{see \code{graphics::pairs}} % \code{\link[graphics]{pairs}}}
+  \item{font.labels}{see \code{graphics::pairs}} % \code{\link[graphics]{pairs}}}
+  \item{row1attop}{see \code{graphics::pairs}} % \code{\link[graphics]{pairs}}}
+  \item{gap}{see \code{graphics::pairs}} % \code{\link[graphics]{pairs}}}
   \item{add}{additional parameter containing a list of additional
     panels}
   \item{xlim}{additional 2x\code{ncol(x)}-matrix parameter giving in
@@ -45,13 +45,17 @@ gsi.plots
     \code{ylim[,i]} the ylims of the j-th column
   }
   \item{log}{additional parameter with possible values like in
-    \code{\link[graphics]{plot}} allowing to log some plots, without a warning}
+    %\code{\link[graphics]{plot}} 
+    \code{graphics::plot}
+    allowing to log some plots, without a warning}
   \item{noplot}{Logical indicating wether the plotting should be
     suppressed. This is usefull for plotting single page postscripts.}
 }
 \details{
   \code{gsi.pairs}  essentially copies the functionality of
-  \code{\link[graphics]{pairs}}. However it additionally stores its own
+  %\code{\link[graphics]{pairs}}. 
+  \code{graphics::pairs}.
+  However it additionally stores its own
   parameters in the dev.cur() position of gsi.plots and allows to modify
   the parameters and re-do a modified plot afterwards. This is mainly
   done by \code{gsi.add2pairs} by modifying the additional \code{add}

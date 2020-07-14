@@ -64,10 +64,11 @@ data(Hydrochem)
 }
 \examples{
 data(Hydrochem)
-biplot(princomp(rplus(Hydrochem)))
-biplot(princomp(rcomp(Hydrochem)))
+cHydrochem=Hydrochem[, 6:19]
+biplot(princomp(rplus(cHydrochem)))
+biplot(princomp(rcomp(cHydrochem)))
 
-biplot(princomp(aplus(Hydrochem)))
-biplot(princomp(acomp(Hydrochem)))
+biplot(princomp(aplus(cHydrochem)))
+biplot(princomp(acomp(cHydrochem)))
 }
 \keyword{datasets}
