@@ -9,7 +9,7 @@
 data(Aar)
 }
 \source{
-von Eynatten H.; Tolosana-Delgado, R.; Karius, V (2012) Sediment generation in modern glacial settings: Grain-size and source-rock control on sediment composition. Sedimentary Geology 280 (1): 80-92 \url{https://doi.org/10.1016/j.sedgeo.2012.03.008}
+von Eynatten H.; Tolosana-Delgado, R.; Karius, V (2012) Sediment generation in modern glacial settings: Grain-size and source-rock control on sediment composition. Sedimentary Geology 280 (1): 80-92 \doi{10.1016/j.sedgeo.2012.03.008}
 }
 
 \details{
@@ -22,7 +22,7 @@ von Eynatten H.; Tolosana-Delgado, R.; Karius, V (2012) Sediment generation in m
 }
 
 \references{
-   von Eynatten H.; Tolosana-Delgado, R.; Karius, V (2012) Sediment generation in modern glacial settings: Grain-size and source-rock control on sediment composition. Sedimentary Geology 280 (1): 80-92 \url{https://doi.org/10.1016/j.sedgeo.2012.03.008}
+   von Eynatten H.; Tolosana-Delgado, R.; Karius, V (2012) Sediment generation in modern glacial settings: Grain-size and source-rock control on sediment composition. Sedimentary Geology 280 (1): 80-92 \doi{10.1016/j.sedgeo.2012.03.008}
  }
 \note{Courtesy of H. von Eynatten}
 \keyword{datasets}

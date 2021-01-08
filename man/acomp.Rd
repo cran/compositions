@@ -110,15 +110,15 @@ Aitchison, J. (1986) \emph{The Statistical Analysis of Compositional
   Pawlowsky-Glahn, V. (2003) Statistical modelling on coordinates. In: 
   Thi\'o-Henestrosa, S. and Mart\'in-Fern\'andez, J.A. (Eds.)
   \emph{Proceedings of the 1st International Workshop on Compositional Data Analysis},
-  Universitat de Girona, ISBN 84-8458-111-X, \url{http://ima.udg.es/Activitats/CoDaWork03}\cr
+  Universitat de Girona, ISBN 84-8458-111-X, \url{http://ima.udg.es/Activitats/CoDaWork03/}\cr
 
   Mateu-Figueras, G. and Barcel\'o-Vidal, C. (Eds.)
   \emph{Proceedings of the 2nd International Workshop on Compositional Data Analysis},
-  Universitat de Girona, ISBN 84-8458-222-1, \url{http://ima.udg.es/Activitats/CoDaWork05}\cr
+  Universitat de Girona, ISBN 84-8458-222-1, \url{http://ima.udg.es/Activitats/CoDaWork05/}\cr
 
     van den Boogaart, K.G. and R. Tolosana-Delgado (2008) "compositions": a unified 
   R package to analyze Compositional Data, \emph{Computers &
-    Geosciences}, 34 (4), pages 320-338, doi:10.1016/j.cageo.2006.11.017.
+    Geosciences}, 34 (4), pages 320-338, \doi{10.1016/j.cageo.2006.11.017}.
 }
 \examples{
 data(SimulatedAmounts)

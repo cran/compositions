@@ -90,9 +90,11 @@ be downloaded separately.
 }
 \examples{
 data(SimulatedAmounts)
-plot3D(acomp(sa.lognormals5),1:3,col="green")
-plot3D(acomp(sa.lognormals5),1:3,log=TRUE,col="green")
-plot3D(acomp(sa.lognormals5),1:4,col="green")
-plot3D(acomp(sa.lognormals5),1:4,log=TRUE,col="green")
+if(requireNamespace("rgl", quietly = TRUE)) {
+  plot3D(acomp(sa.lognormals5),1:3,col="green")
+  plot3D(acomp(sa.lognormals5),1:3,log=TRUE,col="green")
+  plot3D(acomp(sa.lognormals5),1:4,col="green")
+  plot3D(acomp(sa.lognormals5),1:4,log=TRUE,col="green")
+} ## this function requires package 'rgl'
 }
 \keyword{multivariate}

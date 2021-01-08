@@ -53,8 +53,10 @@ arrows3D(\dots)
 }
 \examples{
 x <- cbind(rnorm(10),rnorm(10),rnorm(10))
-plot3D(x)
-x0 <- x*0
-arrows3D(x0,x)
+if(requireNamespace("rgl", quietly = TRUE)) {
+  plot3D(x)
+  x0 <- x*0
+  arrows3D(x0,x)
+} ## this function requires package 'rgl'
 }
 \keyword{multivariate}

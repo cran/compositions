@@ -180,7 +180,7 @@ vgmFit2lrv <- function(emp,vg,..., mode="log",psgn=rep(-1,length(param)),print.l
 fit.lmc <- function(v, ...) UseMethod("fit.lmc", v)
 
 fit.lmc.logratioVariogram <- function(v, model, ..., mode="log",psgn=rep(-1,length(param)),print.level=1){
-  if(!exists("as.CompLinModCoReg")) as.CompLinModCoReg = function(x) x
+  if(!exists("as.CompLinModCoReg")) as.CompLinModCoReg = function(x) x # in case gmGeostats is not loaded
   emp = v
   vg = as.CompLinModCoReg(model)
   h <- apply(emp$h,c(1),mean)

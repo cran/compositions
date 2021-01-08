@@ -142,9 +142,9 @@
     Data} Journal of the Royal Statistical Society, Series C (Applied Statistics)
     \bold{51} (4) 375-392\cr
   
-  \url{http://ima.udg.es/Activitats/CoDaWork03}\cr
+  \url{http://ima.udg.es/Activitats/CoDaWork03/}\cr
   
-  \url{http://ima.udg.es/Activitats/CoDaWork05}
+  \url{http://ima.udg.es/Activitats/CoDaWork05/}
 
 }
 \examples{
@@ -173,6 +173,7 @@ pc$Loadings
 pc$DownLoadings
 barplot(pc$Loadings)
 pc$sdev^2
-cov(predict(pc,sa.lognormals5))
+p = predict(pc,sa.lognormals5)
+cov(p)
 }
 \keyword{multivariate}

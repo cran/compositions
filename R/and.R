@@ -467,16 +467,23 @@ vp.diffdensityplot <- function (x, y, col=2,..., alpha = NULL){
 
 
 
-vp.kde2dplot = 
-  function(x, y, grid=TRUE, legpos="bottomright", colpalette=heat.colors,...){
-    aux = MASS::kde2d(x, y, n=50)
-    aux$z = sqrt(aux$z)
-    bks = hist(aux$z, plot=F, breaks=20)$breaks
-    cols = c(NA,colpalette(length(bks)-2))
-    image(aux, breaks = bks, col=cols, xlab="", ylab="", add=TRUE, ...) #yaxt=ifelse(j==1,"s","n")
-    xgrid = seq(from=floor(min(x)), to = ceiling(max(x)), by=1)
-    ygrid = seq(from=floor(min(y)), to = ceiling(max(y)), by=1)
-    abline(lm(y~x), col=2, lwd=2)
-    if(grid)abline(v=xgrid, h=ygrid, col="#999999")
-    legend(legpos, legend=round(cor(x,y), digits=3), bg="#999999")
-  }
+vp.kde2dplot <- function (x, y, grid = TRUE, legpos = "bottomright", colpalette = heat.colors, ...) {
+  args = list(...)
+  aux = MASS::kde2d(x, y, n = 50)
+  aux$z = sqrt(aux$z)
+  bks = hist(aux$z, plot = F, breaks = 20)$breaks
+  cols = c(NA, colpalette(length(bks) - 2))
+  args$add = c(args$add, TRUE)[1]
+  args$xlab = c(args$xlab, "")[1]
+  args$ylab = c(args$ylab, "")[1]
+  args$breaks = bks
+  args$col = cols
+  args$x = aux
+  do.call("image", args)
+  xgrid = seq(from = floor(min(x)), to = ceiling(max(x)), by = 1)
+  ygrid = seq(from = floor(min(y)), to = ceiling(max(y)), by = 1)
+  abline(lm(y ~ x), col = 2, lwd = 2)
+  if (grid) 
+    abline(v = xgrid, h = ygrid, col = "#999999")
+  legend(legpos, legend = round(cor(x, y), digits = 3), bg = "#999999")
+}

@@ -49,8 +49,10 @@ axis3D(axis.origin=c(0,0,0),axis.scale=1,axis.col="gray",vlabs=c("x","y","z"),
 }
 \examples{
 x <- cbind(rnorm(10),rnorm(10),rnorm(10))
-plot3D(x)
-x0 <- x*0
-arrows3D(x0,x)
+if(requireNamespace("rgl", quietly = TRUE)) {
+  plot3D(x)
+  x0 <- x*0
+  axis3D()
+} ## this function requires package 'rgl'
 }
 \keyword{multivariate}

@@ -59,7 +59,7 @@
   Tolosana-Delgado, R. and H. von Eynatten (2009); Grain-size control 
   on petrographic composition of sediments: compositional regression 
   and rounded zeroes. \emph{Mathematical Geosciences}: 41(8): 869-886. 
-  DOI 10.1007/s11004-009-9216-6. 
+  \doi{10.1007/s11004-009-9216-6}.
 }
 \examples{
 (tmp <- pwlr(c(1,2,3)))

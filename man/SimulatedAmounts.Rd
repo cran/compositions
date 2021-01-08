@@ -377,7 +377,7 @@ sa.missings5[5,2]<-BDLvalue
 objects(pattern="sa.*")
  }
  \references{
-   http://www.stat.boogaart.de/compositions/data\cr
+   %http://www.stat.boogaart.de/compositions/data \cr
 
    Aitchison, J. (1986) \emph{The Statistical Analysis of Compositional
      Data} Monographs on Statistics and Applied Probability. Chapman &

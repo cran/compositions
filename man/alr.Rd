@@ -43,7 +43,7 @@
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{clr}},\code{\link{ilr}},\code{\link{apt}},
-  \url{http://ima.udg.es/Activitats/CoDaWork03}
+  \url{http://ima.udg.es/Activitats/CoDaWork03/}
 }
 \references{
   Aitchison, J. (1986) \emph{The Statistical Analysis of Compositional

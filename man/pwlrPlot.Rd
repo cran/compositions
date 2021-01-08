@@ -44,11 +44,11 @@ robust regression lines can be added.
   Boogaart, K.G. v.d. , R. Tolosana (2008) Mixing Compositions and Other
   scales, Proceedings of CodaWork 08.
   
-  \url{http://ima.udg.es/Activitats/CoDaWork03}\cr
+  \url{http://ima.udg.es/Activitats/CoDaWork03/}\cr
   
-  \url{http://ima.udg.es/Activitats/CoDaWork05}
+  \url{http://ima.udg.es/Activitats/CoDaWork05/}
 
-  \url{http://ima.udg.es/Activitats/CoDaWork08}
+  \url{http://ima.udg.es/Activitats/CoDaWork08/}
 
 }
 \author{Raimon

@@ -56,7 +56,7 @@ data(Hydrochem)
   Otero, N.; R. Tolosana-Delgado, A. Soler, V. Pawlowsky-Glahn
   and A. Canals (2005).  Relative vs. absolute statistical analysis of
   compositions: A comparative study of surface waters of a Mediterranean
-  river. Water Research, 39(7): 1404-1414. doi: 10.1016/j.watres.2005.01.012
+  river. Water Research, 39(7): 1404-1414. \doi{10.1016/j.watres.2005.01.012}.
 
   Tolosana-Delgado, R.; Otero, N.; Pawlowsky-Glahn, V.; Soler, A. (2005). 
   Latent Compositional Factors in The Llobregat River Basin (Spain) 

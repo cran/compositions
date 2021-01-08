@@ -16,14 +16,14 @@
   in case of full compositions, or meaningless, in case of subcompositions
   where meaningless parts have been removed from the full composition. The
   package and this document can be retrieved from
-  ``http://www.stat.boogaart.de/compositions''
+  ``http://www.stat.boogaart.de/compositions/''
 \end{abstract}
 \section*{Forward to the Second Edition}
 The package has reasonably gained functionality since the first edition of
 this introduction was written. Please look to the help topics
 \verb+robustnessInCompositions+, \verb+missingsInCompositions+,
 \verb+outliersInCompositions+ for new fundamental concepts and at our web-page
-\verb+http://www.stat.boogaart.de/compositions+ further information and our
+\verb+http://www.stat.boogaart.de/compositions/+ further information and our
 forthcoming book on compositional data analysis with R. Please also report all
 errors and problems you encounter in the latest version (please check) of the
 package to \verb+support@boogaart.de+.

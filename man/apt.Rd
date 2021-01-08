@@ -48,7 +48,7 @@
 \references{
     van den Boogaart, K.G. and R. Tolosana-Delgado (2008) "compositions": a unified 
   R package to analyze Compositional Data, \emph{Computers &
-    Geosciences}, 34 (4), pages 320-338, doi:10.1016/j.cageo.2006.11.017.
+    Geosciences}, 34 (4), pages 320-338, \doi{10.1016/j.cageo.2006.11.017}.
 }
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \examples{

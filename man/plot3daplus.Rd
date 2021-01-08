@@ -54,6 +54,9 @@
 }
 \examples{
 data(SimulatedAmounts)
-plot3D(aplus(sa.lognormals),size=2)
+if(requireNamespace("rgl", quietly = TRUE)) {
+  plot3D(aplus(sa.lognormals),size=2)
+} ## this function requires package 'rgl'
+
 }
 \keyword{multivariate}

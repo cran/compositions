@@ -89,8 +89,8 @@ variables and
   \code{\link{clr}},\code{\link{ilr}},\code{\link{ipt}}, \code{\link{ilrBase}}
 }
 \references{
-  \url{http://ima.udg.es/Activitats/CoDaWork08} Papers of Boogaart and Tolosana
-  \url{http://ima.udg.es/Activitats/CoDaWork05} Paper of Egozcue
+  \url{http://ima.udg.es/Activitats/CoDaWork08/} Papers of Boogaart and Tolosana
+  \url{http://ima.udg.es/Activitats/CoDaWork05/} Paper of Egozcue
   }
 \examples{
 X <- rnorm(100)

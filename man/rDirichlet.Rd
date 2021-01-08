@@ -40,7 +40,7 @@ rDirichlet.rcomp(n,alpha)
   with respect to the Aitchison measure on the simplex, a first approach.
   In: Mateu-Figueras, G. and Barcel\'o-Vidal, C. (Eds.)
   \emph{Proceedings of the 2nd International Workshop on Compositional Data Analysis},
-  Universitat de Girona, ISBN 84-8458-222-1, \url{http://ima.udg.es/Activitats/CoDaWork05}\cr
+  Universitat de Girona, ISBN 84-8458-222-1, \url{http://ima.udg.es/Activitats/CoDaWork05/}\cr
 }
 \examples{
 tmp <- rDirichlet.acomp(10,alpha=c(A=2,B=0.2,C=0.2))

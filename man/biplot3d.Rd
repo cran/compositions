@@ -68,7 +68,11 @@ data(SimulatedAmounts)
 pc <- princomp(acomp(sa.lognormals5))
 pc
 summary(pc)
-plot(pc)           #plot(pc,type="screeplot")
-biplot3D(pc)
+plot(pc)      #plot(pc,type="screeplot")
+biplot(pc)
+if(requireNamespace("rgl", quietly = TRUE)) {
+  biplot3D(pc)
+} ## this function requires package 'rgl'
+
 }
 \keyword{multivariate}

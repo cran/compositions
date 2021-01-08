@@ -46,8 +46,10 @@ plot3D(x,...)
 }
 \examples{
 x <- cbind(rnorm(10),rnorm(10),rnorm(10))
-plot3D(x)
 data(SimulatedAmounts)
-plot3D(sa.lognormals,cex=4,col=1:nrow(sa.lognormals))
+if(requireNamespace("rgl", quietly = TRUE)) {
+  plot3D(x)
+  plot3D(sa.lognormals,cex=4,col=1:nrow(sa.lognormals))
+} ## this function requires package 'rgl'
 }
 \keyword{multivariate}

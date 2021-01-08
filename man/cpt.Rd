@@ -50,7 +50,7 @@
 \references{
     van den Boogaart, K.G. and R. Tolosana-Delgado (2008) "compositions": a unified 
   R package to analyze Compositional Data, \emph{Computers &
-    Geosciences}, 34 (4), pages 320-338, doi:10.1016/j.cageo.2006.11.017.
+    Geosciences}, 34 (4), pages 320-338, \doi{10.1016/j.cageo.2006.11.017}.
 }
 \examples{
 (tmp <- cpt(c(1,2,3)))

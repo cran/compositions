@@ -350,11 +350,11 @@ acomp <- function(X,parts=1:NCOL(oneOrDataset(X)),total=1,warn.na=FALSE,detectio
   }
   if( warn.na ) {
     if( any(is.SZ(X))) 
-      warning("Composition has structural zeros")
+      warning("Composition has structural zeros: check ?missingsInCompositions")
     if( any(is.MAR(X) | is.MNAR(X)))
-      warning("Composition has missings")
+      warning("Composition has missings: check ?missingsInCompositions")
     if( any(is.BDL(X)) )
-      warning("Composition has values below detection limit")
+      warning("Composition has values below detection limit: check ?missingsInCompositions")
   }
   X
 }
@@ -365,9 +365,9 @@ rcomp <- function(X,parts=1:NCOL(oneOrDataset(X)),total=1,warn.na=FALSE,detectio
   X <-  gsi.mystructure(clo(X,parts,total,detectionlimit=detectionlimit,BDL=BDL,MAR=MAR,MNAR=MNAR,SZ=SZ),class="rcomp")
   if( warn.na ) {
     if( any(is.SZ(X))) 
-      warning("Composition has structural zeros")
+      warning("Composition has structural zeros: check ?missingsInCompositions")
     if( any(is.MAR(X) | is.MNAR(X)))
-      warning("Composition has missings")
+      warning("Composition has missings: check ?missingsInCompositions")
     #if( any(is.BDL(X)) )
      # warning("Composition has values below detection limit")
   }
@@ -381,11 +381,11 @@ aplus <- function(X,parts=1:NCOL(oneOrDataset(X)),total=NA,warn.na=FALSE,detecti
   X <- gsi.simshape(clo(X,parts,total,detectionlimit=detectionlimit,BDL=BDL,MAR=MAR,MNAR=MNAR,SZ=SZ),X)
   if( warn.na ) {
     if( any(is.SZ(X))) 
-      warning("aplus has structural zeros")
+      warning("aplus has structural zeros: check ?missingsInCompositions")
     if( any(is.MAR(X) | is.MNAR(X)))
-      warning("aplus has missings")
+      warning("aplus has missings: check ?missingsInCompositions")
     if( any(is.BDL(X)) )
-      warning("aplus has values below detection limit")
+      warning("aplus has values below detection limit: check ?missingsInCompositions")
   }
   class(X) <-"aplus"
   X
@@ -395,11 +395,11 @@ rplus <- function(X,parts=1:NCOL(oneOrDataset(X)),total=NA,warn.na=FALSE,detecti
   X <- gsi.simshape(clo(X,parts,total,detectionlimit=detectionlimit,BDL=BDL,MAR=MAR,MNAR=MNAR,SZ=SZ),X)
   if( warn.na ) {
     if( any(na.omit(c(X)==0)) )
-      warning("rplus has structural zeros")
+      warning("rplus has structural zeros: check ?missingsInCompositions")
     if( any(is.na(c(X)) & ! is.nan(c(X))))
-      warning("rplus has missings")
+      warning("rplus has missings: check ?missingsInCompositions")
     if( any(is.nan(c(X))))
-      warning("rplus has values below detection limit")
+      warning("rplus has values below detection limit: check ?missingsInCompositions")
   }
   class(X) <-"rplus"
   X
@@ -409,11 +409,11 @@ ccomp <- function(X,parts=1:NCOL(oneOrDataset(X)),total=NA,warn.na=FALSE,detecti
   X <- gsi.simshape(clo(X,parts,total,detectionlimit=detectionlimit,BDL=BDL,MAR=MAR,MNAR=MNAR,SZ=SZ),X)
   if( warn.na ) {
     if( any(na.omit(c(X)==0)) )
-      warning("ccomp has structural zeros")
+      warning("ccomp has structural zeros: check ?missingsInCompositions")
     if( any(is.na(c(X)) & ! is.nan(c(X))))
-      warning("ccomp has missings")
+      warning("ccomp has missings: check ?missingsInCompositions")
     if( any(is.nan(c(X))))
-      warning("ccomp has values below detection limit")
+      warning("ccomp has values below detection limit: check ?missingsInCompositions")
   }
   class(X) <-"ccomp"
   X
@@ -2059,7 +2059,9 @@ formals(scale) <- c(formals(scale),alist(...= ))
 formals(scale.default) <- c(formals(scale.default),alist(...= ))
 
 scale.aplus  <- scale.acomp <- function( x,center=TRUE, scale=TRUE ,...,robust=getOption("robust")) {
-  if( ! (center || scale ) ) return(x)
+  if(is.logical(center) & is.logical(scale)){
+    if( ! (center || scale ) ) return(x)
+  }
   va <- var(x,robust=robust,giveCenter=TRUE)
   ce <- attr(va,"center")
   if( is.logical(center) ) {
@@ -2115,7 +2117,9 @@ scale.aplus  <- scale.acomp <- function( x,center=TRUE, scale=TRUE ,...,robust=g
 #}
 
 scale.rcomp <- scale.rplus <- scale.rmult <- function( x,center=TRUE, scale=TRUE ,..., robust=getOption("robust")) {
-  if( ! (center || scale ) ) return(x)
+  if(is.logical(center) & is.logical(scale)){
+    if( ! (center || scale ) ) return(x)
+  }
   var <- var(x,robust=robust,giveCenter=TRUE)
   ce <- attr(var,"center")
   if( is.logical(center) ) {

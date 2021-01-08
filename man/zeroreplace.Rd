@@ -44,9 +44,9 @@
   Dealing With Zeros and Missing Values in Compositional Data Sets
   Using Nonparametric Imputation. \emph{Mathematical Geology}, 35 , 253-278
 
-  \url{http://ima.udg.es/Activitats/CoDaWork03}\cr
+  \url{http://ima.udg.es/Activitats/CoDaWork03/}\cr
 
-  \url{http://ima.udg.es/Activitats/CoDaWork05}
+  \url{http://ima.udg.es/Activitats/CoDaWork05/}
 
 }
 \examples{

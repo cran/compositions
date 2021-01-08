@@ -53,9 +53,9 @@ in the vector.}
   Pawlowsky-Glahn, V. and J.J. Egozcue (2001) Geometric approach to
   statistical analysis on the simplex. \emph{SERRA} \bold{15}(5), 384-398\cr
   
-  \url{http://ima.udg.es/Activitats/CoDaWork03}\cr
+  \url{http://ima.udg.es/Activitats/CoDaWork03/}\cr
   
-  \url{http://ima.udg.es/Activitats/CoDaWork05}
+  \url{http://ima.udg.es/Activitats/CoDaWork05/}
 
 }
 \examples{
