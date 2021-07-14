@@ -1,11 +1,14 @@
 \name{logratioVariogram}
 \alias{logratioVariogram}
+\alias{logratioVariogram.acomp}
 \title{Empirical variograms for compositions}
 \description{
   Computes the matrix of logratio variograms.
 }
 \usage{
-logratioVariogram(data,
+  logratioVariogram(data, \dots)
+  
+  \method{logratioVariogram}{acomp}(data,
                           loc,
                           maxdist=max(dist(loc))/2,
                           nbins=20,
@@ -13,11 +16,13 @@ logratioVariogram(data,
                           bins=cbind(dists[-length(dists)],dists[-1]),
                           azimuth=0,
                           azimuth.tol=180,
-                          comp=data
+                          comp=data,
+                          \dots
                           )
           }
 \arguments{
   \item{data}{an acomp compositional dataset}
+  \item{\dots}{arguments for generic functionality}
   \item{loc}{a matrix or dataframe providing the observation locations
     of the compositions. Any number of dimension >= 2 is supported.}
   \item{maxdist}{the maximum distance to compute the variogram for.}

@@ -327,6 +327,7 @@ S3method(acompGOF.test,list)
 S3method(pairs,acomp)
 S3method(pairs,rcomp)
 S3method(fit.lmc,logratioVariogram)
+S3method(logratioVariogram,acomp)
 useDynLib(compositions,
           gsiAitchisonDistributionIntegral,
           gsirandomClr1Aitchison,

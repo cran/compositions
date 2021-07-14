@@ -22,7 +22,7 @@
   from, in case that \code{x} does not include it}
 }
 \value{
-  For functions \code{backtransform} or \code{backtransform.rmult}, a corresponding matrix or vector containing the backtransformation of \code{x}.  \\
+  For functions \code{backtransform} or \code{backtransform.rmult}, a corresponding matrix or vector containing the backtransformation of \code{x}. Efforts are taken to keep any extra attributes (beyond, "dim", "dimnames" and "class") the argument "x" may have   \\
   For function \code{gsi.orig}, the original data with a compositional class, if it exists (or NULL otherwise).  \\
   For function \code{gsi.getV}, the transposed, inverse matrix of log-contrasts originally used to forward transform the original composition \code{orig} to its coefficients/coordinates. If it does not exists, the output is NULL.
 }

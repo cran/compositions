@@ -1,7 +1,8 @@
 
 
+logratioVariogram <- function(data, ...) UseMethod("logratioVariogram", data)
 
-logratioVariogram <- function(data,
+logratioVariogram.acomp <- function(data,
                           loc,
                           maxdist=max(dist(loc))/2,
                           nbins=20,
@@ -9,9 +10,11 @@ logratioVariogram <- function(data,
                           bins=cbind(dists[-length(dists)],dists[-1]),
                           azimuth=0,
                           azimuth.tol=180,
-                          comp = data
+                          comp = data, ...
                           ) {
-  if(all(comp!=data)) stop("compositions::logratioVariogram: 'comp' only provided for backwards compatibility")
+  if(!missing(data) & !missing(comp))
+    if(all(comp!=data)) 
+      stop("compositions::logratioVariogram: 'comp' only provided for backwards compatibility")
   lcomp <- log(ifelse(is.NMV(comp),comp,NaN))
   if( !is.matrix(loc))
     loc <- as.matrix(loc)

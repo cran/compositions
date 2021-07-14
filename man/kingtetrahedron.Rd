@@ -28,15 +28,16 @@
     The function is called for its side effect of generating 
   a file  for 3D display  with the KiNG (Kinemage, Next Generation) interactive
        system for three-dimensional vector graphics.
-       Works only with KiNG viewer available at \url{http://kinemage.biochem.duke.edu}
+       Works only with KiNG viewer. More information (and links to the actual viewers) 
+       can be found at \url{https://en.wikipedia.org/wiki/Kinemage}
       }
 \details{
   The  routine transforms a 4 parts mixture m quadrays into 3-dimensional
   XYZ coordinates and writes them as file.kin. For this transformation we
   apply K. Urner: Quadrays and XYZ at
   \url{http://www.grunch.net/synergetics/quadxyz.html}. 
-  The kin file we display as 3-D animation with KiNG viewer  a free software available
-  at \url{http://kinemage.biochem.duke.edu}.  A kinemage is a dynamic, 3-D illustration. 
+  The kin file we display as 3-D animation with KiNG viewer.  
+  A kinemage is a dynamic, 3-D illustration. 
   The best way to take advantage of that is by rotating it and twisting it around 
   with the mouse click near the center of the graphics window and slowly draging right or left,
   up or down. Furthermore by clicking on points with the mouse (left button again), 
@@ -46,7 +47,9 @@
   This animation supports coloring and different sizing of points.
   
   We can display the kin file as 3-D animation also with MAGE viewer a previous version of KiNG,
-  also a free software available at http://kinemage.biochem.duke.edu.
+  %also a free software available at http://kinemage.biochem.duke.edu.
+  more information (and links to the software) can be found at 
+  \url{https://en.wikipedia.org/wiki/Kinemage}.
   For this one has to put king=FALSE as a parameter.
 }
 \note{

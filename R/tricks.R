@@ -1,10 +1,20 @@
+#### wrappers around standard functions ----------
 
-gsi.mystructure <- function(x, ...){
-  if(is.null(x)) return(x)
-  else return(structure(x, ...))
+#' test:
+#' data(Hydrochem)
+#' X1 = Hydrochem$H
+#' Y = acomp(Hydrochem[, 7:12])
+#' model = lm(alr(Y)~log(X1))
+#' anova(model)
+anova = function(...){
+  o = getStickyClassOption()
+  setStickyClassOption(FALSE)
+  on.exit(setStickyClassOption(o))
+  #o = options("compositions")$compositions
+  #fun = o$compositions$wrappedFunctions$anova
+  res = stats::anova(...)
+  return(res)
 }
-  
-
 
 
 
@@ -93,7 +103,7 @@ gsi.subsetvector <- function(x,i){
   if(.stickyClass & is.rmult(x)){
      .orig = gsi.orig(x)
      .V = gsi.getV(x)
-      if(!is.null(.V)) .V = .V[,i]
+      if(!is.null(.V) & ncol(.V)>1) .V = .V[,i] # if ncol(V)==1 we are in a (2,1) situation, and x is actually a column vector
      return(rmult(y, orig=.orig, V=.V))
   }
   if(.stickyClass & !(is.acomp(x)|is.rcomp(x)) ) return(gsi.mystructure(y,class=class(x)))
@@ -256,4 +266,13 @@ gsi.ANDsequentially <- function(...){
   }  
   return(TRUE)
 }
+
+
+
+gsi.mystructure <- function(x, ...){
+  if(is.null(x)) return(x)
+  else return(structure(x, ...))
+}
+
+
 

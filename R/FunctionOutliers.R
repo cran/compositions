@@ -24,6 +24,11 @@ MahalanobisDist <- function(x,center=NULL,cov=NULL,inverted=FALSE,...) UseMethod
 
 
 MahalanobisDist.rmult <- function(x,center=NULL,cov=NULL,inverted=FALSE,...,goodOnly=NULL,pairwise=FALSE,pow=1, robust=FALSE,giveGeometry=FALSE) {
+  # inset: manage sticky class status
+    oldstickystatus = getStickyClassOption()
+    setStickyClassOption(FALSE)
+    on.exit(setStickyClassOption(oldstickystatus))
+  # former function goes on
   if( is.null(goodOnly) ) 
     xx <- x
   else 
@@ -587,6 +592,11 @@ OutlierClassifier1.acomp <- function(X,...,alpha=0.05,type=c("best","all","type"
   if( type=="grade" )
     isOutlier2 <- IsMahalanobisOutlier(X,...,alpha=alpha,goodOnly=goodOnly,corrected=FALSE,robust=robust)
   if( any( isOutlier ) ) {
+    # inset: manage sticky class status
+      oldstickystatus = getStickyClassOption()
+      setStickyClassOption(FALSE)
+      on.exit(setStickyClassOption(oldstickystatus))
+    # former function goes on
     checkRedOutlier <- function(i) {
       IsMahalanobisOutlier(reclass(X[,-i,drop=FALSE]),alpha=alpha,corrected=RedCorrected,robust=robust)
     }
@@ -594,6 +604,11 @@ OutlierClassifier1.acomp <- function(X,...,alpha=0.05,type=c("best","all","type"
     colnames(redOutlier) = colnames(X)
     oneExplains <- c(((1-redOutlier) %*% rep(1,ncol(X)))>0)
     checkRed2Outlier <- function(i) {
+        # inset: manage sticky class status
+        oldstickystatus = getStickyClassOption()
+        setStickyClassOption(FALSE)
+        on.exit(setStickyClassOption(oldstickystatus))
+        # former function goes on
       MahalanobisDist(reclass(X[,-i,drop=FALSE]),robust=robust)
     }
     red2Outlier <- sapply(1:NCOL(X),checkRed2Outlier)
@@ -964,6 +979,11 @@ outlierplot.acomp <- function(X,colcode=colorsForOutliers1,pchcode=pchForOutlier
                               ){
   cl=match.call()
   what = match.arg(type)
+  # inset: manage sticky class status
+    oldstickystatus = getStickyClassOption()
+    setStickyClassOption(FALSE)
+    on.exit(setStickyClassOption(oldstickystatus))
+  # former function
   if(what=="biplot"){
     if( is.function(colcode) )
       colcode <- colcode(myCls)

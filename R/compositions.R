@@ -313,7 +313,8 @@ acomp <- function(X,parts=1:NCOL(oneOrDataset(X)),total=1,warn.na=FALSE,detectio
   if( is.list(X) )
     X<-data.matrix(X)
   if( is.ccomp(X) )
-    X <- unclass(X)+0.5
+    X <- X+0.5
+  # X <- oneOrDataset(X)[,parts]
   if( !is.null(BDL) ) {
     if( is.finite(BDL) )
       bdl <- X==BDL
@@ -859,7 +860,7 @@ var.acomp <- function(x,y=NULL,...,
            mcd={
              #require("robustbase")
              if(is.null(y)) {
-               erg <- ilrvar2clr(if( is.null(control)) covMcd(idt(x),...)$cov else covMcd(idt(x),...,control=control)$cov,x=x)
+               erg <- ilrvar2clr(if( is.null(control)) covMcd(unclass(idt(x)),...)$cov else covMcd(unclass(idt(x)),...,control=control)$cov,x=x)
                if(giveCenter)
                  attr(erg,"center")<-mean(x,robust=FALSE)
                erg
@@ -920,7 +921,7 @@ var.aplus  <- function(x,y=NULL,...,robust=getOption("robust"), use="all.obs",
            mcd={
              #require("robustbase")
              if(is.null(y)) {
-               erg <- if( is.null(control)) covMcd(idt(x),...)$cov else covMcd(idt(x),...,control=control)$cov
+               erg <- if( is.null(control)) covMcd(unclass(idt(x)),...)$cov else covMcd(unclass(idt(x)),...,control=control)$cov
                if(giveCenter)
                  attr(erg,"center")<-mean(x,robust=FALSE)
                erg
@@ -2609,11 +2610,20 @@ idtInv.factor <- function(x,orig=gsi.orig(x),V=gsi.getV(x),...){
 backtransform <- backtransform.rmult <- function(x, as=x){
   if(!is.rmult(x)) stop("backtransform only defined for rmult objects")
   if(!is.null(gsi.getV(as))){
-    idtInv(x, orig=gsi.orig(as), V=gsi.getV(as))
+    rs = idtInv(x, orig=gsi.orig(as), V=gsi.getV(as))
   }else{
-    cdtInv(x, orig=gsi.orig(as))
+    rs = cdtInv(x, orig=gsi.orig(as))
   }
+  # keep extra attributes
+  atr = attributes(x)
+  keep = setdiff(names(atr), c("dim", "dimnames", "class" ))
+  if(length(keep)!=0){
+    attributes(rs) <- append(attributes(rs), atr[keep])
+  }
+  return(rs)
 }
+
+
 gsi.cdt2idt <- function(x, as){
   .V = gsi.getV(as)
   if(is.null(.V)) return(x)
@@ -6199,7 +6209,7 @@ kingTetrahedron <- function(X,parts=1:4,file="tmptetrahedron.kin",clu=NULL,vec=N
     'greentint', 'bluetint', 'lilactint',
     'deadwhite', 'deadblack', 'invisible')
   warn <- ""
-  if (king) warn <- "\n*** works only with KiNG viewer: http://kinemage.biochem.duke.edu/"
+  if (king) warn <- "\n*** works only with KiNG viewer: https://en.wikipedia.org/wiki/Kinemage"
   head <- paste("@text\n",
     file," / ",date(),
     "\nDataset: ", m$tit,warn,
@@ -6453,9 +6463,12 @@ if( !is.null(attr(x,"Losts"))) {
                                         #  dim(erg)<-dm
                                         #  dimnames(erg)<-dimnames(x)
 quote <- FALSE
-if( !is.null(list(...)$quote ))
-  quote <- list(...)$quote
-print.default(x=erg,...,quote=FALSE)
+ddd = list(...)
+if( !is.null(list(...)$quote )){
+  ddd$quote <- quote
+}
+ddd$x <- erg
+do.call("print.default", args=ddd)
 invisible(x)
 }
 

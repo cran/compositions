@@ -1,3 +1,51 @@
+Version 2.0-1.9001
+
+Minor changes / Bugfixes:
+  * functions that do not work with sticky classes are now wrapped 
+  (e.g. `anova()`)
+
+Version 2.0-1.9000
+
+Major change: sticky classes! 
+  Now objects of compositional classes do not miss their class 
+  when subsetting. For example, if `x` is an "acomp" object,
+  x[1:2,] will also be an "acomp" object. Selection of columns work 
+  as well, but it is a bit more tricky. Check ?`[.acomp` for
+  details. You can get skip this behaviour by setting
+  setStickyClassOption(FALSE). The dollar notation `$` also works!
+
+Added:
+  * Limited support for using compositions classes as formal S4 
+  classes, for instance in slots of S4 classes expecting a 
+  "data.frame" or a "structure" (matrix or array).
+  * self-invertibility: now "rmult" objects created by any 
+  transformation (cdt, clr, cpt, idt, ilr, ipt, iit, ilt, alr,
+  apt) remember the original data and the transformation between
+  them, and can be back-transformed with `backtransform`.
+  * added cdt and idt methods for objects of class "factor" (returning
+  the contrasts and their ipt transformation), and for "data.frame"
+  objects (exploiting the attribute "origClass" if they have it).
+  * `pwlr()`: pairwise logratio transformation (and inverse: `pwlrInv()`)
+  * `pwlrPlot()`: pairwise logratio plots vs covariables, both as explained 
+   and as explanatory variables. This makes use of the ability of plot(x~y)
+  to react to the nature of `x` and `y` to create scatterplots, boxplots
+  and spineplots.
+  * transformation functions between variation and clrvar: variation2clrvar
+  and clrvar2variation
+  * `split()` methods for compositional classes
+  * new panels for filling `pairs()` plots with boxplots, densities, 
+  kde2d-densities, etc...: check ?vp.kde2dplot
+  
+Minor Changes:
+  * the function to fit linear models of coregionalisation is now called
+  `fit.lmc()`; use full name specification with it! `compositions::fit.lmc()`
+  
+Bugfixes:
+  * bug in subsetting of one-column rmult object corected
+  
+
+
+-----------------------------------------
 Version 0.92-1 (R (>= 2.2.0), rgl, tensorA, robustBase)
 
 Added:	Robustness: see robustnessInCompositions (robust= parameter)

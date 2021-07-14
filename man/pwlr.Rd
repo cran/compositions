@@ -49,7 +49,7 @@
 \author{R. Tolosana-Delgado \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{clr}},\code{\link{alr}},\code{\link{apt}},
-  \url{http://ima.udg.es/Activitats/CoDaWork03}
+  \url{http://ima.udg.es/Activitats/CoDaWork03/}
 }
 \references{
   Aitchison, J. (1986) \emph{The Statistical Analysis of Compositional

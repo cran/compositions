@@ -425,7 +425,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <a class="sourceLine" id="cb1-5" title="5"><span class="co">#&gt; Attaching package: &#39;compositions&#39;</span></a>
 <a class="sourceLine" id="cb1-6" title="6"><span class="co">#&gt; The following objects are masked from &#39;package:stats&#39;:</span></a>
 <a class="sourceLine" id="cb1-7" title="7"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb1-8" title="8"><span class="co">#&gt;     cor, cov, dist, var</span></a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="co">#&gt;     anova, cor, cov, dist, var</span></a>
 <a class="sourceLine" id="cb1-9" title="9"><span class="co">#&gt; The following objects are masked from &#39;package:base&#39;:</span></a>
 <a class="sourceLine" id="cb1-10" title="10"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb1-11" title="11"><span class="co">#&gt;     %*%, norm, scale, scale.default</span></a></code></pre></div>
@@ -469,10 +469,10 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">xc =<span class="st"> </span><span class="kw">acomp</span>(Hydrochem[, <span class="kw">c</span>(<span class="st">&quot;Ca&quot;</span>,<span class="st">&quot;K&quot;</span>, <span class="st">&quot;Na&quot;</span>, <span class="st">&quot;Mg&quot;</span>)])</a>
 <a class="sourceLine" id="cb8-2" title="2"><span class="kw">summary</span>(xc)</a>
 <a class="sourceLine" id="cb8-3" title="3"><span class="co">#&gt; $mean</span></a>
-<a class="sourceLine" id="cb8-4" title="4"><span class="co">#&gt;         Ca          K         Na         Mg </span></a>
-<a class="sourceLine" id="cb8-5" title="5"><span class="co">#&gt; 0.47366650 0.04034558 0.35849821 0.12748971 </span></a>
+<a class="sourceLine" id="cb8-4" title="4"><span class="co">#&gt;           Ca            K           Na           Mg </span></a>
+<a class="sourceLine" id="cb8-5" title="5"><span class="co">#&gt; &quot;0.47366650&quot; &quot;0.04034558&quot; &quot;0.35849821&quot; &quot;0.12748971&quot; </span></a>
 <a class="sourceLine" id="cb8-6" title="6"><span class="co">#&gt; attr(,&quot;class&quot;)</span></a>
-<a class="sourceLine" id="cb8-7" title="7"><span class="co">#&gt; [1] acomp</span></a>
+<a class="sourceLine" id="cb8-7" title="7"><span class="co">#&gt; [1] &quot;acomp&quot;</span></a>
 <a class="sourceLine" id="cb8-8" title="8"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb8-9" title="9"><span class="co">#&gt; $mean.ratio</span></a>
 <a class="sourceLine" id="cb8-10" title="10"><span class="co">#&gt;            Ca         K        Na        Mg</span></a>
@@ -631,29 +631,29 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 </ul>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1">xp0 =<span class="st"> </span>xp[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,]</a>
 <a class="sourceLine" id="cb17-2" title="2">xp0</a>
-<a class="sourceLine" id="cb17-3" title="3"><span class="co">#&gt;   Ca    K     Na    Mg   </span></a>
-<a class="sourceLine" id="cb17-4" title="4"><span class="co">#&gt; 1 279.1 6.318 159.0 92.41</span></a>
-<a class="sourceLine" id="cb17-5" title="5"><span class="co">#&gt; 2 300.3 6.449 179.2 96.20</span></a>
-<a class="sourceLine" id="cb17-6" title="6"><span class="co">#&gt; 3 305.1 5.978 186.0 96.83</span></a>
-<a class="sourceLine" id="cb17-7" title="7"><span class="co">#&gt; 4 343.4 5.171 181.1 88.58</span></a>
-<a class="sourceLine" id="cb17-8" title="8"><span class="co">#&gt; 5 369.0 7.371 151.0 84.90</span></a>
+<a class="sourceLine" id="cb17-3" title="3"><span class="co">#&gt;   Ca      K       Na      Mg     </span></a>
+<a class="sourceLine" id="cb17-4" title="4"><span class="co">#&gt; 1 &quot;279.1&quot; &quot;6.318&quot; &quot;159.0&quot; &quot;92.41&quot;</span></a>
+<a class="sourceLine" id="cb17-5" title="5"><span class="co">#&gt; 2 &quot;300.3&quot; &quot;6.449&quot; &quot;179.2&quot; &quot;96.20&quot;</span></a>
+<a class="sourceLine" id="cb17-6" title="6"><span class="co">#&gt; 3 &quot;305.1&quot; &quot;5.978&quot; &quot;186.0&quot; &quot;96.83&quot;</span></a>
+<a class="sourceLine" id="cb17-7" title="7"><span class="co">#&gt; 4 &quot;343.4&quot; &quot;5.171&quot; &quot;181.1&quot; &quot;88.58&quot;</span></a>
+<a class="sourceLine" id="cb17-8" title="8"><span class="co">#&gt; 5 &quot;369.0&quot; &quot;7.371&quot; &quot;151.0&quot; &quot;84.90&quot;</span></a>
 <a class="sourceLine" id="cb17-9" title="9"><span class="co">#&gt; attr(,&quot;class&quot;)</span></a>
-<a class="sourceLine" id="cb17-10" title="10"><span class="co">#&gt; [1] aplus</span></a>
+<a class="sourceLine" id="cb17-10" title="10"><span class="co">#&gt; [1] &quot;aplus&quot;</span></a>
 <a class="sourceLine" id="cb17-11" title="11">xc0 =<span class="st"> </span>xc[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,]</a>
 <a class="sourceLine" id="cb17-12" title="12">xc0</a>
-<a class="sourceLine" id="cb17-13" title="13"><span class="co">#&gt;   Ca        K           Na        Mg       </span></a>
-<a class="sourceLine" id="cb17-14" title="14"><span class="co">#&gt; 1 0.5199058 0.011769133 0.2961843 0.1721408</span></a>
-<a class="sourceLine" id="cb17-15" title="15"><span class="co">#&gt; 2 0.5158473 0.011077920 0.3078250 0.1652498</span></a>
-<a class="sourceLine" id="cb17-16" title="16"><span class="co">#&gt; 3 0.5137159 0.010065532 0.3131798 0.1630387</span></a>
-<a class="sourceLine" id="cb17-17" title="17"><span class="co">#&gt; 4 0.5554378 0.008363917 0.2929231 0.1432751</span></a>
-<a class="sourceLine" id="cb17-18" title="18"><span class="co">#&gt; 5 0.6026743 0.012038787 0.2466228 0.1386641</span></a>
+<a class="sourceLine" id="cb17-13" title="13"><span class="co">#&gt;   Ca          K             Na          Mg         </span></a>
+<a class="sourceLine" id="cb17-14" title="14"><span class="co">#&gt; 1 &quot;0.5199058&quot; &quot;0.011769133&quot; &quot;0.2961843&quot; &quot;0.1721408&quot;</span></a>
+<a class="sourceLine" id="cb17-15" title="15"><span class="co">#&gt; 2 &quot;0.5158473&quot; &quot;0.011077920&quot; &quot;0.3078250&quot; &quot;0.1652498&quot;</span></a>
+<a class="sourceLine" id="cb17-16" title="16"><span class="co">#&gt; 3 &quot;0.5137159&quot; &quot;0.010065532&quot; &quot;0.3131798&quot; &quot;0.1630387&quot;</span></a>
+<a class="sourceLine" id="cb17-17" title="17"><span class="co">#&gt; 4 &quot;0.5554378&quot; &quot;0.008363917&quot; &quot;0.2929231&quot; &quot;0.1432751&quot;</span></a>
+<a class="sourceLine" id="cb17-18" title="18"><span class="co">#&gt; 5 &quot;0.6026743&quot; &quot;0.012038787&quot; &quot;0.2466228&quot; &quot;0.1386641&quot;</span></a>
 <a class="sourceLine" id="cb17-19" title="19"><span class="co">#&gt; attr(,&quot;class&quot;)</span></a>
-<a class="sourceLine" id="cb17-20" title="20"><span class="co">#&gt; [1] acomp</span></a>
+<a class="sourceLine" id="cb17-20" title="20"><span class="co">#&gt; [1] &quot;acomp&quot;</span></a>
 <a class="sourceLine" id="cb17-21" title="21">xc[<span class="dv">10</span>,]</a>
-<a class="sourceLine" id="cb17-22" title="22"><span class="co">#&gt;         Ca          K         Na         Mg </span></a>
-<a class="sourceLine" id="cb17-23" title="23"><span class="co">#&gt; 0.52155495 0.01018437 0.30386080 0.16439989 </span></a>
+<a class="sourceLine" id="cb17-22" title="22"><span class="co">#&gt;           Ca            K           Na           Mg </span></a>
+<a class="sourceLine" id="cb17-23" title="23"><span class="co">#&gt; &quot;0.52155495&quot; &quot;0.01018437&quot; &quot;0.30386080&quot; &quot;0.16439989&quot; </span></a>
 <a class="sourceLine" id="cb17-24" title="24"><span class="co">#&gt; attr(,&quot;class&quot;)</span></a>
-<a class="sourceLine" id="cb17-25" title="25"><span class="co">#&gt; [1] acomp</span></a></code></pre></div>
+<a class="sourceLine" id="cb17-25" title="25"><span class="co">#&gt; [1] &quot;acomp&quot;</span></a></code></pre></div>
 <ul>
 <li>selecting columns in classes “rmult”, “ccomp”, “aplus” and “rplus” invariably return an object of that class, with the columns selected;</li>
 </ul>
@@ -661,26 +661,26 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <a class="sourceLine" id="cb18-2" title="2"><span class="co">#&gt;     1     2     3     4     5 </span></a>
 <a class="sourceLine" id="cb18-3" title="3"><span class="co">#&gt; 279.1 300.3 305.1 343.4 369.0</span></a>
 <a class="sourceLine" id="cb18-4" title="4">xp0[,<span class="kw">c</span>(<span class="st">&quot;Ca&quot;</span>,<span class="st">&quot;K&quot;</span>)]</a>
-<a class="sourceLine" id="cb18-5" title="5"><span class="co">#&gt;   Ca    K    </span></a>
-<a class="sourceLine" id="cb18-6" title="6"><span class="co">#&gt; 1 279.1 6.318</span></a>
-<a class="sourceLine" id="cb18-7" title="7"><span class="co">#&gt; 2 300.3 6.449</span></a>
-<a class="sourceLine" id="cb18-8" title="8"><span class="co">#&gt; 3 305.1 5.978</span></a>
-<a class="sourceLine" id="cb18-9" title="9"><span class="co">#&gt; 4 343.4 5.171</span></a>
-<a class="sourceLine" id="cb18-10" title="10"><span class="co">#&gt; 5 369.0 7.371</span></a>
+<a class="sourceLine" id="cb18-5" title="5"><span class="co">#&gt;   Ca      K      </span></a>
+<a class="sourceLine" id="cb18-6" title="6"><span class="co">#&gt; 1 &quot;279.1&quot; &quot;6.318&quot;</span></a>
+<a class="sourceLine" id="cb18-7" title="7"><span class="co">#&gt; 2 &quot;300.3&quot; &quot;6.449&quot;</span></a>
+<a class="sourceLine" id="cb18-8" title="8"><span class="co">#&gt; 3 &quot;305.1&quot; &quot;5.978&quot;</span></a>
+<a class="sourceLine" id="cb18-9" title="9"><span class="co">#&gt; 4 &quot;343.4&quot; &quot;5.171&quot;</span></a>
+<a class="sourceLine" id="cb18-10" title="10"><span class="co">#&gt; 5 &quot;369.0&quot; &quot;7.371&quot;</span></a>
 <a class="sourceLine" id="cb18-11" title="11"><span class="co">#&gt; attr(,&quot;class&quot;)</span></a>
-<a class="sourceLine" id="cb18-12" title="12"><span class="co">#&gt; [1] aplus</span></a></code></pre></div>
+<a class="sourceLine" id="cb18-12" title="12"><span class="co">#&gt; [1] &quot;aplus&quot;</span></a></code></pre></div>
 <ul>
 <li>selecting two or more columns of objects of class “acomp” or “rcomp” returns the selected subcomposition, that is, another object of the parent class with the selected components reclosed to sum to 1</li>
 </ul>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1">xc0[,<span class="kw">c</span>(<span class="st">&quot;Ca&quot;</span>,<span class="st">&quot;K&quot;</span>)]</a>
-<a class="sourceLine" id="cb19-2" title="2"><span class="co">#&gt;   Ca        K         </span></a>
-<a class="sourceLine" id="cb19-3" title="3"><span class="co">#&gt; 1 0.9778640 0.02213595</span></a>
-<a class="sourceLine" id="cb19-4" title="4"><span class="co">#&gt; 2 0.9789763 0.02102370</span></a>
-<a class="sourceLine" id="cb19-5" title="5"><span class="co">#&gt; 3 0.9807830 0.01921705</span></a>
-<a class="sourceLine" id="cb19-6" title="6"><span class="co">#&gt; 4 0.9851651 0.01483485</span></a>
-<a class="sourceLine" id="cb19-7" title="7"><span class="co">#&gt; 5 0.9804156 0.01958440</span></a>
+<a class="sourceLine" id="cb19-2" title="2"><span class="co">#&gt;   Ca          K           </span></a>
+<a class="sourceLine" id="cb19-3" title="3"><span class="co">#&gt; 1 &quot;0.9778640&quot; &quot;0.02213595&quot;</span></a>
+<a class="sourceLine" id="cb19-4" title="4"><span class="co">#&gt; 2 &quot;0.9789763&quot; &quot;0.02102370&quot;</span></a>
+<a class="sourceLine" id="cb19-5" title="5"><span class="co">#&gt; 3 &quot;0.9807830&quot; &quot;0.01921705&quot;</span></a>
+<a class="sourceLine" id="cb19-6" title="6"><span class="co">#&gt; 4 &quot;0.9851651&quot; &quot;0.01483485&quot;</span></a>
+<a class="sourceLine" id="cb19-7" title="7"><span class="co">#&gt; 5 &quot;0.9804156&quot; &quot;0.01958440&quot;</span></a>
 <a class="sourceLine" id="cb19-8" title="8"><span class="co">#&gt; attr(,&quot;class&quot;)</span></a>
-<a class="sourceLine" id="cb19-9" title="9"><span class="co">#&gt; [1] acomp</span></a></code></pre></div>
+<a class="sourceLine" id="cb19-9" title="9"><span class="co">#&gt; [1] &quot;acomp&quot;</span></a></code></pre></div>
 <ul>
 <li>selecting one single column returns that individual column as a vector; the same happens with the dollar notation; both destroy the class</li>
 </ul>
@@ -738,15 +738,15 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <a class="sourceLine" id="cb22-25" title="25"><span class="co">#&gt; [1] 485  20</span></a></code></pre></div>
 <p>This composition can be then recovered with the dollar notation, and also used in further calls to statistical methods, e.g.</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1"><span class="kw">head</span>(Hydrochem<span class="op">$</span>comp)</a>
-<a class="sourceLine" id="cb23-2" title="2"><span class="co">#&gt;   [,1]      [,2]        [,3]      [,4]     </span></a>
-<a class="sourceLine" id="cb23-3" title="3"><span class="co">#&gt; 1 0.5199058 0.011769133 0.2961843 0.1721408</span></a>
-<a class="sourceLine" id="cb23-4" title="4"><span class="co">#&gt; 2 0.5158473 0.011077920 0.3078250 0.1652498</span></a>
-<a class="sourceLine" id="cb23-5" title="5"><span class="co">#&gt; 3 0.5137159 0.010065532 0.3131798 0.1630387</span></a>
-<a class="sourceLine" id="cb23-6" title="6"><span class="co">#&gt; 4 0.5554378 0.008363917 0.2929231 0.1432751</span></a>
-<a class="sourceLine" id="cb23-7" title="7"><span class="co">#&gt; 5 0.6026743 0.012038787 0.2466228 0.1386641</span></a>
-<a class="sourceLine" id="cb23-8" title="8"><span class="co">#&gt; 6 0.5589450 0.010720287 0.2816248 0.1487098</span></a>
+<a class="sourceLine" id="cb23-2" title="2"><span class="co">#&gt;   [,1]        [,2]          [,3]        [,4]       </span></a>
+<a class="sourceLine" id="cb23-3" title="3"><span class="co">#&gt; 1 &quot;0.5199058&quot; &quot;0.011769133&quot; &quot;0.2961843&quot; &quot;0.1721408&quot;</span></a>
+<a class="sourceLine" id="cb23-4" title="4"><span class="co">#&gt; 2 &quot;0.5158473&quot; &quot;0.011077920&quot; &quot;0.3078250&quot; &quot;0.1652498&quot;</span></a>
+<a class="sourceLine" id="cb23-5" title="5"><span class="co">#&gt; 3 &quot;0.5137159&quot; &quot;0.010065532&quot; &quot;0.3131798&quot; &quot;0.1630387&quot;</span></a>
+<a class="sourceLine" id="cb23-6" title="6"><span class="co">#&gt; 4 &quot;0.5554378&quot; &quot;0.008363917&quot; &quot;0.2929231&quot; &quot;0.1432751&quot;</span></a>
+<a class="sourceLine" id="cb23-7" title="7"><span class="co">#&gt; 5 &quot;0.6026743&quot; &quot;0.012038787&quot; &quot;0.2466228&quot; &quot;0.1386641&quot;</span></a>
+<a class="sourceLine" id="cb23-8" title="8"><span class="co">#&gt; 6 &quot;0.5589450&quot; &quot;0.010720287&quot; &quot;0.2816248&quot; &quot;0.1487098&quot;</span></a>
 <a class="sourceLine" id="cb23-9" title="9"><span class="co">#&gt; attr(,&quot;class&quot;)</span></a>
-<a class="sourceLine" id="cb23-10" title="10"><span class="co">#&gt; [1] acomp</span></a>
+<a class="sourceLine" id="cb23-10" title="10"><span class="co">#&gt; [1] &quot;acomp&quot;</span></a>
 <a class="sourceLine" id="cb23-11" title="11">codalm =<span class="st"> </span><span class="kw">lm</span>(<span class="kw">alr</span>(comp)<span class="op">~</span>River, <span class="dt">data=</span>Hydrochem) </a>
 <a class="sourceLine" id="cb23-12" title="12"><span class="kw">summary</span>(codalm)</a>
 <a class="sourceLine" id="cb23-13" title="13"><span class="co">#&gt; Response v1 :</span></a>
@@ -819,47 +819,47 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <p>The transformation can even be called with the dollar notation, and transformed data keep the information necessary to construct their back-transformation.</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1">codalm =<span class="st"> </span><span class="kw">lm</span>(comp<span class="op">$</span>idt<span class="op">~</span>River, <span class="dt">data=</span>Hydrochem) </a>
 <a class="sourceLine" id="cb24-2" title="2"><span class="kw">head</span>(<span class="kw">predict</span>(codalm)<span class="op">$</span>idtInv)</a>
-<a class="sourceLine" id="cb24-3" title="3"><span class="co">#&gt;   [,1]      [,2]       [,3]      [,4]     </span></a>
-<a class="sourceLine" id="cb24-4" title="4"><span class="co">#&gt; 1 0.4530465 0.02685076 0.3751471 0.1449556</span></a>
-<a class="sourceLine" id="cb24-5" title="5"><span class="co">#&gt; 2 0.4530465 0.02685076 0.3751471 0.1449556</span></a>
-<a class="sourceLine" id="cb24-6" title="6"><span class="co">#&gt; 3 0.4530465 0.02685076 0.3751471 0.1449556</span></a>
-<a class="sourceLine" id="cb24-7" title="7"><span class="co">#&gt; 4 0.4530465 0.02685076 0.3751471 0.1449556</span></a>
-<a class="sourceLine" id="cb24-8" title="8"><span class="co">#&gt; 5 0.4530465 0.02685076 0.3751471 0.1449556</span></a>
-<a class="sourceLine" id="cb24-9" title="9"><span class="co">#&gt; 6 0.4530465 0.02685076 0.3751471 0.1449556</span></a>
+<a class="sourceLine" id="cb24-3" title="3"><span class="co">#&gt;   [,1]        [,2]         [,3]        [,4]       </span></a>
+<a class="sourceLine" id="cb24-4" title="4"><span class="co">#&gt; 1 &quot;0.4530465&quot; &quot;0.02685076&quot; &quot;0.3751471&quot; &quot;0.1449556&quot;</span></a>
+<a class="sourceLine" id="cb24-5" title="5"><span class="co">#&gt; 2 &quot;0.4530465&quot; &quot;0.02685076&quot; &quot;0.3751471&quot; &quot;0.1449556&quot;</span></a>
+<a class="sourceLine" id="cb24-6" title="6"><span class="co">#&gt; 3 &quot;0.4530465&quot; &quot;0.02685076&quot; &quot;0.3751471&quot; &quot;0.1449556&quot;</span></a>
+<a class="sourceLine" id="cb24-7" title="7"><span class="co">#&gt; 4 &quot;0.4530465&quot; &quot;0.02685076&quot; &quot;0.3751471&quot; &quot;0.1449556&quot;</span></a>
+<a class="sourceLine" id="cb24-8" title="8"><span class="co">#&gt; 5 &quot;0.4530465&quot; &quot;0.02685076&quot; &quot;0.3751471&quot; &quot;0.1449556&quot;</span></a>
+<a class="sourceLine" id="cb24-9" title="9"><span class="co">#&gt; 6 &quot;0.4530465&quot; &quot;0.02685076&quot; &quot;0.3751471&quot; &quot;0.1449556&quot;</span></a>
 <a class="sourceLine" id="cb24-10" title="10"><span class="co">#&gt; attr(,&quot;class&quot;)</span></a>
-<a class="sourceLine" id="cb24-11" title="11"><span class="co">#&gt; [1] acomp</span></a></code></pre></div>
+<a class="sourceLine" id="cb24-11" title="11"><span class="co">#&gt; [1] &quot;acomp&quot;</span></a></code></pre></div>
 <p>To recover the column names in the backtransformation you might need to make use of the <code>orig</code> argument of the explicit transformation (that is, without the dollar notation)</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1"><span class="kw">head</span>(<span class="kw">idtInv</span>(<span class="kw">predict</span>(codalm), <span class="dt">orig=</span>xc))</a>
-<a class="sourceLine" id="cb25-2" title="2"><span class="co">#&gt;   Ca        K          Na        Mg       </span></a>
-<a class="sourceLine" id="cb25-3" title="3"><span class="co">#&gt; 1 0.4530465 0.02685076 0.3751471 0.1449556</span></a>
-<a class="sourceLine" id="cb25-4" title="4"><span class="co">#&gt; 2 0.4530465 0.02685076 0.3751471 0.1449556</span></a>
-<a class="sourceLine" id="cb25-5" title="5"><span class="co">#&gt; 3 0.4530465 0.02685076 0.3751471 0.1449556</span></a>
-<a class="sourceLine" id="cb25-6" title="6"><span class="co">#&gt; 4 0.4530465 0.02685076 0.3751471 0.1449556</span></a>
-<a class="sourceLine" id="cb25-7" title="7"><span class="co">#&gt; 5 0.4530465 0.02685076 0.3751471 0.1449556</span></a>
-<a class="sourceLine" id="cb25-8" title="8"><span class="co">#&gt; 6 0.4530465 0.02685076 0.3751471 0.1449556</span></a>
+<a class="sourceLine" id="cb25-2" title="2"><span class="co">#&gt;   Ca          K            Na          Mg         </span></a>
+<a class="sourceLine" id="cb25-3" title="3"><span class="co">#&gt; 1 &quot;0.4530465&quot; &quot;0.02685076&quot; &quot;0.3751471&quot; &quot;0.1449556&quot;</span></a>
+<a class="sourceLine" id="cb25-4" title="4"><span class="co">#&gt; 2 &quot;0.4530465&quot; &quot;0.02685076&quot; &quot;0.3751471&quot; &quot;0.1449556&quot;</span></a>
+<a class="sourceLine" id="cb25-5" title="5"><span class="co">#&gt; 3 &quot;0.4530465&quot; &quot;0.02685076&quot; &quot;0.3751471&quot; &quot;0.1449556&quot;</span></a>
+<a class="sourceLine" id="cb25-6" title="6"><span class="co">#&gt; 4 &quot;0.4530465&quot; &quot;0.02685076&quot; &quot;0.3751471&quot; &quot;0.1449556&quot;</span></a>
+<a class="sourceLine" id="cb25-7" title="7"><span class="co">#&gt; 5 &quot;0.4530465&quot; &quot;0.02685076&quot; &quot;0.3751471&quot; &quot;0.1449556&quot;</span></a>
+<a class="sourceLine" id="cb25-8" title="8"><span class="co">#&gt; 6 &quot;0.4530465&quot; &quot;0.02685076&quot; &quot;0.3751471&quot; &quot;0.1449556&quot;</span></a>
 <a class="sourceLine" id="cb25-9" title="9"><span class="co">#&gt; attr(,&quot;class&quot;)</span></a>
-<a class="sourceLine" id="cb25-10" title="10"><span class="co">#&gt; [1] acomp</span></a></code></pre></div>
+<a class="sourceLine" id="cb25-10" title="10"><span class="co">#&gt; [1] &quot;acomp&quot;</span></a></code></pre></div>
 <p>Note as well the existence of the new function <code>backtransform</code>, which will take an “rmult” object and return its expression in the appropriate original components. This can even be allowed to be controlled by a third object through an extra argument <code>as</code></p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1"><span class="kw">head</span>(<span class="kw">backtransform</span>(<span class="kw">idt</span>(xp)))</a>
-<a class="sourceLine" id="cb26-2" title="2"><span class="co">#&gt;   Ca    K     Na    Mg   </span></a>
-<a class="sourceLine" id="cb26-3" title="3"><span class="co">#&gt; 1 279.1 6.318 159.0 92.41</span></a>
-<a class="sourceLine" id="cb26-4" title="4"><span class="co">#&gt; 2 300.3 6.449 179.2 96.20</span></a>
-<a class="sourceLine" id="cb26-5" title="5"><span class="co">#&gt; 3 305.1 5.978 186.0 96.83</span></a>
-<a class="sourceLine" id="cb26-6" title="6"><span class="co">#&gt; 4 343.4 5.171 181.1 88.58</span></a>
-<a class="sourceLine" id="cb26-7" title="7"><span class="co">#&gt; 5 369.0 7.371 151.0 84.90</span></a>
-<a class="sourceLine" id="cb26-8" title="8"><span class="co">#&gt; 6 337.6 6.475 170.1 89.82</span></a>
+<a class="sourceLine" id="cb26-2" title="2"><span class="co">#&gt;   Ca      K       Na      Mg     </span></a>
+<a class="sourceLine" id="cb26-3" title="3"><span class="co">#&gt; 1 &quot;279.1&quot; &quot;6.318&quot; &quot;159.0&quot; &quot;92.41&quot;</span></a>
+<a class="sourceLine" id="cb26-4" title="4"><span class="co">#&gt; 2 &quot;300.3&quot; &quot;6.449&quot; &quot;179.2&quot; &quot;96.20&quot;</span></a>
+<a class="sourceLine" id="cb26-5" title="5"><span class="co">#&gt; 3 &quot;305.1&quot; &quot;5.978&quot; &quot;186.0&quot; &quot;96.83&quot;</span></a>
+<a class="sourceLine" id="cb26-6" title="6"><span class="co">#&gt; 4 &quot;343.4&quot; &quot;5.171&quot; &quot;181.1&quot; &quot;88.58&quot;</span></a>
+<a class="sourceLine" id="cb26-7" title="7"><span class="co">#&gt; 5 &quot;369.0&quot; &quot;7.371&quot; &quot;151.0&quot; &quot;84.90&quot;</span></a>
+<a class="sourceLine" id="cb26-8" title="8"><span class="co">#&gt; 6 &quot;337.6&quot; &quot;6.475&quot; &quot;170.1&quot; &quot;89.82&quot;</span></a>
 <a class="sourceLine" id="cb26-9" title="9"><span class="co">#&gt; attr(,&quot;class&quot;)</span></a>
-<a class="sourceLine" id="cb26-10" title="10"><span class="co">#&gt; [1] aplus</span></a>
+<a class="sourceLine" id="cb26-10" title="10"><span class="co">#&gt; [1] &quot;aplus&quot;</span></a>
 <a class="sourceLine" id="cb26-11" title="11"><span class="kw">head</span>(<span class="kw">backtransform</span>(<span class="kw">predict</span>(codalm), <span class="dt">as=</span>codalm<span class="op">$</span>residuals))</a>
-<a class="sourceLine" id="cb26-12" title="12"><span class="co">#&gt;   [,1]      [,2]       [,3]      [,4]     </span></a>
-<a class="sourceLine" id="cb26-13" title="13"><span class="co">#&gt; 1 0.4530465 0.02685076 0.3751471 0.1449556</span></a>
-<a class="sourceLine" id="cb26-14" title="14"><span class="co">#&gt; 2 0.4530465 0.02685076 0.3751471 0.1449556</span></a>
-<a class="sourceLine" id="cb26-15" title="15"><span class="co">#&gt; 3 0.4530465 0.02685076 0.3751471 0.1449556</span></a>
-<a class="sourceLine" id="cb26-16" title="16"><span class="co">#&gt; 4 0.4530465 0.02685076 0.3751471 0.1449556</span></a>
-<a class="sourceLine" id="cb26-17" title="17"><span class="co">#&gt; 5 0.4530465 0.02685076 0.3751471 0.1449556</span></a>
-<a class="sourceLine" id="cb26-18" title="18"><span class="co">#&gt; 6 0.4530465 0.02685076 0.3751471 0.1449556</span></a>
+<a class="sourceLine" id="cb26-12" title="12"><span class="co">#&gt;   [,1]        [,2]         [,3]        [,4]       </span></a>
+<a class="sourceLine" id="cb26-13" title="13"><span class="co">#&gt; 1 &quot;0.4530465&quot; &quot;0.02685076&quot; &quot;0.3751471&quot; &quot;0.1449556&quot;</span></a>
+<a class="sourceLine" id="cb26-14" title="14"><span class="co">#&gt; 2 &quot;0.4530465&quot; &quot;0.02685076&quot; &quot;0.3751471&quot; &quot;0.1449556&quot;</span></a>
+<a class="sourceLine" id="cb26-15" title="15"><span class="co">#&gt; 3 &quot;0.4530465&quot; &quot;0.02685076&quot; &quot;0.3751471&quot; &quot;0.1449556&quot;</span></a>
+<a class="sourceLine" id="cb26-16" title="16"><span class="co">#&gt; 4 &quot;0.4530465&quot; &quot;0.02685076&quot; &quot;0.3751471&quot; &quot;0.1449556&quot;</span></a>
+<a class="sourceLine" id="cb26-17" title="17"><span class="co">#&gt; 5 &quot;0.4530465&quot; &quot;0.02685076&quot; &quot;0.3751471&quot; &quot;0.1449556&quot;</span></a>
+<a class="sourceLine" id="cb26-18" title="18"><span class="co">#&gt; 6 &quot;0.4530465&quot; &quot;0.02685076&quot; &quot;0.3751471&quot; &quot;0.1449556&quot;</span></a>
 <a class="sourceLine" id="cb26-19" title="19"><span class="co">#&gt; attr(,&quot;class&quot;)</span></a>
-<a class="sourceLine" id="cb26-20" title="20"><span class="co">#&gt; [1] acomp</span></a></code></pre></div>
+<a class="sourceLine" id="cb26-20" title="20"><span class="co">#&gt; [1] &quot;acomp&quot;</span></a></code></pre></div>
 <p>In the case of tibbles, the column names of the embedded object are even preserved, so that</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1">tbHydro =<span class="st"> </span>tibble<span class="op">::</span><span class="kw">as_tibble</span>(Hydrochem)</a>
 <a class="sourceLine" id="cb27-2" title="2">tbHydro<span class="op">$</span>comp =<span class="st"> </span>xc</a>

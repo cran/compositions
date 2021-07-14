@@ -10,7 +10,6 @@
   Draws ellipses from a mean and a variance into a plot.
 }
 \usage{
-   ellipses(mean,...)
   \method{ellipses}{acomp}(mean,var,r=1,\dots,steps=72,
                                          thinRatio=NULL,aspanel=FALSE)
   \method{ellipses}{rcomp}(mean,var,r=1,\dots,steps=72,
