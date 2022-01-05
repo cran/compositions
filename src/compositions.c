@@ -4,9 +4,14 @@
 #include <Rinternals.h>
 #include <limits.h>     
 #include <R_ext/Utils.h>
+#define USE_FC_LEN_T
+#include <Rconfig.h>
 #include <R_ext/BLAS.h>
 #include <R_ext/Lapack.h>
 #include <R_ext/Rdynload.h>
+#ifndef FCONE
+# define FCONE
+#endif
 
 #define isNil(x) ((x)==NULL || (SEXP) (x) == R_NilValue )
 
@@ -215,7 +220,7 @@ extern void gsiCGSkrigingPrep(
     int i,j;                  // cases
     int k,l;                  // actual matrix position
     int p,q;                  // variables in cases         
-    const char uplo='U';     // for LAPACK
+    //const char uplo='U';     // for LAPACK
     int lwork=ldN*60;        // for LAPACK (dsytrf)
     double *work=(double*) R_alloc(lwork,sizeof(double));// for LAPACK
     int info=0;              // for LAPACK
@@ -381,7 +386,7 @@ extern void gsiCGSkrigingPrep(
     //	W[k]=Nmat[k+ldN*4];
     //printMat("Main Mat","%2.4lf",lmax,lmax,Nmat,ldN);
     // Factorize (Multiple right hand sides and errors!!!)
-    F77_NAME(dsytrf)(&uplo, //const char* uplo, 
+    F77_CALL(dsytrf)("U", //const char* uplo, 
 		     &lmax, //const int* n,
 		     Nmat,  //double* a, 
 		     &ldN,  //const int* lda, 
@@ -389,6 +394,7 @@ extern void gsiCGSkrigingPrep(
 		     work,  //double* work, 
 		     &lwork,//const int* lwork, 
 		     &info //int* info
+		     FCONE
 	);
     if( info > 0 )
 	error("gsiCGSkriging: Kriging Matrix is singular");
@@ -407,8 +413,8 @@ extern void gsiCGSkrigingPrep(
 	W[k++]=0;
     //printMat("Wpre","%2.4lf",lmax,1,W,ldN);
     // Compute CgramWeights
-    F77_NAME(dsytrs)(
-	&uplo, //const char* uplo,
+    F77_CALL(dsytrs)(
+		     "U",	     //&uplo, //const char* uplo,
 	&lmax, //const int* n,
 	&eins, //const int* nrhs,
 	Nmat,  //const double* a, 
@@ -417,6 +423,7 @@ extern void gsiCGSkrigingPrep(
 	W,     // double* b, 
 	&ldN,  //const int* ldb, 
 	&info  // int* info
+	FCONE
 	);
     //printMat("Wpost","%2.4lf",lmax,1,W,ldN);
     *lmaxP=lmax;
@@ -501,9 +508,9 @@ extern void gsiCGSkrigingPredict(
 	}
 	// Krige
 	//printMat("RHS","%2.4lf",lmax,D,RHS,lmax);
-	F77_NAME(dgemm)(
-	    &transB,  //const char *transa, 
-	    &transA,  //const char *transb, 
+	F77_CALL(dgemm)( // stimmt die Zuordnung?
+			"T",		//&transB,  //const char *transa, 
+			"N",		//&transA,  //const char *transb, 
 	    &eins,    //const int *m,
 	    &D,       //const int *n, 
 	    &lmax,    //const int *k, 
@@ -515,6 +522,7 @@ extern void gsiCGSkrigingPredict(
 	    &zero,    //const double *beta, 
 	    pred+j,   //double *c, 
 	    &np       //const int *ldc
+			FCONE FCONE
 	    );
 	// Transform into composition
 	tmp=0;
@@ -747,7 +755,7 @@ extern void gsiCGSkriging(
     //	W[k]=Nmat[k+ldN*4];
     //printMat("Main Mat","%2.4lf",lmax,lmax,Nmat,ldN);
     // Factorize (Multiple right hand sides and errors!!!)
-    F77_NAME(dsytrf)(&uplo, //const char* uplo, 
+    F77_CALL(dsytrf)("U",//&uplo, //const char* uplo, 
 		     &lmax, //const int* n,
 		     Nmat,  //double* a, 
 		     &ldN,  //const int* lda, 
@@ -755,6 +763,7 @@ extern void gsiCGSkriging(
 		     work,  //double* work, 
 		     &lwork,//const int* lwork, 
 		     &info //int* info
+		     FCONE
 	);
     if( info > 0 )
 	error("gsiCGSkriging: Kriging Matrix is singular");
@@ -773,8 +782,8 @@ extern void gsiCGSkriging(
 	W[k++]=0;
     //printMat("Wpre","%2.4lf",lmax,1,W,ldN);
     // Compute CgramWeights
-    F77_NAME(dsytrs)(
-	&uplo, //const char* uplo,
+    F77_CALL(dsytrs)(
+		     "U",	     //&uplo, //const char* uplo,
 	&lmax, //const int* n,
 	&eins, //const int* nrhs,
 	Nmat,  //const double* a, 
@@ -783,6 +792,7 @@ extern void gsiCGSkriging(
 	W,     // double* b, 
 	&ldN,  //const int* ldb, 
 	&info  // int* info
+	FCONE
 	);
     //printMat("Wpost","%2.4lf",lmax,1,W,ldN);
     // Kriging loop
@@ -830,9 +840,9 @@ extern void gsiCGSkriging(
 	}
 	// Krige
 	//printMat("RHS","%2.4lf",lmax,D,RHS,ldN);
-	F77_NAME(dgemm)(
-	    &transB,  //const char *transa, 
-	    &transA,  //const char *transb, 
+	F77_CALL(dgemm)(
+			"T", //&transB,  //const char *transa, 
+			"N", //&transA,  //const char *transb, 
 	    &eins,    //const int *m,
 	    &D,       //const int *n, 
 	    &lmax,    //const int *k, 
@@ -844,6 +854,7 @@ extern void gsiCGSkriging(
 	    &zero,    //const double *beta, 
 	    pred+j,   //double *c, 
 	    &np       //const int *ldc
+	    FCONE FCONE
 	    );
 	// Transform into composition
 	tmp=0;
@@ -860,8 +871,8 @@ extern void gsiCGSkriging(
 		for(q=0;q<D;q++)
 		    RHS2[i+ldN*j]=RHS[i+ldN*j];
 	    // Solve
-	    F77_NAME(dsytrs)(
-		&uplo, //const char* uplo,
+	    F77_CALL(dsytrs)(
+			     "U",//&uplo, //const char* uplo,
 		&lmax, //const int* n,
 		&D, //const int* nrhs,
 		Nmat,  //const double* a, 
@@ -870,11 +881,12 @@ extern void gsiCGSkriging(
 		RHS2,  // double* b, 
 		&ldN,  //const int* ldb, 
 		&info  // int* info
+		FCONE
 		);
 	    // Multiply
-	    F77_NAME(dgemm)(
-		&transB,  //const char *transa, 
-		&transA,  //const char *transb, 
+	    F77_CALL(dgemm)(
+			    "T", //&transB,  //const char *transa, 
+			    "N", //&transA,  //const char *transb, 
 		&D,       //const int *m,
 		&D,       //const int *n, 
 		&lmax,    //const int *k, 
@@ -886,6 +898,7 @@ extern void gsiCGSkriging(
 		&zero,    //const double *beta, 
 		err+D2*j, //double *c, 
 		&D       //const int *ldc
+		FCONE FCONE	    
 		);
 	    // alr to clr errors
 	    tmp=0.0;
@@ -1107,7 +1120,7 @@ extern void gsiCImpAcompNewImputationVariance(
 	    if( *liwork < 1 || *liwork < 3*D*23)
 		error("liwork to small in gsiCNewImputationVariance ");
 	    int Dnew=D;
-	    F77_NAME(dgelsd)(
+	    F77_CALL(dgelsd)(
 		&nonMissingValues,//const int* m, 
 		&nonMissingValues,//const int* n, 
 		&nMissing, //const int* nrhs,
@@ -1139,9 +1152,9 @@ extern void gsiCImpAcompNewImputationVariance(
 		lambda[j+(nonMissingvalues-1)*D]+=1;
 	    */
 	    // Compute resVar = Vmm - Vmg *lambdaT into Vmm
-	    F77_NAME(dgemm)(
-		&transA,//const char *transa, 
-		&transA,//const char *transb, 
+	    F77_CALL(dgemm)(
+			    "N", //&transA,//const char *transa, 
+			    "N", //&transA,//const char *transb, 
 		&nMissing,//const int *m,
 		&nMissing,//const int *n, 
 		&nonMissingValues,//const int *k, 
@@ -1153,6 +1166,7 @@ extern void gsiCImpAcompNewImputationVariance(
 		&one,//const double *beta, 
 		hpA,//double *c, 
 		&D//const int *ldc
+		FCONE FCONE
 		);
 	    // copy result to resVar
 	    for(i=0;i<nMissing;i++)
@@ -1276,8 +1290,8 @@ extern void gsiCImpAcompCompleteAlr(
  	    // correct the prediction from other observations
 	    double *lambda=imputationCache+DD*type+D*nMissings;
 	    // workm += lambda work2
-	    F77_NAME(dgemv)(
-		&transA, //const char *trans, 
+	    F77_CALL(dgemv)(
+			    "N",//&transA, //const char *trans, 
 		&nMissings,//const int *m, 
 		&nonMissingValues,//const int *n,
 		&one,//const double *alpha, 
@@ -1288,6 +1302,7 @@ extern void gsiCImpAcompCompleteAlr(
 		&one,//const double *beta,
 		work,//double *y, 
 		&eins//const int *incy
+		FCONE
 		);
 	    // copy result to output
 	    for(j=0;j<nMissings;j++) {
@@ -1528,8 +1543,8 @@ extern void gsiCImpAcompClrExpectation(
 		for(i=0;i<nMissings;i++)
 		    smallAlr[i]=smallAlrPre[i];
 		// smallAlrm = mean+myL t(norm[l,])
-		F77_NAME(dgemv)(
-		    &transA, // const char *trans, 
+		F77_CALL(dgemv)(
+				"N", //&transA, // const char *trans, 
 		    &nMissings,//const int *m, 
 		    &nMissings,//const int *n,
 		    &one, //const double *alpha, 
@@ -1540,6 +1555,7 @@ extern void gsiCImpAcompClrExpectation(
 		    &one,//const double *beta,
 		    smallAlr,//double *y, 
 		    &eins//const int *incy
+		    FCONE
 		    );
 		// check conditions
 		fits=1;
@@ -1771,7 +1787,7 @@ extern void gsiCImpAcompFitWithProjection(
     int lwork=-1;
     double myWork[3]={0.0,0.0,0.0};
     double *work=myWork;
-    F77_NAME(dgelsd)(
+    F77_CALL(dgelsd)(
 	&XbigM, // int *m, 
 	&XbigN, // int *n, 
 	&eins,  // int *nrhs,
@@ -1791,7 +1807,7 @@ extern void gsiCImpAcompFitWithProjection(
 	error("gsiCImpAcompFitWithProjection: Problem in workspace query");
     lwork=(int)(work[0]);
     work=(double*)R_alloc(lwork+ssize,sizeof(double));
-    F77_NAME(dgelsd)(
+    F77_CALL(dgelsd)(
 	&XbigM, // int *m, 
 	&XbigN, // int *n, 
 	&eins,  // int *nrhs,
@@ -1810,9 +1826,9 @@ extern void gsiCImpAcompFitWithProjection(
     if( info!= 0 )
 	error("gsiCImpAcompFitWithProjection: Problem in finding solution");
     // computed prediction values (for all cases!)
-    F77_NAME(dgemm)(
-	&transA, // const char *transa, 
-	&transA, // const char *transb, 
+    F77_CALL(dgemm)(
+		    "N",//&transA, // const char *transa, 
+		    "N",//&transA, // const char *transb, 
 	&N,      //const int *m,
 	&D,      // const int *n, 
 	&p,      // const int *k, 
@@ -1824,6 +1840,7 @@ extern void gsiCImpAcompFitWithProjection(
 	&zero,   // const double *beta, 
 	clr,     // double *c, 
 	&N       // const int *ldc
+	FCONE FCONE
 	);
     
 	

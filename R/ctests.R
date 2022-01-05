@@ -60,7 +60,7 @@ fitDirichlet <- function(x,elog=mean(ult(x)),alpha0=rep(1,length(elog)),maxIter=
 #    print(list(alpha=alpha,E=E,V=V,update=update,deltaR=delta/delta1))
   }
   list(alpha=alpha,
-       loglikelihood=n*(sum(lgamma(alpha))-lgamma(sum(alpha))+sum(elog*(alpha-1))),
+       loglikelihood=-n*(sum(lgamma(alpha))-lgamma(sum(alpha))+sum(elog*(alpha-1))),
        df=n*(length(elog)-1)-length(elog)
        )
 }
@@ -399,6 +399,67 @@ acompNormalLocation.test <- function(x,g=NULL,var.equal=FALSE,paired=FALSE,R=ife
   }
 }
 
+
+
+
+
+
+kdeDirichlet = function(x, adj=1, n=200, kdegrid=NULL, delta=FALSE){
+  # dimension:
+  d = ncol(x)-1
+  N = nrow(x)
+  
+  # grid
+  if(is.null(kdegrid)){
+    xseq <- seq(from=0, to=1, length.out = n)    
+    kdegrid = as.matrix(do.call("expand.grid", lapply(1:d, function(i) xseq)))
+    if(is.logical(delta)){ # compute delta correction if requested
+      if(delta) delta = (xseq[2]-xseq[1])/2 
+    } 
+    dimgrid = rep(n, d)
+  }else{
+    dimgrid = NULL
+  }
+  
+  # potentially correct zeroes
+  x = compositions::clo(compositions::clo(x) + delta)
+  
+  # optimal bandwidth determination
+  b <- N ^ (-1 / 3) 
+  bInv <- adj/b
+  
+  # compute Dirichlet closing constant on the grid
+  betamap = apply(kdegrid, 1, function(s){
+    sums = sum(s)
+    if (sums < 0 || sums > 1) {
+      return (NA)
+    } else {
+      return (gamma(b)/prod( c(gamma(s/b), gamma((1-sums)/b) )  )  )
+    }
+  })  
+  
+  # compute Dirichlet density
+  zz <- apply(kdegrid, 1, function(s){
+    sums = sum(s)
+    if (sums < 0 || sums > 1) {
+      return (NA)
+    } else {
+      return ( mean( exp(log(x) %*% (c(s, 1-sums)*bInv - 1) ) ))
+    }
+  })
+  
+  # close and dimension density
+  zz = zz * betamap
+  if(!is.null(dimgrid)){
+    dim(zz) = dimgrid
+    out = list(x=xseq, y=xseq, z=zz)
+  } else{
+    out = list(x=kdegrid, z=zz)
+  }
+  
+  # return with MASS::kde() format
+  return(out)
+}
 
 
 

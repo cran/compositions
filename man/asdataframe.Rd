@@ -5,7 +5,8 @@
 \alias{as.data.frame.rplus}
 \alias{as.data.frame.rmult}
 \alias{as.data.frame.ccomp}
-\title{Convert "compositions" classes to data frames}
+\alias{as.matrix.rmult}
+\title{Convert "compositions" classes to data frames or matrices}
 \description{
   Convert a compositional object to a dataframe
 }
@@ -16,6 +17,8 @@
 \method{as.data.frame}{rplus}(x,\dots)
 \method{as.data.frame}{rmult}(x,\dots)
 \method{as.data.frame}{ccomp}(x,\dots)
+\method{as.matrix}{rmult}(x,\dots)
+
           }
 \arguments{
   \item{x}{an object to be converted to a dataframe}
@@ -23,7 +26,7 @@
 }
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \value{
-  a data frame containing the given data.
+  a data frame containing the given data, or (for rmult only) as matrix.
 }
 \examples{
 data(SimulatedAmounts)

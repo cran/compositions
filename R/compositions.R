@@ -5266,7 +5266,35 @@ straight.rmult <- function(x,d,...,steps=30,aspanel=FALSE) {
 #  }
 #}
 
-
+dDirichlet <- function(x, alpha, log=FALSE, measure="Lebesgue"){
+  # ensure the data are converted to (row)matrices
+  alpha = unclass(oneOrDataset(alpha, B = if(length(x)>length(alpha)){x} ))
+  x = unclass(oneOrDataset(x, B = if(length(x)<length(alpha)){alpha} ))
+  if(is.null(dim(alpha))) dim(alpha) = dim(x)
+  if(is.null(dim(x))) dim(x) = dim(alpha)
+  # are the points within the simplex?
+  x0 = rowSums(x)
+  inside = abs(x0-1)<1e-12 & apply(x>=0,1,all)
+  # compute closing constant
+  a0 = rowSums(alpha)
+  logmultibeta = rowSums(lgamma(alpha)) - lgamma(a0)
+  # process reference measure
+  if(is.character(measure)){
+    k = pmatch(tolower(measure), c("aitchison","lebesgue"))-1
+    if(is.na(k)) stop("dDirichlet: `measure` needs to be a string or a function, see ?dDirichlet")
+  }else if(is.function(measure)){
+    k = 0
+    m = apply(x,1,measure)
+    logmultibeta = logmultibeta + m
+  }else stop("dDirichlet: `measure` needs to be a string or a function, see ?dDirichlet")
+  # compute density
+  # attention: here are x and alpha transposed so that recycling happens in the right way
+  D = ncol(x)
+  logdens = sapply(1:D, function(i) log(x[,i])*(alpha[,i]-k)) %*% rep(1,D) - logmultibeta
+  logdens = ifelse(inside, logdens, -Inf)
+  if(log) return(logdens)
+  return(exp(logdens))
+}
 
 rDirichlet.acomp <- function(n,alpha) {
   acomp(sapply(alpha,rgamma,n=n))

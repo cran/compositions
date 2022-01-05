@@ -1,11 +1,11 @@
 #### wrappers around standard functions ----------
 
-#' test:
-#' data(Hydrochem)
-#' X1 = Hydrochem$H
-#' Y = acomp(Hydrochem[, 7:12])
-#' model = lm(alr(Y)~log(X1))
-#' anova(model)
+# test:
+# data(Hydrochem)
+# X1 = Hydrochem$H
+# Y = acomp(Hydrochem[, 7:12])
+# model = lm(alr(Y)~log(X1))
+# anova(model)
 anova = function(...){
   o = getStickyClassOption()
   setStickyClassOption(FALSE)
@@ -17,6 +17,15 @@ anova = function(...){
 }
 
 
+#summary.manova = function(object, ...){
+#  for(nm in names(which(sapply(object, class)=="rmult"))){
+#    object[[nm]] = unclass(object[[nm]])
+#  }
+#  stats::manova(object, ...)
+#}
+
+
+as.matrix.rmult = function(x, ...) oneOrDataset(unclass(x), B=x)
 
 
 #### subsetting ----------

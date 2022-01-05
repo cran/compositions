@@ -1,11 +1,11 @@
 Package: compositions
-Version: 2.0-2
-Date: 2021-07-14
+Version: 2.0-4
+Date: 2022-01-05
 Title: Compositional Data Analysis
 Author: K. Gerald van den Boogaart <boogaart@hzdr.de>, 
 	Raimon Tolosana-Delgado, Matevz Bren  
 Maintainer: K. Gerald van den Boogaart <support@boogaart.de>
-Depends: R (>= 2.2.0)
+Depends: R (>= 3.6)
 Imports: methods, utils, grDevices, stats, tensorA, robustbase, bayesm,
         graphics, MASS
 Suggests: rgl, combinat, energy, knitr, rmarkdown
@@ -17,6 +17,6 @@ URL: http://www.stat.boogaart.de/compositions/
 VignetteBuilder: knitr
 RoxygenNote: 7.1.1
 NeedsCompilation: yes
-Packaged: 2021-07-14 13:23:40 UTC; tolosa53
+Packaged: 2022-01-05 11:24:03 UTC; tolosa53
 Repository: CRAN
-Date/Publication: 2021-07-14 14:10:01 UTC
+Date/Publication: 2022-01-05 12:00:09 UTC
