@@ -15,7 +15,7 @@ arrows3D(\dots)
 \arguments{
   \item{x0}{a matrix or vector giving the starting points of the arrows}
   \item{x1}{a matrix or vector giving the end points of the arrows}
-  \item{\dots}{additional plotting parameters as described in rgl::rgl.material
+  \item{\dots}{additional plotting parameters as described in \code{rgl::material3d}
        %\code{\link[rgl]{rgl.material}}
    }
   \item{length}{a number giving the length of the arrowhead}

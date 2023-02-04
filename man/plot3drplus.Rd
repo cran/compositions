@@ -13,7 +13,7 @@
   \item{parts}{the variables in the rplus object to be plotted}
   \item{\dots}{additional plotting parameters as described in
         %\code{\link[rgl]{rgl.material}}
-    \code{rgl::rgl.material}
+    \code{rgl::material3d}
     }
   \item{vlabs}{the labels used for the variable axes}
   \item{add}{logical, adding  or new plot}

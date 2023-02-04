@@ -31,7 +31,7 @@ gsi.varwithlosts(x,giveCenter=FALSE)
   from compositions, the R package. In:  Daunis-i-Estadella, J. and
   Mart\'in-Fern\'a ndez, J.A. (Eds.)
   \emph{Proceedings of the 3rd International Workshop on Compositional Data Analysis},
-  Universitat de Girona, Spain. \url{http://ima.udg.es/Activitats/CoDaWork03/}\cr
+  Universitat de Girona, Spain. \url{https://ima.udg.edu/Activitats/CoDaWork03/}\cr
 }
 \examples{
 # generates a 3-part compositional data set with missings

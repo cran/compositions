@@ -34,7 +34,7 @@ diagrams. However, this geometric mean is difficult to interpret.
 }
 \references{
   Vera Pawlowsky-Glahn (2003) personal communication.
-  Universitat de Girona. vera.pawlowsky@udg.es\cr
+  Universitat de Girona.
   
       van den Boogaart, K.G. and R. Tolosana-Delgado (2008)
   "compositions": a unified R package to analyze Compositional Data,

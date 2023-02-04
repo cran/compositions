@@ -3,7 +3,7 @@ gsi.PrinBal = function(x, method="PBhclust"){
   # All principal balance methods MUST start with the "PB" marker and 
   #   require an acomp data set; no check is done
   if(method=="PBhclust"){
-    if(class(x)!="acomp") warning("gsi.PrinBal: data given in x is not acomp! Do not trust results")
+    if(!inherits(x,"acomp")) warning("gsi.PrinBal: data given in x is not acomp! Do not trust results")
     dd = as.dist(variation(x))
     hh = hclust(dd, method="ward")
     sgn = gsi.merge2signary(hh$merge)
@@ -27,7 +27,7 @@ gsi.PrinBal = function(x, method="PBhclust"){
     file.remove(".APtable")
   }
   if(method=="PBmaxvar"){
-    if(class(x)!="acomp") warning("gsi.PrinBal: data given in x is not acomp! Do not trust results")
+    if(!inherits(x,"acomp")) warning("gsi.PrinBal: data given in x is not acomp! Do not trust results")
     sgn = t(gsi.mvOPTIMAL(cpt(x)))
   }
   V = gsi.buildilrBase(sgn)

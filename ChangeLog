@@ -1,3 +1,7 @@
+Version 2.0-5
+   * Adapted to new rgl 1.0.1 interface
+	
+
 Version 2.0-4
    * F77_ calling conventions adapted from fixed length strings to length parameter in BLAS calls
    * fitDirichlet returned loglikehood fixed (by adding a "-" in front of n)

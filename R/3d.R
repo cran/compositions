@@ -88,7 +88,7 @@ plot3D.default <- function(x,...,add=FALSE,bbox=TRUE,axes=FALSE,cex=1,size=cex,c
     gsi.reset3D()
   radius <- max(max(X[,1, drop=ddd])-min(X[,1, drop=ddd]),max(X[,2, drop=ddd])-min(X[,2, drop=ddd]),max(X[,3, drop=ddd])-min(X[,3, drop=ddd]))/100*cex
   rgl::spheres3d(X[,1, drop=ddd],X[,2, drop=ddd],X[,3, drop=ddd],...,radius=radius,col=col)
-  if( bbox) rgl::rgl.bbox()
+  if( bbox) rgl::bbox3d(color = c("white", "black"))
   if( any(axes) ) arrows3D(diag(c(0,0,0)),diag(c(1,1,1))) 
   invisible(X[,1:3, drop=ddd])
 }
@@ -124,7 +124,7 @@ plot3D.acomp <- function(x,parts=1:min(ncol(X),4),...,lwd=2,axis.col="gray",add=
       rgl::points3d(x[,1, drop=ddd],x[,2, drop=ddd],x[,3, drop=ddd],size=size,...,col=col)
       out = rmult(x[,1:3, drop=ddd])
     }
-   rgl::rgl.viewpoint(45,35.4)
+   rgl::view3d(45,35.4)
  } else if( length(parts)==4 ) {
    x <- clo(X,parts=parts)
    if( log ) {

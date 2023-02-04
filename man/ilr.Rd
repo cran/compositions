@@ -56,7 +56,7 @@ Tolosana-Delgado}
   simplex, the sample space for compositional data analysis, \emph{Terra
     Nostra}, Schriften der Alfred Wegener-Stiftung, 03/2003
   \cr
-  \url{http://ima.udg.es/Activitats/CoDaWork03/}
+  \url{https://ima.udg.edu/Activitats/CoDaWork03/}
   }
 \examples{
 (tmp <- ilr(c(1,2,3)))

@@ -22,7 +22,7 @@
     columns to be plotted}
   \item{\dots}{additional plotting parameters as described in
     %\code{\link[rgl]{rgl.material}}
-    \code{rgl::rgl.material}
+    \code{rgl::material3d}
     }
   \item{add}{logical, adding  or new plot}
   \item{cex}{size of the plotting symbols}

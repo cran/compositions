@@ -4949,7 +4949,7 @@ ellipses.rcomp <- ellipses.acomp <- function(mean,var,r=1,...,steps=72,thinRatio
                          t(mi + t(sqrt(eisp$values[r1])*r*cos(w) %o% eisp$vectors[,r1] +
                            sqrt(eisp$values[r2])*r*sin(w) %o% eisp$vectors[,r2])), mi)
         }
-      if( class(mean) == "rcomp")
+      if( inherits(mean, "rcomp"))
         noreplot(lines.rcomp(uciptInv(X),...))
       else
         noreplot(lines(ilrInv(X),...))
@@ -4977,7 +4977,7 @@ gsi.ellipsesRealPanel <- function(i,j,mean,var,r=1,...,steps=72) {
     X <- cdtInv(cbind(me[1]+rs[1]*ei$vectors[1,1]*sin(w)+rs[2]*ei$vectors[1,2]*cos(w),
                       me[2]+rs[1]*ei$vectors[2,1]*sin(w)+rs[2]*ei$vectors[2,2]*cos(w)
                       ),mean)
-    if( class(mean) == "rplus" ) {
+    if( inherits(mean, "rplus" )) {
       noreplot(lines(gsi.mystructure(X,class="rplus"),...))
     } else noreplot(lines(X,...))
   }

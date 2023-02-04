@@ -25,7 +25,7 @@
  }
 \details{
     A 'compositions' object is obtained from the mixtute object m, having the same data matrix
-    as mixture object m i.e. m\$mat.
+    as mixture object m i.e. \code{m$mat}.
    }
 \seealso{
   \code{\link{aplus}}

@@ -27,7 +27,7 @@ gsi.getBalStruct(descr,names,allowMinus=FALSE,allowOne=FALSE)
 \author{Raimon Tolosana-Delgado, K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}}
 \seealso{
   \code{\link{ilrBase}},\code{\link{ipt}},\code{\link{ilr}},
-  \url{http://ima.udg.es/Activitats/CoDaWork03/}
+  \url{https://ima.udg.edu/Activitats/CoDaWork03/}
 }
 \references{
   Egozcue J.J., V. Pawlowsky-Glahn, G. Mateu-Figueras and

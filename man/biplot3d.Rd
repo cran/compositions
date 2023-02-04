@@ -32,7 +32,7 @@ biplot3D(x,...)
   \item{comp.col}{color to draw the axes of the components, defaults to black}
   \item{comp.labs}{labels for the components}
   \item{\dots}{further plotting parameters as defined in %\code{\link[rgl]{rgl.material}}
-  \code{rgl::rgl.material}}
+  \code{rgl::material3d}}
   \item{y}{matrix of  second point/arrow-head locations (typically, variables)}
   \item{var.axes}{logical, TRUE draws arrows and FALSE points for y}
   \item{col}{vector/list of two elements the first giving the

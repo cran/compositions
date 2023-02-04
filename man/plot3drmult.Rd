@@ -14,7 +14,7 @@
   \item{parts}{the variables in the rmult object to be plotted}
   \item{\dots}{additional plotting parameters as described in
         %\code{\link[rgl]{rgl.material}}
-    \code{rgl::rgl.material}
+    \code{rgl::material3d}
     }
   \item{center}{logical, center the data? This might be necessary to
     stay within the openGL-arithmetic used in rgl.}

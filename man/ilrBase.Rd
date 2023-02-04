@@ -62,7 +62,7 @@
   compositional data analysis. \emph{Mathematical Geology}, \bold{35}(3)
   279-300\cr
 
-  \url{http://ima.udg.es/Activitats/CoDaWork03/}
+  \url{https://ima.udg.edu/Activitats/CoDaWork03/}
   }
 \examples{
 ilr(c(1,2,3))

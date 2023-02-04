@@ -15,7 +15,7 @@
     columns to be plotted}
   \item{\dots}{additional plotting parameters as described in
         %\code{\link[rgl]{rgl.material}}
-    \code{rgl::rgl.material}
+    \code{rgl::material3d}
     }
   \item{add}{logical, adding  or new plot}
   \item{vlabs}{the column names to be plotted, if missing defaults to

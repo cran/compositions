@@ -27,8 +27,8 @@ mix.Read(file,eps=1e-6)
     \item{3}{the data set in a matrix, rows as cases, variables in columns
       with the firs colum comprising cases labels.}
     }
-  A mixture object 'm' consists of  m\$tit  the title, m\$mat the matrix with the data, 
-  m\$sum the value of the rows total, if constant and  m\$sta the status of the mixture object
+  A mixture object 'm' consists of  \code{m$tit}  the title, \code{m$mat} the matrix with the data, 
+  \code{m$sum} the value of the rows total, if constant and  \code{m$sta} the status of the mixture object
   with values:
   \tabular{rll}{
   \tab   -2   \tab     - matrix contains negative elements,\cr

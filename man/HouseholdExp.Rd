@@ -6,7 +6,7 @@
 \title{Household Expenditures}
 \description{
 Household budget survey data on month expenditures of twenty men and twenty women
-for four commodity groups: housing, foodstuffs, other, and services. Amounts in HK\$
+for four commodity groups: housing, foodstuffs, other, and services. Amounts in HK-Dollar
 are given. There are 40 cases and 5 variables for 4 commodity groups and sex.
 }
 \usage{
@@ -24,9 +24,9 @@ mutually exclusive and exhaustive commodity groups:
 Housing, including fuel and lights, Foodstuffs, including alcohol and tobacco,
 Other goods, including clothing, footwear and durable goods, and
 Services, including transport and vehicles.
-Amounts in HK\$ are given. There are 40 cases, 20 men and 20 women and
+Amounts in HK-Dollar are given. There are 40 cases, 20 men and 20 women and
 5 variables: 4 for commodity groups Housing, Food, Other, Services and the fifth sex,
-1 for men, $-1$ for women. Note that the data has no sum constraint. 
+$+1$ for men, $-1$ for women. Note that the data has no sum constraint. 
 }
 \references{
    Aitchison (1986): The Statistical Analysis of Compositional Data, (Data 08), pp13.

@@ -70,7 +70,7 @@ Note that the original coda-dendrogram as defined by Egozcue and Pawlowsky-Glahn
   Egozcue, J.J. and V. Pawlowsky-Glahn (2005). CoDa-Dendrogram: a new exploratory tool.
   In: Mateu-Figueras, G. and Barcel\'o-Vidal, C. (Eds.)
   \emph{Proceedings of the 2nd International Workshop on Compositional Data Analysis},
-  Universitat de Girona, ISBN 84-8458-222-1, \url{http://ima.udg.es/Activitats/CoDaWork05/}\cr
+  Universitat de Girona, ISBN 84-8458-222-1, \url{https://ima.udg.edu/Activitats/CoDaWork05/}\cr
 
 
 }

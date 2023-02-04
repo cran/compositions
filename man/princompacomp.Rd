@@ -142,9 +142,9 @@
     Data} Journal of the Royal Statistical Society, Series C (Applied Statistics)
     \bold{51} (4) 375-392\cr
   
-  \url{http://ima.udg.es/Activitats/CoDaWork03/}\cr
+  \url{https://ima.udg.edu/Activitats/CoDaWork03/}\cr
   
-  \url{http://ima.udg.es/Activitats/CoDaWork05/}
+  \url{https://ima.udg.edu/Activitats/CoDaWork05/}
 
 }
 \examples{

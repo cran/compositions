@@ -927,7 +927,7 @@ Pawlowsky-Glahn, Vera (2003).
 \newblock In: Thi{\'o}-Henestrosa and Mart{\'\i}n-Fern{\`a}ndez(2003)
 \newblock {\em Compositional Data Analysis Workshop -- CoDaWork'03,
   Proceedings}. Universitat de Girona, {ISBN} 84-8458-111-X,
-  http://ima.udg.es/Activitats/CoDaWork03/.
+  https://ima.udg.edu/Activitats/CoDaWork03/.
   
 \bibitem[{Pawlowsky-Glahn and Mateu-Figueras(2005)}]{PM05} Pawlowsky-Glahn,
   V., G. Mateu-Figueras (2005) The Statistical Analysis on Coordinates in

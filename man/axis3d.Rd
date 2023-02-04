@@ -29,7 +29,7 @@ axis3D(axis.origin=c(0,0,0),axis.scale=1,axis.col="gray",vlabs=c("x","y","z"),
   \item{axes}{a boolean, wether to plot the axes}
   \item{\dots}{these arguments are passed to arrows3D as
     %\code{\link[rgl]{rgl.material}} 
-    \code{rgl::rgl.material} arguments}
+    \code{rgl::material3d} arguments}
 }
 \value{
   Nothing

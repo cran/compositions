@@ -14,7 +14,7 @@ plot3D(x,...)
   \item{x}{an object to be plotted, e.g. a data frame or a data matrix}
   \item{\dots}{additional plotting parameters as described in
   %\code{\link[rgl]{rgl.material}}
-  \code{rgl::rgl.material}  
+  \code{rgl::material3d}  
   }
   \item{add}{logical, adding  or new plot}
   \item{bbox}{logical, whether to add a bounding box}

@@ -66,11 +66,11 @@ characteristics to the plot, in particular arguments \code{mar} and \code{oma}.
   scales, Proceedings of CodaWork 08.
 
   
-  \url{http://ima.udg.es/Activitats/CoDaWork03/}\cr
+  \url{https://ima.udg.edu/Activitats/CoDaWork03/}\cr
   
-  \url{http://ima.udg.es/Activitats/CoDaWork05/}
+  \url{https://ima.udg.edu/Activitats/CoDaWork05/}
 
-  \url{http://ima.udg.es/Activitats/CoDaWork08/}
+  \url{https://ima.udg.edu/Activitats/CoDaWork08/}
 
 }
 \author{K.Gerald v.d. Boogaart \url{http://www.stat.boogaart.de}, Raimon
