@@ -1,4 +1,6 @@
 \name{segments}
+\alias{segments}
+\alias{segments.default}
 \alias{segments.rmult}
 \alias{segments.acomp}
 \alias{segments.rcomp}
@@ -6,19 +8,20 @@
 \alias{segments.rplus}
 \title{Draws straight lines from point to point.}
 \description{
-  The function draws lines from a points x to a point y in the given geometry.
+  The function draws lines from a points x0 to a point y1 in the given geometry.
 }
 \usage{
-          
-          \method{segments}{acomp}(x0,y,...,steps=30,aspanel=FALSE)
-          \method{segments}{rcomp}(x0,y,...,steps=30,aspanel=FALSE)
-          \method{segments}{aplus}(x0,y,...,steps=30,aspanel=FALSE)
-          \method{segments}{rplus}(x0,y,...,steps=30,aspanel=FALSE)
-          \method{segments}{rmult}(x0,y,...,steps=30,aspanel=FALSE)
+          segments(x0,...)
+          \method{segments}{default}(x0,...)
+          \method{segments}{acomp}(x0,y1,...,steps=30,aspanel=FALSE)
+          \method{segments}{rcomp}(x0,y1,...,steps=30,aspanel=FALSE)
+          \method{segments}{aplus}(x0,y1,...,steps=30,aspanel=FALSE)
+          \method{segments}{rplus}(x0,y1,...,steps=30,aspanel=FALSE)
+          \method{segments}{rmult}(x0,y1,...,steps=30,aspanel=FALSE)
           }
 \arguments{
   \item{x0}{dataset of points (of the given type) to draw the line from}
-  \item{y}{dataset of points (of the given type) to draw the line to}
+  \item{y1}{dataset of points (of the given type) to draw the line to}
   \item{\dots}{further graphical parameters}
   \item{steps}{the number of discretisation points to draw the segments,
     since the representation might not visually be a straight line}
@@ -26,8 +29,11 @@
 
 }
 \details{
-The functions add lines to the graphics generated with the corresponding
-plot functions.
+
+The default `segments.default(x0,...)` redirects to `segments` in package "graphics".
+
+The other methods add lines to the graphics generated with the corresponding
+plot functions of "compositions"-classes.
 \cr
 
 Adding to multipaneled plots redraws the plot completely, and is only

@@ -23,7 +23,7 @@ logratioVariogram.acomp <- function(data,
   nbins = nrow(bins)
   D     = ncol(lcomp)
   labs   = colnames(comp)
-  erg <- .C("gsiCGSvariogram",
+  erg <- .C(gsiCGSvariogram, ## pre-symbol: "gsiCGSvariogram"
             dimZ=gsiInt(dim(lcomp),2),
             Z   =lcomp,
             dimX=gsiInt(dim(loc),2),

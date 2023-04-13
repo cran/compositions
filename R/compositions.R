@@ -4583,10 +4583,11 @@ lines.rmult <- function(x,...,steps=30,aspanel=FALSE) {
   if( !aspanel ) replot(plot=match.call(),add=TRUE)  
 }
 
-#segments <- function(x0,...) UseMethod("segments",x0)
-#segments.default <- graphics::segments
+segments <- function(x0,...) UseMethod("segments",x0)
+segments.default <- function(x0, ...) graphics::segments(x0, ...) 
 
-segments.acomp <- function(x0,y,...,steps=30,aspanel=FALSE) {
+segments.acomp <- function(x0,y1,...,steps=30,aspanel=FALSE) {
+  y = y1
 #### Plot Function Paradigma
 ####  simplified for pure adding (with panels):
 ### 1) Prepare the parameters
@@ -4599,7 +4600,7 @@ segments.acomp <- function(x0,y,...,steps=30,aspanel=FALSE) {
     yStore <-y
 ### 3a.2) Define an infkt
     infkt <- function(x,y,...) {
-      segments.acomp(x0=x0Store,y=yStore,...,steps=steps,aspanel=TRUE)
+      segments.acomp(x0=x0Store,y1=yStore,...,steps=steps,aspanel=TRUE)
     }
 ### 3a.3) gsi.add2pairs
     nc <- gsi.getCoorInfo()$nc 
@@ -4641,7 +4642,8 @@ segments.acomp <- function(x0,y,...,steps=30,aspanel=FALSE) {
 }
 
 
-segments.rcomp <- function(x0,y,...,steps=30,aspanel=FALSE) {
+segments.rcomp <- function(x0,y1,...,steps=30,aspanel=FALSE) {
+  y = y1
 ### 1) Prepare the parameters
 ### 2) -
 ### 3) if( !aspanel && ncol>3 ) Set up gsi.pairs else plot directly
@@ -4653,7 +4655,7 @@ segments.rcomp <- function(x0,y,...,steps=30,aspanel=FALSE) {
 ### 3a.2) Define an infkt
     infkt <- function(x,y,...) {
       segments.rcomp(
-                     x0=x0Store,y=yStore,
+                     x0=x0Store,y1=yStore,
                                  ...,steps=steps,aspanel=TRUE)
     }
 ### 3a.3) gsi.add2pairs
@@ -4703,7 +4705,8 @@ segments.rcomp <- function(x0,y,...,steps=30,aspanel=FALSE) {
 
 
 
-segments.aplus <- function(x0,y,...,steps=30,aspanel=FALSE) {
+segments.aplus <- function(x0,y1,...,steps=30,aspanel=FALSE) {
+  y = y1
   X <- oneOrDataset(x0,y)
   Y <- oneOrDataset(y,x0)
   if( ncol(X) > 2 ) {
@@ -4723,7 +4726,8 @@ segments.aplus <- function(x0,y,...,steps=30,aspanel=FALSE) {
   if( !aspanel ) replot(plot=match.call(),add=TRUE)  
 }
 
-segments.rplus <- function(x0,y,...,steps=30,aspanel=FALSE) {
+segments.rplus <- function(x0,y1,...,steps=30,aspanel=FALSE) {
+  y = y1
   X <- oneOrDataset(x0,y)
   Y <- oneOrDataset(y,x0)
   if( ncol(X) > 2 ) {
@@ -4744,7 +4748,8 @@ segments.rplus <- function(x0,y,...,steps=30,aspanel=FALSE) {
 
 }
 
-segments.rmult <- function(x0,y,...,steps=30,aspanel=FALSE) {
+segments.rmult <- function(x0,y1,...,steps=30,aspanel=FALSE) {
+  y = y1
   X <- oneOrDataset(x0,y)
   Y <- oneOrDataset(y,x0)
   if( ncol(X) > 2 ) {

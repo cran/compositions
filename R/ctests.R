@@ -126,7 +126,7 @@ ccompPoissonGOF.test<-function(x,
 
 gsi.sortedUniforms <- function(n) {
   n = as.integer(c(n,0)[1])
-  .C("gsiKSsortedUniforms",
+  .C(gsiKSsortedUniforms, ## pre-symbol: "gsiKSsortedUniforms"
      n    = as.integer(n),
      data = numeric(n),
      getRng= as.integer(1)
@@ -137,7 +137,7 @@ PoissonGOF.test <- function(x,lambda=mean(x),R=999,estimated=missing(lambda)) {
     x <- as.integer(x)  
     Max <- as.integer(max(x))
     ps = dpois(0:Max,lambda)
-    statistic <- .C("gsiKSPoisson",
+    statistic <- .C(gsiKSPoisson, ## pre-symbol: "gsiKSPoisson"
                     nd  =as.integer(c(length(x),1)),
                     data=as.integer(x),
                     nps =as.integer(length(ps)),
@@ -148,7 +148,7 @@ PoissonGOF.test <- function(x,lambda=mean(x),R=999,estimated=missing(lambda)) {
     if( estimated ) {
       N <- sum(x)
       xsample <- rmultinom(R,N,rep(1,length(x)))
-      ksample <- .C("gsiKSPoisson",
+      ksample <- .C(gsiKSPoisson, ## pre-symbol: "gsiKSPoisson"
                    nd  =as.integer(dim(xsample)),
                    data=as.integer(xsample),
                    nps =as.integer(length(ps)),
@@ -158,7 +158,7 @@ PoissonGOF.test <- function(x,lambda=mean(x),R=999,estimated=missing(lambda)) {
                    )$statistic
     } else {
       ksample <- if(R>0)
-        .C("gsiKSPoissonSample",
+        .C(gsiKSPoissonSample, ## pre-symbol: "gsiKSPoissonSample"
            n=as.integer(length(x)),
            data=numeric(length(x)),
            Nps =as.integer(length(ps)),

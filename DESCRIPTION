@@ -1,6 +1,6 @@
 Package: compositions
-Version: 2.0-5
-Date: 2023-02-03
+Version: 2.0-6
+Date: 2023-04-12
 Title: Compositional Data Analysis
 Author: K. Gerald van den Boogaart <boogaart@hzdr.de>, 
 	Raimon Tolosana-Delgado, Matevz Bren  
@@ -17,6 +17,6 @@ URL: http://www.stat.boogaart.de/compositions/
 VignetteBuilder: knitr
 RoxygenNote: 7.1.1
 NeedsCompilation: yes
-Packaged: 2023-02-03 17:34:52 UTC; tolosa53
+Packaged: 2023-04-13 09:18:52 UTC; tolosa53
 Repository: CRAN
-Date/Publication: 2023-02-04 09:22:31 UTC
+Date/Publication: 2023-04-13 10:20:02 UTC

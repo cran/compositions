@@ -1,6 +1,8 @@
+Version 2.0-6
+   * All .C() calls include symbols and not string names of the called C routines
+
 Version 2.0-5
    * Adapted to new rgl 1.0.1 interface
-	
 
 Version 2.0-4
    * F77_ calling conventions adapted from fixed length strings to length parameter in BLAS calls

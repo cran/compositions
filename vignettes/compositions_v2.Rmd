@@ -2,7 +2,7 @@
 title: "'compositions' v2.0: R classes for compositional analysis"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{compositions_v2}
+  %\VignetteIndexEntry{'compositions' v2.0: R classes for compositional analysis}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
