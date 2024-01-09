@@ -31,7 +31,7 @@
   \cr
   which defaults to a new option "robust". This option can take several
   values:
-  \itemize{
+  \describe{
     \item{FALSE}{The classical estimators such as arithmetic mean and
       persons product moment variance are used and the results are to be
       considered nonrobust. }

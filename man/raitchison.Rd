@@ -62,7 +62,7 @@ AitchisonDistributionIntegrals(
   \item{rAitchison}{Returns a sample of size n of simulated compostions
     as an acomp object.} 
   \item{AitchisondistributionIntegrals}{Returns a list with
-    \itemize{
+    \describe{
       \item{theta}{the theta parameter given or computed}
       \item{beta}{the beta parameter given or computed}
       \item{alpha}{the alpha parameter given or computed}

@@ -1,11 +1,13 @@
 
-R version 2.8.0 Under development (unstable) (2008-04-28 r45539)
-Copyright (C) 2008 The R Foundation for Statistical Computing
-ISBN 3-900051-07-0
+R version 4.1.2 (2021-11-01) -- "Bird Hippie"
+Copyright (C) 2021 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
 Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
 
 R is a collaborative project with many contributors.
 Type 'contributors()' for more information and
@@ -16,40 +18,23 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 Type 'q()' to quit R.
 
 > library("compositions")
-Loading required package: rgl
-Loading required package: tensorA
-Loading required package: robustbase
 Welcome to compositions, a package for compositional data analysis.
-
-Get help with "? compositions"
-Version info: to ensure compatibility with R > 2.7.0.
- ".inv" in function names has globaly been replaced by "Inv"
- similarly ".row" and ".col" respectively by "Row" and "Col".
-
-WARNING
-Please be advised that this peace of software does complicated
-geometric operations in high dimensional spaces often based on
-on various incompatible geometries in most cases behaving more
-like an expert system then like an application software merily
-guessing the your intention using several incompatible systems
-of thought. Thus please never trust the software. Always check.
-
-Attaching package: 'compositions'
+Find an intro with "? compositions"
 
 
-	The following object(s) are masked from package:stats :
+Attaching package: ‘compositions’
 
-	 cor,
-	 cov,
-	 dist,
-	 var 
+The following objects are masked from ‘package:stats’:
 
+    anova, cor, cov, dist, var
 
-	The following object(s) are masked from package:base :
+The following object is masked from ‘package:graphics’:
 
-	 %*%,
-	 scale,
-	 scale.default 
+    segments
+
+The following objects are masked from ‘package:base’:
+
+    %*%, norm, scale, scale.default
 
 > 
 > #js <- read.table("juraset.dat",skip=17,header=TRUE)
@@ -621,14 +606,6 @@ Attaching package: 'compositions'
 [58,]  2.27187854  5.627651759  1.23918951 -3.3166326 -5.82208723
 [59,]  0.35618232  3.468271255 -1.61071480 -0.1706302 -2.04310858
 [60,]  0.08621881  3.673444533 -3.48579240  0.8063215 -1.08019245
-attr(,"orig")
-        missingType
-variable NMV BDT MAR MNAR SZ Err
-      Cu  60   0   0    0  0   0
-      Zn  60   0   0    0  0   0
-      Pb  60   0   0    0  0   0
-      Cd  60   0   0    0  0   0
-      Co  60   0   0    0  0   0
 attr(,"class")
 [1] "rmult"
 > checker( clrInv(clr(cdata)) , clo(cdata) )
@@ -758,7 +735,7 @@ attr(,"class")
 attr(,"class")
 [1] "rmult"
 > checker( ilrInv(ilr(cdata)) , clo(cdata) )
-                1          2            3            4            5
+               Cu         Zn           Pb           Cd           Co
  [1,] 0.025707633 0.03643146 0.8941291179 1.043489e-02 3.329690e-02
  [2,] 0.002823595 0.03806539 0.6767266974 5.233545e-02 2.300489e-01
  [3,] 0.016013070 0.10956322 0.8739074365 1.135197e-04 4.027560e-04
@@ -884,7 +861,7 @@ attr(,"class")
 attr(,"class")
 [1] "rmult"
 > checker( alrInv(alr(cdata)) , clo(cdata) )
-               Cu         Zn           Pb           Cd             
+               Cu         Zn           Pb           Cd           Co
  [1,] 0.025707633 0.03643146 0.8941291179 1.043489e-02 3.329690e-02
  [2,] 0.002823595 0.03806539 0.6767266974 5.233545e-02 2.300489e-01
  [3,] 0.016013070 0.10956322 0.8739074365 1.135197e-04 4.027560e-04
@@ -1007,14 +984,6 @@ attr(,"class")
 [58,] -0.166697590  0.754705584 -1.881427e-01 -0.199875429 -0.19998983
 [59,] -0.158829246  0.725021606 -1.942406e-01 -0.175689323 -0.19626242
 [60,] -0.174701425  0.714130913 -1.992891e-01 -0.148020430 -0.19211993
-attr(,"orig")
-        missingType
-variable NMV BDT MAR MNAR SZ Err
-      Cu  60   0   0    0  0   0
-      Zn  60   0   0    0  0   0
-      Pb  60   0   0    0  0   0
-      Cd  60   0   0    0  0   0
-      Co  60   0   0    0  0   0
 attr(,"class")
 [1] "rmult"
 > checker( cptInv(cpt(cdata)) , clo(cdata) )
@@ -1141,18 +1110,10 @@ attr(,"class")
 [58,]  0.651530432 -0.39367116 -0.28852836 -0.22359543
 [59,]  0.624976931 -0.38974386 -0.25952464 -0.21942806
 [60,]  0.628499373 -0.38294006 -0.22637952 -0.21479661
-attr(,"orig")
-        missingType
-variable NMV BDT MAR MNAR SZ Err
-      Cu  60   0   0    0  0   0
-      Zn  60   0   0    0  0   0
-      Pb  60   0   0    0  0   0
-      Cd  60   0   0    0  0   0
-      Co  60   0   0    0  0   0
 attr(,"class")
 [1] "rmult"
 > checker( iptInv(ipt(cdata)) , clo(cdata) )
-                1          2            3            4            5
+               Cu         Zn           Pb           Cd           Co
  [1,] 0.025707633 0.03643146 0.8941291179 1.043489e-02 3.329690e-02
  [2,] 0.002823595 0.03806539 0.6767266974 5.233545e-02 2.300489e-01
  [3,] 0.016013070 0.10956322 0.8739074365 1.135197e-04 4.027560e-04
@@ -1278,7 +1239,7 @@ attr(,"class")
 attr(,"class")
 [1] "rmult"
 > checker( aptInv(apt(cdata)) , clo(cdata) )
-               Cu         Zn           Pb           Cd             
+               Cu         Zn           Pb           Cd           Co
  [1,] 0.025707633 0.03643146 0.8941291179 1.043489e-02 3.329690e-02
  [2,] 0.002823595 0.03806539 0.6767266974 5.233545e-02 2.300489e-01
  [3,] 0.016013070 0.10956322 0.8739074365 1.135197e-04 4.027560e-04
@@ -1401,14 +1362,6 @@ attr(,"class")
 [58,]  1.3208892  4.6766624  0.288200179 -4.26762191 -6.7730766
 [59,]  1.9698068  5.0818958  0.002909715  1.44299432 -0.4294841
 [60,]  3.2732844  6.8605102 -0.298726764  3.99338714  2.1068732
-attr(,"orig")
-        missingType
-variable NMV BDT MAR MNAR SZ Err
-      Cu  60   0   0    0  0   0
-      Zn  60   0   0    0  0   0
-      Pb  60   0   0    0  0   0
-      Cd  60   0   0    0  0   0
-      Co  60   0   0    0  0   0
 attr(,"class")
 [1] "rmult"
 > checker( iltInv(ilt(cdata)) , cdata )
@@ -1535,14 +1488,6 @@ attr(,"class")
 [58,]   3.74675153  107.4109817   1.3340243 1.401507e-02 1.144169e-03
 [59,]   7.16929149  161.0791359   1.0029140 4.233353e+00 6.508448e-01
 [60,]  26.39789963  953.8535679   0.7417621 5.423829e+01 8.222491e+00
-attr(,"orig")
-        missingType
-variable NMV BDT MAR MNAR SZ Err
-      Cu  60   0   0    0  0   0
-      Zn  60   0   0    0  0   0
-      Pb  60   0   0    0  0   0
-      Cd  60   0   0    0  0   0
-      Co  60   0   0    0  0   0
 attr(,"class")
 [1] "rmult"
 > checker( iitInv(iit(cdata)) , cdata )
@@ -1611,37 +1556,24 @@ attr(,"class")
 > clr(c(a=1,2,3))
           a                         
 -0.59725316  0.09589402  0.50135913 
-attr(,"orig")
-      missingType
-       NMV BDT MAR MNAR SZ Err
-  [1,]   3   0   0    0  0   0
 attr(,"class")
 [1] "rmult"
 > ilr(c(a=1,2,3))
-          [,1]     [,2]
-[1,] 0.4901291 0.614037
+[1] 0.4901291 0.6140370
 attr(,"class")
 [1] "rmult"
 > alr(c(a=1,2,3))
-         a            
+         a         v2 
 -1.0986123 -0.4054651 
 attr(,"class")
 [1] "rmult"
 > cpt(c(a=1,2,3))
          a                       
 -0.1666667  0.0000000  0.1666667 
-attr(,"orig")
-      missingType
-       NMV BDT MAR MNAR SZ Err
-  [1,]   3   0   0    0  0   0
 attr(,"class")
 [1] "rmult"
 > ipt(c(a=1,2,3))
 [1] 0.1178511 0.2041241
-attr(,"orig")
-      missingType
-       NMV BDT MAR MNAR SZ Err
-  [1,]   3   0   0    0  0   0
 attr(,"class")
 [1] "rmult"
 > apt(c(a=1,2,3))
@@ -1652,27 +1584,19 @@ attr(,"class")
 > ilt(c(a=1,2,3))
         a                     
 0.0000000 0.6931472 1.0986123 
-attr(,"orig")
-      missingType
-       NMV BDT MAR MNAR SZ Err
-  [1,]   3   0   0    0  0   0
 attr(,"class")
 [1] "rmult"
 > iit(c(a=1,2,3))
 a     
 1 2 3 
-attr(,"orig")
-      missingType
-       NMV BDT MAR MNAR SZ Err
-  [1,]   3   0   0    0  0   0
 attr(,"class")
 [1] "rmult"
 > checker( clrInv(clr(c(a=1,2,3))) , clo(c(1,2,3)))
         a                     
 0.1666667 0.3333333 0.5000000 
 > checker( ilrInv(ilr(c(a=1,2,3))) , clo(c(1,2,3)))
-             1         2   3
-[1,] 0.1666667 0.3333333 0.5
+        a                     
+0.1666667 0.3333333 0.5000000 
 > checker( alrInv(alr(c(a=1,2,3))) , clo(c(1,2,3)))
         a                     
 0.1666667 0.3333333 0.5000000 
@@ -1680,7 +1604,7 @@ attr(,"class")
         a                     
 0.1666667 0.3333333 0.5000000 
 > checker( iptInv(ipt(c(a=1,2,3))) , clo(c(1,2,3)))
-        1         2         3 
+        a                     
 0.1666667 0.3333333 0.5000000 
 > checker( aptInv(apt(c(a=1,2,3))) , clo(c(1,2,3)))
         a                     
@@ -1695,25 +1619,25 @@ a
 > # mean
 > 
 > mean(acomp(cdata))
-         Cu          Zn          Pb          Cd          Co 
-0.141647429 0.659658588 0.190494272 0.005344234 0.002855477 
+           Cu            Zn            Pb            Cd            Co 
+"0.141647429" "0.659658588" "0.190494272" "0.005344234" "0.002855477" 
 attr(,"class")
-[1] acomp
+[1] "acomp"
 > mean(rcomp(cdata))
-        Cu         Zn         Pb         Cd         Co 
-0.10310773 0.47060698 0.37685703 0.03476121 0.01466705 
+          Cu           Zn           Pb           Cd           Co 
+"0.10310773" "0.47060698" "0.37685703" "0.03476121" "0.01466705" 
 attr(,"class")
-[1] rcomp
+[1] "rcomp"
 > mean(aplus(cdata))
-        Cu         Zn         Pb         Cd         Co 
- 6.1194322 28.4984768  8.2297065  0.2308808  0.1233619 
+          Cu           Zn           Pb           Cd           Co 
+" 6.1194322" "28.4984768" " 8.2297065" " 0.2308808" " 0.1233619" 
 attr(,"class")
-[1] aplus
+[1] "aplus"
 > mean(rplus(cdata))
-        Cu         Zn         Pb         Cd         Co 
- 13.183423 121.515630  31.862701   6.996818   1.399201 
+          Cu           Zn           Pb           Cd           Co 
+" 13.183423" "121.515630" " 31.862701" "  6.996818" "  1.399201" 
 attr(,"class")
-[1] rplus
+[1] "rplus"
 > 
 > meanCol(cdata)
         Cu         Zn         Pb         Cd         Co 
@@ -1748,55 +1672,50 @@ Pb -1.4714713 -2.47461811  3.51452054 -1.9575641 -0.01146509
 Cd  0.8405705  1.61548352 -1.95756414  7.0358261  5.75296062
 Co -0.2271162 -0.08347976 -0.01146509  5.7529606  6.07752755
 > var(rplus(cdata))
-             Cu         Zn          Pb         Cd          Co
-Cu  349.6810423  3437.9029  -269.78187   24.11394  -0.7558546
-Zn 3437.9029094 57387.5095 -3357.26363  723.31989  64.1824056
-Pb -269.7818731 -3357.2636  2553.59680 -197.98662 -26.9206203
-Cd   24.1139377   723.3199  -197.98662  835.37631 116.0417177
-Co   -0.7558546    64.1824   -26.92062  116.04172  17.1630628
+             Cu          Zn          Pb         Cd          Co
+Cu  349.6810423  3437.90291  -269.78187   24.11394  -0.7558546
+Zn 3437.9029094 57387.50949 -3357.26363  723.31989  64.1824056
+Pb -269.7818731 -3357.26363  2553.59680 -197.98662 -26.9206203
+Cd   24.1139377   723.31989  -197.98662  835.37631 116.0417177
+Co   -0.7558546    64.18241   -26.92062  116.04172  17.1630628
 > 
 > # clr
 > clr(mean(acomp(cdata)))
        Cu        Zn        Pb        Cd        Co 
  1.069353  2.607734  1.365634 -2.207970 -2.834750 
-attr(,"orig")
-      missingType
-       NMV BDT MAR MNAR SZ Err
-  [1,]   5   0   0    0  0   0
 attr(,"class")
 [1] "rmult"
 > meanCol(clr(cdata))
        Cu        Zn        Pb        Cd        Co 
  1.069353  2.607734  1.365634 -2.207970 -2.834750 
 > clrInv(meanCol(clr(cdata)))
-         Cu          Zn          Pb          Cd          Co 
-0.141647429 0.659658588 0.190494272 0.005344234 0.002855477 
+           Cu            Zn            Pb            Cd            Co 
+"0.141647429" "0.659658588" "0.190494272" "0.005344234" "0.002855477" 
 attr(,"class")
-[1] acomp
+[1] "acomp"
 > mean(acomp(cdata))
-         Cu          Zn          Pb          Cd          Co 
-0.141647429 0.659658588 0.190494272 0.005344234 0.002855477 
+           Cu            Zn            Pb            Cd            Co 
+"0.141647429" "0.659658588" "0.190494272" "0.005344234" "0.002855477" 
 attr(,"class")
-[1] acomp
+[1] "acomp"
 > 
 > # ilr
 > ilr(mean(acomp(cdata)))
-         [,1]       [,2]      [,3]      [,4]
-[1,] 1.087800 -0.3861291 -3.367866 -3.169346
+[1]  1.0877999 -0.3861291 -3.3678663 -3.1693464
 attr(,"class")
 [1] "rmult"
 > meanCol(ilr(cdata))
 [1]  1.0877999 -0.3861291 -3.3678663 -3.1693464
 > ilrInv(meanCol(ilr(cdata)))
-          1           2           3           4           5 
-0.141647429 0.659658588 0.190494272 0.005344234 0.002855477 
+            1             2             3             4             5 
+"0.141647429" "0.659658588" "0.190494272" "0.005344234" "0.002855477" 
 attr(,"class")
-[1] acomp
+[1] "acomp"
 > mean(acomp(cdata))
-         Cu          Zn          Pb          Cd          Co 
-0.141647429 0.659658588 0.190494272 0.005344234 0.002855477 
+           Cu            Zn            Pb            Cd            Co 
+"0.141647429" "0.659658588" "0.190494272" "0.005344234" "0.002855477" 
 attr(,"class")
-[1] acomp
+[1] "acomp"
 > 
 > # alr
 > alr(mean(acomp(cdata)))
@@ -1808,22 +1727,22 @@ attr(,"class")
        Cu        Zn        Pb        Cd 
 3.9041021 5.4424834 4.2003831 0.6267792 
 > alrInv(meanCol(alr(cdata)))
-         Cu          Zn          Pb          Cd             
-0.141647429 0.659658588 0.190494272 0.005344234 0.002855477 
+           Cu            Zn            Pb            Cd               
+"0.141647429" "0.659658588" "0.190494272" "0.005344234" "0.002855477" 
 attr(,"class")
-[1] acomp
+[1] "acomp"
 > mean(acomp(cdata))
-         Cu          Zn          Pb          Cd          Co 
-0.141647429 0.659658588 0.190494272 0.005344234 0.002855477 
+           Cu            Zn            Pb            Cd            Co 
+"0.141647429" "0.659658588" "0.190494272" "0.005344234" "0.002855477" 
 attr(,"class")
-[1] acomp
+[1] "acomp"
 > 
 > # Operations
 > mean(acomp(3 * (cdata - mean(acomp(cdata)))))
-  Cu   Zn   Pb   Cd   Co 
- 0.2  0.2  0.2  0.2  0.2 
+    Cu     Zn     Pb     Cd     Co 
+" 0.2" " 0.2" " 0.2" " 0.2" " 0.2" 
 attr(,"class")
-[1] acomp
+[1] "acomp"
 > 
 > 
 > # barplot
@@ -1847,19 +1766,19 @@ attr(,"class")
 > # Triangular Diagrams
 > plot(acomp(cdata[,1:3]))
 > mean(acomp(cdata[,1:3]))
-       Cu        Zn        Pb 
-0.1428185 0.6651123 0.1920692 
+         Cu          Zn          Pb 
+"0.1428185" "0.6651123" "0.1920692" 
 attr(,"class")
-[1] acomp
+[1] "acomp"
 > plot(acomp(cdata),margin="rcomp",pca=TRUE)
 There were 20 warnings (use warnings() to see them)
 > plot(acomp(cdata),margin="acomp",pca=TRUE)
 > #plot(acomp(cdata),margin="Cd",pca=TRUE) # Bug!!!
 > mean(acomp(cdata))
-         Cu          Zn          Pb          Cd          Co 
-0.141647429 0.659658588 0.190494272 0.005344234 0.002855477 
+           Cu            Zn            Pb            Cd            Co 
+"0.141647429" "0.659658588" "0.190494272" "0.005344234" "0.002855477" 
 attr(,"class")
-[1] acomp
+[1] "acomp"
 > 
 > boxplot(acomp(cdata))              # boxplotscale
 > boxplot(acomp(cdata),Land,notch=TRUE) # notch
@@ -1946,10 +1865,10 @@ Proportion of Variance 0.5249094 0.4416284 0.02035289 0.01310925
 Cumulative Proportion  0.5249094 0.9665379 0.98689075 1.00000000
 > summary(princomp(rcomp(cdata)))
 Importance of components:
-                          Comp.1     Comp.2     Comp.3      Comp.4
-Standard deviation     0.4923727 0.13158041 0.09732249 0.033344985
-Proportion of Variance 0.8968032 0.06404595 0.03503770 0.004113110
-Cumulative Proportion  0.8968032 0.96084919 0.99588689 1.000000000
+                          Comp.1     Comp.2     Comp.3     Comp.4
+Standard deviation     0.4923727 0.13158041 0.09732249 0.03334499
+Proportion of Variance 0.8968032 0.06404595 0.03503770 0.00411311
+Cumulative Proportion  0.8968032 0.96084919 0.99588689 1.00000000
 > summary(princomp(aplus(cdata)))
 Importance of components:
                           Comp.1    Comp.2     Comp.3     Comp.4     Comp.5
@@ -1972,7 +1891,7 @@ Cumulative Proportion  1.000000e+00
 Loadings:
    Comp.1 Comp.2 Comp.3 Comp.4 Comp.5
 Cu                       0.997       
-Zn -0.996                            
+Zn  0.996                            
 Pb        -0.993 -0.100              
 Cd               -0.985        -0.138
 Co               -0.137         0.990
@@ -1985,11 +1904,11 @@ Cumulative Var    0.2    0.4    0.6    0.8    1.0
 
 Loadings:
    Comp.1 Comp.2 Comp.3 Comp.4
-Cu -0.209 -0.435  0.748       
-Zn        -0.591 -0.600  0.291
-Pb -0.681  0.514 -0.181 -0.199
+Cu -0.209  0.435  0.748       
+Zn         0.591 -0.600  0.291
+Pb -0.681 -0.514 -0.181 -0.199
 Cd  0.580        -0.137 -0.662
-Co  0.387  0.438  0.170  0.655
+Co  0.387 -0.438  0.170  0.655
 
                Comp.1 Comp.2 Comp.3 Comp.4
 SS loadings       1.0    1.0    1.0    1.0
@@ -2013,11 +1932,11 @@ Cumulative Var    0.2    0.4    0.6    0.8
 
 Loadings:
    Comp.1 Comp.2 Comp.3 Comp.4 Comp.5
-Cu  0.107 -0.410 -0.593  0.681       
-Zn  0.192 -0.576 -0.363 -0.673  0.215
-Pb -0.220  0.571 -0.701 -0.257 -0.262
+Cu  0.107 -0.410  0.593  0.681       
+Zn  0.192 -0.576  0.363 -0.673  0.215
+Pb -0.220  0.571  0.701 -0.257 -0.262
 Cd  0.731                      -0.671
-Co  0.607  0.415 -0.134         0.657
+Co  0.607  0.415  0.134         0.657
 
                Comp.1 Comp.2 Comp.3 Comp.4 Comp.5
 SS loadings       1.0    1.0    1.0    1.0    1.0
@@ -2044,10 +1963,10 @@ Cumulative Var    0.2    0.4    0.6    0.8    1.0
        Cu        Zn        Pb 
  13.18342 121.51563  31.86270 
 > mean(acomp(cdata[,1:3]))
-       Cu        Zn        Pb 
-0.1428185 0.6651123 0.1920692 
+         Cu          Zn          Pb 
+"0.1428185" "0.6651123" "0.1920692" 
 attr(,"class")
-[1] acomp
+[1] "acomp"
 > oneOrDataset(c(a=1,b=2,c=3))
      a b c
 [1,] 1 2 3
@@ -2091,26 +2010,26 @@ Standard deviations:
 
  5  variables and  60 observations.
 Mean (compositional):
-         Cu          Zn          Pb          Cd          Co 
-0.141647429 0.659658588 0.190494272 0.005344234 0.002855477 
+           Cu            Zn            Pb            Cd            Co 
+"0.141647429" "0.659658588" "0.190494272" "0.005344234" "0.002855477" 
 attr(,"class")
-[1] acomp
+[1] "acomp"
 +Loadings (compositional):
-       Cu        Zn        Pb        Cd        Co      
-Comp.1 0.7375815 0.8407088 0.4599019 1.6234982 1.338310
-Comp.2 0.5885192 0.5033364 1.5194066 0.9797612 1.408977
-Comp.3 1.9028618 0.4943567 0.7510342 0.7848020 1.066945
-Comp.4 0.8323051 1.2127455 0.7425769 0.4672515 1.745121
+       Cu          Zn          Pb          Cd          Co         
+Comp.1 "0.7375815" "0.8407088" "0.4599019" "1.6234982" "1.3383096"
+Comp.2 "1.3986249" "1.6353230" "0.5417362" "0.8401206" "0.5841953"
+Comp.3 "1.9028618" "0.4943567" "0.7510342" "0.7848020" "1.0669454"
+Comp.4 "0.8323051" "1.2127455" "0.7425769" "0.4672515" "1.7451211"
 attr(,"class")
-[1] acomp
+[1] "acomp"
 -Loadings (compositional):
-       Cu        Zn        Pb        Cd        Co       
-Comp.1 1.1144401 0.9777349 1.7873165 0.5063081 0.6142004
-Comp.2 1.3986249 1.6353230 0.5417362 0.8401206 0.5841953
-Comp.3 0.4313718 1.6604225 1.0929474 1.0459210 0.7693373
-Comp.4 0.9870999 0.6774450 1.1063748 1.7583002 0.4707801
+       Cu          Zn          Pb         Cd          Co         
+Comp.1 "1.1144401" "0.9777349" "1.787317" "0.5063081" "0.6142004"
+Comp.2 "0.5885192" "0.5033364" "1.519407" "0.9797612" "1.4089767"
+Comp.3 "0.4313718" "1.6604225" "1.092947" "1.0459210" "0.7693373"
+Comp.4 "0.9870999" "0.6774450" "1.106375" "1.7583002" "0.4707801"
 attr(,"class")
-[1] acomp
+[1] "acomp"
 > plot(tmp)
 > biplot(tmp)   # Fehler !!!
 > biplot(tmp,ch=2:3)
@@ -7142,3 +7061,6 @@ Read 2 items
 2500             1.65               5.83
 >  # read.standard("LAKE.txt")
 > 
+> proc.time()
+   user  system elapsed 
+  2.158   0.775   2.109 

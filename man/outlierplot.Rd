@@ -86,7 +86,7 @@ outlierplot(X,...)
   See \link{outliersInCompositions} for a comprehensive introduction
 into the outlier
   treatment in compositions.
-  \itemize{
+  \describe{
     \item{\code{type="scatter"}}{
       Produces an appropriate standard plot such as a tenary diagram with
       the outliers marked by there codes according to the given classifier
@@ -158,7 +158,7 @@ into the outlier
       This is a simplification of the previous plot simply providing the
       number of outliers over a given limit.
       \cr
-      ??? MORE DOCUMENTATION NEEDED ???
+      %??? MORE DOCUMENTATION NEEDED ???
     }
     \item{\code{type="distdist"}}{
       Plots a scatterplot of the the classical and robust Mahalanobis

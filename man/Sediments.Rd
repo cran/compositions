@@ -12,7 +12,7 @@ Data provide sand, silt and clay compositions of 21  sediments specimens,
 data(Sediments)
 }
 \format{
-  \itemize{
+  \describe{
     \item{sand}{numeric: the portion of sand}
     \item{silt}{numeric: the protion of silt}
     \item{clay}{numeric: the portion of clay}

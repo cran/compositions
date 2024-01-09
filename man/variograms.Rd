@@ -37,7 +37,7 @@ vgram.nugget( h , nugget = 1,...,tol=1E-8 )
 \details{
   The univariate variograms are used in the CompLinCoReg as building
   blocks of multivariate variogram models. 
-  \itemize{
+  \describe{
     \item{sph}{Spherical variogram}
     \item{exp}{Exponential variogram}
     \item{gauss}{The Gaussian variogram.}

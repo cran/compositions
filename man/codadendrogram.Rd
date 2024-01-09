@@ -41,7 +41,7 @@ CoDaDendrogram(X, V = NULL, expr=NULL, mergetree = NULL, signary = NULL,
   The object \emph{and an isometric basis} are represented in a
   CoDa-dendrogram, as defined by Egozcue and Pawlowsky-Glahn
   (2005). This is a representation of the following elements:
-  \itemize{
+  \describe{
   \item{a}{a hierarchical partition (which can be specified either through an ilrBase matrix (see \code{\link{ilrBase}}), a merging tree structure (see \code{\link{hclust}}) or a signary matrix (see \code{\link{gsi.merge2signary}}))}
   \item{b}{the sample mean of each coordinate of the ilr basis associated to that partition}
   \item{c}{the sample variance of each coordinate of the ilr basis associated to that partition}

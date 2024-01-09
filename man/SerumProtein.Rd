@@ -12,7 +12,7 @@ of 30 patients, 14 with known disease A, 16 with known disease B, and
 data(SerumProtein)
 }
 \format{
-  \itemize{
+  \describe{
     \item{a}{numeric a protein type}
     \item{b}{numeric a protein type}
     \item{c}{numeric a protein type}

@@ -30,7 +30,7 @@ CompLinModCoReg(formula,comp,D=ncol(comp),envir=environment(formula))
   product of a matrix description and a scalar variogram description or
   only a scalar variogram description. Scalar variogram descriptions are
   either formal function calls to
-  \itemize{
+  \describe{
     \item{\code{sph(range)}}{ for spherical variogram with range \code{range}}
     \item{\code{exp(range)}}{ for an exponential variogram with effective range 
       \code{range}}

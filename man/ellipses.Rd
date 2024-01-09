@@ -52,7 +52,7 @@
 
   There are actually three possibilities of drawing a a hyperdimensional
   ellipsoid or ellipse and non of them is perfect.
-  \itemize{
+  \describe{
   \item{thinRatio=1.1}{
     This works like, what was implemented in the older versions of
     compositons, but never correctly documented. It draws an ellipse

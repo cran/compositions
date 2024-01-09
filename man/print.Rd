@@ -25,7 +25,7 @@ An invisible version of x.
 
 \details{
   Missings are displayed with an appropriate encoding:
-  \itemize{
+  \describe{
     \item{MAR}{Missing at random: The value is missing independently of
       its true value.}
     \item{MNAR}{Missing NOT at random: The value is missing dependently of

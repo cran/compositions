@@ -1,11 +1,13 @@
 
-R version 2.8.0 Under development (unstable) (2008-04-28 r45539)
-Copyright (C) 2008 The R Foundation for Statistical Computing
-ISBN 3-900051-07-0
+R version 4.1.2 (2021-11-01) -- "Bird Hippie"
+Copyright (C) 2021 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
 Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
 
 R is a collaborative project with many contributors.
 Type 'contributors()' for more information and
@@ -16,40 +18,23 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 Type 'q()' to quit R.
 
 > library(compositions)
-Loading required package: rgl
-Loading required package: tensorA
-Loading required package: robustbase
 Welcome to compositions, a package for compositional data analysis.
-
-Get help with "? compositions"
-Version info: to ensure compatibility with R > 2.7.0.
- ".inv" in function names has globaly been replaced by "Inv"
- similarly ".row" and ".col" respectively by "Row" and "Col".
-
-WARNING
-Please be advised that this peace of software does complicated
-geometric operations in high dimensional spaces often based on
-on various incompatible geometries in most cases behaving more
-like an expert system then like an application software merily
-guessing the your intention using several incompatible systems
-of thought. Thus please never trust the software. Always check.
-
-Attaching package: 'compositions'
+Find an intro with "? compositions"
 
 
-	The following object(s) are masked from package:stats :
+Attaching package: ‘compositions’
 
-	 cor,
-	 cov,
-	 dist,
-	 var 
+The following objects are masked from ‘package:stats’:
 
+    anova, cor, cov, dist, var
 
-	The following object(s) are masked from package:base :
+The following object is masked from ‘package:graphics’:
 
-	 %*%,
-	 scale,
-	 scale.default 
+    segments
+
+The following objects are masked from ‘package:base’:
+
+    %*%, norm, scale, scale.default
 
 > #library(compositions,lib.loc="../../compositions.Rcheck")
 > par(pch=20)
@@ -57,21 +42,21 @@ Attaching package: 'compositions'
 > 
 > geomSetA <- acomp(rbind(c(1,2,3),c(1,1,1)))
 > geomSetA
-     [,1]      [,2]      [,3]     
-[1,] 0.1666667 0.3333333 0.5000000
-[2,] 0.3333333 0.3333333 0.3333333
+     [,1]        [,2]        [,3]       
+[1,] "0.1666667" "0.3333333" "0.5000000"
+[2,] "0.3333333" "0.3333333" "0.3333333"
 attr(,"class")
-[1] acomp
+[1] "acomp"
 > plot(geomSetA)
 > ellipses(acomp(geomSetA[1,]),ilrvar2clr(clrvar2ilr(diag(3))))
 > 
 > geomSetA <- acomp(rbind(c(a=1,b=2,c=3,d=4),c(1,1,1,1)))
 > geomSetA
-     a    b    c    d   
-[1,] 0.10 0.20 0.30 0.40
-[2,] 0.25 0.25 0.25 0.25
+     a      b      c      d     
+[1,] "0.10" "0.20" "0.30" "0.40"
+[2,] "0.25" "0.25" "0.25" "0.25"
 attr(,"class")
-[1] acomp
+[1] "acomp"
 > plot(geomSetA,col=1:2,axes=list(side=-1:-3,pos=0.5))
 > 
 > 
@@ -103,7 +88,8 @@ Warning messages:
 > delta <- acomp(c(0.4,0.9,3))
 > plot(geomSetA+delta)
 > straight(acomp(c(2,1,1))+delta,acomp(c(1,2,1))-acomp(c(2,1,1)))
-> ellipses(acomp(c(1,1,2))+delta,var=diag(3),r=norm(acomp(c(1,1,2))-acomp(c(1,1,1))))
+> rr = norm(acomp(c(1,1,2))-acomp(c(1,1,1)))
+> ellipses(acomp(c(1,1,2))+delta,var=diag(3),r=rr)
 > ellipses(mean(geomSetA+delta),var=var(geomSetA+delta),r=2)
 > 
 > 
@@ -155,3 +141,6 @@ Warning messages:
 +             pos=rep(c(0,0.5,1),each=3),col.axis=1:3,col.lab="green")
 > ternaryAxis(side=rep(1:3,3),at=1:9/10,labels=expression(9:1,4:1,7:3,3:2,1:1,2:3,3:7,1:4,1:9),pos=rep(c(0,0.5,1),each=3))
 > 
+> proc.time()
+   user  system elapsed 
+  6.205   9.374   4.405 

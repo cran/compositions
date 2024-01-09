@@ -21,7 +21,7 @@
   undetected but different subpopulation. The package provides various
   concepts to investigate possible reasons for outliers in compositional
   datasets. 
-  \itemize{
+  \describe{
     \item{Proven Outliers}{
       The package relies on an additive--lognormal reference distribution
       in the simplex (and the correponding normal distribution in each

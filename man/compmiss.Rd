@@ -64,7 +64,7 @@ BDLvalue
 \details{
   In the context of compositional data we have to consider at least four
   types of missing and zero values:
-  \itemize{
+  \describe{
   \item{MAR}{ (Missing at random) coded by NaN, the amount was not observed or
   is otherwise missing, in a way unrelated to its actual value. This is the "nice"
   type of missing.}
@@ -133,7 +133,7 @@ BDLvalue
   very preliminary. 
   \cr
   The four philosophies work with different approaches to these problems:
-  \itemize{
+  \describe{
     \item{\code{\link{rplus}}}{ For positive real vectors, one can either identify BDL
       with a true 0 or impute a value relative to the detection limit, with a
       function like \code{\link{zeroreplace}}. A structural zero can either

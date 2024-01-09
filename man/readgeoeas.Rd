@@ -21,11 +21,11 @@ read.geoEAS(file)
   "read.geoeas" read geoEAS format.
 
   The geoEAS format has the following structure:
-  \itemize{
-    \item{}{a first row with a description of the data set}
-    \item{}{the number of variables (=nvars)}
-    \item{}{"nvars"  rows, each containing the name of a variable}
-    \item{}{the data set, in a matrix of "nvars" columns
+  \describe{
+    \item{1}{a first row with a description of the data set}
+    \item{2}{the number of variables (=nvars)}
+    \item{3}{"nvars"  rows, each containing the name of a variable}
+    \item{4}{the data set, in a matrix of "nvars" columns
       and as many rows as individuals}
     }
 }

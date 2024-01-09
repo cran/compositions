@@ -13,7 +13,7 @@ simpleMissingSubplot(loc, portions, labels=NULL,
   \item{loc}{a vector of the form c(x1,x2,y1,y2) giving the drawing
     rectangle for the subplot in coordinates as in par("usr"). I.e. if
     the plot is logrithmic the base 10 logarithm is to be used:
-    \itemize{
+    \describe{
       \item{x1}{left boundary of drawing rectangle}
       \item{y1}{lower boundary of drawing rectangle}
       \item{x2}{right boundary of drawing rectangle}

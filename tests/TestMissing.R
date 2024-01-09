@@ -1,4 +1,5 @@
 library("compositions")
+set.seed(1334345)
 data(SimulatedAmounts)
 par(pch=20)
 mydata <- simulateMissings(sa.groups5,dl=0.01,knownlimit=TRUE,MAR=0.05,MNARprob=0.05,SZprob=0.05)

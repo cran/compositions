@@ -1,11 +1,13 @@
 
-R version 2.8.0 Under development (unstable) (2008-04-28 r45539)
-Copyright (C) 2008 The R Foundation for Statistical Computing
-ISBN 3-900051-07-0
+R version 4.1.2 (2021-11-01) -- "Bird Hippie"
+Copyright (C) 2021 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
 Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
 
 R is a collaborative project with many contributors.
 Type 'contributors()' for more information and
@@ -17,7 +19,7 @@ Type 'q()' to quit R.
 
 > 
 > extensiveCheck <- FALSE
-> noRobustCheck  <- FALSE
+> noRobustCheck  <- TRUE
 > if( !noRobustCheck ) {
 + ###################################################
 + ### chunk number 1: Bsp1
@@ -523,40 +525,7 @@ Type 'q()' to quit R.
 + if( !extensiveCheck )
 +   try(save(file=simStore,list=objects(gsi.pStore),envir=gsi.pStore))
 + }
-Loading required package: compositions
-Loading required package: rgl
-Loading required package: tensorA
-Loading required package: robustbase
-Welcome to compositions, a package for compositional data analysis.
-
-Get help with "? compositions"
-Version info: to ensure compatibility with R > 2.7.0.
- ".inv" in function names has globaly been replaced by "Inv"
- similarly ".row" and ".col" respectively by "Row" and "Col".
-
-WARNING
-Please be advised that this peace of software does complicated
-geometric operations in high dimensional spaces often based on
-on various incompatible geometries in most cases behaving more
-like an expert system then like an application software merily
-guessing the your intention using several incompatible systems
-of thought. Thus please never trust the software. Always check.
-
-Attaching package: 'compositions'
-
-
-	The following object(s) are masked from package:stats :
-
-	 cor,
-	 cov,
-	 dist,
-	 var 
-
-
-	The following object(s) are masked from package:base :
-
-	 %*%,
-	 scale,
-	 scale.default 
-
 > 
+> proc.time()
+   user  system elapsed 
+  0.523   0.736   0.373 

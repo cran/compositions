@@ -1,11 +1,13 @@
 
-R version 2.8.0 Under development (unstable) (2008-04-28 r45539)
-Copyright (C) 2008 The R Foundation for Statistical Computing
-ISBN 3-900051-07-0
+R version 4.1.2 (2021-11-01) -- "Bird Hippie"
+Copyright (C) 2021 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
 Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
 
 R is a collaborative project with many contributors.
 Type 'contributors()' for more information and
@@ -46,3 +48,6 @@ Type 'q()' to quit R.
 +   ),ncol=4,byrow=TRUE)
 > 
 > 
+> proc.time()
+   user  system elapsed 
+  0.342   0.713   0.205 

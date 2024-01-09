@@ -21,7 +21,7 @@ mix.Read(file,eps=1e-6)
 }
 \details{
   The data files must have the adequate structure:
-  \itemize{
+  \describe{
     \item{1}{the first row with a title of the data set,}
     \item{2}{the second row with variables names}
     \item{3}{the data set in a matrix, rows as cases, variables in columns

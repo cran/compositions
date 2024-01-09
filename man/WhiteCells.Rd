@@ -5,7 +5,7 @@
 \title{White-cell composition of 30 blood samples by two different methods}
 \description{
 In 30 blood samples portions of three kinds of white cells
-\itemize{
+\describe{
   \item{G:}{granulocytes,}
   \item{L:}{lymphocytes,}
   \item{M:}{monocytes,}

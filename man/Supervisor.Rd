@@ -24,7 +24,7 @@ data(Supervisor)
 \details{
 For each session the 'statements' of the supervisor were classified into
 four categories
-\itemize{
+\describe{
   \item{C:}{commanding, posing a specific instruction to the supervisee,}
   \item{D:}{demanding, posing a specific question to the supervisee,}
   \item{E:}{exposing, providing the supervisee with an explanation,}

@@ -1,4 +1,4 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -56,7 +56,7 @@ is(xc, "compositional")
 is(rcomp(xc), "compositional")
 is(ccomp(xc), "compositional")
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  as(xc, "data.frame")
 #  as(xc, "structure")
 
@@ -100,28 +100,28 @@ Hydrochem$comp <- xc
 head(Hydrochem)
 dim(Hydrochem)
 
-## ---- lm_example--------------------------------------------------------------
+## ----lm_example---------------------------------------------------------------
 head(Hydrochem$comp)
 codalm = lm(alr(comp)~River, data=Hydrochem) 
 summary(codalm)
 
-## ---- lm_predict--------------------------------------------------------------
+## ----lm_predict---------------------------------------------------------------
 codalm = lm(comp$idt~River, data=Hydrochem) 
 head(predict(codalm)$idtInv)
 
-## ---- lm_predict2-------------------------------------------------------------
+## ----lm_predict2--------------------------------------------------------------
 head(idtInv(predict(codalm), orig=xc))
 
-## ---- selfbacktrafo-----------------------------------------------------------
+## ----selfbacktrafo------------------------------------------------------------
 head(backtransform(idt(xp)))
 head(backtransform(predict(codalm), as=codalm$residuals))
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  tbHydro = tibble::as_tibble(Hydrochem)
 #  tbHydro$comp = xc
 #  tbHydro$comp$Ca
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  data("jura", package="gstat")
 #  coords = jura.pred[, 1:2]
 #  compo = jura.pred[, 7:13]
