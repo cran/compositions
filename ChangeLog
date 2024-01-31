@@ -1,3 +1,10 @@
+Version 2.0-8
+   * test files report all warnings, as `options(warn=1)` has been included in
+each one; numerical results have been rounded to three digits, to ease comparison;
+warnings intended for end-users have been suppressed with a human-readable marking.
+   * plot.acomp() produced a funny warning by accummulating par() arguments; this
+has been programmed more cleanly.
+
 Version 2.0-7
    * test result files stored as requested by cran standards
 

@@ -17,6 +17,7 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
+> options(warn=1)
 > library(compositions)
 Welcome to compositions, a package for compositional data analysis.
 Find an intro with "? compositions"
@@ -68,20 +69,10 @@ attr(,"class")
 > ellipses(acomp(geomSetA[1,]),ilrvar2clr(clrvar2ilr(diag(4))))
 > 
 > plot(rcomp(geomSetA),col=1:2,margin="b")
-> ellipses(rcomp(geomSetA[1,]),ilrvar2clr(clrvar2ilr(diag(4))))
-Warning messages:
-1: In gsi.pltTrafo(var, what = "var", geo = class(mean)) :
-  Can not correctly marginalise a rcomp-variances to subcompositions
-2: In gsi.pltTrafo(var, what = "var", geo = class(mean)) :
-  Can not correctly marginalise a rcomp-variances to subcompositions
-3: In gsi.pltTrafo(var, what = "var", geo = class(mean)) :
-  Can not correctly marginalise a rcomp-variances to subcompositions
-4: In gsi.pltTrafo(var, what = "var", geo = class(mean)) :
-  Can not correctly marginalise a rcomp-variances to subcompositions
-5: In gsi.pltTrafo(var, what = "var", geo = class(mean)) :
-  Can not correctly marginalise a rcomp-variances to subcompositions
-6: In gsi.pltTrafo(var, what = "var", geo = class(mean)) :
-  Can not correctly marginalise a rcomp-variances to subcompositions
+> 
+> # In this file we suppress unnecessary warnings targeting end-users
+> # Human: if you want to see them, replace suppressWarnings() by I()
+> suppressWarnings( ellipses(rcomp(geomSetA[1,]),ilrvar2clr(clrvar2ilr(diag(4)))) )
 > 
 > 
 > geomSetA <- acomp(rbind( c(2,1,1),c(1,2,1),c(1,1,2),c(1,1,1)))
@@ -143,4 +134,4 @@ Warning messages:
 > 
 > proc.time()
    user  system elapsed 
-  6.205   9.374   4.405 
+ 12.041  13.390   9.524 

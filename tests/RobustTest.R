@@ -1,3 +1,4 @@
+options(warn=1)
 
 extensiveCheck <- FALSE
 noRobustCheck  <- TRUE

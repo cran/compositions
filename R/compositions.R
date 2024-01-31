@@ -3143,10 +3143,11 @@ simpleMissingSubplot <- function(loc,
   y1<-loc[3]
   y2<-loc[4]
   opar <- par(list("xlog","ylog","xpd","pin","plt"))
-  usr<-par("usr")
+  usr <- par("usr")
   #par(opar[c("xlog","ylog","xpd","pin","plt")])
   on.exit(par(opar),add=TRUE)
-  par(xlog=FALSE,ylog=FALSE,xpd=xpd,par(),opar)
+  # newpar = unlist( list(xlog=FALSE,ylog=FALSE,xpd=xpd,par(),opar), recursive=FALSE )
+  par(xlog=FALSE,ylog=FALSE,xpd=xpd)
   if( is.null(vertical) ) {
     vertical <- opar$pin[1]*abs(x2-x1)/abs(usr[2]-usr[1]) < 
       opar$pin[2]*abs(y2-y1)/abs(usr[4]-usr[3])

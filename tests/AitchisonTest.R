@@ -1,4 +1,4 @@
-
+options(warn=1)
 require(compositions)
 
 res <- rAitchison(100,theta=c(1,2,3),sigma=ilrvar2clr(diag(c(0.1,2))))

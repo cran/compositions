@@ -1,3 +1,4 @@
+options(warn=1)
 library(compositions)
 #library(compositions,lib.loc="../../compositions.Rcheck")
 par(pch=20)
@@ -21,7 +22,10 @@ plot(geomSetA,col=1:2,margin="b")
 ellipses(acomp(geomSetA[1,]),ilrvar2clr(clrvar2ilr(diag(4))))
 
 plot(rcomp(geomSetA),col=1:2,margin="b")
-ellipses(rcomp(geomSetA[1,]),ilrvar2clr(clrvar2ilr(diag(4))))
+
+# In this file we suppress unnecessary warnings targeting end-users
+# Human: if you want to see them, replace suppressWarnings() by I()
+suppressWarnings( ellipses(rcomp(geomSetA[1,]),ilrvar2clr(clrvar2ilr(diag(4)))) )
 
 
 geomSetA <- acomp(rbind( c(2,1,1),c(1,2,1),c(1,1,2),c(1,1,1)))

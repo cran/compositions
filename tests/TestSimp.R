@@ -1,3 +1,7 @@
+options(warn=1)
+# ad-hod function for comparing numbers
+qround <- function(x) round(x, dig=3)
+
 library("compositions")
 
 #js <- read.table("juraset.dat",skip=17,header=TRUE)
@@ -23,14 +27,14 @@ cd2 <- cdata[,4:5]
 clo(c(1,2,3))
 clo(matrix(1:4,ncol=2))
 data(iris)
-clo(iris[,1:4])
+clo(iris[1:10,1:4])
 clo(0.5)
 clo(matrix(0.5))
 clo(matrix(0.5,nrow=5))
 clo(matrix(0.5,ncol=5))
 
-clo(iris,c("Sepal.Length","Petal.Length"))
-clo(iris,c(2,3))
+clo(iris[1:10,],c("Sepal.Length","Petal.Length"))
+clo(iris[1:10,],c(2,3))
 
 checker <- function(x,y) {
   x<-unclass(x)
@@ -39,74 +43,76 @@ checker <- function(x,y) {
     stop("Wrong results in ", deparse(substitute(x)))
   x
 }
-clr(cdata)
-checker( clrInv(clr(cdata)) , clo(cdata) )
-ilr(cdata)
-checker( ilrInv(ilr(cdata)) , clo(cdata) )
-alr(cdata)
-checker( alrInv(alr(cdata)) , clo(cdata) )
-cpt(cdata)
-checker( cptInv(cpt(cdata)) , clo(cdata) )
-ipt(cdata)
-checker( iptInv(ipt(cdata)) , clo(cdata) )
-apt(cdata)
-checker( aptInv(apt(cdata)) , clo(cdata) )
-ilt(cdata)
-checker( iltInv(ilt(cdata)) , cdata )
-iit(cdata)
-checker( iitInv(iit(cdata)) , cdata )
 
-clr(c(a=1,2,3))
-ilr(c(a=1,2,3))
-alr(c(a=1,2,3))
-cpt(c(a=1,2,3))
-ipt(c(a=1,2,3))
-apt(c(a=1,2,3))
-ilt(c(a=1,2,3))
-iit(c(a=1,2,3))
-checker( clrInv(clr(c(a=1,2,3))) , clo(c(1,2,3)))
-checker( ilrInv(ilr(c(a=1,2,3))) , clo(c(1,2,3)))
-checker( alrInv(alr(c(a=1,2,3))) , clo(c(1,2,3)))
-checker( cptInv(cpt(c(a=1,2,3))) , clo(c(1,2,3)))
-checker( iptInv(ipt(c(a=1,2,3))) , clo(c(1,2,3)))
-checker( aptInv(apt(c(a=1,2,3))) , clo(c(1,2,3)))
-checker( iltInv(ilt(c(a=1,2,3))) , c(1,2,3))
-checker( iitInv(iit(c(a=1,2,3))) , c(1,2,3))
+qround( clr(cdata[1:10,]) )
+
+qround( checker( clrInv(clr(cdata)) , clo(cdata) ) )
+qround( ilr(cdata) )
+qround( checker( ilrInv(ilr(cdata)) , clo(cdata) ) )
+qround( alr(cdata) )
+qround( checker( alrInv(alr(cdata)) , clo(cdata) ) )
+qround( cpt(cdata) )
+qround( checker( cptInv(cpt(cdata)) , clo(cdata) ) )
+qround( ipt(cdata) )
+qround( checker( iptInv(ipt(cdata)) , clo(cdata) ) )
+qround( apt(cdata) )
+qround( checker( aptInv(apt(cdata)) , clo(cdata) ) )
+qround( ilt(cdata) )
+qround( checker( iltInv(ilt(cdata)) , cdata ) )
+qround( iit(cdata) )
+qround( checker( iitInv(iit(cdata)) , cdata ) )
+
+qround( clr(c(a=1,2,3)))
+qround( ilr(c(a=1,2,3)))
+qround( alr(c(a=1,2,3)))
+qround( cpt(c(a=1,2,3)))
+qround( ipt(c(a=1,2,3)))
+qround( apt(c(a=1,2,3)))
+qround( ilt(c(a=1,2,3)))
+qround( iit(c(a=1,2,3)))
+qround( checker( clrInv(clr(c(a=1,2,3))) , clo(c(1,2,3))) )
+qround( checker( ilrInv(ilr(c(a=1,2,3))) , clo(c(1,2,3))) )
+qround( checker( alrInv(alr(c(a=1,2,3))) , clo(c(1,2,3))) )
+qround( checker( cptInv(cpt(c(a=1,2,3))) , clo(c(1,2,3))) )
+qround( checker( iptInv(ipt(c(a=1,2,3))) , clo(c(1,2,3))) )
+qround( checker( aptInv(apt(c(a=1,2,3))) , clo(c(1,2,3))) )
+qround( checker( iltInv(ilt(c(a=1,2,3))) , c(1,2,3)) )
+qround( checker( iitInv(iit(c(a=1,2,3))) , c(1,2,3)) )
 
 # mean
 
-mean(acomp(cdata))
-mean(rcomp(cdata))
-mean(aplus(cdata))
-mean(rplus(cdata))
+qround( mean(acomp(cdata)) )
+qround( mean(rcomp(cdata)) )
+qround( mean(aplus(cdata)) )
+qround( mean(rplus(cdata)) )
 
-meanCol(cdata)
-meanCol(clo(cdata))
-clo(meanCol(cdata))
+qround( meanCol(cdata) )
+qround( meanCol(clo(cdata)) )
+qround( clo(meanCol(cdata)) )
 
 # var (Variation Matrix)
-var(rcomp(cdata))
-var(acomp(cdata))
-var(aplus(cdata))
-var(rplus(cdata))
+qround( var(rcomp(cdata)) )
+qround( var(acomp(cdata)) )
+qround( var(aplus(cdata)) )
+qround( var(rplus(cdata)) )
 
 # clr
-clr(mean(acomp(cdata)))
-meanCol(clr(cdata))
-clrInv(meanCol(clr(cdata)))
-mean(acomp(cdata))
+qround( clr(mean(acomp(cdata))) )
+qround( meanCol(clr(cdata)) )
+qround( clrInv(meanCol(clr(cdata))) )
+qround( mean(acomp(cdata)) )
 
 # ilr
-ilr(mean(acomp(cdata)))
-meanCol(ilr(cdata))
-ilrInv(meanCol(ilr(cdata)))
-mean(acomp(cdata))
+qround( ilr(mean(acomp(cdata))) )
+qround( meanCol(ilr(cdata)) )
+qround( ilrInv(meanCol(ilr(cdata))) )
+qround( mean(acomp(cdata)) )
 
 # alr
-alr(mean(acomp(cdata)))
-meanCol(alr(cdata))
-alrInv(meanCol(alr(cdata)))
-mean(acomp(cdata))
+qround( alr(mean(acomp(cdata))) )
+qround( meanCol(alr(cdata)) )
+qround( alrInv(meanCol(alr(cdata))) )
+qround( mean(acomp(cdata)) )
 
 # Operations
 mean(acomp(3 * (cdata - mean(acomp(cdata)))))
@@ -132,14 +138,17 @@ pie(mean(aplus(cdata)))
 
 # Triangular Diagrams
 plot(acomp(cdata[,1:3]))
-mean(acomp(cdata[,1:3]))
-plot(acomp(cdata),margin="rcomp",pca=TRUE)
+qround( mean(acomp(cdata[,1:3])) )
+
+# In this file we suppress unnecessary warnings targeting end-users
+# Human: if you want to see them, replace suppressWarnings() by I()
+suppressWarnings( plot(acomp(cdata),margin="rcomp",pca=TRUE) )
 plot(acomp(cdata),margin="acomp",pca=TRUE)
-#plot(acomp(cdata),margin="Cd",pca=TRUE) # Bug!!!
-mean(acomp(cdata))
+plot(acomp(cdata),margin="Cd",pca=TRUE) # bug corrected
+qround( mean(acomp(cdata)) )
 
 boxplot(acomp(cdata))              # boxplotscale
-boxplot(acomp(cdata),Land,notch=TRUE) # notch
+suppressWarnings( boxplot(acomp(cdata),Land,notch=TRUE) )# notch
 #boxplot(acomp(cdata),Rock)
 
 boxplot(acomp(cdata),log=FALSE)
@@ -202,43 +211,41 @@ summary(princomp(rcomp(cdata)))
 summary(princomp(aplus(cdata)))
 summary(princomp(rplus(cdata)))
 
-loadings(princomp(cdata))
-loadings(princomp(acomp(cdata)))
-loadings(princomp(rcomp(cdata)))
-loadings(princomp(aplus(cdata)))
-loadings(princomp(rplus(cdata)))
+
+# The following lines produce loadings, which are known to be defined
+#   only up to a sign; to ensure meaningful comparison, they are
+#   converted to absolute values
+# Human: if you want to see the actual numbers, replace abs() by I()
+abs( loadings(princomp(cdata)) )
+abs( loadings(princomp(acomp(cdata))) )
+abs( loadings(princomp(rcomp(cdata))) )
+abs( loadings(princomp(aplus(cdata))) )
+abs( loadings(princomp(rplus(cdata))) )
 
 
 #names
-meanCol(cdata[,1:3])
-mean(acomp(cdata[,1:3]))
+qround( meanCol(cdata[,1:3]) )
+qround( mean(acomp(cdata[,1:3])) )
 oneOrDataset(c(a=1,b=2,c=3))
 
 # covariance
-cov(acomp(cd1),acomp(cd2))
-cov(rcomp(cd1),rcomp(cd2))
-cov(aplus(cd1),aplus(cd2))
-cov(rplus(cd1),rplus(cd2))
+qround( cov(acomp(cd1),acomp(cd2)) )
+qround( cov(rcomp(cd1),rcomp(cd2)) )
+qround( cov(aplus(cd1),aplus(cd2)) )
+qround( cov(rplus(cd1),rplus(cd2)) )
 
-#tmp <- princov(acomp(cd1,cd2))
+# tmp <- princov(acomp(cd1,cd2))
+# The following line produce loadings and scores, which are known to be defined
+#   only up to a sign; to ensure meaningful comparison, they are
+#   commented
+# Human: if you want to see the actual numbers, uncomment next lines
 #tmp
-#plot(tmp)
-#biplot(tmp)
-
 
 tmp <- princomp(acomp(cdata))
-tmp
+# tmp
 plot(tmp)
-biplot(tmp)   # Fehler !!!
+biplot(tmp)
 biplot(tmp,ch=2:3)
 
 #pplot(acomp(cdata))
 
-# Simulated data
-
-
-
-# Loading data
-  read.geoeas("TRUE.DAT")
-  read.geoEAS("TRUE.DAT")
- # read.standard("LAKE.txt")
